@@ -13,6 +13,16 @@
                 $("#editor").click(function(){
                     alert("Hi 7th @rt");
                 });
+                
+                $(".draggable").draggable();
+                $( ".droppable" ).droppable({
+                    drop: function( event, ui ) {
+                      $(this)
+                        .addClass( "ui-state-highlight" )
+                        .find( "p" )
+                          .html( "Dropped!" );
+                    }
+                    });
             });
         </script>
     </head>
@@ -27,11 +37,9 @@
             <div id="workspace">
                 <div id="editor">
                     <div id="toolbar">
-                        <div class="object">image</div>
-                        <div class="object">text</div>
-                        <div class="object">text / image</div>
+                        <div class="draggable">object</div>
                     </div>
-                    <div>
+                    <div id="area" class="droppable">
                         
                     </div>
                 </div>
