@@ -59,6 +59,11 @@
 #container #area #editor #button-object{
     background-image: url('images/object.png');
 }
+.object-helper{
+    background-image: url('images/object.png');
+    height: 48px;
+    width: 48px;
+}
 #container #area #editor #button1{
     background-image: url('images/button1.png');
 }
@@ -84,14 +89,37 @@
     border: solid 1px #C75C5C;
     border-radius: 5px;
     cursor: move;
-    height: 150px;
-    min-height: 50px;
-    min-width: 50px;
+    height: 160px;
+    min-height: 160px;
+    min-width: 100px;
     position: absolute;
     width: 100px;
 }
-#container #area #editor #workspace .draggable .objectButton{
+#container #area #editor #workspace .draggable .content{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+#container #area #editor #workspace .draggable .image{
     background: #4F5D73;
+    background-image: url('images/image.png');
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    height: 64px;
+    width: 64px;
+}
+#container #area #editor #workspace .draggable .text{
+    background: #FFF;
+    border: 1px #ccc solid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    height: 64px;
+    width: 62px;
+}
+#container #area #editor #workspace .draggable .objectButton{
+    background: #C75C5C;
     background-position:center;
     background-repeat:no-repeat;
     border-radius: 7px;
@@ -104,7 +132,7 @@
     position: absolute;
     right: -5px;
     text-align: center;
-    top: -5px;
+    top: -10px;
     width: 25px;
 }
 #container #area #editor #workspace .draggable .config{

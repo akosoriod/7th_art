@@ -15,7 +15,10 @@
                     appendTo: "body",
                     containment: "#workspace",
                     cursor: "move",
-                    helper: "clone",
+//                    helper: "clone",
+                    helper: function(){
+                        return $( "<div class='object-helper'></div>" );
+                    },
                     opacity: 0.8,
                     scroll: false
                 });
@@ -24,7 +27,7 @@
                     drop: function( event, ui ) {
                         if(ui.draggable.hasClass("object")){
                             countObjects++;
-                            $(this).append('<div class="draggable object" id="object'+countObjects+'" data-id="'+countObjects+'"><div class="objectButton config"></div><div class="objectButton close">x</div></div>');
+                            $(this).append('<div class="draggable object" id="object'+countObjects+'" data-id="'+countObjects+'"><div class="content"><div class="image"></div><div class="text"></div></div><div class="objectButton config"></div><div class="objectButton close">x</div></div>');
                             var object=$(this).find('#object'+countObjects);
                             object.draggable({
                                 containment: "#workspace",
@@ -48,6 +51,18 @@
                                         .attr("data-object",id)
                                 ;
                                 $("#properties").dialog("open");
+                            });
+                            var image=object.find(".image");
+                            var text=object.find(".text");
+                            image.draggable({
+                                containment: object,
+                                cursor: "move",
+                                scroll: false
+                            });
+                            text.draggable({
+                                containment: object,
+                                cursor: "move",
+                                scroll: false
                             });
                         }else{
                             alert("I'm a prototype");
