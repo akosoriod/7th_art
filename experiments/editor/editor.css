@@ -1,6 +1,11 @@
 #header_7th_art{
-    background: #ccc;
+    background: #323E4E;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
     height: 40px;
+    line-height: 40px;
+    text-indent: 10px;
     width: 100%;
 }
 #container{
@@ -11,11 +16,22 @@
     top: 40px;
 }
 #container #navigation{
-    background: orange;
+    background: #E09A5E;
+    color: #fff;
     height: 100%;
     width: 200px;
 }
-#container #workspace{
+#container #navigation > ul > li{
+    text-indent: 15px;
+}
+#container #navigation > ul > li > ul > li{
+    cursor: pointer;
+    text-indent: 35px;
+}
+#container #navigation > ul > li > ul > li:hover{
+    color: #323E4E;
+}
+#container #area{
     bottom: 0;
     left: 200px;
     overflow: auto;
@@ -23,27 +39,75 @@
     right: 0;
     top: 0;
 }
-#container #workspace #editor{
+#container #area #editor{
     height: 100%;
     width: 100%;
 }
-#container #workspace #editor #toolbar{
-    background: pink;
-    height: 25px;
+#container #area #editor #toolbar{
+    background: #E0E0D1;
+    height: 54px;
     width: 100%;
 }
-#container #workspace #editor #toolbar .draggable{
-    border: solid 1px #060;
+#container #area #editor .button{
     cursor: pointer;
     float: left;
-    margin-left: 5px;
+    height: 48px;
+    margin: 2px 5px;
+    width: 48px;
+    z-index: 10;
 }
-#container #workspace #editor #area{
-    background: red;
+#container #area #editor #button-object{
+    background-image: url('images/object.png');
+}
+#container #area #editor #button1{
+    background-image: url('images/button1.png');
+}
+#container #area #editor #button2{
+    background-image: url('images/button2.png');
+}
+#container #area #editor #button3{
+    background-image: url('images/button3.png');
+}
+#container #area #editor #button4{
+    background-image: url('images/button4.png');
+}
+#container #area #editor #workspace{
     bottom: 0;
+    box-shadow: 1px 1px 4px 0 #444444 inset;	
     left: 0;
     position: absolute;
     right: 0;
-    top: 25px;
-    
+    top: 54px;
+}
+#container #area #editor #workspace .draggable{
+    background: #FFFFF7;
+    border: solid 1px #C75C5C;
+    border-radius: 5px;
+    cursor: move;
+    height: 150px;
+    min-height: 50px;
+    min-width: 50px;
+    position: absolute;
+    width: 100px;
+}
+#container #area #editor #workspace .draggable .objectButton{
+    background: #4F5D73;
+    background-position:center;
+    background-repeat:no-repeat;
+    border-radius: 7px;
+    color: #EEE;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    height: 15px;
+    position: absolute;
+    right: -5px;
+    text-align: center;
+    top: -5px;
+    width: 25px;
+}
+#container #area #editor #workspace .draggable .config{
+    background-image: url('images/properties.png');
+    right: 22px;
 }
