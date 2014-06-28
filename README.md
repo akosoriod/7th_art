@@ -6,23 +6,23 @@
 ##Framework
 * Descargar Yii en un directorio accesible por la aplicación
 
-+ Renombrar el folder descargado como yii
+* Renombrar el folder descargado como yii
 
-- Descargar esta versión del código
+* Descargar esta versión del código
 
-4. Si es necesario cambiar la variable "$yii" en index.php de 7th_art
+* Si es necesario cambiar la variable "$yii" en index.php de 7th_art
 ```php
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
 ...
 ```
 
-5. Si no existe el folder 7th_art/protected/runtime, crearlo:
+* Si no existe el folder 7th_art/protected/runtime, crearlo:
 ```bash
 sudo mkdir 7th_art/protected/runtime
 ```
 
-6. Dar los permisos necesarios (estando en el folder raíz de apache):
+* Dar los permisos necesarios (estando en el folder raíz de apache):
 ```bash
 sudo chmod -R 777 7th_art/assets
 sudo chmod -R 777 7th_art/protected/runtime
