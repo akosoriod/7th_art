@@ -13,11 +13,16 @@
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
 ...
 ```
-5. Dar los permisos necesarios (estando en el folder raíz de apache):
+5. Si no existe el folder 7th_art/protected/runtime, crearlo:
+```bash
+sudo mkdir 7th_art/protected/runtime
+```
+6. Dar los permisos necesarios (estando en el folder raíz de apache):
 ```bash
 sudo chmod -R 777 7th_art/assets
 sudo chmod -R 777 7th_art/protected/runtime
 ```
+
 
 
 ##Base de datos (como root de MySQL)
