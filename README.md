@@ -7,8 +7,10 @@
 3. Descargar esta versión del código
 4. Si es necesario cambiar la variable "$yii" en index.php de 7th_art
 5. Dar los permisos necesarios (estando en el folder raíz de apache):
-** sudo chmod -R 777 7th_art/assets
-** sudo chmod -R 777 7th_art/protected/runtime
+```bash
+sudo chmod -R 777 7th_art/assets
+sudo chmod -R 777 7th_art/protected/runtime
+```
 
 
 #Crear el usuario y conectar con la base de datos (como root de MySQL)
