@@ -8,6 +8,11 @@
 2. Renombrar el folder descargado como yii
 3. Descargar esta versión del código
 4. Si es necesario cambiar la variable "$yii" en index.php de 7th_art
+```php
+// change the following paths if necessary
+$yii=dirname(__FILE__).'/../yii/framework/yii.php';
+...
+```
 5. Dar los permisos necesarios (estando en el folder raíz de apache):
 ```bash
 sudo chmod -R 777 7th_art/assets
