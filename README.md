@@ -1,7 +1,9 @@
 #Instalación
+##Requisitos
 - PHP v.5.1 (mínimo para Yii)
 - Yii v.1.1.14
 
+##Pasos
 1. Descargar Yii en un directorio accesible por la aplicación
 2. Renombrar el folder descargado como yii
 3. Descargar esta versión del código
