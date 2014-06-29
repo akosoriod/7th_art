@@ -4,6 +4,8 @@ Universidad Nacional de Colombia
 7thart_bog@unal.edu.co
 2014
 */
-body{
-    background: red;
+#intro_video{
+    background: black;
+    height: 300px;
+    width: 400px;
 }
