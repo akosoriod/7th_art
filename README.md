@@ -32,3 +32,11 @@ sudo chmod -R 777 7th_art/protected/runtime
 ```sql
 GRANT SELECT, INSERT, UPDATE, DROP, DELETE, CREATE ON 7th_art.* TO '7th_art_web_app'@'localhost' IDENTIFIED BY 'nTwWEMb3YjkLTY4';
 ```
+
+##Layout
+En el directorio ```layout``` están los archivos HTML, CSS y Javascript para aplicar los estilos. No requiere el uso de servidor.
+
+* Los estilos generales de la aplicación están en: ```layout/css/7th_art.css```
+* Para editar el layout de una página en particular, por ejemplo intro, los estilos están en: ```layout/css/intro.html```
+* Los templates usados, como header y footer de la UNAL están en: ```layout/templates/header.html```, ```layout/templates/footer.html```
+* Todos los archivos requeridos por la UNAL están en: ```layout/templates/unal/```
