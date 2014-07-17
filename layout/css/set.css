@@ -1,0 +1,43 @@
+/*
+Universidad Nacional de Colombia
+7th @rt The Power of Films to Learn English
+7thart_bog@unal.edu.co
+2014
+*/
+#menu{
+    height: 20px;
+}
+#menu .mnu_button{
+    background: orange;
+    float: left;
+    margin-left: 2px;
+}
+#menu .active{
+    background: green;
+    float: left;
+    margin-left: 2px;
+}
+
+/* Pruebas con el Parallax */
+body{
+    /*Para simular la imagen de fondo*/
+    background-color: #aebcc9;
+}
+#parallax{
+    background-color: #aebcc9;
+    height: 20em;
+    max-width: 60em;
+    overflow: hidden;
+    position: relative;     /* relative, absolute, fixed */
+    width: 100%;
+}
+.parallax-layer {
+    position: absolute;
+}
+
+
+/* Estilos de las actividades */
+#activities{
+    background: #ddd;
+    height: 560px;
+}

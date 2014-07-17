@@ -7,3 +7,31 @@ Universidad Nacional de Colombia
 body{
     background: #FFFFFF;
 }
+
+
+
+/* estilos de los pasos en la introducción a la herramienta */
+#steps .step{
+    float: left;
+    margin-left: 2px;
+}
+#steps .step_active{
+    background: orange;
+}
+
+
+/* Estilos de los links de página */
+#links{
+    background: red;
+    height: 20px;
+}
+#links .link{
+    background: orange;
+    float: left;
+    margin-left: 5px;
+}
+#links .link img{
+    background: gray;
+    height: 10px;
+    width: 10px;
+}
