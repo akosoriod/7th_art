@@ -4,34 +4,178 @@ Universidad Nacional de Colombia
 7thart_bog@unal.edu.co
 2014
 */
-body{
-    background: #FFFFFF;
+/*
+ARCHIVO CREADO USANDO LESS
+NO EDITAR DIRECTAMENTE EL CSS
+*/
+/* HTML GENERAL */
+body {
+  background: #FFFFFF;
 }
+/* LAYOUT GENERAL */
+main.detalle {
+  margin: 0 10% 10px;
+}
+main.detalle .breadcrumb-class {
+  margin: 10px 0;
+}
+#investment_project {
+  margin-top: 90px;
+  text-align: center;
+}
+#sys_footer {
+  bottom: 0;
+}
+#links {
+  height: 20px;
+  margin: 70px auto 0;
+  width: 500px;
+}
+#links .link {
+  float: left;
+  margin-left: 5px;
+}
+#links .link img {
+  height: 22px;
+  width: 22px;
+}
+/* PAGE FRONT, INTRO */
+.front form#loginform {
+  margin: 70px auto 0;
+  width: 300px;
+}
+.front form#loginform label {
+  width: 70px;
+}
+.front .detalle > .row {
+  margin-top: 50px;
+}
+.front #intro_video {
+  height: 225px;
+  width: 400px;
+}
+/* PAGE ABOUT_US */
+.page-about_us #div_img_camera {
+  margin-top: 20px;
+}
+.page-about_us #buttons {
+  margin-top: 40px;
+}
+.page-about_us #buttons #btn_agree {
+  float: left;
+  margin-left: 25%;
+  width: 127px;
+}
+.page-about_us #buttons #btn_decline {
+  float: left;
+  margin-left: 10%;
+  width: 56px;
+}
+.page-about_us #steps {
+  clear: both;
+  margin: 70px auto 30px;
+  width: 120px;
+}
+.page-about_us #steps .step {
+  border: 1px solid #000;
+  border-radius: 10px;
+  height: 15px;
+  margin-left: 3px;
+  text-align: center;
+  width: 15px;
+}
+/* PAGE HOME */
+.page-home #tools .tool {
+  float: left;
+}
+.page-home #sets .set {
+  background: orange;
+  float: left;
+  height: 130px;
+  margin: 10px;
+  width: 130px;
+}
+.page-home #sets .set .percent {
+  background: url(../images/percentage.png) no-repeat left top transparent;
+  display: block;
+  height: 47px;
+  margin: -23px 0 0 -23px;
+  padding: 16px 0 0 14px;
+  position: absolute;
+  width: 47px;
+}
+.page-home #sets .set .info {
+  color: #fff;
+  margin-top: -18px;
+}
+.page-home #sets .set .info .attribute.title {
+  background: transparent;
+  text-align: center;
+}
+.page-home #sets .set .info .hidden {
+  display: none;
+}
+.page-home .row1 {
+  margin: 0 0 40px 0;
+}
+.page-home .row1 #tools {
+  float: right;
+  margin-top: 25px;
+  width: 250px;
+}
+/* PAGE MOVIES */
+.page-set {
+  /* Estilos de las actividades */
 
+}
+.page-set #menu {
+  height: 20px;
+}
+.page-set #menu .mnu_button {
+  background: orange;
+  float: left;
+  margin-left: 2px;
+}
+.page-set #menu .active {
+  background: green;
+  float: left;
+  margin-left: 2px;
+}
+.page-set #parallax {
+  background-color: transparent;
+  height: 20em;
+  max-width: 60em;
+  overflow: hidden;
+  position: relative;
+  /* relative, absolute, fixed */
 
-
+  width: 100%;
+}
+.page-set .parallax-layer {
+  position: absolute;
+}
+.page-set #activities {
+  background: #ddd;
+  height: 560px;
+}
+/* PAGE MOVIE PERFUME */
+.movie-perfume {
+  background: url(../images/perfume.4.filmmenu_muro.png) repeat center top transparent;
+}
+/******************** TEMPORALES *************************/
+/* QUITAR MENUS QUE NO SE VEN EN CADA PAGINA
+        YA QUE CARGAN DINÁMICAMENTE */
+.front .navbar-,
+.page-about_us .navbar-,
+.page-home .navbar- {
+  display: none;
+}
+/* OTROS CREADOS POR MIGUEL */
 /* estilos de los pasos en la introducción a la herramienta */
-#steps .step{
-    float: left;
-    margin-left: 2px;
+#steps .step {
+  float: left;
+  margin-left: 2px;
 }
-#steps .step_active{
-    background: orange;
-}
-
-
-/* Estilos de los links de página */
-#links{
-    background: red;
-    height: 20px;
-}
-#links .link{
-    background: orange;
-    float: left;
-    margin-left: 5px;
-}
-#links .link img{
-    background: gray;
-    height: 10px;
-    width: 10px;
+#steps .step_active {
+  background: orange;
 }
