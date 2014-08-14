@@ -39,6 +39,9 @@ main.detalle .breadcrumb-class {
   height: 22px;
   width: 22px;
 }
+#links .link a {
+  font-weight: bold;
+}
 /* PAGE FRONT, INTRO */
 .front form#loginform {
   margin: 70px auto 0;
@@ -92,7 +95,7 @@ main.detalle .breadcrumb-class {
   background: orange;
   float: left;
   height: 130px;
-  margin: 10px;
+  margin: 12px;
   width: 130px;
 }
 .page-home #sets .set .percent {
@@ -123,28 +126,40 @@ main.detalle .breadcrumb-class {
   margin-top: 25px;
   width: 250px;
 }
-/* PAGE MOVIES */
-.page-set {
-  /* Estilos de las actividades */
-
-}
-.page-set #menu {
+/* HOME PAGE -FOR ALL- MOVIES */
+#menu-movies {
   height: 20px;
 }
-.page-set #menu .mnu_button {
-  background: orange;
+#menu-movies a.mnu_button {
+  background-color: #50992E;
+  color: #fff;
   float: left;
+  font-size: 16px;
   margin-left: 2px;
+  padding: 10px 6px;
 }
-.page-set #menu .active {
+#menu-movies a.active {
   background: green;
   float: left;
   margin-left: 2px;
 }
+#controls-movies {
+  height: 17px;
+  margin: 10px 0 20px;
+}
+#controls-movies #progress,
+#controls-movies #volume {
+  float: right;
+  margin-left: 10px;
+}
+#credits-movies {
+  font-size: 16px;
+  margin-top: 30px;
+  text-align: right;
+}
 .page-set #parallax {
   background-color: transparent;
-  height: 20em;
-  max-width: 60em;
+  height: 350px;
   overflow: hidden;
   position: relative;
   /* relative, absolute, fixed */
@@ -154,9 +169,18 @@ main.detalle .breadcrumb-class {
 .page-set .parallax-layer {
   position: absolute;
 }
-.page-set #activities {
-  background: #ddd;
-  height: 560px;
+/* SET ACTIVITIES PAGE -FOR ALL- MOVIES */
+.row_activities {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding-bottom: 20px;
+}
+#activities .title h4 {
+  font-size: 25px;
+  padding: 20px 0 10px;
+}
+#activities textarea {
+  border: none;
+  padding: 10px;
 }
 /* PAGE MOVIE PERFUME */
 .movie-perfume {
