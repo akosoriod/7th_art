@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "Audio".
+ * This is the model class for table "audio".
  *
- * The followings are the available columns in table 'Audio':
+ * The followings are the available columns in table 'audio':
  * @property integer $id
  * @property string $path
- * @property string $voicedBy
- * @property integer $fileType
+ * @property string $voiced_by
+ * @property integer $file_type
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
- * @property FileType $fileType0
+ * @property FileType $fileType
  * @property Comment[] $comments
  */
 class Audio extends CActiveRecord
@@ -21,7 +21,7 @@ class Audio extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Audio';
+		return 'audio';
 	}
 
 	/**
@@ -32,13 +32,13 @@ class Audio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, path, fileType', 'required'),
-			array('id, fileType', 'numerical', 'integerOnly'=>true),
+			array('path, file_type', 'required'),
+			array('file_type', 'numerical', 'integerOnly'=>true),
 			array('path', 'length', 'max'=>45),
-			array('voicedBy', 'length', 'max'=>100),
+			array('voiced_by', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, path, voicedBy, fileType', 'safe', 'on'=>'search'),
+			array('id, path, voiced_by, file_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +51,7 @@ class Audio extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'soundtrack'),
-			'fileType0' => array(self::BELONGS_TO, 'FileType', 'fileType'),
+			'fileType' => array(self::BELONGS_TO, 'FileType', 'file_type'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'audio'),
 		);
 	}
@@ -64,8 +64,8 @@ class Audio extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'path' => 'Path',
-			'voicedBy' => 'Voiced By',
-			'fileType' => 'File Type',
+			'voiced_by' => 'Voiced By',
+			'file_type' => 'File Type',
 		);
 	}
 
@@ -89,8 +89,8 @@ class Audio extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('path',$this->path,true);
-		$criteria->compare('voicedBy',$this->voicedBy,true);
-		$criteria->compare('fileType',$this->fileType);
+		$criteria->compare('voiced_by',$this->voiced_by,true);
+		$criteria->compare('file_type',$this->file_type);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

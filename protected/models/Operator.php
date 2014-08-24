@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This is the model class for table "Operator".
+ * This is the model class for table "operator".
  *
- * The followings are the available columns in table 'Operator':
+ * The followings are the available columns in table 'operator':
  * @property integer $id
- * @property integer $person
+ * @property integer $person_id
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
- * @property Person $person0
+ * @property Person $person
  */
 class Operator extends CActiveRecord
 {
@@ -18,7 +18,7 @@ class Operator extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Operator';
+		return 'operator';
 	}
 
 	/**
@@ -29,11 +29,11 @@ class Operator extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, person', 'required'),
-			array('id, person', 'numerical', 'integerOnly'=>true),
+			array('id, person_id', 'required'),
+			array('id, person_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, person', 'safe', 'on'=>'search'),
+			array('id, person_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +45,8 @@ class Operator extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'operator'),
-			'person0' => array(self::BELONGS_TO, 'Person', 'person'),
+			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'operator_id'),
+			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Operator extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'person' => 'Person',
+			'person_id' => 'Person',
 		);
 	}
 
@@ -80,7 +80,7 @@ class Operator extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('person',$this->person);
+		$criteria->compare('person_id',$this->person_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

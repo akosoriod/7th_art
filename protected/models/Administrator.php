@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This is the model class for table "Administrator".
+ * This is the model class for table "administrator".
  *
- * The followings are the available columns in table 'Administrator':
+ * The followings are the available columns in table 'administrator':
  * @property integer $id
- * @property integer $person
+ * @property integer $person_id
  *
  * The followings are the available model relations:
- * @property Person $person0
+ * @property Person $person
  */
 class Administrator extends CActiveRecord
 {
@@ -17,7 +17,7 @@ class Administrator extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Administrator';
+		return 'administrator';
 	}
 
 	/**
@@ -28,11 +28,11 @@ class Administrator extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, person', 'required'),
-			array('id, person', 'numerical', 'integerOnly'=>true),
+			array('id, person_id', 'required'),
+			array('id, person_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, person', 'safe', 'on'=>'search'),
+			array('id, person_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -44,7 +44,7 @@ class Administrator extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'person0' => array(self::BELONGS_TO, 'Person', 'person'),
+			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
 		);
 	}
 
@@ -55,7 +55,7 @@ class Administrator extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'person' => 'Person',
+			'person_id' => 'Person',
 		);
 	}
 
@@ -78,7 +78,7 @@ class Administrator extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('person',$this->person);
+		$criteria->compare('person_id',$this->person_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

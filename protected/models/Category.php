@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "Category".
+ * This is the model class for table "category".
  *
- * The followings are the available columns in table 'Category':
+ * The followings are the available columns in table 'category':
  * @property integer $id
  * @property string $name
  *
@@ -17,7 +17,7 @@ class Category extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Category';
+		return 'category';
 	}
 
 	/**
@@ -28,8 +28,7 @@ class Category extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
+			array('name', 'required'),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -45,7 +44,7 @@ class Category extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'comments' => array(self::HAS_MANY, 'Comment', 'category'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'category_id'),
 		);
 	}
 

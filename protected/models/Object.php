@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "Object".
+ * This is the model class for table "object".
  *
- * The followings are the available columns in table 'Object':
+ * The followings are the available columns in table 'object':
  * @property integer $id
  * @property string $text
- * @property integer $objectList
+ * @property integer $object_list
  *
  * The followings are the available model relations:
  * @property Exercise[] $exercises
- * @property ObjectList $objectList0
+ * @property ObjectList $objectList
  * @property Image[] $images
  * @property Relation[] $relations
  */
@@ -21,7 +21,7 @@ class Object extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Object';
+		return 'object';
 	}
 
 	/**
@@ -32,12 +32,11 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id', 'required'),
-			array('id, objectList', 'numerical', 'integerOnly'=>true),
+			array('object_list', 'numerical', 'integerOnly'=>true),
 			array('text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, text, objectList', 'safe', 'on'=>'search'),
+			array('id, text, object_list', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,10 +48,10 @@ class Object extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercises' => array(self::MANY_MANY, 'Exercise', 'Exercise_Object(object, exercise)'),
-			'objectList0' => array(self::BELONGS_TO, 'ObjectList', 'objectList'),
-			'images' => array(self::MANY_MANY, 'Image', 'Object_Image(object, image)'),
-			'relations' => array(self::MANY_MANY, 'Relation', 'Object_Relation(object, relation)'),
+			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_object(object_id, exercise_id)'),
+			'objectList' => array(self::BELONGS_TO, 'ObjectList', 'object_list'),
+			'images' => array(self::MANY_MANY, 'Image', 'object_image(object_id, image_id)'),
+			'relations' => array(self::MANY_MANY, 'Relation', 'object_relation(object_id, relation_id)'),
 		);
 	}
 
@@ -64,7 +63,7 @@ class Object extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'text' => 'Text',
-			'objectList' => 'Object List',
+			'object_list' => 'Object List',
 		);
 	}
 
@@ -88,7 +87,7 @@ class Object extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('text',$this->text,true);
-		$criteria->compare('objectList',$this->objectList);
+		$criteria->compare('object_list',$this->object_list);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

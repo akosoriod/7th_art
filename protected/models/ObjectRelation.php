@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "Object_Relation".
+ * This is the model class for table "object_relation".
  *
- * The followings are the available columns in table 'Object_Relation':
- * @property integer $object
- * @property integer $relation
+ * The followings are the available columns in table 'object_relation':
+ * @property integer $object_id
+ * @property integer $relation_id
  */
 class ObjectRelation extends CActiveRecord
 {
@@ -14,7 +14,7 @@ class ObjectRelation extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Object_Relation';
+		return 'object_relation';
 	}
 
 	/**
@@ -25,11 +25,11 @@ class ObjectRelation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object, relation', 'required'),
-			array('object, relation', 'numerical', 'integerOnly'=>true),
+			array('object_id, relation_id', 'required'),
+			array('object_id, relation_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('object, relation', 'safe', 'on'=>'search'),
+			array('object_id, relation_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class ObjectRelation extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'object' => 'Object',
-			'relation' => 'Relation',
+			'object_id' => 'Object',
+			'relation_id' => 'Relation',
 		);
 	}
 
@@ -73,8 +73,8 @@ class ObjectRelation extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('object',$this->object);
-		$criteria->compare('relation',$this->relation);
+		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('relation_id',$this->relation_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

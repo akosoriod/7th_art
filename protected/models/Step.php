@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "Step".
+ * This is the model class for table "step".
  *
- * The followings are the available columns in table 'Step':
+ * The followings are the available columns in table 'step':
  * @property integer $id
  * @property string $instruction
- * @property integer $activity
- * @property integer $css
+ * @property integer $activity_id
+ * @property integer $css_id
  *
  * The followings are the available model relations:
  * @property Exercise[] $exercises
- * @property Activity $activity0
- * @property CSS $css0
+ * @property Activity $activity
+ * @property Css $css
  */
 class Step extends CActiveRecord
 {
@@ -21,7 +21,7 @@ class Step extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Step';
+		return 'step';
 	}
 
 	/**
@@ -32,12 +32,12 @@ class Step extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, activity, css', 'required'),
-			array('id, activity, css', 'numerical', 'integerOnly'=>true),
+			array('activity_id, css_id', 'required'),
+			array('activity_id, css_id', 'numerical', 'integerOnly'=>true),
 			array('instruction', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, instruction, activity, css', 'safe', 'on'=>'search'),
+			array('id, instruction, activity_id, css_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,9 +49,9 @@ class Step extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercises' => array(self::HAS_MANY, 'Exercise', 'step'),
-			'activity0' => array(self::BELONGS_TO, 'Activity', 'activity'),
-			'css0' => array(self::BELONGS_TO, 'CSS', 'css'),
+			'exercises' => array(self::HAS_MANY, 'Exercise', 'step_id'),
+			'activity' => array(self::BELONGS_TO, 'Activity', 'activity_id'),
+			'css' => array(self::BELONGS_TO, 'Css', 'css_id'),
 		);
 	}
 
@@ -63,8 +63,8 @@ class Step extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'instruction' => 'Instruction',
-			'activity' => 'Activity',
-			'css' => 'Css',
+			'activity_id' => 'Activity',
+			'css_id' => 'Css',
 		);
 	}
 
@@ -88,8 +88,8 @@ class Step extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('instruction',$this->instruction,true);
-		$criteria->compare('activity',$this->activity);
-		$criteria->compare('css',$this->css);
+		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('css_id',$this->css_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

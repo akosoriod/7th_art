@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "User_Exercise".
+ * This is the model class for table "user_exercise".
  *
- * The followings are the available columns in table 'User_Exercise':
+ * The followings are the available columns in table 'user_exercise':
  * @property integer $id
- * @property integer $exercise
- * @property integer $user
+ * @property integer $exercise_id
+ * @property integer $user_id
  *
  * The followings are the available model relations:
- * @property Exercise $exercise0
- * @property User $user0
+ * @property Exercise $exercise
+ * @property User $user
  * @property Answer[] $answers
  */
 class UserExercise extends CActiveRecord
@@ -20,7 +20,7 @@ class UserExercise extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User_Exercise';
+		return 'user_exercise';
 	}
 
 	/**
@@ -31,11 +31,11 @@ class UserExercise extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, exercise, user', 'required'),
-			array('id, exercise, user', 'numerical', 'integerOnly'=>true),
+			array('exercise_id, user_id', 'required'),
+			array('exercise_id, user_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise, user', 'safe', 'on'=>'search'),
+			array('id, exercise_id, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,9 +47,9 @@ class UserExercise extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercise0' => array(self::BELONGS_TO, 'Exercise', 'exercise'),
-			'user0' => array(self::BELONGS_TO, 'User', 'user'),
-			'answers' => array(self::MANY_MANY, 'Answer', 'User_Exercise_Answer(user_exercise, answer)'),
+			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'answers' => array(self::MANY_MANY, 'Answer', 'user_exercise_answer(user_exercise, answer)'),
 		);
 	}
 
@@ -60,8 +60,8 @@ class UserExercise extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'exercise' => 'Exercise',
-			'user' => 'User',
+			'exercise_id' => 'Exercise',
+			'user_id' => 'User',
 		);
 	}
 
@@ -84,8 +84,8 @@ class UserExercise extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('exercise',$this->exercise);
-		$criteria->compare('user',$this->user);
+		$criteria->compare('exercise_id',$this->exercise_id);
+		$criteria->compare('user_id',$this->user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "User_ActivitySet_Prize".
+ * This is the model class for table "user_activity_set_prize".
  *
- * The followings are the available columns in table 'User_ActivitySet_Prize':
- * @property integer $user
- * @property integer $activity
- * @property integer $prize
+ * The followings are the available columns in table 'user_activity_set_prize':
+ * @property integer $user_id
+ * @property integer $activity_id
+ * @property integer $prize_id
  *
  * The followings are the available model relations:
- * @property UserActivitySet $user0
- * @property UserActivitySet $activity0
- * @property Prize $prize0
+ * @property UserActivitySet $user
+ * @property UserActivitySet $activity
+ * @property Prize $prize
  */
 class UserActivitySetPrize extends CActiveRecord
 {
@@ -20,7 +20,7 @@ class UserActivitySetPrize extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User_ActivitySet_Prize';
+		return 'user_activity_set_prize';
 	}
 
 	/**
@@ -31,11 +31,11 @@ class UserActivitySetPrize extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user, activity, prize', 'required'),
-			array('user, activity, prize', 'numerical', 'integerOnly'=>true),
+			array('user_id, activity_id, prize_id', 'required'),
+			array('user_id, activity_id, prize_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user, activity, prize', 'safe', 'on'=>'search'),
+			array('user_id, activity_id, prize_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,9 +47,9 @@ class UserActivitySetPrize extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user0' => array(self::BELONGS_TO, 'UserActivitySet', 'user'),
-			'activity0' => array(self::BELONGS_TO, 'UserActivitySet', 'activity'),
-			'prize0' => array(self::BELONGS_TO, 'Prize', 'prize'),
+			'user' => array(self::BELONGS_TO, 'UserActivitySet', 'user_id'),
+			'activity' => array(self::BELONGS_TO, 'UserActivitySet', 'activity_id'),
+			'prize' => array(self::BELONGS_TO, 'Prize', 'prize_id'),
 		);
 	}
 
@@ -59,9 +59,9 @@ class UserActivitySetPrize extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user' => 'User',
-			'activity' => 'Activity',
-			'prize' => 'Prize',
+			'user_id' => 'User',
+			'activity_id' => 'Activity',
+			'prize_id' => 'Prize',
 		);
 	}
 
@@ -83,9 +83,9 @@ class UserActivitySetPrize extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user',$this->user);
-		$criteria->compare('activity',$this->activity);
-		$criteria->compare('prize',$this->prize);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('prize_id',$this->prize_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

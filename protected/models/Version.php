@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "Version".
+ * This is the model class for table "version".
  *
- * The followings are the available columns in table 'Version':
+ * The followings are the available columns in table 'version':
  * @property integer $id
  * @property string $name
  * @property integer $visible
  * @property integer $selected
- * @property integer $section
+ * @property integer $section_id
  *
  * The followings are the available model relations:
  * @property Activity[] $activities
- * @property Section $section0
+ * @property Section $section
  */
 class Version extends CActiveRecord
 {
@@ -21,7 +21,7 @@ class Version extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Version';
+		return 'version';
 	}
 
 	/**
@@ -32,12 +32,12 @@ class Version extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name, selected, section', 'required'),
-			array('id, visible, selected, section', 'numerical', 'integerOnly'=>true),
+			array('name, selected, section_id', 'required'),
+			array('visible, selected, section_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, visible, selected, section', 'safe', 'on'=>'search'),
+			array('id, name, visible, selected, section_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +49,8 @@ class Version extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activities' => array(self::HAS_MANY, 'Activity', 'version'),
-			'section0' => array(self::BELONGS_TO, 'Section', 'section'),
+			'activities' => array(self::HAS_MANY, 'Activity', 'version_id'),
+			'section' => array(self::BELONGS_TO, 'Section', 'section_id'),
 		);
 	}
 
@@ -62,9 +62,9 @@ class Version extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => 'Name',
-			'visible' => 'Indica si una versión de sección es visible o no.',
+			'visible' => 'Visible',
 			'selected' => 'Selected',
-			'section' => 'Section',
+			'section_id' => 'Section',
 		);
 	}
 
@@ -90,7 +90,7 @@ class Version extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('visible',$this->visible);
 		$criteria->compare('selected',$this->selected);
-		$criteria->compare('section',$this->section);
+		$criteria->compare('section_id',$this->section_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
