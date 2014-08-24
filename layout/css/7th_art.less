@@ -1,0 +1,311 @@
+/*
+Universidad Nacional de Colombia
+7th @rt The Power of Films to Learn English
+7thart_bog@unal.edu.co
+2014
+*/
+
+/*
+ARCHIVO CREADO USANDO LESS
+NO EDITAR DIRECTAMENTE EL CSS
+*/
+
+
+
+/* HTML GENERAL */
+
+    body{
+        background: #FFFFFF;
+    }
+
+
+
+/* LAYOUT GENERAL */
+
+    main.detalle {
+        margin: 0 10% 10px;
+
+            .breadcrumb-class {
+                margin: 10px 0;
+            }
+
+    }
+
+    #investment_project {
+        margin-top: 90px;
+        text-align: center;
+    }
+
+    #sys_footer {
+        bottom: 0;
+    }
+
+    #links {
+    height: 20px;
+    margin: 70px auto 0;
+    width: 500px;
+
+        .link {
+            float: left;
+            margin-left: 5px;
+
+                img {
+                    height: 22px;
+                    width: 22px;
+                }
+
+                a {
+                    font-weight: bold;
+                }
+        }
+}
+
+
+
+/* PAGE FRONT, INTRO */
+
+    .front {
+
+        form#loginform {
+            margin: 70px auto 0;
+            width: 300px;
+
+                label {
+                    width: 70px;
+                }
+        }
+
+        .detalle > .row {
+            margin-top: 50px;
+        }
+
+        #intro_video {
+            height: 225px;
+            width: 400px;
+        }
+    }
+
+
+/* PAGE ABOUT_US */
+
+    .page-about_us  {
+
+        #div_img_camera {
+            margin-top: 20px;
+        }
+
+        #buttons {
+            margin-top: 40px;
+
+                #btn_agree {
+                    float: left;
+                    margin-left: 25%;
+                    width: 127px;
+                }
+
+                #btn_decline {
+                    float: left;
+                    margin-left: 10%;
+                    width: 56px;
+                }
+        }
+
+        #steps {
+            clear: both;
+            margin: 70px auto 30px;
+            width: 120px;
+
+                .step {
+                    border: 1px solid #000;
+                    border-radius: 10px;
+                    height: 15px;
+                    margin-left: 3px;
+                    text-align: center;
+                    width: 15px;
+                }
+
+        }
+
+
+    }
+
+
+/* PAGE HOME */
+
+    .page-home {
+
+        #tools .tool {
+            float: left;
+        }
+
+
+        #sets {
+
+            .set {
+                background: orange;
+                float: left;
+                height: 130px;
+                margin: 12px;
+                width: 130px;
+
+                    .percent {
+                        background: url(../images/percentage.png) no-repeat left top transparent;
+                        display: block;
+                        height: 47px;
+                        margin: -23px 0 0 -23px;
+                        padding: 16px 0 0 14px;
+                        position: absolute;
+                        width: 47px;
+                    }
+
+                    .info {
+                        color: #fff;
+                        margin-top: -18px;
+
+                            .attribute.title {
+                                background: transparent;
+                                text-align: center;
+                            }
+
+                            .hidden {
+                                display: none;
+                            }
+
+                    }
+
+            }
+
+        }
+
+        .row1 {
+            margin: 0 0 40px 0;
+
+                #tools {
+                    float: right;
+                    margin-top: 25px;
+                    width: 250px;
+                }
+        }
+    }
+
+
+
+
+/* HOME PAGE -FOR ALL- MOVIES */
+
+    #menu-movies {
+        height: 20px;
+
+            a.mnu_button{
+                background-color: #50992E;
+                color: #fff;
+                float: left;
+                font-size: 16px;
+                margin-left: 2px;
+                padding: 10px 6px;
+            }
+
+            a.active{
+                background: green;
+                float: left;
+                margin-left: 2px;
+            }
+    }
+
+    #controls-movies {
+        height: 17px;
+        margin: 10px 0 20px;
+
+        #progress,
+        #volume {
+            float: right;
+            margin-left: 10px;
+        }
+
+    }
+
+    #credits-movies {
+        font-size: 16px;
+        margin-top: 30px;
+        text-align: right;
+    }
+
+
+    .page-set {
+
+        #parallax{
+            background-color: transparent;
+            height: 350px;
+            overflow: hidden;
+            position: relative;     /* relative, absolute, fixed */
+            width: 100%;
+        }
+        .parallax-layer {
+            position: absolute;
+        }
+
+    }
+
+
+
+/* SET ACTIVITIES PAGE -FOR ALL- MOVIES */
+
+        .row_activities {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding-bottom: 20px;
+        }
+
+        #activities{
+
+
+                .title h4 {
+                    font-size: 25px;
+                    padding: 20px 0 10px;
+                }
+
+                textarea {
+                    border: none;
+                    padding: 10px;
+                }
+        }
+
+
+
+/* PAGE MOVIE PERFUME */
+
+    .movie-perfume {
+        background: url(../images/perfume.4.filmmenu_muro.png) repeat center top transparent;
+
+    }
+
+
+
+/******************** TEMPORALES *************************/
+
+    /* QUITAR MENUS QUE NO SE VEN EN CADA PAGINA
+        YA QUE CARGAN DINÁMICAMENTE */
+
+            .front,
+            .page-about_us,
+            .page-home {
+
+                .navbar- {
+                    display: none;
+                }
+            }
+
+
+
+
+
+/* OTROS CREADOS POR MIGUEL */
+
+
+    /* estilos de los pasos en la introducción a la herramienta */
+    #steps .step{
+        float: left;
+        margin-left: 2px;
+    }
+    #steps .step_active{
+        background: orange;
+    }

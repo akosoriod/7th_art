@@ -44,7 +44,7 @@
         <!--[if lt IE 9]><script src="js/html5shiv.js" type="text/javascript"></script><![endif]-->
         <!--[if lt IE 9]><script src="js/respond.js" type="text/javascript"></script><![endif]-->
     </head>
-    <body class="front page-intro not-logged fullpage">
+    <body class="not-front page-about_us not-logged fullpage">
         <!--Header cargado como plantilla-->
         <div id="sys_header"></div>
 
@@ -64,31 +64,46 @@
                 Está en:&nbsp;<a href="http://unal.edu.co" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Sección</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>Página</b>
             </div>
             <div class="row row1">
-                <div id="welcome" class="col-xs-12 col-sm-12 col-md-6">
-                    <h2>Welcome to</h2>
-                    <h1>The Power & Magic of Films to Learn English</h1>
-                    <p>7th @rt is directly concerned with the educational purpose of providing opportunities for independent learners to strengthen  and, to help foster positive attitudes for improvement and consolidation of knowledge of the English language, language skills and learning strategies.</p>
+                <div id="div_img_camera" class="col-xs-12 col-sm-12 col-md-5">
+                    <img id="img_camera" src="images/camara.png" height="441" width="296" alt="camera"/>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6">
-                    <div id="intro_video">
-                        <iframe width="400" height="225" src="//www.youtube.com/embed/cqkq5PkhVJM?rel=0" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-            <div class="row row2" id="login">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <form id="loginform" action="about_us.html" method="post">
-                        <label>Username: </label><input type="text" name="username">@unal.edu.co
-                         <label>Password: </label><input type="text" name="password">
-                           <input type="submit" value="LOGIN">
+                <div id="terms" class="col-xs-12 col-sm-12 col-md-7">
+                    <h2>Terms of use</h2>
+                    <p>7th @rt is directly concerned with the educational purpose of providing opportunities for independent learners to strengthen  and, to help foster positive attitudes for improvement and consolidation of knowledge of the English language, language skills and learning strategies. In this sense, it is a goal but, more significantly, it is an on-going process, principled by the idea that learning a foreign language is not only a communicative and cooperative activity itself, but very importantly, an autonomous one. It therefore emphasizes the great need and importance of students’ initiatives and contributions to the learning experience in the process of becoming autonomous learners.</p>
+
+                    <p>The English Language Autonomous Learning materals (ELAL) presented in 7th @rt are the product of a research project developed with students of the Philology and Languages degree, which take advantage of their strengths, improvement and achievements, for the benefit of the entire learning community at Universidad Nacional de Colombia.</p>
+
+                    <p>7th @rt makes use of the compelling, undeniable power of feature films and the Internet that expose learners to authentic language in authentic contexts, in order to build up an overwhelming tool and environment for the learning experience. It introduces new features to challenge young adult students’ language comprehension and production, and to allow them to verify that learning the target language can be an interesting, enriching and motivating experience that promotes independent thinking.</p>
+
+                    <p>Each set of film activities presents the following sections which are expected to be relevant to the learner’s needs, interests and abilities.</p>
+
+                    <p>Your comments and suggestions are warmly welcome on the 7th @rt Wall.</p>
+
+                    <p>The Director-Editor</p>
+
+                    <form id="terms_of_use" action="home.html" method="post">
+                        <div id="buttons" class="col-xs-12 col-sm-12 col-md-12">
+                            <div id="btn_agree" class="button">
+                                <input type="submit" value="I READ IT AND I AGREE">
+                            </div>
+                            <div id="btn_decline" class="button">
+                                    <input type="submit" value="I DECLINE">
+                            </div>
+                        </div>
                     </form>
+
+                    <div id="steps" class="col-xs-12 col-sm-12 col-md-12">
+                        <div id="btn_step_1" class="step step_active">1</div>
+                        <div id="btn_step_2" class="step step_active">2</div>
+                        <div id="btn_step_3" class="step">3</div>
+                        <div id="btn_step_4" class="step">4</div>
+                    </div>
+
                 </div>
+
+
             </div>
-            <div class="row row3" id="investment_project">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <span>Investment Project BPUN 400000019818</span>
-                </div>
-            </div>
+
         </main>
         <!--Header cargado como plantilla-->
         <div id="sys_footer"></div>
