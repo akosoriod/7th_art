@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "Session".
+ * This is the model class for table "session".
  *
- * The followings are the available columns in table 'Session':
+ * The followings are the available columns in table 'session':
  * @property integer $id
  * @property string $sessionId
  * @property string $timeIni
  * @property string $timeEnd
  * @property string $ip
- * @property integer $person
- * @property integer $activitySet
+ * @property integer $person_id
+ * @property integer $activity_set
  *
  * The followings are the available model relations:
- * @property Person $person0
- * @property ActivitySet $activitySet0
+ * @property ActivitySet $activitySet
+ * @property Person $person
  */
 class Session extends CActiveRecord
 {
@@ -23,7 +23,7 @@ class Session extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Session';
+		return 'session';
 	}
 
 	/**
@@ -34,13 +34,13 @@ class Session extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, sessionId, timeIni, person', 'required'),
-			array('id, person, activitySet', 'numerical', 'integerOnly'=>true),
+			array('sessionId, timeIni, person_id', 'required'),
+			array('person_id, activity_set', 'numerical', 'integerOnly'=>true),
 			array('sessionId, ip', 'length', 'max'=>45),
 			array('timeEnd', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, sessionId, timeIni, timeEnd, ip, person, activitySet', 'safe', 'on'=>'search'),
+			array('id, sessionId, timeIni, timeEnd, ip, person_id, activity_set', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +52,8 @@ class Session extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'person0' => array(self::BELONGS_TO, 'Person', 'person'),
-			'activitySet0' => array(self::BELONGS_TO, 'ActivitySet', 'activitySet'),
+			'activitySet' => array(self::BELONGS_TO, 'ActivitySet', 'activity_set'),
+			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
 		);
 	}
 
@@ -68,8 +68,8 @@ class Session extends CActiveRecord
 			'timeIni' => 'Time Ini',
 			'timeEnd' => 'Time End',
 			'ip' => 'Ip',
-			'person' => 'Person',
-			'activitySet' => 'Activity Set',
+			'person_id' => 'Person',
+			'activity_set' => 'Activity Set',
 		);
 	}
 
@@ -96,8 +96,8 @@ class Session extends CActiveRecord
 		$criteria->compare('timeIni',$this->timeIni,true);
 		$criteria->compare('timeEnd',$this->timeEnd,true);
 		$criteria->compare('ip',$this->ip,true);
-		$criteria->compare('person',$this->person);
-		$criteria->compare('activitySet',$this->activitySet);
+		$criteria->compare('person_id',$this->person_id);
+		$criteria->compare('activity_set',$this->activity_set);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

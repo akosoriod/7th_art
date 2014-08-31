@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "User_Exercise_Answer".
+ * This is the model class for table "user_exercise_answer".
  *
- * The followings are the available columns in table 'User_Exercise_Answer':
+ * The followings are the available columns in table 'user_exercise_answer':
  * @property integer $user_exercise
  * @property integer $answer
  */
@@ -14,7 +14,7 @@ class UserExerciseAnswer extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User_Exercise_Answer';
+		return 'user_exercise_answer';
 	}
 
 	/**

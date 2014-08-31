@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "ExerciseType".
+ * This is the model class for table "exercise_type".
  *
- * The followings are the available columns in table 'ExerciseType':
+ * The followings are the available columns in table 'exercise_type':
  * @property integer $id
  * @property string $name
  * @property string $description
- * @property integer $template
+ * @property integer $template_id
  *
  * The followings are the available model relations:
  * @property Exercise[] $exercises
- * @property Template $template0
+ * @property Template $template
  */
 class ExerciseType extends CActiveRecord
 {
@@ -20,7 +20,7 @@ class ExerciseType extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ExerciseType';
+		return 'exercise_type';
 	}
 
 	/**
@@ -31,12 +31,12 @@ class ExerciseType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, template', 'required'),
-			array('template', 'numerical', 'integerOnly'=>true),
+			array('name, description, template_id', 'required'),
+			array('template_id', 'numerical', 'integerOnly'=>true),
 			array('name, description', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, template', 'safe', 'on'=>'search'),
+			array('id, name, description, template_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +48,8 @@ class ExerciseType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercises' => array(self::HAS_MANY, 'Exercise', 'exerciseType'),
-			'template0' => array(self::BELONGS_TO, 'Template', 'template'),
+			'exercises' => array(self::HAS_MANY, 'Exercise', 'exercise_type_id'),
+			'template' => array(self::BELONGS_TO, 'Template', 'template_id'),
 		);
 	}
 
@@ -62,7 +62,7 @@ class ExerciseType extends CActiveRecord
 			'id' => 'ID',
 			'name' => 'Name',
 			'description' => 'Description',
-			'template' => 'Template',
+			'template_id' => 'Template',
 		);
 	}
 
@@ -87,7 +87,7 @@ class ExerciseType extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('template',$this->template);
+		$criteria->compare('template_id',$this->template_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This is the model class for table "Exercise_Image".
+ * This is the model class for table "exercise_image".
  *
- * The followings are the available columns in table 'Exercise_Image':
- * @property integer $exercise
- * @property integer $image
- * @property string $cssClass
+ * The followings are the available columns in table 'exercise_image':
+ * @property integer $exercise_id
+ * @property integer $image_id
+ * @property string $css_class
  */
 class ExerciseImage extends CActiveRecord
 {
@@ -15,7 +15,7 @@ class ExerciseImage extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Exercise_Image';
+		return 'exercise_image';
 	}
 
 	/**
@@ -26,12 +26,12 @@ class ExerciseImage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise, image', 'required'),
-			array('exercise, image', 'numerical', 'integerOnly'=>true),
-			array('cssClass', 'length', 'max'=>45),
+			array('exercise_id, image_id', 'required'),
+			array('exercise_id, image_id', 'numerical', 'integerOnly'=>true),
+			array('css_class', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('exercise, image, cssClass', 'safe', 'on'=>'search'),
+			array('exercise_id, image_id, css_class', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,9 +52,9 @@ class ExerciseImage extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'exercise' => 'Exercise',
-			'image' => 'Image',
-			'cssClass' => 'Css Class',
+			'exercise_id' => 'Exercise',
+			'image_id' => 'Image',
+			'css_class' => 'Css Class',
 		);
 	}
 
@@ -76,9 +76,9 @@ class ExerciseImage extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('exercise',$this->exercise);
-		$criteria->compare('image',$this->image);
-		$criteria->compare('cssClass',$this->cssClass,true);
+		$criteria->compare('exercise_id',$this->exercise_id);
+		$criteria->compare('image_id',$this->image_id);
+		$criteria->compare('css_class',$this->css_class,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

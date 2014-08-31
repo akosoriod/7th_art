@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "Genre_ActivitySet".
+ * This is the model class for table "genre_activity_set".
  *
- * The followings are the available columns in table 'Genre_ActivitySet':
- * @property integer $activitySet
- * @property integer $genre
+ * The followings are the available columns in table 'genre_activity_set':
+ * @property integer $activity_set_id
+ * @property integer $genre_id
  */
 class GenreActivitySet extends CActiveRecord
 {
@@ -14,7 +14,7 @@ class GenreActivitySet extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Genre_ActivitySet';
+		return 'genre_activity_set';
 	}
 
 	/**
@@ -25,11 +25,11 @@ class GenreActivitySet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('activitySet, genre', 'required'),
-			array('activitySet, genre', 'numerical', 'integerOnly'=>true),
+			array('activity_set_id, genre_id', 'required'),
+			array('activity_set_id, genre_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('activitySet, genre', 'safe', 'on'=>'search'),
+			array('activity_set_id, genre_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class GenreActivitySet extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'activitySet' => 'Activity Set',
-			'genre' => 'Genre',
+			'activity_set_id' => 'Activity Set',
+			'genre_id' => 'Genre',
 		);
 	}
 
@@ -73,8 +73,8 @@ class GenreActivitySet extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('activitySet',$this->activitySet);
-		$criteria->compare('genre',$this->genre);
+		$criteria->compare('activity_set_id',$this->activity_set_id);
+		$criteria->compare('genre_id',$this->genre_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

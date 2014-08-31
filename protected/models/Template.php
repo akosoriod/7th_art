@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "Template".
+ * This is the model class for table "template".
  *
- * The followings are the available columns in table 'Template':
+ * The followings are the available columns in table 'template':
  * @property integer $id
  * @property string $name
  * @property string $description
- * @property integer $css
  * @property string $path
+ * @property integer $css_id
  *
  * The followings are the available model relations:
  * @property ExerciseType[] $exerciseTypes
- * @property CSS $css0
+ * @property Css $css
  */
 class Template extends CActiveRecord
 {
@@ -21,7 +21,7 @@ class Template extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Template';
+		return 'template';
 	}
 
 	/**
@@ -32,12 +32,12 @@ class Template extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, css, path', 'required'),
-			array('css', 'numerical', 'integerOnly'=>true),
+			array('name, description, path, css_id', 'required'),
+			array('css_id', 'numerical', 'integerOnly'=>true),
 			array('name, description, path', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, css, path', 'safe', 'on'=>'search'),
+			array('id, name, description, path, css_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +49,8 @@ class Template extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exerciseTypes' => array(self::HAS_MANY, 'ExerciseType', 'template'),
-			'css0' => array(self::BELONGS_TO, 'CSS', 'css'),
+			'exerciseTypes' => array(self::HAS_MANY, 'ExerciseType', 'template_id'),
+			'css' => array(self::BELONGS_TO, 'Css', 'css_id'),
 		);
 	}
 
@@ -63,8 +63,8 @@ class Template extends CActiveRecord
 			'id' => 'ID',
 			'name' => 'Name',
 			'description' => 'Description',
-			'css' => 'Css',
-			'path' => 'Ubicación de la plantilla',
+			'path' => 'Path',
+			'css_id' => 'Css',
 		);
 	}
 
@@ -89,8 +89,8 @@ class Template extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('css',$this->css);
 		$criteria->compare('path',$this->path,true);
+		$criteria->compare('css_id',$this->css_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
