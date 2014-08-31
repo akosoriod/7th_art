@@ -2,7 +2,7 @@
 date_default_timezone_set("America/Bogota");
 
 // change the following paths if necessary
-$yii=dirname(__FILE__).'/../yii-1.1.15.022a51/framework/yii.php';
+$yii=dirname(__FILE__).'/../yii/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
 
 // remove the following lines when in production mode
