@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "User".
+ * This is the model class for table "user".
  *
- * The followings are the available columns in table 'User':
+ * The followings are the available columns in table 'user':
  * @property integer $id
- * @property integer $secondsToCheck
- * @property integer $person
- * @property double $fontSize
- * @property integer $blackAndWhite
+ * @property integer $seconds_to_check
+ * @property integer $person_id
+ * @property double $font_size
+ * @property integer $black_and_white
  *
  * The followings are the available model relations:
  * @property Comment[] $comments
- * @property Person $person0
+ * @property Person $person
  * @property ActivitySet[] $activitySets
  * @property UserExercise[] $userExercises
  */
@@ -23,7 +23,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User';
+		return 'user';
 	}
 
 	/**
@@ -34,12 +34,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, person', 'required'),
-			array('id, secondsToCheck, person, blackAndWhite', 'numerical', 'integerOnly'=>true),
-			array('fontSize', 'numerical'),
+			array('id, person_id', 'required'),
+			array('id, seconds_to_check, person_id, black_and_white', 'numerical', 'integerOnly'=>true),
+			array('font_size', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, secondsToCheck, person, fontSize, blackAndWhite', 'safe', 'on'=>'search'),
+			array('id, seconds_to_check, person_id, font_size, black_and_white', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,10 +51,10 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'comments' => array(self::HAS_MANY, 'Comment', 'user'),
-			'person0' => array(self::BELONGS_TO, 'Person', 'person'),
-			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'User_ActivitySet(user, activity)'),
-			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'user'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
+			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
+			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_id)'),
+			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'user_id'),
 		);
 	}
 
@@ -65,10 +65,10 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'secondsToCheck' => 'Seconds To Check',
-			'person' => 'Person',
-			'fontSize' => 'Font Size',
-			'blackAndWhite' => 'Black And White',
+			'seconds_to_check' => 'Seconds To Check',
+			'person_id' => 'Person',
+			'font_size' => 'Font Size',
+			'black_and_white' => 'Black And White',
 		);
 	}
 
@@ -91,10 +91,10 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('secondsToCheck',$this->secondsToCheck);
-		$criteria->compare('person',$this->person);
-		$criteria->compare('fontSize',$this->fontSize);
-		$criteria->compare('blackAndWhite',$this->blackAndWhite);
+		$criteria->compare('seconds_to_check',$this->seconds_to_check);
+		$criteria->compare('person_id',$this->person_id);
+		$criteria->compare('font_size',$this->font_size);
+		$criteria->compare('black_and_white',$this->black_and_white);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

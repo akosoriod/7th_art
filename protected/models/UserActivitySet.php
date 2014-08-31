@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "User_ActivitySet".
+ * This is the model class for table "user_activity_set".
  *
- * The followings are the available columns in table 'User_ActivitySet':
- * @property integer $user
- * @property integer $activity
+ * The followings are the available columns in table 'user_activity_set':
+ * @property integer $user_id
+ * @property integer $activity_id
  * @property integer $score
  * @property string $rating
  *
@@ -20,7 +20,7 @@ class UserActivitySet extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User_ActivitySet';
+		return 'user_activity_set';
 	}
 
 	/**
@@ -31,12 +31,12 @@ class UserActivitySet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user, activity', 'required'),
-			array('user, activity, score', 'numerical', 'integerOnly'=>true),
+			array('user_id, activity_id', 'required'),
+			array('user_id, activity_id, score', 'numerical', 'integerOnly'=>true),
 			array('rating', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user, activity, score, rating', 'safe', 'on'=>'search'),
+			array('user_id, activity_id, score, rating', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +48,8 @@ class UserActivitySet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'userActivitySetPrizes' => array(self::HAS_MANY, 'UserActivitySetPrize', 'user'),
-			'userActivitySetPrizes1' => array(self::HAS_MANY, 'UserActivitySetPrize', 'activity'),
+			'userActivitySetPrizes' => array(self::HAS_MANY, 'UserActivitySetPrize', 'user_id'),
+			'userActivitySetPrizes1' => array(self::HAS_MANY, 'UserActivitySetPrize', 'activity_id'),
 		);
 	}
 
@@ -59,8 +59,8 @@ class UserActivitySet extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user' => 'User',
-			'activity' => 'Activity',
+			'user_id' => 'User',
+			'activity_id' => 'Activity',
 			'score' => 'Score',
 			'rating' => 'Rating',
 		);
@@ -84,8 +84,8 @@ class UserActivitySet extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user',$this->user);
-		$criteria->compare('activity',$this->activity);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('activity_id',$this->activity_id);
 		$criteria->compare('score',$this->score);
 		$criteria->compare('rating',$this->rating,true);
 

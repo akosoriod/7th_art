@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "Section".
+ * This is the model class for table "section".
  *
- * The followings are the available columns in table 'Section':
+ * The followings are the available columns in table 'section':
  * @property integer $id
- * @property integer $sectionType
- * @property integer $activity
+ * @property integer $section_type_id
+ * @property integer $activity_id
  *
  * The followings are the available model relations:
- * @property SectionType $sectionType0
- * @property ActivitySet $activity0
+ * @property ActivitySet $activity
+ * @property SectionType $sectionType
  * @property Version[] $versions
  */
 class Section extends CActiveRecord
@@ -20,7 +20,7 @@ class Section extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Section';
+		return 'section';
 	}
 
 	/**
@@ -31,11 +31,11 @@ class Section extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, sectionType, activity', 'required'),
-			array('id, sectionType, activity', 'numerical', 'integerOnly'=>true),
+			array('section_type_id, activity_id', 'required'),
+			array('section_type_id, activity_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, sectionType, activity', 'safe', 'on'=>'search'),
+			array('id, section_type_id, activity_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,9 +47,9 @@ class Section extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sectionType0' => array(self::BELONGS_TO, 'SectionType', 'sectionType'),
-			'activity0' => array(self::BELONGS_TO, 'ActivitySet', 'activity'),
-			'versions' => array(self::HAS_MANY, 'Version', 'section'),
+			'activity' => array(self::BELONGS_TO, 'ActivitySet', 'activity_id'),
+			'sectionType' => array(self::BELONGS_TO, 'SectionType', 'section_type_id'),
+			'versions' => array(self::HAS_MANY, 'Version', 'section_id'),
 		);
 	}
 
@@ -60,8 +60,8 @@ class Section extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'sectionType' => 'Section Type',
-			'activity' => 'Activity',
+			'section_type_id' => 'Section Type',
+			'activity_id' => 'Activity',
 		);
 	}
 
@@ -84,8 +84,8 @@ class Section extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('sectionType',$this->sectionType);
-		$criteria->compare('activity',$this->activity);
+		$criteria->compare('section_type_id',$this->section_type_id);
+		$criteria->compare('activity_id',$this->activity_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

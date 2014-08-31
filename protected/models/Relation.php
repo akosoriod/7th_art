@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This is the model class for table "Relation".
+ * This is the model class for table "relation".
  *
- * The followings are the available columns in table 'Relation':
+ * The followings are the available columns in table 'relation':
  * @property integer $id
- * @property integer $answer
+ * @property integer $answer_id
  *
  * The followings are the available model relations:
  * @property Object[] $objects
- * @property Answer $answer0
+ * @property Answer $answer
  */
 class Relation extends CActiveRecord
 {
@@ -18,7 +18,7 @@ class Relation extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Relation';
+		return 'relation';
 	}
 
 	/**
@@ -29,11 +29,11 @@ class Relation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, answer', 'required'),
-			array('id, answer', 'numerical', 'integerOnly'=>true),
+			array('answer_id', 'required'),
+			array('answer_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, answer', 'safe', 'on'=>'search'),
+			array('id, answer_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +45,8 @@ class Relation extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'objects' => array(self::MANY_MANY, 'Object', 'Object_Relation(relation, object)'),
-			'answer0' => array(self::BELONGS_TO, 'Answer', 'answer'),
+			'objects' => array(self::MANY_MANY, 'Object', 'object_relation(relation_id, object_id)'),
+			'answer' => array(self::BELONGS_TO, 'Answer', 'answer_id'),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Relation extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'answer' => 'Answer',
+			'answer_id' => 'Answer',
 		);
 	}
 
@@ -80,7 +80,7 @@ class Relation extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('answer',$this->answer);
+		$criteria->compare('answer_id',$this->answer_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

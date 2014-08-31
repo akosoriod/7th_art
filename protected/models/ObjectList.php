@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "ObjectList".
+ * This is the model class for table "object_list".
  *
- * The followings are the available columns in table 'ObjectList':
+ * The followings are the available columns in table 'object_list':
  * @property integer $id
  * @property integer $static
  * @property integer $connected
- * @property integer $exercise
+ * @property integer $exercise_id
  *
  * The followings are the available model relations:
  * @property Object[] $objects
- * @property Exercise $exercise0
+ * @property Exercise $exercise
  */
 class ObjectList extends CActiveRecord
 {
@@ -20,7 +20,7 @@ class ObjectList extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ObjectList';
+		return 'object_list';
 	}
 
 	/**
@@ -31,11 +31,11 @@ class ObjectList extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, exercise', 'required'),
-			array('id, static, connected, exercise', 'numerical', 'integerOnly'=>true),
+			array('exercise_id', 'required'),
+			array('static, connected, exercise_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, static, connected, exercise', 'safe', 'on'=>'search'),
+			array('id, static, connected, exercise_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,8 +47,8 @@ class ObjectList extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'objects' => array(self::HAS_MANY, 'Object', 'objectList'),
-			'exercise0' => array(self::BELONGS_TO, 'Exercise', 'exercise'),
+			'objects' => array(self::HAS_MANY, 'Object', 'object_list'),
+			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 		);
 	}
 
@@ -60,8 +60,8 @@ class ObjectList extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'static' => 'Static',
-			'connected' => 'If the objects in the list are changeable with other lists',
-			'exercise' => 'Exercise',
+			'connected' => 'Connected',
+			'exercise_id' => 'Exercise',
 		);
 	}
 
@@ -86,7 +86,7 @@ class ObjectList extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('static',$this->static);
 		$criteria->compare('connected',$this->connected);
-		$criteria->compare('exercise',$this->exercise);
+		$criteria->compare('exercise_id',$this->exercise_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

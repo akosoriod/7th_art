@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "Parameter".
+ * This is the model class for table "parameter".
  *
- * The followings are the available columns in table 'Parameter':
+ * The followings are the available columns in table 'parameter':
  * @property integer $id
  * @property string $name
  * @property string $value
@@ -16,7 +16,7 @@ class Parameter extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Parameter';
+		return 'parameter';
 	}
 
 	/**

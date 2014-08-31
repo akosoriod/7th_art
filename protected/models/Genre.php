@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "Genre".
+ * This is the model class for table "genre".
  *
- * The followings are the available columns in table 'Genre':
+ * The followings are the available columns in table 'genre':
  * @property integer $id
  * @property string $name
  *
@@ -17,7 +17,7 @@ class Genre extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Genre';
+		return 'genre';
 	}
 
 	/**
@@ -28,8 +28,7 @@ class Genre extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
+			array('name', 'required'),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -45,7 +44,7 @@ class Genre extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'Genre_ActivitySet(genre, activitySet)'),
+			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'genre_activity_set(genre_id, activity_set_id)'),
 		);
 	}
 

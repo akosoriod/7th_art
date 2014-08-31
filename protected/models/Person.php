@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "Person".
+ * This is the model class for table "person".
  *
- * The followings are the available columns in table 'Person':
+ * The followings are the available columns in table 'person':
  * @property integer $id
  * @property string $name
  * @property string $lastname
  * @property string $username
  * @property string $password
  * @property integer $active
- * @property string $authType
+ * @property string $auth_type
  *
  * The followings are the available model relations:
  * @property Administrator[] $administrators
@@ -25,7 +25,7 @@ class Person extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Person';
+		return 'person';
 	}
 
 	/**
@@ -36,13 +36,13 @@ class Person extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, username, password', 'required'),
-			array('id, active', 'numerical', 'integerOnly'=>true),
+			array('username, password', 'required'),
+			array('active', 'numerical', 'integerOnly'=>true),
 			array('name, lastname, username, password', 'length', 'max'=>45),
-			array('authType', 'length', 'max'=>4),
+			array('auth_type', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, lastname, username, password, active, authType', 'safe', 'on'=>'search'),
+			array('id, name, lastname, username, password, active, auth_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,10 +54,10 @@ class Person extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'administrators' => array(self::HAS_MANY, 'Administrator', 'person'),
-			'operators' => array(self::HAS_MANY, 'Operator', 'person'),
-			'sessions' => array(self::HAS_MANY, 'Session', 'person'),
-			'users' => array(self::HAS_MANY, 'User', 'person'),
+			'administrators' => array(self::HAS_MANY, 'Administrator', 'person_id'),
+			'operators' => array(self::HAS_MANY, 'Operator', 'person_id'),
+			'sessions' => array(self::HAS_MANY, 'Session', 'person_id'),
+			'users' => array(self::HAS_MANY, 'User', 'person_id'),
 		);
 	}
 
@@ -73,7 +73,7 @@ class Person extends CActiveRecord
 			'username' => 'Username',
 			'password' => 'Password',
 			'active' => 'Active',
-			'authType' => 'Auth Type',
+			'auth_type' => 'Auth Type',
 		);
 	}
 
@@ -101,7 +101,7 @@ class Person extends CActiveRecord
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('active',$this->active);
-		$criteria->compare('authType',$this->authType,true);
+		$criteria->compare('auth_type',$this->auth_type,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

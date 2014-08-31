@@ -1,23 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "Comment".
+ * This is the model class for table "comment".
  *
- * The followings are the available columns in table 'Comment':
+ * The followings are the available columns in table 'comment':
  * @property integer $id
  * @property string $comment
  * @property string $date
- * @property integer $user
- * @property integer $category
+ * @property integer $user_id
+ * @property integer $category_id
  * @property integer $parent
  * @property integer $audio
  *
  * The followings are the available model relations:
- * @property User $user0
- * @property Category $category0
+ * @property Audio $audio0
+ * @property Category $category
  * @property Comment $parent0
  * @property Comment[] $comments
- * @property Audio $audio0
+ * @property User $user
  */
 class Comment extends CActiveRecord
 {
@@ -26,7 +26,7 @@ class Comment extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Comment';
+		return 'comment';
 	}
 
 	/**
@@ -37,12 +37,12 @@ class Comment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('comment, date, user, category', 'required'),
-			array('user, category, parent, audio', 'numerical', 'integerOnly'=>true),
+			array('comment, date, user_id, category_id', 'required'),
+			array('user_id, category_id, parent, audio', 'numerical', 'integerOnly'=>true),
 			array('comment', 'length', 'max'=>140),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, comment, date, user, category, parent, audio', 'safe', 'on'=>'search'),
+			array('id, comment, date, user_id, category_id, parent, audio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,11 +54,11 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user0' => array(self::BELONGS_TO, 'User', 'user'),
-			'category0' => array(self::BELONGS_TO, 'Category', 'category'),
+			'audio0' => array(self::BELONGS_TO, 'Audio', 'audio'),
+			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
 			'parent0' => array(self::BELONGS_TO, 'Comment', 'parent'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'parent'),
-			'audio0' => array(self::BELONGS_TO, 'Audio', 'audio'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -71,8 +71,8 @@ class Comment extends CActiveRecord
 			'id' => 'ID',
 			'comment' => 'Comment',
 			'date' => 'Date',
-			'user' => 'User',
-			'category' => 'Category',
+			'user_id' => 'User',
+			'category_id' => 'Category',
 			'parent' => 'Parent',
 			'audio' => 'Audio',
 		);
@@ -99,8 +99,8 @@ class Comment extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('comment',$this->comment,true);
 		$criteria->compare('date',$this->date,true);
-		$criteria->compare('user',$this->user);
-		$criteria->compare('category',$this->category);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('category_id',$this->category_id);
 		$criteria->compare('parent',$this->parent);
 		$criteria->compare('audio',$this->audio);
 
