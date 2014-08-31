@@ -13,8 +13,8 @@
  * @property integer $activity_set
  *
  * The followings are the available model relations:
- * @property Person $person
  * @property ActivitySet $activitySet
+ * @property Person $person
  */
 class Session extends CActiveRecord
 {
@@ -52,8 +52,8 @@ class Session extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
 			'activitySet' => array(self::BELONGS_TO, 'ActivitySet', 'activity_set'),
+			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
 		);
 	}
 

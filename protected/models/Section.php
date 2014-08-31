@@ -9,8 +9,8 @@
  * @property integer $activity_id
  *
  * The followings are the available model relations:
- * @property SectionType $sectionType
  * @property ActivitySet $activity
+ * @property SectionType $sectionType
  * @property Version[] $versions
  */
 class Section extends CActiveRecord
@@ -47,8 +47,8 @@ class Section extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sectionType' => array(self::BELONGS_TO, 'SectionType', 'section_type_id'),
 			'activity' => array(self::BELONGS_TO, 'ActivitySet', 'activity_id'),
+			'sectionType' => array(self::BELONGS_TO, 'SectionType', 'section_type_id'),
 			'versions' => array(self::HAS_MANY, 'Version', 'section_id'),
 		);
 	}

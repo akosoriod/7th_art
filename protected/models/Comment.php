@@ -13,11 +13,11 @@
  * @property integer $audio
  *
  * The followings are the available model relations:
- * @property User $user
+ * @property Audio $audio0
  * @property Category $category
  * @property Comment $parent0
  * @property Comment[] $comments
- * @property Audio $audio0
+ * @property User $user
  */
 class Comment extends CActiveRecord
 {
@@ -54,11 +54,11 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'audio0' => array(self::BELONGS_TO, 'Audio', 'audio'),
 			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
 			'parent0' => array(self::BELONGS_TO, 'Comment', 'parent'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'parent'),
-			'audio0' => array(self::BELONGS_TO, 'Audio', 'audio'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 

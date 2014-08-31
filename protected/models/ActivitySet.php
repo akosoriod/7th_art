@@ -16,9 +16,9 @@
  * @property integer $operator_id
  *
  * The followings are the available model relations:
- * @property Operator $operator
- * @property Image $image0
  * @property Audio $soundtrack0
+ * @property Image $image0
+ * @property Operator $operator
  * @property Genre[] $genres
  * @property Section[] $sections
  * @property Session[] $sessions
@@ -60,9 +60,9 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'operator' => array(self::BELONGS_TO, 'Operator', 'operator_id'),
-			'image0' => array(self::BELONGS_TO, 'Image', 'image'),
 			'soundtrack0' => array(self::BELONGS_TO, 'Audio', 'soundtrack'),
+			'image0' => array(self::BELONGS_TO, 'Image', 'image'),
+			'operator' => array(self::BELONGS_TO, 'Operator', 'operator_id'),
 			'genres' => array(self::MANY_MANY, 'Genre', 'genre_activity_set(activity_set_id, genre_id)'),
 			'sections' => array(self::HAS_MANY, 'Section', 'activity_id'),
 			'sessions' => array(self::HAS_MANY, 'Session', 'activity_set'),
