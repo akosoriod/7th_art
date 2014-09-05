@@ -1,26 +1,44 @@
-#Instalación
-##Requisitos
-- PHP v.5.1 (mínimo para Yii)
-- Yii v.1.1.14
+Esta aplicación... PENDING:
 
-##Framework
-* Descargar Yii en un directorio accesible por la aplicación
+* Intro
+* Propósito del proyecto
+* Instalación
+* Historia
+* Desarrolladores
+* Hacking
+* Referencias
 
-* Renombrar el folder descargado como yii
+# Instalación
 
-* Descargar esta versión del código
+## Requisitos
+- [PHP (>= v.5.1)](http://php.net/), cuya instalación depende de su S.O., e.g., `sudo pacman -S php` en arch.
+- [Yii (>=v.1.1.15)](https://github.com/yiisoft/yii)
 
-* Si es necesario cambiar la variable "$yii" en index.php de 7th_art
-```php
-// change the following paths if necessary
-$yii=dirname(__FILE__).'/../yii/framework/yii.php';
-...
-```
+## Yii
 
-* Si no existe el folder 7th_art/protected/runtime, crearlo:
-```bash
-sudo mkdir 7th_art/protected/runtime
-```
+1. Crear una carpeta para la aplicación:
+
+ ```sh
+ $ mkdir dev
+ $ cd dev
+ ```
+
+1. Descargar y renombrar [Yii](https://github.com/maparrar/7th_art.git) 
+
+ ```sh
+ $ wget https://github.com/yiisoft/yii/releases/download/1.1.15/yii-1.1.15.022a51.tar.gz
+ $ tar zxvf yii-1.1.15.022a51.tar.gz
+ $ mv yii-1.1.15.022a51 yii
+ ```
+
+1. Clonar el repo y crear la carpeta runtime
+
+ ```sh
+ $ git clone https://github.com/maparrar/7th_art.git
+ $ mkdir 7th_art/protected/runtime
+ ```
+
+<!--- de acá para adelante no se entiende nada y además está incompleto -->
 
 * Dar los permisos necesarios (estando en el folder raíz de apache):
 ```bash
