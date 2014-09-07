@@ -127,4 +127,17 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Returns the current user
+         * @return User User object currently connected
+         */
+        public static function getCurrentUser(){
+            $username=Yii::app()->user->name;
+            $user=self::model()->find(
+                'username=:username',
+                array(':username'=>$username)
+            );
+            return $user;
+        }
 }
