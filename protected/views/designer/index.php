@@ -11,6 +11,14 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
 ?>
 <script type="text/javascript">
             $( document ).ready(function(){
+                $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Designer');
+                
+                
+                
+                
+                
+                
+                
                 var countObjects=0;
                 $(".button").draggable({
                     appendTo: "body",
@@ -134,7 +142,20 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
             });
         </script>
 <main class="detalle">
-    <h2>7th @rt Designer</h2>
+    
+    
+    <?php
+    $this->breadcrumbs=array(
+	'Activity Sets',
+    );
+    ?>
+    
+    
+    
+    
+    
+    
+    
     <div id="container">
         <nav id="navigation">
             Perfume
