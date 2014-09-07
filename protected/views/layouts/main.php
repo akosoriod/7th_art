@@ -13,7 +13,6 @@
         <meta name="revisit-after" content="1 hour">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=2.5, user-scalable=yes">
         <base href="">
-
         <?php
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap.min.css');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/reset.css');
@@ -22,31 +21,23 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/tablet.css','only screen and (min-width: 992px) and (max-width: 1199px)');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/phone.css','only screen and (min-width: 768px) and (max-width: 991px)');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/small.css','only screen and (max-width: 767px)');
-                        
             Yii::app()->clientScript->registerCoreScript('jquery');
-            
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/form.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap-select.min.css','all');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
-
             //Estilos de 7th @rt
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
         ?>
-
-        <!-- acciones para formularios con la clase ".unal-form" -->
-        
     </head>
-
     <body class="front page-intro not-logged fullpage">
         <?php require_once(Yii::app()->basePath . '/views/layouts/header.php'); ?>
         <?php require_once(Yii::app()->basePath . '/views/layouts/services.php'); ?>
-        <div class="container" id="page">
             <div id="mainmenu">
                 <?php
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
                         array('label' => 'Home', 'url' => array('/site/index')),
-                        array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+//                        array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
                     ),
                 ));
@@ -54,20 +45,14 @@
             </div><!-- mainmenu -->
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
-                $this->widget('zii.widgets.CBreadcrumbs', array(
-                    'links' => $this->breadcrumbs,
-                ));
+//                $this->widget('zii.widgets.CBreadcrumbs', array(
+//                    'links' => $this->breadcrumbs,
+//                ));
                 ?><!-- breadcrumbs -->
             <?php endif ?>
 
             <?php echo $content; ?>
-
             <div class="clear"></div>
-
-            
-
-        </div><!-- page -->
-        
         <?php 
             require_once(Yii::app()->basePath . '/views/layouts/footer.php');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/unal.js');

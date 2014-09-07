@@ -9,10 +9,12 @@
  * @property integer $visible
  * @property integer $selected
  * @property integer $section_id
+ * @property integer $status_id
  *
  * The followings are the available model relations:
  * @property Activity[] $activities
  * @property Section $section
+ * @property Status $status
  */
 class Version extends CActiveRecord
 {
@@ -32,12 +34,12 @@ class Version extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, selected, section_id', 'required'),
-			array('visible, selected, section_id', 'numerical', 'integerOnly'=>true),
+			array('name, selected, section_id, status_id', 'required'),
+			array('visible, selected, section_id, status_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, visible, selected, section_id', 'safe', 'on'=>'search'),
+			array('id, name, visible, selected, section_id, status_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,6 +53,7 @@ class Version extends CActiveRecord
 		return array(
 			'activities' => array(self::HAS_MANY, 'Activity', 'version_id'),
 			'section' => array(self::BELONGS_TO, 'Section', 'section_id'),
+			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
 		);
 	}
 
@@ -65,6 +68,7 @@ class Version extends CActiveRecord
 			'visible' => 'Visible',
 			'selected' => 'Selected',
 			'section_id' => 'Section',
+			'status_id' => 'Status',
 		);
 	}
 
@@ -91,6 +95,7 @@ class Version extends CActiveRecord
 		$criteria->compare('visible',$this->visible);
 		$criteria->compare('selected',$this->selected);
 		$criteria->compare('section_id',$this->section_id);
+		$criteria->compare('status_id',$this->status_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

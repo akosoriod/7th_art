@@ -9,6 +9,7 @@
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
+ * @property Version[] $versions
  */
 class Status extends CActiveRecord
 {
@@ -28,8 +29,6 @@ class Status extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -46,6 +45,7 @@ class Status extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'status_id'),
+			'versions' => array(self::HAS_MANY, 'Version', 'status_id'),
 		);
 	}
 
