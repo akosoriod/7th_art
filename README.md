@@ -1,42 +1,25 @@
-#Instalación
-##Requisitos
-- PHP v.5.1 (mínimo para Yii)
-- Yii v.1.1.14
+Esta aplicación fue creada en la Universidad Nacional de Colombia por el 
+Departamento de Lenguas Extranjeras con apoyo de un equipo interdisciplinario [[Ver todos los créditos]].
 
-##Framework
-* Descargar Yii en un directorio accesible por la aplicación
+Más información sobre la aplicación en la [Wiki del proyecto](https://github.com/maparrar/7th_art/wiki)
 
-* Renombrar el folder descargado como yii
+## Introducción
+7th @rt es una herramienta para apoyar el aprendizaje autónomo del Inglés de estudiantes que posean como mínimo un nivel B1 (conocimiento y manejo) del Marco Común Europeo.
 
-* Descargar esta versión del código
+## Propósito del proyecto
 
-* Si es necesario cambiar la variable "$yii" en index.php de 7th_art
-```php
-// change the following paths if necessary
-$yii=dirname(__FILE__).'/../yii/framework/yii.php';
-...
-```
 
-* Si no existe el folder 7th_art/protected/runtime, crearlo:
-```bash
-sudo mkdir 7th_art/protected/runtime
-```
+## Historia
 
-* Dar los permisos necesarios (estando en el folder raíz de apache):
-```bash
-sudo chmod -R 777 7th_art/assets
-sudo chmod -R 777 7th_art/protected/runtime
-```
 
-##Base de datos (como root de MySQL)
-```sql
-GRANT SELECT, INSERT, UPDATE, DROP, DELETE, CREATE ON 7th_art.* TO '7th_art_web_app'@'localhost' IDENTIFIED BY 'nTwWEMb3YjkLTY4';
-```
+## Hacking
 
-##Layout
-En el directorio ```layout``` están los archivos HTML, CSS y Javascript para aplicar los estilos. No requiere el uso de servidor.
 
-* Los estilos generales de la aplicación están en: ```layout/css/7th_art.css```
-* Para editar el layout de una página en particular, por ejemplo intro, los estilos están en: ```layout/css/intro.html```
-* Los templates usados, como header y footer de la UNAL están en: ```layout/templates/header.html```, ```layout/templates/footer.html```
-* Todos los archivos requeridos por la UNAL están en: ```layout/templates/unal/```
+## Referencias
+
+
+## Desarrolladores
+* Grace Cabana
+* Oscar Paruma
+* Alejandro Parra
+* Jean Pierre Charalambos

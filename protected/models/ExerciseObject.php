@@ -1,13 +1,13 @@
 <?php
 
 /**
- * This is the model class for table "Exercise_Object".
+ * This is the model class for table "exercise_object".
  *
- * The followings are the available columns in table 'Exercise_Object':
- * @property integer $exercise
- * @property integer $object
+ * The followings are the available columns in table 'exercise_object':
+ * @property integer $exercise_id
+ * @property integer $object_id
  * @property integer $match
- * @property integer $target
+ * @property integer $target_id
  */
 class ExerciseObject extends CActiveRecord
 {
@@ -16,7 +16,7 @@ class ExerciseObject extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Exercise_Object';
+		return 'exercise_object';
 	}
 
 	/**
@@ -27,11 +27,11 @@ class ExerciseObject extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise, object, target', 'required'),
-			array('exercise, object, match, target', 'numerical', 'integerOnly'=>true),
+			array('exercise_id, object_id, target_id', 'required'),
+			array('exercise_id, object_id, match, target_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('exercise, object, match, target', 'safe', 'on'=>'search'),
+			array('exercise_id, object_id, match, target_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,10 +52,10 @@ class ExerciseObject extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'exercise' => 'Exercise',
-			'object' => 'Object',
+			'exercise_id' => 'Exercise',
+			'object_id' => 'Object',
 			'match' => 'Match',
-			'target' => 'Target',
+			'target_id' => 'Target',
 		);
 	}
 
@@ -77,10 +77,10 @@ class ExerciseObject extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('exercise',$this->exercise);
-		$criteria->compare('object',$this->object);
+		$criteria->compare('exercise_id',$this->exercise_id);
+		$criteria->compare('object_id',$this->object_id);
 		$criteria->compare('match',$this->match);
-		$criteria->compare('target',$this->target);
+		$criteria->compare('target_id',$this->target_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "Image".
+ * This is the model class for table "image".
  *
- * The followings are the available columns in table 'Image':
+ * The followings are the available columns in table 'image':
  * @property integer $id
  * @property string $path
  * @property string $copyright
- * @property integer $fileType
+ * @property integer $file_type_id
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
  * @property Exercise[] $exercises
- * @property FileType $fileType0
+ * @property FileType $fileType
  * @property Object[] $objects
  * @property Prize[] $prizes
  */
@@ -23,7 +23,7 @@ class Image extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Image';
+		return 'image';
 	}
 
 	/**
@@ -34,12 +34,12 @@ class Image extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, path, fileType', 'required'),
-			array('id, fileType', 'numerical', 'integerOnly'=>true),
+			array('path, file_type_id', 'required'),
+			array('file_type_id', 'numerical', 'integerOnly'=>true),
 			array('copyright', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, path, copyright, fileType', 'safe', 'on'=>'search'),
+			array('id, path, copyright, file_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,11 +51,11 @@ class Image extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'image'),
-			'exercises' => array(self::MANY_MANY, 'Exercise', 'Exercise_Image(image, exercise)'),
-			'fileType0' => array(self::BELONGS_TO, 'FileType', 'fileType'),
-			'objects' => array(self::MANY_MANY, 'Object', 'Object_Image(image, object)'),
-			'prizes' => array(self::HAS_MANY, 'Prize', 'image'),
+			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'image_id'),
+			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_image(image_id, exercise_id)'),
+			'fileType' => array(self::BELONGS_TO, 'FileType', 'file_type_id'),
+			'objects' => array(self::MANY_MANY, 'Object', 'object_image(image_id, object_id)'),
+			'prizes' => array(self::HAS_MANY, 'Prize', 'image_id'),
 		);
 	}
 
@@ -68,7 +68,7 @@ class Image extends CActiveRecord
 			'id' => 'ID',
 			'path' => 'Path',
 			'copyright' => 'Copyright',
-			'fileType' => 'File Type',
+			'file_type_id' => 'File Type',
 		);
 	}
 
@@ -93,7 +93,7 @@ class Image extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('path',$this->path,true);
 		$criteria->compare('copyright',$this->copyright,true);
-		$criteria->compare('fileType',$this->fileType);
+		$criteria->compare('file_type_id',$this->file_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

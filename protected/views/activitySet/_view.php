@@ -34,16 +34,16 @@
 	<br />
 
 	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('operator')); ?>:</b>
-	<?php echo CHtml::encode($data->operator); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('soundtrack_id')); ?>:</b>
+	<?php echo CHtml::encode($data->soundtrack_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('soundtrack')); ?>:</b>
-	<?php echo CHtml::encode($data->soundtrack); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('image_id')); ?>:</b>
+	<?php echo CHtml::encode($data->image_id); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('image')); ?>:</b>
-	<?php echo CHtml::encode($data->image); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('operator_id')); ?>:</b>
+	<?php echo CHtml::encode($data->operator_id); ?>
 	<br />
 
 	*/ ?>

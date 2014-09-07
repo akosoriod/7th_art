@@ -20,12 +20,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id'); ?>
-		<?php echo $form->textField($model,'id'); ?>
-		<?php echo $form->error($model,'id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
 		<?php echo $form->textField($model,'title',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'title'); ?>
@@ -62,21 +56,21 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'operator'); ?>
-		<?php echo $form->textField($model,'operator'); ?>
-		<?php echo $form->error($model,'operator'); ?>
+		<?php echo $form->labelEx($model,'soundtrack_id'); ?>
+		<?php echo $form->textField($model,'soundtrack_id'); ?>
+		<?php echo $form->error($model,'soundtrack_id'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'soundtrack'); ?>
-		<?php echo $form->textField($model,'soundtrack'); ?>
-		<?php echo $form->error($model,'soundtrack'); ?>
+		<?php echo $form->labelEx($model,'image_id'); ?>
+		<?php echo $form->textField($model,'image_id'); ?>
+		<?php echo $form->error($model,'image_id'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'image'); ?>
-		<?php echo $form->textField($model,'image'); ?>
-		<?php echo $form->error($model,'image'); ?>
+		<?php echo $form->labelEx($model,'operator_id'); ?>
+		<?php echo $form->textField($model,'operator_id'); ?>
+		<?php echo $form->error($model,'operator_id'); ?>
 	</div>
 
 	<div class="row buttons">

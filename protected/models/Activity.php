@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "Activity".
+ * This is the model class for table "activity".
  *
- * The followings are the available columns in table 'Activity':
+ * The followings are the available columns in table 'activity':
  * @property integer $id
  * @property string $visible
  * @property string $instruction
- * @property integer $version
+ * @property integer $version_id
  *
  * The followings are the available model relations:
- * @property Version $version0
+ * @property Version $version
  * @property Step[] $steps
  */
 class Activity extends CActiveRecord
@@ -20,7 +20,7 @@ class Activity extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Activity';
+		return 'activity';
 	}
 
 	/**
@@ -31,12 +31,12 @@ class Activity extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, version', 'required'),
-			array('id, version', 'numerical', 'integerOnly'=>true),
+			array('version_id', 'required'),
+			array('version_id', 'numerical', 'integerOnly'=>true),
 			array('visible, instruction', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, visible, instruction, version', 'safe', 'on'=>'search'),
+			array('id, visible, instruction, version_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +48,8 @@ class Activity extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'version0' => array(self::BELONGS_TO, 'Version', 'version'),
-			'steps' => array(self::HAS_MANY, 'Step', 'activity'),
+			'version' => array(self::BELONGS_TO, 'Version', 'version_id'),
+			'steps' => array(self::HAS_MANY, 'Step', 'activity_id'),
 		);
 	}
 
@@ -60,9 +60,9 @@ class Activity extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'visible' => 'Indica si una actividad es visible o no.',
+			'visible' => 'Visible',
 			'instruction' => 'Instruction',
-			'version' => 'Version',
+			'version_id' => 'Version',
 		);
 	}
 
@@ -87,7 +87,7 @@ class Activity extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('visible',$this->visible,true);
 		$criteria->compare('instruction',$this->instruction,true);
-		$criteria->compare('version',$this->version);
+		$criteria->compare('version_id',$this->version_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

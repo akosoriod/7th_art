@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "User_Exercise_Answer".
+ * This is the model class for table "user_exercise_answer".
  *
- * The followings are the available columns in table 'User_Exercise_Answer':
- * @property integer $user_exercise
- * @property integer $answer
+ * The followings are the available columns in table 'user_exercise_answer':
+ * @property integer $user_exercise_id
+ * @property integer $answer_id
  */
 class UserExerciseAnswer extends CActiveRecord
 {
@@ -14,7 +14,7 @@ class UserExerciseAnswer extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User_Exercise_Answer';
+		return 'user_exercise_answer';
 	}
 
 	/**
@@ -25,11 +25,11 @@ class UserExerciseAnswer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_exercise, answer', 'required'),
-			array('user_exercise, answer', 'numerical', 'integerOnly'=>true),
+			array('user_exercise_id, answer_id', 'required'),
+			array('user_exercise_id, answer_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_exercise, answer', 'safe', 'on'=>'search'),
+			array('user_exercise_id, answer_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class UserExerciseAnswer extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user_exercise' => 'User Exercise',
-			'answer' => 'Answer',
+			'user_exercise_id' => 'User Exercise',
+			'answer_id' => 'Answer',
 		);
 	}
 
@@ -73,8 +73,8 @@ class UserExerciseAnswer extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user_exercise',$this->user_exercise);
-		$criteria->compare('answer',$this->answer);
+		$criteria->compare('user_exercise_id',$this->user_exercise_id);
+		$criteria->compare('answer_id',$this->answer_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

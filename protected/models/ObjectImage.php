@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "Object_Image".
+ * This is the model class for table "object_image".
  *
- * The followings are the available columns in table 'Object_Image':
- * @property integer $object
- * @property integer $image
+ * The followings are the available columns in table 'object_image':
+ * @property integer $object_id
+ * @property integer $image_id
  */
 class ObjectImage extends CActiveRecord
 {
@@ -14,7 +14,7 @@ class ObjectImage extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Object_Image';
+		return 'object_image';
 	}
 
 	/**
@@ -25,11 +25,11 @@ class ObjectImage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object, image', 'required'),
-			array('object, image', 'numerical', 'integerOnly'=>true),
+			array('object_id, image_id', 'required'),
+			array('object_id, image_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('object, image', 'safe', 'on'=>'search'),
+			array('object_id, image_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class ObjectImage extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'object' => 'Object',
-			'image' => 'Image',
+			'object_id' => 'Object',
+			'image_id' => 'Image',
 		);
 	}
 
@@ -73,8 +73,8 @@ class ObjectImage extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('object',$this->object);
-		$criteria->compare('image',$this->image);
+		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('image_id',$this->image_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

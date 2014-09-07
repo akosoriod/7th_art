@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "SectionType".
+ * This is the model class for table "section_type".
  *
- * The followings are the available columns in table 'SectionType':
+ * The followings are the available columns in table 'section_type':
  * @property integer $id
  * @property string $name
  * @property double $weigh
@@ -18,7 +18,7 @@ class SectionType extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'SectionType';
+		return 'section_type';
 	}
 
 	/**
@@ -29,8 +29,7 @@ class SectionType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, weigh', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
+			array('weigh', 'required'),
 			array('weigh', 'numerical'),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
@@ -47,7 +46,7 @@ class SectionType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sections' => array(self::HAS_MANY, 'Section', 'sectionType'),
+			'sections' => array(self::HAS_MANY, 'Section', 'section_type_id'),
 		);
 	}
 
@@ -59,7 +58,7 @@ class SectionType extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => 'Name',
-			'weigh' => 'EL valor se almacena como un real de cero a uno. .Cuando se visualice, se debe mostrar de 0 a 100.',
+			'weigh' => 'Weigh',
 		);
 	}
 

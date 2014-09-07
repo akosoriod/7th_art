@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "Answer".
+ * This is the model class for table "answer".
  *
- * The followings are the available columns in table 'Answer':
+ * The followings are the available columns in table 'answer':
  * @property integer $id
  * @property string $text
  * @property integer $correct
- * @property string $defaultText
- * @property integer $exercise
+ * @property string $default_text
+ * @property integer $exercise_id
  *
  * The followings are the available model relations:
- * @property Exercise $exercise0
+ * @property Exercise $exercise
  * @property Relation[] $relations
  * @property UserExercise[] $userExercises
  */
@@ -22,7 +22,7 @@ class Answer extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Answer';
+		return 'answer';
 	}
 
 	/**
@@ -33,12 +33,12 @@ class Answer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, exercise', 'required'),
-			array('id, correct, exercise', 'numerical', 'integerOnly'=>true),
-			array('text, defaultText', 'safe'),
+			array('exercise_id', 'required'),
+			array('correct, exercise_id', 'numerical', 'integerOnly'=>true),
+			array('text, default_text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, text, correct, defaultText, exercise', 'safe', 'on'=>'search'),
+			array('id, text, correct, default_text, exercise_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,9 +50,9 @@ class Answer extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercise0' => array(self::BELONGS_TO, 'Exercise', 'exercise'),
-			'relations' => array(self::HAS_MANY, 'Relation', 'answer'),
-			'userExercises' => array(self::MANY_MANY, 'UserExercise', 'User_Exercise_Answer(answer, user_exercise)'),
+			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
+			'relations' => array(self::HAS_MANY, 'Relation', 'answer_id'),
+			'userExercises' => array(self::MANY_MANY, 'UserExercise', 'user_exercise_answer(answer_id, user_exercise_id)'),
 		);
 	}
 
@@ -65,8 +65,8 @@ class Answer extends CActiveRecord
 			'id' => 'ID',
 			'text' => 'Text',
 			'correct' => 'Correct',
-			'defaultText' => 'Default Text',
-			'exercise' => 'Exercise',
+			'default_text' => 'Default Text',
+			'exercise_id' => 'Exercise',
 		);
 	}
 
@@ -91,8 +91,8 @@ class Answer extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('text',$this->text,true);
 		$criteria->compare('correct',$this->correct);
-		$criteria->compare('defaultText',$this->defaultText,true);
-		$criteria->compare('exercise',$this->exercise);
+		$criteria->compare('default_text',$this->default_text,true);
+		$criteria->compare('exercise_id',$this->exercise_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

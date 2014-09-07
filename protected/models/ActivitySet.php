@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "ActivitySet".
+ * This is the model class for table "activity_set".
  *
- * The followings are the available columns in table 'ActivitySet':
+ * The followings are the available columns in table 'activity_set':
  * @property integer $id
  * @property string $title
  * @property string $status
@@ -11,14 +11,14 @@
  * @property string $tagline
  * @property string $director
  * @property integer $year
- * @property integer $operator
- * @property integer $soundtrack
- * @property integer $image
+ * @property integer $soundtrack_id
+ * @property integer $image_id
+ * @property integer $operator_id
  *
  * The followings are the available model relations:
- * @property Operator $operator0
- * @property Image $image0
- * @property Audio $soundtrack0
+ * @property Image $image
+ * @property Audio $soundtrack
+ * @property User $operator
  * @property Genre[] $genres
  * @property Section[] $sections
  * @property Session[] $sessions
@@ -31,7 +31,7 @@ class ActivitySet extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ActivitySet';
+		return 'activity_set';
 	}
 
 	/**
@@ -42,13 +42,13 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, title, status, operator', 'required'),
-			array('id, year, operator, soundtrack, image', 'numerical', 'integerOnly'=>true),
+			array('title, status, operator_id', 'required'),
+			array('year, soundtrack_id, image_id, operator_id', 'numerical', 'integerOnly'=>true),
 			array('title, status, publication, director', 'length', 'max'=>45),
 			array('tagline', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, status, publication, tagline, director, year, operator, soundtrack, image', 'safe', 'on'=>'search'),
+			array('id, title, status, publication, tagline, director, year, soundtrack_id, image_id, operator_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,13 +60,13 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'operator0' => array(self::BELONGS_TO, 'Operator', 'operator'),
-			'image0' => array(self::BELONGS_TO, 'Image', 'image'),
-			'soundtrack0' => array(self::BELONGS_TO, 'Audio', 'soundtrack'),
-			'genres' => array(self::MANY_MANY, 'Genre', 'Genre_ActivitySet(activitySet, genre)'),
-			'sections' => array(self::HAS_MANY, 'Section', 'activity'),
-			'sessions' => array(self::HAS_MANY, 'Session', 'activitySet'),
-			'users' => array(self::MANY_MANY, 'User', 'User_ActivitySet(activity, user)'),
+			'image' => array(self::BELONGS_TO, 'Image', 'image_id'),
+			'soundtrack' => array(self::BELONGS_TO, 'Audio', 'soundtrack_id'),
+			'operator' => array(self::BELONGS_TO, 'User', 'operator_id'),
+			'genres' => array(self::MANY_MANY, 'Genre', 'genre_activity_set(activity_set_id, genre_id)'),
+			'sections' => array(self::HAS_MANY, 'Section', 'activity_id'),
+			'sessions' => array(self::HAS_MANY, 'Session', 'activity_set_id'),
+			'users' => array(self::MANY_MANY, 'User', 'user_activity_set(activity_id, user_id)'),
 		);
 	}
 
@@ -83,9 +83,9 @@ class ActivitySet extends CActiveRecord
 			'tagline' => 'Tagline',
 			'director' => 'Director',
 			'year' => 'Year',
-			'operator' => 'Operator',
-			'soundtrack' => 'Soundtrack',
-			'image' => 'Image',
+			'soundtrack_id' => 'Soundtrack',
+			'image_id' => 'Image',
+			'operator_id' => 'Operator',
 		);
 	}
 
@@ -114,9 +114,9 @@ class ActivitySet extends CActiveRecord
 		$criteria->compare('tagline',$this->tagline,true);
 		$criteria->compare('director',$this->director,true);
 		$criteria->compare('year',$this->year);
-		$criteria->compare('operator',$this->operator);
-		$criteria->compare('soundtrack',$this->soundtrack);
-		$criteria->compare('image',$this->image);
+		$criteria->compare('soundtrack_id',$this->soundtrack_id);
+		$criteria->compare('image_id',$this->image_id);
+		$criteria->compare('operator_id',$this->operator_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

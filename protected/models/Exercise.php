@@ -1,25 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "Exercise".
+ * This is the model class for table "exercise".
  *
- * The followings are the available columns in table 'Exercise':
+ * The followings are the available columns in table 'exercise':
  * @property integer $id
+ * @property integer $exercise_type_id
+ * @property integer $exercise_id
+ * @property integer $step_id
  * @property string $question
- * @property integer $exerciseType
- * @property integer $depends
- * @property integer $step
  *
  * The followings are the available model relations:
  * @property Answer[] $answers
- * @property ExerciseType $exerciseType0
- * @property Exercise $depends0
+ * @property ExerciseType $exerciseType
+ * @property Exercise $exercise
  * @property Exercise[] $exercises
- * @property Step $step0
+ * @property Step $step
  * @property Image[] $images
  * @property Object[] $objects
  * @property ObjectList[] $objectLists
- * @property StepAnswer[] $stepAnswers
  * @property Target[] $targets
  * @property UserExercise[] $userExercises
  */
@@ -30,7 +29,7 @@ class Exercise extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Exercise';
+		return 'exercise';
 	}
 
 	/**
@@ -41,12 +40,12 @@ class Exercise extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, exerciseType, depends, step', 'required'),
-			array('id, exerciseType, depends, step', 'numerical', 'integerOnly'=>true),
+			array('exercise_type_id, exercise_id, step_id', 'required'),
+			array('exercise_type_id, exercise_id, step_id', 'numerical', 'integerOnly'=>true),
 			array('question', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, question, exerciseType, depends, step', 'safe', 'on'=>'search'),
+			array('id, exercise_type_id, exercise_id, step_id, question', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,17 +57,16 @@ class Exercise extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'answers' => array(self::HAS_MANY, 'Answer', 'exercise'),
-			'exerciseType0' => array(self::BELONGS_TO, 'ExerciseType', 'exerciseType'),
-			'depends0' => array(self::BELONGS_TO, 'Exercise', 'depends'),
-			'exercises' => array(self::HAS_MANY, 'Exercise', 'depends'),
-			'step0' => array(self::BELONGS_TO, 'Step', 'step'),
-			'images' => array(self::MANY_MANY, 'Image', 'Exercise_Image(exercise, image)'),
-			'objects' => array(self::MANY_MANY, 'Object', 'Exercise_Object(exercise, object)'),
-			'objectLists' => array(self::HAS_MANY, 'ObjectList', 'exercise'),
-			'stepAnswers' => array(self::HAS_MANY, 'StepAnswer', 'step'),
-			'targets' => array(self::HAS_MANY, 'Target', 'exercise'),
-			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'exercise'),
+			'answers' => array(self::HAS_MANY, 'Answer', 'exercise_id'),
+			'exerciseType' => array(self::BELONGS_TO, 'ExerciseType', 'exercise_type_id'),
+			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
+			'exercises' => array(self::HAS_MANY, 'Exercise', 'exercise_id'),
+			'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
+			'images' => array(self::MANY_MANY, 'Image', 'exercise_image(exercise_id, image_id)'),
+			'objects' => array(self::MANY_MANY, 'Object', 'exercise_object(exercise_id, object_id)'),
+			'objectLists' => array(self::HAS_MANY, 'ObjectList', 'exercise_id'),
+			'targets' => array(self::HAS_MANY, 'Target', 'exercise_id'),
+			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'exercise_id'),
 		);
 	}
 
@@ -79,10 +77,10 @@ class Exercise extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'exercise_type_id' => 'Exercise Type',
+			'exercise_id' => 'Exercise',
+			'step_id' => 'Step',
 			'question' => 'Question',
-			'exerciseType' => 'Exercise Type',
-			'depends' => 'Depends',
-			'step' => 'Step',
 		);
 	}
 
@@ -105,10 +103,10 @@ class Exercise extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('exercise_type_id',$this->exercise_type_id);
+		$criteria->compare('exercise_id',$this->exercise_id);
+		$criteria->compare('step_id',$this->step_id);
 		$criteria->compare('question',$this->question,true);
-		$criteria->compare('exerciseType',$this->exerciseType);
-		$criteria->compare('depends',$this->depends);
-		$criteria->compare('step',$this->step);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

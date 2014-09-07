@@ -1,0 +1,65 @@
+<?php
+
+class RbacCommand extends CConsoleCommand {
+
+    private $_authManager;
+
+    public function getHelp() {
+
+        $description = "DESCRIPTION\n";
+        $description .= '    ' . "This command generates an initial RBAC authorization hierarchy.\n";
+        return parent::getHelp() . $description;
+    }
+
+    /**
+     * The default action - create the RBAC structure.
+     */
+    public function actionIndex() {
+
+        $this->ensureAuthManagerDefined();
+
+        //first we need to remove all operations, 
+        //roles, child relationship and assignments
+        $this->_authManager->clearAll();
+        
+        //Operaciones para administración de set de actividades
+        $this->_authManager->createOperation("administrarSetActividades", "Administrar sets de actividades");
+        $this->_authManager->createOperation("crearSetActividades", "Crear un set de actividades");
+        
+        //Creación del rol y asignación de permisos
+        $role = $this->_authManager->createRole("administrador");
+        $role->addChild("administrarSetActividades");
+        $role->addChild("crearSetActividades");
+        
+        //Creación del rol y asignación de permisos
+        $role = $this->_authManager->createRole("operador");
+        $role->addChild("administrarSetActividades");
+                
+        //Temp user assignment, this must be doing by the administration interface
+        $auth=Yii::app()->authManager;
+        $auth->assign('administrador',1);
+        $auth->assign('operador',2);        
+
+        //provide a message indicating success
+        echo "Authorization hierarchy successfully generated.\n";
+    }
+    public function actionDelete() {
+        $this->ensureAuthManagerDefined();
+        $message = "This command will clear all RBAC definitions.\n";
+        $message .= "Would you like to continue?";
+        //check the input from the user and continue if they indicated 
+        //yes to the above question
+        if ($this->confirm($message)) {
+            $this->_authManager->clearAll();
+            echo "Authorization hierarchy removed.\n";
+        } else
+            echo "Delete operation cancelled.\n";
+    }
+    protected function ensureAuthManagerDefined() {
+        //ensure that an authManager is defined as this is mandatory for creating an auth heirarchy
+        if (($this->_authManager = Yii::app()->authManager) === null) {
+            $message = "Error: an authorization manager, named 'authManager' must be con-figured to use this command.";
+            $this->usageError($message);
+        }
+    }
+}

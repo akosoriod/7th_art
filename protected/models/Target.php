@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "Target".
+ * This is the model class for table "target".
  *
- * The followings are the available columns in table 'Target':
+ * The followings are the available columns in table 'target':
  * @property integer $id
- * @property string $previousText
+ * @property string $previous_text
  * @property string $id_div
- * @property integer $exercise
+ * @property integer $exercise_id
  *
  * The followings are the available model relations:
- * @property Exercise $exercise0
+ * @property Exercise $exercise
  */
 class Target extends CActiveRecord
 {
@@ -19,7 +19,7 @@ class Target extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Target';
+		return 'target';
 	}
 
 	/**
@@ -30,13 +30,13 @@ class Target extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, exercise', 'required'),
-			array('id, exercise', 'numerical', 'integerOnly'=>true),
+			array('exercise_id', 'required'),
+			array('exercise_id', 'numerical', 'integerOnly'=>true),
 			array('id_div', 'length', 'max'=>45),
-			array('previousText', 'safe'),
+			array('previous_text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, previousText, id_div, exercise', 'safe', 'on'=>'search'),
+			array('id, previous_text, id_div, exercise_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +48,7 @@ class Target extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercise0' => array(self::BELONGS_TO, 'Exercise', 'exercise'),
+			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 		);
 	}
 
@@ -59,9 +59,9 @@ class Target extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'previousText' => 'Previous Text',
+			'previous_text' => 'Previous Text',
 			'id_div' => 'Id Div',
-			'exercise' => 'Exercise',
+			'exercise_id' => 'Exercise',
 		);
 	}
 
@@ -84,9 +84,9 @@ class Target extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('previousText',$this->previousText,true);
+		$criteria->compare('previous_text',$this->previous_text,true);
 		$criteria->compare('id_div',$this->id_div,true);
-		$criteria->compare('exercise',$this->exercise);
+		$criteria->compare('exercise_id',$this->exercise_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

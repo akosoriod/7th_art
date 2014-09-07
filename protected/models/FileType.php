@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This is the model class for table "FileType".
+ * This is the model class for table "file_type".
  *
- * The followings are the available columns in table 'FileType':
+ * The followings are the available columns in table 'file_type':
  * @property integer $id
  * @property string $name
  * @property string $extension
  * @property string $mime
- * @property integer $maxSize
+ * @property integer $max_size
  *
  * The followings are the available model relations:
  * @property Audio[] $audios
@@ -21,7 +21,7 @@ class FileType extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'FileType';
+		return 'file_type';
 	}
 
 	/**
@@ -32,13 +32,13 @@ class FileType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, extension, mime, maxSize', 'required'),
-			array('maxSize', 'numerical', 'integerOnly'=>true),
+			array('name, extension, mime, max_size', 'required'),
+			array('max_size', 'numerical', 'integerOnly'=>true),
 			array('name, mime', 'length', 'max'=>45),
 			array('extension', 'length', 'max'=>3),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, extension, mime, maxSize', 'safe', 'on'=>'search'),
+			array('id, name, extension, mime, max_size', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class FileType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'audios' => array(self::HAS_MANY, 'Audio', 'fileType'),
-			'images' => array(self::HAS_MANY, 'Image', 'fileType'),
+			'audios' => array(self::HAS_MANY, 'Audio', 'file_type_id'),
+			'images' => array(self::HAS_MANY, 'Image', 'file_type_id'),
 		);
 	}
 
@@ -65,7 +65,7 @@ class FileType extends CActiveRecord
 			'name' => 'Name',
 			'extension' => 'Extension',
 			'mime' => 'Mime',
-			'maxSize' => 'Max Size',
+			'max_size' => 'Max Size',
 		);
 	}
 
@@ -91,7 +91,7 @@ class FileType extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('extension',$this->extension,true);
 		$criteria->compare('mime',$this->mime,true);
-		$criteria->compare('maxSize',$this->maxSize);
+		$criteria->compare('max_size',$this->max_size);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

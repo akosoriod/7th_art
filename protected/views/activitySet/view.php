@@ -28,8 +28,8 @@ $this->menu=array(
 		'tagline',
 		'director',
 		'year',
-		'operator',
-		'soundtrack',
-		'image',
+		'soundtrack_id',
+		'image_id',
+		'operator_id',
 	),
 )); ?>

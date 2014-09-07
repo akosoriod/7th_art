@@ -1,16 +1,16 @@
 <?php
 
 /**
- * This is the model class for table "Prize".
+ * This is the model class for table "prize".
  *
- * The followings are the available columns in table 'Prize':
+ * The followings are the available columns in table 'prize':
  * @property integer $id
  * @property string $name
- * @property double $requiredPercent
- * @property integer $image
+ * @property double $required_percent
+ * @property integer $image_id
  *
  * The followings are the available model relations:
- * @property Image $image0
+ * @property Image $image
  * @property UserActivitySetPrize[] $userActivitySetPrizes
  */
 class Prize extends CActiveRecord
@@ -20,7 +20,7 @@ class Prize extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Prize';
+		return 'prize';
 	}
 
 	/**
@@ -31,13 +31,13 @@ class Prize extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, name, requiredPercent, image', 'required'),
-			array('id, image', 'numerical', 'integerOnly'=>true),
-			array('requiredPercent', 'numerical'),
+			array('name, required_percent, image_id', 'required'),
+			array('image_id', 'numerical', 'integerOnly'=>true),
+			array('required_percent', 'numerical'),
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, requiredPercent, image', 'safe', 'on'=>'search'),
+			array('id, name, required_percent, image_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,8 +49,8 @@ class Prize extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'image0' => array(self::BELONGS_TO, 'Image', 'image'),
-			'userActivitySetPrizes' => array(self::HAS_MANY, 'UserActivitySetPrize', 'prize'),
+			'image' => array(self::BELONGS_TO, 'Image', 'image_id'),
+			'userActivitySetPrizes' => array(self::HAS_MANY, 'UserActivitySetPrize', 'prize_id'),
 		);
 	}
 
@@ -62,8 +62,8 @@ class Prize extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'name' => 'Name',
-			'requiredPercent' => 'Required Percent',
-			'image' => 'Image',
+			'required_percent' => 'Required Percent',
+			'image_id' => 'Image',
 		);
 	}
 
@@ -87,8 +87,8 @@ class Prize extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('requiredPercent',$this->requiredPercent);
-		$criteria->compare('image',$this->image);
+		$criteria->compare('required_percent',$this->required_percent);
+		$criteria->compare('image_id',$this->image_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
