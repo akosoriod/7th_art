@@ -28,7 +28,7 @@ class ActivitySetController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+//				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -120,12 +120,15 @@ class ActivitySetController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('ActivitySet');
+	public function actionIndex(){
+            if(Yii::app()->user->checkAccess('manageActivitySets')){
+                $dataProvider=new CActiveDataProvider('ActivitySet');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+            }else{
+                $this->redirect(array('site/index')); 
+            }
 	}
 
 	/**
