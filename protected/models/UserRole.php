@@ -1,26 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "CSS".
+ * This is the model class for table "user_role".
  *
- * The followings are the available columns in table 'CSS':
- * @property integer $id
- * @property string $name
- * @property string $description
- * @property string $path
- *
- * The followings are the available model relations:
- * @property Step[] $steps
- * @property Template[] $templates
+ * The followings are the available columns in table 'user_role':
+ * @property integer $user_id
+ * @property integer $role_id
  */
-class CSS extends CActiveRecord
+class UserRole extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'CSS';
+		return 'user_role';
 	}
 
 	/**
@@ -31,11 +25,11 @@ class CSS extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, path', 'required'),
-			array('name, description, path', 'length', 'max'=>45),
+			array('user_id, role_id', 'required'),
+			array('user_id, role_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, path', 'safe', 'on'=>'search'),
+			array('user_id, role_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,8 +41,6 @@ class CSS extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'steps' => array(self::HAS_MANY, 'Step', 'css'),
-			'templates' => array(self::HAS_MANY, 'Template', 'css'),
 		);
 	}
 
@@ -58,10 +50,8 @@ class CSS extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'description' => 'Description',
-			'path' => 'Nombre del archivo .css que contiene los estilos que se van a aplicar. Estos archivos se encuentran dentro del directorio /css.',
+			'user_id' => 'User',
+			'role_id' => 'Role',
 		);
 	}
 
@@ -83,10 +73,8 @@ class CSS extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('path',$this->path,true);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('role_id',$this->role_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -97,7 +85,7 @@ class CSS extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CSS the static model class
+	 * @return UserRole the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

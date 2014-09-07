@@ -51,7 +51,7 @@ class Image extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'image'),
+			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'image_id'),
 			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_image(image_id, exercise_id)'),
 			'fileType' => array(self::BELONGS_TO, 'FileType', 'file_type_id'),
 			'objects' => array(self::MANY_MANY, 'Object', 'object_image(image_id, object_id)'),

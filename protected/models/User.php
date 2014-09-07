@@ -5,16 +5,22 @@
  *
  * The followings are the available columns in table 'user':
  * @property integer $id
- * @property integer $seconds_to_check
- * @property integer $person_id
- * @property double $font_size
- * @property integer $black_and_white
+ * @property string $name
+ * @property string $lastname
+ * @property string $username
+ * @property string $password
+ * @property string $active
+ * @property string $auth_type
+ * @property string $email
  *
  * The followings are the available model relations:
- * @property Comment[] $comments
- * @property Person $person
  * @property ActivitySet[] $activitySets
+ * @property AuthItem[] $authItems
+ * @property Comment[] $comments
+ * @property Session[] $sessions
  * @property UserExercise[] $userExercises
+ * @property UserParameter[] $userParameters
+ * @property Role[] $roles
  */
 class User extends CActiveRecord
 {
@@ -34,12 +40,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, person_id', 'required'),
-			array('id, seconds_to_check, person_id, black_and_white', 'numerical', 'integerOnly'=>true),
-			array('font_size', 'numerical'),
+			array('id, username, password', 'required'),
+			array('id', 'numerical', 'integerOnly'=>true),
+			array('name, lastname, username, password, active, auth_type', 'length', 'max'=>45),
+			array('email', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, seconds_to_check, person_id, font_size, black_and_white', 'safe', 'on'=>'search'),
+			array('id, name, lastname, username, password, active, auth_type, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,10 +58,13 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
-			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
 			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_id)'),
+			'authItems' => array(self::MANY_MANY, 'AuthItem', 'auth_assignment(user_id, item_name)'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
+			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
 			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'user_id'),
+			'userParameters' => array(self::HAS_MANY, 'UserParameter', 'user_id'),
+			'roles' => array(self::MANY_MANY, 'Role', 'user_role(user_id, role_id)'),
 		);
 	}
 
@@ -65,10 +75,13 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'seconds_to_check' => 'Seconds To Check',
-			'person_id' => 'Person',
-			'font_size' => 'Font Size',
-			'black_and_white' => 'Black And White',
+			'name' => 'Name',
+			'lastname' => 'Lastname',
+			'username' => 'Username',
+			'password' => 'Password',
+			'active' => 'Active',
+			'auth_type' => 'Auth Type',
+			'email' => 'Email',
 		);
 	}
 
@@ -91,10 +104,13 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('seconds_to_check',$this->seconds_to_check);
-		$criteria->compare('person_id',$this->person_id);
-		$criteria->compare('font_size',$this->font_size);
-		$criteria->compare('black_and_white',$this->black_and_white);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('lastname',$this->lastname,true);
+		$criteria->compare('username',$this->username,true);
+		$criteria->compare('password',$this->password,true);
+		$criteria->compare('active',$this->active,true);
+		$criteria->compare('auth_type',$this->auth_type,true);
+		$criteria->compare('email',$this->email,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

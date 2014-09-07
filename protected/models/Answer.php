@@ -52,7 +52,7 @@ class Answer extends CActiveRecord
 		return array(
 			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 			'relations' => array(self::HAS_MANY, 'Relation', 'answer_id'),
-			'userExercises' => array(self::MANY_MANY, 'UserExercise', 'user_exercise_answer(answer, user_exercise)'),
+			'userExercises' => array(self::MANY_MANY, 'UserExercise', 'user_exercise_answer(answer_id, user_exercise_id)'),
 		);
 	}
 

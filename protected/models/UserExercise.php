@@ -49,7 +49,7 @@ class UserExercise extends CActiveRecord
 		return array(
 			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-			'answers' => array(self::MANY_MANY, 'Answer', 'user_exercise_answer(user_exercise, answer)'),
+			'answers' => array(self::MANY_MANY, 'Answer', 'user_exercise_answer(user_exercise_id, answer_id)'),
 		);
 	}
 

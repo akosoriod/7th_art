@@ -50,7 +50,7 @@ class FileType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'audios' => array(self::HAS_MANY, 'Audio', 'file_type'),
+			'audios' => array(self::HAS_MANY, 'Audio', 'file_type_id'),
 			'images' => array(self::HAS_MANY, 'Image', 'file_type_id'),
 		);
 	}

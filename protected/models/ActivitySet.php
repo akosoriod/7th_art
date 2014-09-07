@@ -11,14 +11,14 @@
  * @property string $tagline
  * @property string $director
  * @property integer $year
- * @property integer $soundtrack
- * @property integer $image
+ * @property integer $soundtrack_id
+ * @property integer $image_id
  * @property integer $operator_id
  *
  * The followings are the available model relations:
- * @property Audio $soundtrack0
- * @property Image $image0
- * @property Operator $operator
+ * @property Image $image
+ * @property Audio $soundtrack
+ * @property User $operator
  * @property Genre[] $genres
  * @property Section[] $sections
  * @property Session[] $sessions
@@ -43,12 +43,12 @@ class ActivitySet extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('title, status, operator_id', 'required'),
-			array('year, soundtrack, image, operator_id', 'numerical', 'integerOnly'=>true),
+			array('year, soundtrack_id, image_id, operator_id', 'numerical', 'integerOnly'=>true),
 			array('title, status, publication, director', 'length', 'max'=>45),
 			array('tagline', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, status, publication, tagline, director, year, soundtrack, image, operator_id', 'safe', 'on'=>'search'),
+			array('id, title, status, publication, tagline, director, year, soundtrack_id, image_id, operator_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,12 +60,12 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'soundtrack0' => array(self::BELONGS_TO, 'Audio', 'soundtrack'),
-			'image0' => array(self::BELONGS_TO, 'Image', 'image'),
-			'operator' => array(self::BELONGS_TO, 'Operator', 'operator_id'),
+			'image' => array(self::BELONGS_TO, 'Image', 'image_id'),
+			'soundtrack' => array(self::BELONGS_TO, 'Audio', 'soundtrack_id'),
+			'operator' => array(self::BELONGS_TO, 'User', 'operator_id'),
 			'genres' => array(self::MANY_MANY, 'Genre', 'genre_activity_set(activity_set_id, genre_id)'),
 			'sections' => array(self::HAS_MANY, 'Section', 'activity_id'),
-			'sessions' => array(self::HAS_MANY, 'Session', 'activity_set'),
+			'sessions' => array(self::HAS_MANY, 'Session', 'activity_set_id'),
 			'users' => array(self::MANY_MANY, 'User', 'user_activity_set(activity_id, user_id)'),
 		);
 	}
@@ -83,8 +83,8 @@ class ActivitySet extends CActiveRecord
 			'tagline' => 'Tagline',
 			'director' => 'Director',
 			'year' => 'Year',
-			'soundtrack' => 'Soundtrack',
-			'image' => 'Image',
+			'soundtrack_id' => 'Soundtrack',
+			'image_id' => 'Image',
 			'operator_id' => 'Operator',
 		);
 	}
@@ -114,8 +114,8 @@ class ActivitySet extends CActiveRecord
 		$criteria->compare('tagline',$this->tagline,true);
 		$criteria->compare('director',$this->director,true);
 		$criteria->compare('year',$this->year);
-		$criteria->compare('soundtrack',$this->soundtrack);
-		$criteria->compare('image',$this->image);
+		$criteria->compare('soundtrack_id',$this->soundtrack_id);
+		$criteria->compare('image_id',$this->image_id);
 		$criteria->compare('operator_id',$this->operator_id);
 
 		return new CActiveDataProvider($this, array(

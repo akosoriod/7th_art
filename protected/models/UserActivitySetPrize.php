@@ -9,9 +9,9 @@
  * @property integer $prize_id
  *
  * The followings are the available model relations:
- * @property Prize $prize
  * @property UserActivitySet $user
  * @property UserActivitySet $activity
+ * @property Prize $prize
  */
 class UserActivitySetPrize extends CActiveRecord
 {
@@ -47,9 +47,9 @@ class UserActivitySetPrize extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'prize' => array(self::BELONGS_TO, 'Prize', 'prize_id'),
 			'user' => array(self::BELONGS_TO, 'UserActivitySet', 'user_id'),
 			'activity' => array(self::BELONGS_TO, 'UserActivitySet', 'activity_id'),
+			'prize' => array(self::BELONGS_TO, 'Prize', 'prize_id'),
 		);
 	}
 

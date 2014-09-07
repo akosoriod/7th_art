@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'object':
  * @property integer $id
  * @property string $text
- * @property integer $object_list
+ * @property integer $object_list_id
  *
  * The followings are the available model relations:
  * @property Exercise[] $exercises
@@ -32,11 +32,11 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_list', 'numerical', 'integerOnly'=>true),
+			array('object_list_id', 'numerical', 'integerOnly'=>true),
 			array('text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, text, object_list', 'safe', 'on'=>'search'),
+			array('id, text, object_list_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,7 +49,7 @@ class Object extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_object(object_id, exercise_id)'),
-			'objectList' => array(self::BELONGS_TO, 'ObjectList', 'object_list'),
+			'objectList' => array(self::BELONGS_TO, 'ObjectList', 'object_list_id'),
 			'images' => array(self::MANY_MANY, 'Image', 'object_image(object_id, image_id)'),
 			'relations' => array(self::MANY_MANY, 'Relation', 'object_relation(object_id, relation_id)'),
 		);
@@ -63,7 +63,7 @@ class Object extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'text' => 'Text',
-			'object_list' => 'Object List',
+			'object_list_id' => 'Object List',
 		);
 	}
 
@@ -87,7 +87,7 @@ class Object extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('text',$this->text,true);
-		$criteria->compare('object_list',$this->object_list);
+		$criteria->compare('object_list_id',$this->object_list_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -47,7 +47,7 @@ class ObjectList extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'objects' => array(self::HAS_MANY, 'Object', 'object_list'),
+			'objects' => array(self::HAS_MANY, 'Object', 'object_list_id'),
 			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 		);
 	}

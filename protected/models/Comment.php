@@ -9,15 +9,15 @@
  * @property string $date
  * @property integer $user_id
  * @property integer $category_id
- * @property integer $parent
- * @property integer $audio
+ * @property integer $parent_id
+ * @property integer $audio_id
  *
  * The followings are the available model relations:
- * @property Audio $audio0
- * @property Category $category
- * @property Comment $parent0
- * @property Comment[] $comments
  * @property User $user
+ * @property Category $category
+ * @property Comment $parent
+ * @property Comment[] $comments
+ * @property Audio $audio
  */
 class Comment extends CActiveRecord
 {
@@ -38,11 +38,11 @@ class Comment extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('comment, date, user_id, category_id', 'required'),
-			array('user_id, category_id, parent, audio', 'numerical', 'integerOnly'=>true),
+			array('user_id, category_id, parent_id, audio_id', 'numerical', 'integerOnly'=>true),
 			array('comment', 'length', 'max'=>140),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, comment, date, user_id, category_id, parent, audio', 'safe', 'on'=>'search'),
+			array('id, comment, date, user_id, category_id, parent_id, audio_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,11 +54,11 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'audio0' => array(self::BELONGS_TO, 'Audio', 'audio'),
-			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
-			'parent0' => array(self::BELONGS_TO, 'Comment', 'parent'),
-			'comments' => array(self::HAS_MANY, 'Comment', 'parent'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'category' => array(self::BELONGS_TO, 'Category', 'category_id'),
+			'parent' => array(self::BELONGS_TO, 'Comment', 'parent_id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'parent_id'),
+			'audio' => array(self::BELONGS_TO, 'Audio', 'audio_id'),
 		);
 	}
 
@@ -73,8 +73,8 @@ class Comment extends CActiveRecord
 			'date' => 'Date',
 			'user_id' => 'User',
 			'category_id' => 'Category',
-			'parent' => 'Parent',
-			'audio' => 'Audio',
+			'parent_id' => 'Parent',
+			'audio_id' => 'Audio',
 		);
 	}
 
@@ -101,8 +101,8 @@ class Comment extends CActiveRecord
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('category_id',$this->category_id);
-		$criteria->compare('parent',$this->parent);
-		$criteria->compare('audio',$this->audio);
+		$criteria->compare('parent_id',$this->parent_id);
+		$criteria->compare('audio_id',$this->audio_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

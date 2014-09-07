@@ -53,6 +53,13 @@ return array(
 			'password' => 'nTwWEMb3YjkLTY4',
 			'charset' => 'utf8',
 		),
+                'authManager'=>array(
+			'class'=>'CDbAuthManager',
+                        'connectionID'=>'db',
+			'itemTable' => 'auth_item',
+			'itemChildTable' => 'auth_item_child',
+			'assignmentTable' => 'auth_assignment',
+		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',

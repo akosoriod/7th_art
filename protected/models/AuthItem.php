@@ -1,21 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "FAQ".
+ * This is the model class for table "auth_item".
  *
- * The followings are the available columns in table 'FAQ':
- * @property integer $id
- * @property string $question
- * @property string $answer
+ * The followings are the available columns in table 'auth_item':
+ * @property string $name
+ * @property integer $type
+ * @property string $description
+ * @property string $bizrule
+ * @property string $data
+ *
+ * The followings are the available model relations:
+ * @property User[] $users
+ * @property AuthItemChild[] $authItemChildren
+ * @property AuthItemChild[] $authItemChildren1
  */
-class FAQ extends CActiveRecord
+class AuthItem extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'FAQ';
+		return 'auth_item';
 	}
 
 	/**
@@ -26,11 +33,13 @@ class FAQ extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, question, answer', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
+			array('name', 'required'),
+			array('type', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>64),
+			array('description, bizrule, data', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, question, answer', 'safe', 'on'=>'search'),
+			array('name, type, description, bizrule, data', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +51,9 @@ class FAQ extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'users' => array(self::MANY_MANY, 'User', 'auth_assignment(item_name, user_id)'),
+			'authItemChildren' => array(self::HAS_MANY, 'AuthItemChild', 'parent'),
+			'authItemChildren1' => array(self::HAS_MANY, 'AuthItemChild', 'child'),
 		);
 	}
 
@@ -51,9 +63,11 @@ class FAQ extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'question' => 'Question',
-			'answer' => 'Answer',
+			'name' => 'Name',
+			'type' => 'Type',
+			'description' => 'Description',
+			'bizrule' => 'Bizrule',
+			'data' => 'Data',
 		);
 	}
 
@@ -75,9 +89,11 @@ class FAQ extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('question',$this->question,true);
-		$criteria->compare('answer',$this->answer,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type',$this->type);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('bizrule',$this->bizrule,true);
+		$criteria->compare('data',$this->data,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -88,7 +104,7 @@ class FAQ extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return FAQ the static model class
+	 * @return AuthItem the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
