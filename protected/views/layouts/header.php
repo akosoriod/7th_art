@@ -45,7 +45,7 @@
                     <a href="home.html">Home</a>
                 </div>
             </div>
-            <div class="btn-group">
+<!--            <div class="btn-group">
                 <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     Perfume<span class="caret"></span>
                 </div>
@@ -55,7 +55,7 @@
                     <li><a href="#" target="_top">Venom</a></li>
                     <li><a href="#" target="_top">Zeus</a></li>
                 </ul>
-            </div>
+            </div>-->
             <div class="btn-group">
                 <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <a href="#" target="_top">Wall</a>

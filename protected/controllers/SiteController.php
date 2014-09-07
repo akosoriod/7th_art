@@ -52,11 +52,14 @@ class SiteController extends Controller {
         if(Yii::app()->user->isGuest){
             $this->redirect(array('login'));
         }else{
-            if(Yii::app()->user->checkAccess('editor')){
-                $this->redirect(array('editor/index')); 
+            if(Yii::app()->user->checkAccess('designer')){
+                $this->redirect(array('designer/index')); 
+            }else if(Yii::app()->user->checkAccess('application')){
+                $this->render('index');
+            }else{
+                $this->redirect(array('index'));
             }
         }
-        $this->render('index');
     }
 
     /**

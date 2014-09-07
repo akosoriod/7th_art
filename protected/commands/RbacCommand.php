@@ -23,23 +23,26 @@ class RbacCommand extends CConsoleCommand {
         $this->_authManager->clearAll();
         
         //Operaciones para administración de set de actividades
-        $this->_authManager->createOperation("editor", "Access to the editor tool");
+        $this->_authManager->createOperation("designer", "Access to the designer system");
         $this->_authManager->createOperation("manageActivitySets", "Manage the Activity Sets");
         $this->_authManager->createOperation("createActivitySet", "Create an Activity Set");
+        $this->_authManager->createOperation("editor", "Manage the edition tool");
         
         //Operaciones para los usuarios
         $this->_authManager->createOperation("application", "Perform activities in the platform");
         
         //Creación del rol y asignación de permisos
         $role = $this->_authManager->createRole("administrator");
-        $role->addChild("editor");
+        $role->addChild("designer");
         $role->addChild("manageActivitySets");
         $role->addChild("createActivitySet");
+        $role->addChild("editor");
         
         //Creación del rol y asignación de permisos
         $role = $this->_authManager->createRole("operator");
-        $role->addChild("editor");
+        $role->addChild("designer");
         $role->addChild("manageActivitySets");
+        $role->addChild("editor");
         
         //Creación del rol y asignación de permisos
         $role = $this->_authManager->createRole("user");
