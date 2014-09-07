@@ -7,8 +7,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create ActivitySet', 'url'=>array('create')),
-	array('label'=>'Manage ActivitySet', 'url'=>array('admin')),
+	array('label'=>'Create ActivitySet', 'url'=>array('create'))
 );
 ?>
 
