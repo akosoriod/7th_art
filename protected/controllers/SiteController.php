@@ -52,8 +52,8 @@ class SiteController extends Controller {
         if(Yii::app()->user->isGuest){
             $this->redirect(array('login'));
         }else{
-            if(Yii::app()->user->checkAccess('manageActivitySets')){
-                $this->redirect(array('activitySet/index')); 
+            if(Yii::app()->user->checkAccess('editor')){
+                $this->redirect(array('editor/index')); 
             }
         }
         $this->render('index');

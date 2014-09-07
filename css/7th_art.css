@@ -99,7 +99,7 @@ main.detalle .breadcrumb-class {
   width: 130px;
 }
 .page-home #sets .set .percent {
-  background: url(../images/percentage.png) no-repeat left top transparent;
+  background: url(../images/test/percentage.png) no-repeat left top transparent;
   display: block;
   height: 47px;
   margin: -23px 0 0 -23px;

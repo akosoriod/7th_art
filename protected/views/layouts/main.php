@@ -29,7 +29,7 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
         ?>
     </head>
-    <body class="front page-intro not-logged fullpage">
+    <body>
         <?php require_once(Yii::app()->basePath . '/views/layouts/header.php'); ?>
         <?php require_once(Yii::app()->basePath . '/views/layouts/services.php'); ?>
             <div id="mainmenu">
