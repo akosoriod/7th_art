@@ -203,3 +203,8 @@ main.detalle .breadcrumb-class {
 #steps .step_active {
   background: orange;
 }
+
+/* estilo temporal para mover el logout mientras se implementa el que es */
+#navlist{
+    float: right;
+}
