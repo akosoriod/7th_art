@@ -4,8 +4,8 @@
  * This is the model class for table "auth_assignment".
  *
  * The followings are the available columns in table 'auth_assignment':
- * @property string $item_name
- * @property integer $user_id
+ * @property string $itemname
+ * @property integer $userid
  * @property string $bizrule
  * @property string $data
  */
@@ -27,13 +27,13 @@ class AuthAssignment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('item_name, user_id', 'required'),
-			array('user_id', 'numerical', 'integerOnly'=>true),
-			array('item_name', 'length', 'max'=>64),
+			array('itemname, userid', 'required'),
+			array('userid', 'numerical', 'integerOnly'=>true),
+			array('itemname', 'length', 'max'=>64),
 			array('bizrule, data', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('item_name, user_id, bizrule, data', 'safe', 'on'=>'search'),
+			array('itemname, userid, bizrule, data', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,8 +54,8 @@ class AuthAssignment extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'item_name' => 'Item Name',
-			'user_id' => 'User',
+			'itemname' => 'Itemname',
+			'userid' => 'Userid',
 			'bizrule' => 'Bizrule',
 			'data' => 'Data',
 		);
@@ -79,8 +79,8 @@ class AuthAssignment extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('item_name',$this->item_name,true);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('itemname',$this->itemname,true);
+		$criteria->compare('userid',$this->userid);
 		$criteria->compare('bizrule',$this->bizrule,true);
 		$criteria->compare('data',$this->data,true);
 

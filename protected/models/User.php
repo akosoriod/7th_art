@@ -59,7 +59,7 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_id)'),
-			'authItems' => array(self::MANY_MANY, 'AuthItem', 'auth_assignment(user_id, item_name)'),
+			'authItems' => array(self::MANY_MANY, 'AuthItem', 'auth_assignment(userid, itemname)'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
 			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'user_id'),

@@ -12,18 +12,19 @@ return array(
 	// application components
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		// uncomment the following to use a MySQL database
-		/*
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+			'connectionString' => 'mysql:host=localhost;dbname=7th_art',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => '7th_art_web_app',
+			'password' => 'nTwWEMb3YjkLTY4',
 			'charset' => 'utf8',
 		),
-		*/
+                'authManager'=>array(
+			'class'=>'CDbAuthManager',
+		    'connectionID'=>'db',
+			'itemTable' => 'auth_item',
+			'itemChildTable' => 'auth_item_child',
+			'assignmentTable' => 'auth_assignment',
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(

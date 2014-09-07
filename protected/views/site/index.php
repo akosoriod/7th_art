@@ -4,17 +4,51 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
 
-<p>Congratulations! You have successfully created your Yii application.</p>
-
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
-</ul>
-
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<?php
+    if(Yii::app()->user->isGuest){
+        echo '<meta http-equiv="refresh" content="0; url='.$this->createUrl('login').'" />';
+    }else{
+        
+        //COLLECT
+        if(Yii::app()->user->checkAccess('collect')){
+            echo '<h3>Recaudo</h3>';
+            echo '<ul>';
+            echo '<li>'.CHtml::link("Recaudo",array("collect/create")).'</li>';
+            if(Yii::app()->user->checkAccess('paySocialPlan')){
+                echo '<li>'.CHtml::link("Abonar al plan social",array("collect/paySocialPlan")).'</li>';
+            }
+            echo '</ul>';
+        }
+        
+        //DISCOUNTS
+        if(Yii::app()->user->checkAccess('discount')){
+            echo '<h3>Descuentos</h3>';
+            echo '<ul>';
+            if(Yii::app()->user->checkAccess('createDiscount')){
+                echo '<li>'.CHtml::link("Hacer un descuento",array("discount/create")).'</li>';
+            }
+            if(Yii::app()->user->checkAccess('viewDiscount')){
+                echo '<li>'.CHtml::link("Ver los descuentos realizados",array("discount/index")).'</li>';
+            }
+            echo '</ul>';
+        }
+        
+        //SCHEDULES
+        if(Yii::app()->user->checkAccess('schedule')){
+            echo '<h3>Programación</h3>';
+            echo '<ul>';
+            if(Yii::app()->user->checkAccess('createSchedule')){
+                echo '<li>'.CHtml::link("Administrar programación",array("schedule/index")).'</li>';
+            }
+            echo '</ul>';
+        }
+        
+        //REPORTING
+        if(Yii::app()->user->checkAccess('reporting')){
+            echo '<h3>Reportes</h3>';
+            echo '<ul>';
+            echo '<li>'.CHtml::link("Ver reportes",array("report/index")).'</li>';
+            echo '</ul>';
+        }
+    }

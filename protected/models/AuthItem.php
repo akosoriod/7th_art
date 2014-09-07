@@ -51,7 +51,7 @@ class AuthItem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'users' => array(self::MANY_MANY, 'User', 'auth_assignment(item_name, user_id)'),
+			'users' => array(self::MANY_MANY, 'User', 'auth_assignment(itemname, userid)'),
 			'authItemChildren' => array(self::HAS_MANY, 'AuthItemChild', 'parent'),
 			'authItemChildren1' => array(self::HAS_MANY, 'AuthItemChild', 'child'),
 		);
