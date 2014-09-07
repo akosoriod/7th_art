@@ -7,7 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta charset="utf-8">
-        <link rel="shortcut icon" href="protected/views/layouts/unal/images/favicon.ico" type="image/x-icon; charset=binary">
+        <link rel="shortcut icon" href="<?php echo Yii::app()->baseUrl; ?>/protected/views/layouts/unal/images/favicon.ico" type="image/x-icon; charset=binary">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon; charset=binary">
         <title>Universidad Nacional de Colombia: 7th @rt The Power of Films to Learn English</title>
         <meta name="revisit-after" content="1 hour">
