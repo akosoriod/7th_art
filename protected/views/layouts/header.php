@@ -42,7 +42,7 @@
         <div class="navbar-">
             <div class="btn-group">
                 <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <a href="home.html">Home</a>
+                    <a href="<?php echo Yii::app()->request->baseUrl; ?>">Home</a>
                 </div>
             </div>
 <!--            <div class="btn-group">
@@ -56,11 +56,13 @@
                     <li><a href="#" target="_top">Zeus</a></li>
                 </ul>
             </div>-->
-            <div class="btn-group">
-                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <a href="#" target="_top">Wall</a>
+            <?php if(Yii::app()->user->checkAccess('application')){ ?>
+                <div class="btn-group">
+                    <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" target="_top">Wall</a>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
     <div class="buscador">
