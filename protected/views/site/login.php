@@ -1,5 +1,6 @@
 <?php
 /* @var $this SiteController */
+
 ?>
 <main class="detalle front page-intro not-logged fullpage">
     <div class="breadcrumb-class">

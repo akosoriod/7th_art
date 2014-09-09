@@ -35,9 +35,10 @@ class SiteController extends Controller {
         }
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-            // validate user input and redirect
+            // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                $this->redirect(array('index'));
+                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicación
+				$this->redirect(array('site/aboutus'));
             }
         }
         $this->render('login', array('model' => $model));
@@ -57,7 +58,10 @@ class SiteController extends Controller {
             }else if(Yii::app()->user->checkAccess('application')){
                 $this->render('index');
             }else{
-                $this->redirect(array('index'));
+                // renders the view file 'protected/views/site/index.php'
+                // using the default layout 'protected/views/layouts/main.php'
+                $model = new LoginForm;
+                $this->render('login', array('model' => $model));
             }
         }
     }
@@ -104,5 +108,17 @@ class SiteController extends Controller {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
+
+    /**
+	 * Displays the about_us page
+	 */
+	public function actionAboutUs() {
+		if(isset($_POST['AGREE'])) {
+			$this->render('index');
+		} elseif (isset($_POST['DECLINE'])) {
+			 $this->redirect(array('site/logout'));
+		}
+		$this->render('about_us');
+	}
 
 }

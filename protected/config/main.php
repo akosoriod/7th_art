@@ -86,5 +86,19 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		// Par&aacute;metros autenticaci&oacute;n LDAP
+		// http://www.yiiframework.com/wiki/62/how-to-use-ldap-in-useridentity-for-authentication/
+		// https://www.exchangecore.com/blog/yii-active-directory-useridentity-login-authentication/
+		'ldap' => array (
+            'servers' => array(
+                'localhost',
+                '127.0.0.1',
+            ),
+			'dc' => array('unal','edu','co'),
+            'ou'=>array(
+                'estudiantes',
+                'profesores',
+            ),
+        ),
 	),
 );
