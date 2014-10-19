@@ -16,7 +16,7 @@
     /*position: absolute;*/
     right: 0;
     top: 40px;
-    width: 1000px;
+    width: 1240px;
 }
 #container #navigation{
     background: #E09A5E;
@@ -38,7 +38,7 @@
 #container #area{
     background: blue;
     bottom: 0;
-    height: 500px;
+    height: 700px;
     left: 200px;
     overflow: auto;
     /*position: absolute;*/
@@ -86,12 +86,12 @@
     background: orange;
     bottom: 0;
     box-shadow: 1px 1px 4px 0 #444444 inset;
-    height: 450px;
+    height: 600px;
     left: 0;
     /*position: absolute;*/
     right: 0;
     top: 54px;
-    width: 800px;
+    width: 1040px;
 }
 #container #area #editor #workspace .draggable{
     background: #FFFFF7;
