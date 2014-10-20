@@ -39,37 +39,36 @@ class UserIdentity extends CUserIdentity
 		// Ref: https://www.exchangecore.com/blog/yii-active-directory-useridentity-login-authentication/
 		// Inicio autenticaci&oacute;n LDAP
 		/**/
-        $options = Yii::app()->params['ldap'];
-		$dc_string = "dc=" . implode(",dc=",$options['dc']);
-        
-		$this->errorCode = self::ERROR_NONE;
-        if($this->username != '' && $this->password != '') {
+                $options = Yii::app()->params['ldap'];
+                $dc_string = "dc=" . implode(",dc=", $options['dc']);
 
-            //connect to the first available domain controller in our list
-            foreach($options['servers'] as $server) {
-                $connection = ldap_connect($server);
-                ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
-                ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
-                if($connection) {
-                    foreach($options['ou'] as $ou) {
-                        if ( $bind = @ldap_bind($connection, "uid={$this->username},ou={$ou},{$dc_string}", $this->password) ) {
-                            break; //we connected to one successfully
+                $this->errorCode = self::ERROR_NONE;
+                if ($this->username != '' && $this->password != '') {
+
+                    //connect to the first available domain controller in our list
+                    foreach ($options['servers'] as $server) {
+                        $connection = ldap_connect($server);
+                        ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+                        ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+                        if ($connection) {
+                            foreach ($options['ou'] as $ou) {
+                                if ($bind = @ldap_bind($connection, "uid={$this->username},ou={$ou},{$dc_string}", $this->password)) {
+                                    break; //we connected to one successfully
+                                }
+                            }
                         }
                     }
+
+                    if (!$bind) {
+                        $this->errorCode = self::ERROR_PASSWORD_INVALID;
+                    } else {
+                        $this->errorCode = self::ERROR_NONE;
+                    }
+                } else {
+                    //if username or password is blank don't even try to authenticate
+                    $this->errorCode = self::ERROR_INVALID_CREDENTIALS;
                 }
-            }
-            
-            if(!$bind) {
-				$this->errorCode = self::ERROR_PASSWORD_INVALID;
-			} else {
-				$this->errorCode = self::ERROR_NONE;
-			}
-            
-        } else {
-            //if username or password is blank don't even try to authenticate
-            $this->errorCode = self::ERROR_INVALID_CREDENTIALS;
-        }
-		/**/
+                /**/
 		// Fin autenticaci&oacute;n LDAP
 		
 		return !$this->errorCode;
