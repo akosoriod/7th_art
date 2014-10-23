@@ -203,3 +203,72 @@ main.detalle .breadcrumb-class {
 #steps .step_active {
   background: orange;
 }
+
+/* estilos aplicados en Perfume - Who is Who */
+.divTable {
+  display:  table;
+  width: auto;
+}
+
+.divRow {
+  display: table-row;
+  width: auto;
+  border: 1px solid !important;
+}
+
+.divCell {
+  float: left;
+  display: table-column;
+  width: 150px;
+  border: 1px solid !important;
+  height: 65px;
+}
+
+.divNoBorder {
+  border: 0 !important;
+}
+
+.taWhoIsWho {
+  padding: 0px;
+  resize: none;
+  overflow: auto;
+  width: 147px;
+}
+
+/* estilos aplicados en Perfume - After Viewing */
+div.columns {
+  width: 900px;
+}
+
+div.columns div {
+  width: 300px;
+  float: left;
+  text-align: justify;
+  padding: 20px;
+}
+
+div.clear  {
+  clear: both;
+}
+
+div.header {
+    text-align: center;
+}
+
+/* estilos aplicados en Perfume - Aknowledgements */
+div.bgColor {
+  background-color: #AAA;
+}
+
+div.left {
+  width: 500px !important;
+}
+
+div.top {
+  width: 550px !important;
+  margin-bottom: 10px;
+}
+
+div.down {
+  width: 550px !important;
+}
