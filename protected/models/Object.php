@@ -6,6 +6,13 @@
  * The followings are the available columns in table 'object':
  * @property integer $id
  * @property string $text
+ * @property integer $left
+ * @property integer $top
+ * @property integer $height
+ * @property integer $width
+ * @property string $background
+ * @property string $border
+ * @property integer $font_size
  * @property integer $object_list_id
  *
  * The followings are the available model relations:
@@ -32,11 +39,12 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_list_id', 'numerical', 'integerOnly'=>true),
+			array('left, top, height, width, font_size, object_list_id', 'numerical', 'integerOnly'=>true),
+			array('background, border', 'length', 'max'=>45),
 			array('text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, text, object_list_id', 'safe', 'on'=>'search'),
+			array('id, text, left, top, height, width, background, border, font_size, object_list_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +71,13 @@ class Object extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'text' => 'Text',
+			'left' => 'Left',
+			'top' => 'Top',
+			'height' => 'Height',
+			'width' => 'Width',
+			'background' => 'Background',
+			'border' => 'Border',
+			'font_size' => 'Font Size',
 			'object_list_id' => 'Object List',
 		);
 	}
@@ -87,6 +102,13 @@ class Object extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('text',$this->text,true);
+		$criteria->compare('left',$this->left);
+		$criteria->compare('top',$this->top);
+		$criteria->compare('height',$this->height);
+		$criteria->compare('width',$this->width);
+		$criteria->compare('background',$this->background,true);
+		$criteria->compare('border',$this->border,true);
+		$criteria->compare('font_size',$this->font_size);
 		$criteria->compare('object_list_id',$this->object_list_id);
 
 		return new CActiveDataProvider($this, array(
@@ -104,4 +126,17 @@ class Object extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Returns the object in HTML format
+         * @return string The Object in HTML Format
+         */
+        public function getHtml(){
+            $html='
+                <div class="object" data-id="'.$this->id.'" data-left="'.$this->left.'" data-top="'.$this->top.'" data-height="'.$this->height.'" data-width="'.$this->width.'" data-background="'.$this->background.'" data-border="'.$this->border.'" data-font-size="'.$this->font_size.'">
+                    <div class="text">'.$this->text.'</div>
+                </div>
+            ';
+            return $html;
+        }
 }

@@ -130,6 +130,27 @@ class ActivitySetController extends Controller
                 $this->redirect(array('site/index')); 
             }
 	}
+        
+        /**
+        * This is the default 'index' action that is invoked
+        * when an action is not explicitly requested by users.
+        */
+        public function actionHome() {
+            // collect user input data
+            if(Yii::app()->user->isGuest){
+                $this->redirect(array('site/login'));
+            }else{
+                if(Yii::app()->user->checkAccess('application')){
+                    if(array_key_exists('movie',$_GET)&&trim($_GET['movie'])!==""){
+                        $name=filter_var($_GET['movie'],FILTER_SANITIZE_STRING);
+                        $model=ActivitySet::getByName($name);
+                        $this->render('home',array('model' => $model));
+                    }
+                }else{
+                    $this->redirect(array('site/login'));
+                }
+            }
+        }
 
 	/**
 	 * Manages all models.

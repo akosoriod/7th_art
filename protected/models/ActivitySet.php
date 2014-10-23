@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'activity_set':
  * @property integer $id
+ * @property string $name
  * @property string $title
  * @property string $publication
  * @property string $tagline
@@ -43,13 +44,13 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, operator_id, status_id', 'required'),
+			array('name, title, operator_id, status_id', 'required'),
 			array('year, soundtrack_id, image_id, operator_id, status_id', 'numerical', 'integerOnly'=>true),
-			array('title, publication, director', 'length', 'max'=>45),
+			array('name, title, publication, director', 'length', 'max'=>45),
 			array('tagline', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, publication, tagline, director, year, soundtrack_id, image_id, operator_id, status_id', 'safe', 'on'=>'search'),
+			array('id, name, title, publication, tagline, director, year, soundtrack_id, image_id, operator_id, status_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,9 +67,9 @@ class ActivitySet extends CActiveRecord
 			'operator' => array(self::BELONGS_TO, 'User', 'operator_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
 			'genres' => array(self::MANY_MANY, 'Genre', 'genre_activity_set(activity_set_id, genre_id)'),
-			'sections' => array(self::HAS_MANY, 'Section', 'activity_id'),
+			'sections' => array(self::HAS_MANY, 'Section', 'activity_set_id'),
 			'sessions' => array(self::HAS_MANY, 'Session', 'activity_set_id'),
-			'users' => array(self::MANY_MANY, 'User', 'user_activity_set(activity_id, user_id)'),
+			'users' => array(self::MANY_MANY, 'User', 'user_activity_set(activity_set_id, user_id)'),
 		);
 	}
 
@@ -79,6 +80,7 @@ class ActivitySet extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'name' => 'Name',
 			'title' => 'Title',
 			'publication' => 'Publication',
 			'tagline' => 'Tagline',
@@ -110,6 +112,7 @@ class ActivitySet extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('publication',$this->publication,true);
 		$criteria->compare('tagline',$this->tagline,true);
@@ -135,4 +138,17 @@ class ActivitySet extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Returns the ActivitySet from the name
+         * @param string $name Name of the ActivitySet
+         * @return ActivitySet ActivitySet object
+         */
+        public static function getByName($name){
+            $object=self::model()->find(
+                'name=:name',
+                array(':name'=>$name)
+            );
+            return $object;
+        }
 }
