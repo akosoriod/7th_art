@@ -10,6 +10,20 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
         $('select', 'form').selectpicker();
 
         $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
+        
+        //Revisa los objectos de la secciñón y los redimensiona
+        $(".object").each(function(){
+            console.debug($(this));
+            $(this).css({
+                border:'1px solid #aaa',
+                left:$(this).attr('data-left')+'px',
+                top:$(this).attr('data-top')+'px',
+                height:$(this).attr('data-height'),
+                width:$(this).attr('data-width'),
+                overflow:'auto',
+                position:'absolute'
+            });
+        });
     });
 </script>
 
@@ -53,6 +67,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
         </div>
     </div>
     <div id="workspace" class="row row4 row_activities">
+        <?php
+            $objects=Object::model()->findAll();
+            foreach ($objects as $object) {
+                echo $object->getHtml();
+            }
+            
+            
+            
+        ?>
 <!--        <div id="activities" class="col-xs-12 col-sm-12 col-md-12">
             <div id="set_1" class="set">
                 <div id="activity_1" class="synopsis" data-template="354">
