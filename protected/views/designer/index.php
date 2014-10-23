@@ -18,7 +18,6 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
                 
                 
                 
-                
                 var countObjects=0;
                 $(".button").draggable({
                     appendTo: "body",
