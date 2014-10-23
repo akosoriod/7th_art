@@ -12,9 +12,21 @@ NO EDITAR DIRECTAMENTE EL CSS
 body {
   background: #FFFFFF;
 }
+.ui-selectmenu-button {
+  min-width: 120px;
+  vertical-align: text-bottom;
+}
+.ui-selectmenu-button span.ui-selectmenu-text {
+  line-height: 1;
+  padding: 0 2.1em 0 4px;
+}
+textarea {
+  background-color: transparent;
+}
 /* LAYOUT GENERAL */
 main.detalle {
-  margin: 0 10% 10px;
+  margin: 0 auto 10px;
+  max-width: 1010px;
 }
 main.detalle .breadcrumb-class {
   margin: 10px 0;
@@ -171,20 +183,75 @@ main.detalle .breadcrumb-class {
 }
 /* SET ACTIVITIES PAGE -FOR ALL- MOVIES */
 .row_activities {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
   padding-bottom: 20px;
+}
+#activities .instruction {
+  font-size: 17px;
+  margin: 20px 0 40px;
+}
+#activities .texttitle {
+  font-size: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+#activities .textsubtitle {
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 40px;
+  text-align: center;
 }
 #activities .title h4 {
   font-size: 25px;
   padding: 20px 0 10px;
 }
-#activities textarea {
+#activities .synopsis textarea {
   border: none;
   padding: 10px;
 }
+#activities h3 {
+  border: none;
+  display: inline-block;
+}
+#activities #pager {
+  display: inline-block;
+  float: right;
+  margin: 20px 0;
+}
+#activities #pager .pagenumber a {
+  background-color: yellow;
+  display: inline-block;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 20px;
+}
+#activities #pager .active a {
+  border-bottom: 3px solid red;
+}
+#activities .cajatextoder {
+  clear: both;
+  float: right;
+  line-height: 1.5em;
+  width: 70%;
+}
+#activities .imagenizq {
+  float: left;
+  width: 30%;
+}
+#activities .checkanswer img {
+  clear: both;
+  float: right;
+  margin-top: 10px;
+}
+#activities ol li,
+#activities ul li {
+  border: none;
+}
 /* PAGE MOVIE PERFUME */
 .movie-perfume {
-  background: url(../images/perfume.4.filmmenu_muro.png) repeat center top transparent;
+  background: url(../images/test/perfume.4.filmmenu_muro.png) repeat center top transparent;
 }
 /******************** TEMPORALES *************************/
 /* QUITAR MENUS QUE NO SE VEN EN CADA PAGINA
@@ -194,6 +261,36 @@ main.detalle .breadcrumb-class {
 .page-home .navbar- {
   display: none;
 }
+/* ACTIVIDAD DE PERFUME WHO IS WHO
+        estos estilos supongo se crean desde el editor
+        se trabajan aquí sólamente para presentación en la web */
+.whoswhoin .divTable {
+  background-color: #FFEAD7;
+  display: table;
+}
+.whoswhoin .headRow,
+.whoswhoin .divRow {
+  clear: both;
+}
+.whoswhoin .headRow .divCell,
+.whoswhoin .divRow .divCell {
+  float: left;
+  padding: 1.3% 1%;
+  text-align: center;
+  width: 16.66666666666667%;
+}
+.whoswhoin .headRow .divCell:first-child,
+.whoswhoin .divRow .divCell:first-child {
+  font-weight: bold;
+  text-align: left;
+}
+.whoswhoin .headRow .divCell {
+  background-color: #BB80A8;
+  color: #fff;
+}
+.whoswhoin .headRow .divCell:first-child {
+  background-color: transparent;
+}
 /* OTROS CREADOS POR MIGUEL */
 /* estilos de los pasos en la introducción a la herramienta */
 #steps .step {
@@ -202,9 +299,4 @@ main.detalle .breadcrumb-class {
 }
 #steps .step_active {
   background: orange;
-}
-
-/* estilo temporal para mover el logout mientras se implementa el que es */
-#navlist{
-    float: right;
 }

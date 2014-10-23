@@ -37,11 +37,34 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicación
-				$this->redirect(array('site/aboutus'));
+                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicaciï¿½n
+                $this->redirect(array('site/aboutus'));
             }
         }
         $this->render('login', array('model' => $model));
+    }
+    
+    /**
+     * This is the login action that is invoked
+     */
+    public function actionAdmin() {
+        if(!Yii::app()->user->isGuest){
+            $this->redirect(array('index'));
+        }
+        $model = new LoginForm;
+        // if it is ajax validation request
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+        if (isset($_POST['LoginForm'])) {
+            $model->attributes = $_POST['LoginForm'];
+            // validate user input and redirect to the next page if valid
+            if ($model->validate() && $model->login()){
+                $this->redirect(array('designer/'));
+            }
+        }
+        $this->render('admin', array('model' => $model));
     }
     
     /**

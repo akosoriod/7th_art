@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'user_activity_set':
  * @property integer $user_id
- * @property integer $activity_id
+ * @property integer $activity_set_id
  * @property integer $score
  * @property string $rating
  *
@@ -31,12 +31,12 @@ class UserActivitySet extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, activity_id', 'required'),
-			array('user_id, activity_id, score', 'numerical', 'integerOnly'=>true),
+			array('user_id, activity_set_id', 'required'),
+			array('user_id, activity_set_id, score', 'numerical', 'integerOnly'=>true),
 			array('rating', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, activity_id, score, rating', 'safe', 'on'=>'search'),
+			array('user_id, activity_set_id, score, rating', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,7 +60,7 @@ class UserActivitySet extends CActiveRecord
 	{
 		return array(
 			'user_id' => 'User',
-			'activity_id' => 'Activity',
+			'activity_set_id' => 'Activity Set',
 			'score' => 'Score',
 			'rating' => 'Rating',
 		);
@@ -85,7 +85,7 @@ class UserActivitySet extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('activity_set_id',$this->activity_set_id);
 		$criteria->compare('score',$this->score);
 		$criteria->compare('rating',$this->rating,true);
 

@@ -6,11 +6,11 @@
  * The followings are the available columns in table 'section':
  * @property integer $id
  * @property integer $section_type_id
- * @property integer $activity_id
+ * @property integer $activity_set_id
  *
  * The followings are the available model relations:
  * @property SectionType $sectionType
- * @property ActivitySet $activity
+ * @property ActivitySet $activitySet
  * @property Version[] $versions
  */
 class Section extends CActiveRecord
@@ -31,11 +31,11 @@ class Section extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('section_type_id, activity_id', 'required'),
-			array('section_type_id, activity_id', 'numerical', 'integerOnly'=>true),
+			array('section_type_id, activity_set_id', 'required'),
+			array('section_type_id, activity_set_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, section_type_id, activity_id', 'safe', 'on'=>'search'),
+			array('id, section_type_id, activity_set_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +48,7 @@ class Section extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'sectionType' => array(self::BELONGS_TO, 'SectionType', 'section_type_id'),
-			'activity' => array(self::BELONGS_TO, 'ActivitySet', 'activity_id'),
+			'activitySet' => array(self::BELONGS_TO, 'ActivitySet', 'activity_set_id'),
 			'versions' => array(self::HAS_MANY, 'Version', 'section_id'),
 		);
 	}
@@ -61,7 +61,7 @@ class Section extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'section_type_id' => 'Section Type',
-			'activity_id' => 'Activity',
+			'activity_set_id' => 'Activity Set',
 		);
 	}
 
@@ -85,7 +85,7 @@ class Section extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('section_type_id',$this->section_type_id);
-		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('activity_set_id',$this->activity_set_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
