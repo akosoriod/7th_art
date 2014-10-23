@@ -45,7 +45,7 @@ var Editor = function(params,callback){
      * Assign the events to the buttons
      */
     function assignEvents(){
-        self.toolbar.find(".button").draggable({
+        self.toolbar.find("#button-object").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
@@ -84,40 +84,11 @@ var Editor = function(params,callback){
                     });
                     object.find(".config").click(function(){
                         var id=parseInt($(this).parent().attr("data-id"));
-                        $("#properties")
-                                .attr("data-object",id)
-                        ;
+                        $("#properties").attr("data-object",id);
                         $("#properties").dialog("open");
                     });
                     
-                    
-                    
-                    
-                    
-                    
-                    
-//                    var image=object.find(".image");
-//                    image.draggable({
-//                        cancel: ".text",
-//                        containment: object,
-//                        cursor: "move",
-//                        scroll: false
-//                    }).resizable({
-//                        containment:"parent"
-//                    });
-//                    image.find('.deleteImage').click(function(){
-//                        $(this).closest('.image').remove();
-//                    });
-                    
-                    
-                    
-                    
                     var text=object.find(".text");
-//                    text.draggable({
-//                        containment: object,
-//                        cursor: "move",
-//                        scroll: false
-//                    });
                     text.dblclick(function(){
                         var textObj=$(this);
                         $('<div><div>Inserte el texto</div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
@@ -141,7 +112,42 @@ var Editor = function(params,callback){
         });
         
         
-        
+        self.div.find("#properties").dialog({
+            autoOpen: false,
+            modal:true,
+            open: function(event,ui){
+                var id=parseInt($(this).attr("data-object"));
+                var object=$("#object"+id).find('.text');
+                var props=$("#properties");
+                props.find("#id").text(id);
+                props.find("#background").spectrum({
+                    color: hexc(object.css("background-color"))
+                });
+                props.find("#borders").spectrum({
+                    color: hexc(object.css("border-bottom-color"))
+                });
+            },
+            buttons: {
+                "Ok": function() {
+                    var props=$("#properties");
+                    var background=props.find("#background");
+                    var borders=props.find("#borders");
+                    var bValid = true;
+                    if (bValid){
+                        var id=parseInt($(this).attr("data-object"));
+                        var object=$("#object"+id).find('.text');
+                        object.css({
+                            'background':'#'+background.spectrum('get').toHex(),
+                            'border-color':'#'+borders.spectrum('get').toHex()
+                        });
+                        $(this).dialog("close");
+                    }
+                },
+                Cancel: function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
         self.toolbar.find('#save').click(function(){
             var objects=parseObjects();
             if(objects.length>0){
@@ -174,8 +180,11 @@ var Editor = function(params,callback){
             id:parseInt(objectElem.attr('data-id')),
             left:pos.left,
             top:pos.top,
-            height:objectElem.height(),
-            width:objectElem.width(),
+            height:text.height(),
+            width:text.width(),
+            background:text.css('background-color'),
+            border:text.css('border-left-color'),
+            font_size:text.css('font-size'),
             text:{
                 content:text.text()
             }
@@ -218,4 +227,30 @@ var Editor = function(params,callback){
             
         });
     };
+    
+    
+    /**************************************************************************/
+    /****************************** OTHER METHODS *****************************/
+    /**************************************************************************/
+    function checkRegexp( o, regexp, n ) {
+        if ( !( regexp.test( o.val() ) ) ) {
+            o.addClass( "ui-state-error" );
+            alert( n );
+            return false;
+        } else {
+            return true;
+        }
+        }
+    function hexc(colorval) {
+        var color;
+        var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        delete(parts[0]);
+        for (var i = 1; i <= 3; ++i) {
+            parts[i] = parseInt(parts[i]).toString(16);
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        color = '#' + parts.join('');
+
+        return color;
+    }
 };

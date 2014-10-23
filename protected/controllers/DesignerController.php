@@ -57,6 +57,9 @@ class DesignerController extends Controller {
             $object->top=intval($dataObject['top']);
             $object->height=intval($dataObject['height']);
             $object->width=intval($dataObject['width']);
+            $object->background=$dataObject['background'];
+            $object->border=$dataObject['border'];
+            $object->font_size=intval($dataObject['font_size']);
             $object->object_list_id=1;
             $object->save();
         }

@@ -5,9 +5,12 @@ $this->breadcrumbs=array(
 	'Designer',
 );
 
-Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
+
 Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/colorpicker/spectrum.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/colorpicker/spectrum.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
 ?>
 <script type="text/javascript">
@@ -17,67 +20,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 
                 var editor=new Editor();
                 editor.init();
-                
-                
-                
-                
-                
-                                
-                $("#properties").dialog({
-                    autoOpen: false,
-                    modal:true,
-                    open: function(event,ui){
-                        var id=parseInt($(this).attr("data-object"));
-                        var object=$("#object"+id);
-                        var props=$("#properties");
-                        props.find("#id").text(id);
-                        props.find("#background").val(hexc(object.css("background-color")));
-                        props.find("#borders").val(hexc(object.css("border-bottom-color")));
-                    },
-                    buttons: {
-                        "Ok": function() {
-                            var props=$("#properties");
-                            var background=props.find("#background");
-                            var borders=props.find("#borders");
-                            var bValid = true;
-                            bValid = bValid && checkRegexp(background, /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i, "Only Hex format color");
-                            bValid = bValid && checkRegexp(borders, /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i, "Only Hex format color");
-                            if (bValid){
-                                var id=parseInt($(this).attr("data-object"));
-                                var object=$("#object"+id);
-                                object.css({
-                                    'background':background.val(),
-                                    'border-color':borders.val()
-                                });
-                                $(this).dialog("close");
-                            }
-                        },
-                        Cancel: function() {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                function checkRegexp( o, regexp, n ) {
-                    if ( !( regexp.test( o.val() ) ) ) {
-                        o.addClass( "ui-state-error" );
-                        alert( n );
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-                function hexc(colorval) {
-                    var color;
-                    var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                    delete(parts[0]);
-                    for (var i = 1; i <= 3; ++i) {
-                        parts[i] = parseInt(parts[i]).toString(16);
-                        if (parts[i].length == 1) parts[i] = '0' + parts[i];
-                    }
-                    color = '#' + parts.join('');
-
-                    return color;
-                }
                 
                 var sections=$("#navigation").children("ul");
                 sections.click(function(){
@@ -187,14 +129,14 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="workspace" class="droppable"></div>
 
 
-                <div id="properties" title="Properties">
+                <div id="properties" title="Propiedades">
                     <form>
                         <fieldset>
-                            <label for="id">identifier</label>
+                            <label for="id">Identificador</label>
                             <div name="id" id="id">0</div>
-                            <label for="background">Background</label>
+                            <label for="background">Fondo</label>
                             <input type="text" name="background" id="background" value="#000" class="text ui-widget-content ui-corner-all">
-                            <label for="borders">Borders</label>
+                            <label for="borders">Bordes</label>
                             <input type="text" name="borders" id="borders" value="#000" class="text ui-widget-content ui-corner-all">
                         </fieldset>
                     </form>
