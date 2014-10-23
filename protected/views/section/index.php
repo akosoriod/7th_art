@@ -18,6 +18,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
                 'background-color':$(this).attr('data-background'),
                 border:'1px solid '+$(this).attr('data-border'),
                 'font-size':$(this).attr('data-font-size')+'px',
+                'line-height':$(this).attr('data-font-size')+'px',
                 left:$(this).attr('data-left')+'px',
                 top:$(this).attr('data-top')+'px',
                 height:$(this).attr('data-height'),

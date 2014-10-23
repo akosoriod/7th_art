@@ -121,9 +121,11 @@ var Editor = function(params,callback){
                 var props=$("#properties");
                 props.find("#id").text(id);
                 props.find("#background").spectrum({
+                    showAlpha: true,
                     color: hexc(object.css("background-color"))
                 });
                 props.find("#borders").spectrum({
+                    showAlpha: true,
                     color: hexc(object.css("border-bottom-color"))
                 });
             },
@@ -132,13 +134,16 @@ var Editor = function(params,callback){
                     var props=$("#properties");
                     var background=props.find("#background");
                     var borders=props.find("#borders");
+                    var font=props.find("#font");
                     var bValid = true;
                     if (bValid){
                         var id=parseInt($(this).attr("data-object"));
                         var object=$("#object"+id).find('.text');
                         object.css({
-                            'background':'#'+background.spectrum('get').toHex(),
-                            'border-color':'#'+borders.spectrum('get').toHex()
+                            'background':background.spectrum('get').toRgbString(),
+                            'border-color':borders.spectrum('get').toRgbString(),
+                            'font-size':font.val()+'px',
+                            'line-height':font.val()+'px'
                         });
                         $(this).dialog("close");
                     }

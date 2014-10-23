@@ -136,8 +136,24 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                             <div name="id" id="id">0</div>
                             <label for="background">Fondo</label>
                             <input type="text" name="background" id="background" value="#000" class="text ui-widget-content ui-corner-all">
+                            <br><br>
                             <label for="borders">Bordes</label>
                             <input type="text" name="borders" id="borders" value="#000" class="text ui-widget-content ui-corner-all">
+                            <br><br>
+                            <label for="font">Tamaño de fuente</label>
+                            <select id="font">
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                <option value="14">14</option>
+                                <option value="16">16</option>
+                                <option value="18">18</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="60">60</option>
+                                <option value="80">80</option>
+                            </select>
                         </fieldset>
                     </form>
                 </div>
