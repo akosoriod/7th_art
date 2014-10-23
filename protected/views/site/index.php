@@ -137,7 +137,7 @@
             <div id="set_10" class="set">
                 <!--El círculo del porcentaje se dibujará con JS-->
                 <div class="percent">25%</div>
-                <a href="set.html">
+                <a href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/activitySet/home/movie/perfume">
                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/7thf1_r7_c11.png" height="130" width="130" alt="movie title"/>
                     <div class="info">
                         <div class="attribute title">Perfume</div>

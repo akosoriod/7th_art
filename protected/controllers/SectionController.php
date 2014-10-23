@@ -1,6 +1,6 @@
 <?php
 
-class ActivitySetController extends Controller
+class SectionController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -28,7 +28,7 @@ class ActivitySetController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-//				'actions'=>array('index','view'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -62,14 +62,14 @@ class ActivitySetController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ActivitySet;
+		$model=new Section;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ActivitySet']))
+		if(isset($_POST['Section']))
 		{
-			$model->attributes=$_POST['ActivitySet'];
+			$model->attributes=$_POST['Section'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -91,9 +91,9 @@ class ActivitySetController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ActivitySet']))
+		if(isset($_POST['Section']))
 		{
-			$model->attributes=$_POST['ActivitySet'];
+			$model->attributes=$_POST['Section'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -120,47 +120,23 @@ class ActivitySetController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex(){
-            if(Yii::app()->user->checkAccess('manageActivitySets')){
-                $dataProvider=new CActiveDataProvider('ActivitySet');
+	public function actionIndex()
+	{
+		$dataProvider=new CActiveDataProvider('Section');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
-            }else{
-                $this->redirect(array('site/index')); 
-            }
 	}
-        
-        /**
-        * This is the default 'index' action that is invoked
-        * when an action is not explicitly requested by users.
-        */
-        public function actionHome() {
-            // collect user input data
-            if(Yii::app()->user->isGuest){
-                $this->redirect(array('site/login'));
-            }else{
-                if(Yii::app()->user->checkAccess('application')){
-                    if(array_key_exists('movie',$_GET)&&trim($_GET['movie'])!==""){
-                        $name=filter_var($_GET['movie'],FILTER_SANITIZE_STRING);
-                        $model=ActivitySet::getByName($name);
-                        $this->render('home',array('model' => $model));
-                    }
-                }else{
-                    $this->redirect(array('site/login'));
-                }
-            }
-        }
 
 	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new ActivitySet('search');
+		$model=new Section('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ActivitySet']))
-			$model->attributes=$_GET['ActivitySet'];
+		if(isset($_GET['Section']))
+			$model->attributes=$_GET['Section'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -171,12 +147,12 @@ class ActivitySetController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return ActivitySet the loaded model
+	 * @return Section the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=ActivitySet::model()->findByPk($id);
+		$model=Section::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -184,11 +160,11 @@ class ActivitySetController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param ActivitySet $model the model to be validated
+	 * @param Section $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='activity-set-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='section-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

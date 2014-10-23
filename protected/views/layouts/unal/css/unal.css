@@ -101,7 +101,7 @@ main.detalle .breadcrumb-class{border-bottom:1px dotted #646464;color:#323232;li
 .btn-default:hover,.btn-default:focus,.btn-default:active,.btn-default.active,.open .dropdown-toggle.btn-default{background-color:#666;border-color:#333;color:#fff}
 .navbar-default .navbar-nav>.open>a,.navbar-default .navbar-nav>.open>a:hover,.navbar-default .navbar-nav>.open>a:focus{background-color:#333}
 main.main-home{display:table;float:right;height:679px;margin:0 30px 0 0;overflow:hidden;position:relative}
-main.detalle{margin:0 15% 50px}
+/*main.detalle{margin:0 15% 50px}*/
 main.detalle .csc-default{margin:20px auto 5px}
 main.detalle .csc-default .csc-header{color:#50992E;margin-bottom:20px}
 main.detalle .csc-frame-frame1{border-bottom:dotted 1px #50992E;color:#4b4b4b;font-family:"Ancizar serif", "MS Serif", "New York", serif;font-size:1.5em;line-height:30px!important;margin-bottom:30px;padding:0 0 20px;text-align:left}

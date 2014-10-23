@@ -140,7 +140,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
                 });
             });
         </script>
-<main class="detalle">
+<main>
     
     
     <?php
@@ -156,7 +156,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
     
     
     <div id="container">
-<!--        <nav id="navigation">
+        <nav id="navigation">
             Perfume
             <ul>
                 <li>                  
@@ -229,8 +229,8 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
                     </ul>
                 </li>
             </ul>
-        </nav>-->
-<!--        <div id="area">
+        </nav>
+        <div id="area">
             <div id="editor">
                 <div id="toolbar">
                     <div class="button object" id="button-object" title="Drag an object"></div>
@@ -255,6 +255,6 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
                     </form>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
 </main>
