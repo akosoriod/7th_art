@@ -6,77 +6,22 @@ $this->breadcrumbs=array(
 );
 
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
-
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
 ?>
 <script type="text/javascript">
             $( document ).ready(function(){
                 $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Designer');
                 
                 
+                var editor=new Editor();
+                editor.init();
                 
                 
                 
                 
-                var countObjects=0;
-                $(".button").draggable({
-                    appendTo: "body",
-                    containment: "#workspace",
-                    cursor: "move",
-//                    helper: "clone",
-                    helper: function(){
-                        return $( "<div class='object-helper'></div>" );
-                    },
-                    opacity: 0.8,
-                    scroll: false
-                });
-                $("#workspace").droppable({
-                    accept: ".button",
-                    drop: function( event, ui ) {
-                        if(ui.draggable.hasClass("object")){
-                            countObjects++;
-                            $(this).append('<div class="draggable object" id="object'+countObjects+'" data-id="'+countObjects+'"><div class="content"><div class="image"></div><div class="text"></div></div><div class="objectButton config"></div><div class="objectButton close">x</div></div>');
-                            var object=$(this).find('#object'+countObjects);
-                            object.draggable({
-                                containment: "#workspace",
-                                cursor: "move",
-                                opacity: 0.4,
-                                scroll: false
-                            }).resizable({
-                                containment: "#workspace"
-                            });
-                            var displacement=$("#workspace").offset();
-                            object.css({
-                                left:ui.position.left-displacement.left,
-                                top:ui.position.top-displacement.top
-                            });
-                            object.find(".close").click(function(){
-                                object.remove();
-                            });
-                            object.find(".config").click(function(){
-                                var id=parseInt($(this).parent().attr("data-id"));
-                                $("#properties")
-                                        .attr("data-object",id)
-                                ;
-                                $("#properties").dialog("open");
-                            });
-                            var image=object.find(".image");
-                            var text=object.find(".text");
-                            image.draggable({
-                                containment: object,
-                                cursor: "move",
-                                scroll: false
-                            });
-                            text.draggable({
-                                containment: object,
-                                cursor: "move",
-                                scroll: false
-                            });
-                        }else{
-                            alert("I'm a prototype");
-                        }
-                    }
-                });
+                
                                 
                 $("#properties").dialog({
                     autoOpen: false,
@@ -140,7 +85,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
                 });
             });
         </script>
-<main>
+<main id="editor_page">
     
     
     <?php
@@ -233,11 +178,11 @@ Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
         <div id="area">
             <div id="editor">
                 <div id="toolbar">
-                    <div class="button object" id="button-object" title="Drag an object"></div>
-                    <div class="button" id="button1" title="I'm a prototype"></div>
+                    <div class="button object" id="button-object" title="Arrastrar un objeto"></div>
+<!--                    <div class="button" id="button1" title="I'm a prototype"></div>
                     <div class="button" id="button2" title="I'm a prototype"></div>
-                    <div class="button" id="button3" title="I'm a prototype"></div>
-                    <div class="button" id="button4" title="I'm a prototype"></div>
+                    <div class="button" id="button3" title="I'm a prototype"></div>-->
+                    <div class="button" id="save" title="Guardar actividad"></div>
                 </div>
                 <div id="workspace" class="droppable"></div>
 
