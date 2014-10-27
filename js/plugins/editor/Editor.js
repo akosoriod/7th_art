@@ -20,7 +20,7 @@ var Editor = function(params,callback){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
-        ajaxUrl:'designer/',
+        ajaxUrl:'',
     };
     self.params = $.extend(def, params);
     self.ajaxUrl=self.params.ajaxUrl;
@@ -91,17 +91,52 @@ var Editor = function(params,callback){
                     var text=object.find(".text");
                     text.dblclick(function(){
                         var textObj=$(this);
-                        $('<div><div>Inserte el texto</div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
-                            title:"Texto",
+                        $('<div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
+                            height:500,
+                            title:"Contenido del objeto",
                             modal:true,
+                            width:800,
                             buttons:{
                                 Cancelar:function(){
+                                    $(this).find("#dialogTextValue").tinymce().remove();
                                     $(this).dialog("close");$(this).dialog('destroy').remove();
                                 },
                                 Aceptar:function(){
-                                    textObj.find('.textContent').text($(this).find('#dialogTextValue').val());
+                                    textObj.find('.textContent').html($(this).find('#dialogTextValue').val());
+                                    $(this).find("#dialogTextValue").tinymce().remove();
                                     $(this).dialog("close");$(this).dialog('destroy').remove();
                                 }
+                            },
+                            open:function(){
+                                var textEditor=$(this).find("#dialogTextValue");
+                                
+                                textEditor.tinymce({
+                                     // Location of TinyMCE script
+                                    script_url : '../js/plugins/tinymce/tinymce.min.js',
+                                    language : 'es_MX',
+                                    height:290,
+                                    plugins: [
+                                        "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
+                                        "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
+                                        "save table contextmenu directionality template paste textcolor textcolor"
+                                    ],
+                                    toolbar: "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker "+
+                                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking"+
+                                            "save table contextmenu directionality template paste textcolor textcolor forecolor backcolor",
+                                    menubar : false,
+                                    oninit:function(){
+                                        tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
+                                        
+                                        
+                                        
+                                        tinyMCE.DOM.setStyle('body', 'background-color', 'red');
+                                    }
+                                });
+                            },
+                            close:function(){
+                                try{
+                                    $(this).find("#dialogTextValue").tinymce().remove();
+                                }catch(e){};
                             }
                         });
                     });
@@ -181,17 +216,24 @@ var Editor = function(params,callback){
     function parseObject(objectElem){
         var text=objectElem.find('.text');
         var pos=objectElem.position();
+        
+        
+//        console.debug(objectElem);
+//        console.debug(text.attr('style'));
+//        $('#button-object').attr('style',text.attr('style'));
+        
+        
         var object={
             id:parseInt(objectElem.attr('data-id')),
             left:pos.left,
             top:pos.top,
             height:text.height(),
             width:text.width(),
-            background:text.css('background-color'),
-            border:text.css('border-left-color'),
-            font_size:text.css('font-size'),
+//            background:text.css('background-color'),
+//            border:text.css('border-left-color'),
+//            font_size:text.css('font-size'),
             text:{
-                content:text.text()
+                content:text.html()
             }
         };
         return object;
