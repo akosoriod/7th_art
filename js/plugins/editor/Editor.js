@@ -20,10 +20,11 @@ var Editor = function(params,callback){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
-        ajaxUrl:'',
+        appUrl:''
     };
     self.params = $.extend(def, params);
-    self.ajaxUrl=self.params.ajaxUrl;
+    self.appUrl=self.params.appUrl;
+    self.ajaxUrl=self.appUrl+"index.php/designer/";
     /**
      * Constructor Method 
      */
@@ -112,7 +113,7 @@ var Editor = function(params,callback){
                                 
                                 textEditor.tinymce({
                                      // Location of TinyMCE script
-                                    script_url : '../js/plugins/tinymce/tinymce.min.js',
+                                    script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
                                     language : 'es_MX',
                                     height:290,
                                     plugins: [

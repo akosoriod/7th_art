@@ -16,25 +16,21 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ti
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
 ?>
 <script type="text/javascript">
-            $( document ).ready(function(){
-                $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Designer');
-                
-                
-                var editor=new Editor();
-                editor.init();
-                
-                var sections=$("#navigation").children("ul");
-                sections.click(function(){
-                    alert("only a prototype");
-                });
-                
-                
-                
-                
-                
- 
-            });
-        </script>
+
+    $( document ).ready(function(){
+        $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Designer');
+        var appUrl="<?php echo Yii::app()->baseUrl."/"; ?>";
+        var editor=new Editor({
+            appUrl:appUrl
+        });
+        editor.init();
+
+        var sections=$("#navigation").children("ul");
+        sections.click(function(){
+            alert("only a prototype");
+        });
+    });
+</script>
 <main id="editor_page">
     <?php
     $this->breadcrumbs=array(
