@@ -79,7 +79,7 @@
     background-image: url('../images/editor/button4.png');
 }
 #container #area #editor #workspace{
-    background: #FFF;
+    background-image: url('../images/editor/background2.jpg');
     bottom: 0;
     box-shadow: 1px 1px 4px 0 #444444 inset;
     height: 600px;
@@ -90,7 +90,6 @@
     width: 1040px;
 }
 #container #area #editor #workspace .draggable{
-    background: #FFFFF7;
     border: solid 1px #C75C5C;
     border-radius: 5px 5px 0 0;
     cursor: move;
@@ -116,7 +115,6 @@
 }
 #container #area #editor #workspace .draggable .text{
     background: #FFF;
-    border: 1px #ccc solid;
     bottom: 0;
     margin-left: auto;
     margin-right: auto;
