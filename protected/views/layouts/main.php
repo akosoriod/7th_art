@@ -25,6 +25,7 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/form.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap-select.min.css','all');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/7th_art.js');
             //Estilos de 7th @rt
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
         ?>
@@ -32,6 +33,8 @@
     <body>
         <?php require_once(Yii::app()->basePath . '/views/layouts/header.php'); ?>
         <?php require_once(Yii::app()->basePath . '/views/layouts/services.php'); ?>
+        <!-- Menú My Account -->
+        <?php (!Yii::app()->user->isGuest) ? require_once(Yii::app()->basePath . '/views/layouts/myAccount.php') : '' ?>
             <div id="mainmenu">
                 <?php
                 $this->widget('zii.widgets.CMenu', array(
