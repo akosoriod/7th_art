@@ -140,8 +140,9 @@ class SiteController extends Controller {
 			$this->render('index');
 		} elseif (isset($_POST['DECLINE'])) {
 			 $this->redirect(array('site/logout'));
-		}
-		$this->render('about_us');
+		} else {
+            $this->render('about_us');
+        }
 	}
 
 }

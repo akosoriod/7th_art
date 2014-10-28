@@ -300,3 +300,53 @@ main.detalle .breadcrumb-class {
 #steps .step_active {
   background: orange;
 }
+
+/** Estilos para el menú My Account */
+#myAccount{background:repeat-y #333 url(../images/myAccountBck.png);position:fixed;right:-800px;top:150px;transition:all .25s ease-out;z-index:20000}
+#myAccount.active{right:0}
+#myAccount ul{margin:0;overflow-x:hidden;padding:0 10px;}
+#myAccount ul li{border-bottom:1px solid #222;border-top:1px solid #444;height:52px;padding:10px 0;width:240px}
+#myAccount ul li:hover{background:#444}
+#myAccount ul li:first-child{border-top:none}
+#myAccount ul li:last-child{border-bottom:none}
+#myAccount ul li a{color:#fff;font-size:.9em;line-height:33px;white-space:nowrap}
+#myAccount ul li img{display:block;float:left;height:32px;margin:0 5px;width:32px}
+#myAccount .tabMyAccount{background-color:#50992E;background-image:url(../images/myAccount.png);background-position:0 0;cursor:pointer;height:126px;left:-34px;position:absolute;top:185px;width:34px}
+#myAccount .tabMyAccount:hover{background-position:0 -127px}
+#myAccount .tabMyAccount.active{background-position:-34px 0}
+#myAccount .tabMyAccount.active:hover{background-position:-34px -127px}
+.row-offcanvas{-moz-transition:all .25s ease-out;-webkit-transition:all .25s ease-out;position:relative;transition:all .25s ease-out}
+
+#myAccount ul ul {display: none;margin:0;overflow-x:hidden;padding:0 10px;}
+#myAccount ul ul {border-radius: 0px; position: absolute; top:0; right: 97%;}
+#myAccount ul li:hover > ul {display: block;background:#444;color:#fff;font-size:.9em;line-height:33px;white-space:nowrap;}
+#myAccount ul ul li {float: none; position: relative;}
+#myAccount ul ul li{border-bottom:1px solid #222;border-top:1px solid #444;height:52px;padding:10px 0;width:240px}
+#myAccount ul li div img{display:block;margin: auto;float:none; max-width: 100%; max-height: 100%; height: auto;width: auto;}
+
+/** Estilos para la opción Progress */
+div.progress {
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: none;
+    margin-bottom: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #575757;
+    padding-left: 10px;
+}
+div.progress div {float: left; width: 25%;}
+
+/** Estilos para la opción Preferences */
+div.preferences {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: none;
+    margin-bottom: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #575757;
+    padding-left: 10px;
+}
+div.preferences div {float: left; width: 33%;}
