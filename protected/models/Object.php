@@ -126,7 +126,7 @@ class Object extends CActiveRecord
          */
         public function getHtml(){
             $html='
-                <div class="object" data-id="'.$this->id.'" data-left="'.$this->left.'" data-top="'.$this->top.'" data-height="'.$this->height.'" data-width="'.$this->width.'">
+                <div class="object" data-id="'.$this->id.'" data-left="'.$this->left.'" data-top="'.$this->top.'" data-height="'.$this->height.'" data-width="'.$this->width.'" style="'.$this->css.'">
                     <div class="text">'.$this->content.'</div>
                 </div>
             ';

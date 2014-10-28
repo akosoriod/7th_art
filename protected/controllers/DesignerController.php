@@ -53,6 +53,7 @@ class DesignerController extends Controller {
         foreach ($dataObjects as $dataObject) {
             $object=new Object();
             $object->content=$dataObject['text']['content'];
+            $object->css=$dataObject['css'];
             $object->left=intval($dataObject['left']);
             $object->top=intval($dataObject['top']);
             $object->height=intval($dataObject['height']);

@@ -110,7 +110,6 @@ var Editor = function(params,callback){
                             },
                             open:function(){
                                 var textEditor=$(this).find("#dialogTextValue");
-                                
                                 textEditor.tinymce({
                                      // Location of TinyMCE script
                                     script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
@@ -121,15 +120,12 @@ var Editor = function(params,callback){
                                         "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
                                         "save table contextmenu directionality template paste textcolor textcolor"
                                     ],
-                                    toolbar: "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker "+
-                                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking"+
-                                            "save table contextmenu directionality template paste textcolor textcolor forecolor backcolor",
+                                    toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect "+
+                                            "searchreplace wordcount fullscreen "+
+                                            "autolink link image media lists preview spellchecker table",
                                     menubar : false,
                                     oninit:function(){
                                         tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
-                                        
-                                        
-                                        
                                         tinyMCE.DOM.setStyle('body', 'background-color', 'red');
                                     }
                                 });
@@ -137,6 +133,7 @@ var Editor = function(params,callback){
                             close:function(){
                                 try{
                                     $(this).find("#dialogTextValue").tinymce().remove();
+                                    $(this).dialog("close");$(this).dialog('destroy').remove();
                                 }catch(e){};
                             }
                         });
@@ -170,16 +167,13 @@ var Editor = function(params,callback){
                     var props=$("#properties");
                     var background=props.find("#background");
                     var borders=props.find("#borders");
-                    var font=props.find("#font");
                     var bValid = true;
                     if (bValid){
                         var id=parseInt($(this).attr("data-object"));
                         var object=$("#object"+id).find('.text');
                         object.css({
                             'background':background.spectrum('get').toRgbString(),
-                            'border-color':borders.spectrum('get').toRgbString(),
-                            'font-size':font.val()+'px',
-                            'line-height':font.val()+'px'
+                            'border-color':borders.spectrum('get').toRgbString()
                         });
                         $(this).dialog("close");
                     }
@@ -217,22 +211,17 @@ var Editor = function(params,callback){
     function parseObject(objectElem){
         var text=objectElem.find('.text');
         var pos=objectElem.position();
+        var asd=new Objeto();
         
-        
-//        console.debug(objectElem);
-//        console.debug(text.attr('style'));
-//        $('#button-object').attr('style',text.attr('style'));
-        
+        console.debug(asd);
         
         var object={
             id:parseInt(objectElem.attr('data-id')),
+            css:text.attr('style')===undefined?"background: #fff;":text.attr('style'),
             left:pos.left,
             top:pos.top,
             height:text.height(),
             width:text.width(),
-//            background:text.css('background-color'),
-//            border:text.css('border-left-color'),
-//            font_size:text.css('font-size'),
             text:{
                 content:text.html()
             }
