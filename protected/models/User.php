@@ -12,6 +12,7 @@
  * @property string $active
  * @property string $auth_type
  * @property string $email
+ * @property integer $entries
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
@@ -41,11 +42,12 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password', 'required'),
+			array('entries', 'numerical', 'integerOnly'=>true),
 			array('name, lastname, username, password, active, auth_type', 'length', 'max'=>45),
 			array('email', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, lastname, username, password, active, auth_type, email', 'safe', 'on'=>'search'),
+			array('id, name, lastname, username, password, active, auth_type, email, entries', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +59,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_id)'),
+			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_set_id)'),
 			'authItems' => array(self::MANY_MANY, 'AuthItem', 'auth_assignment(userid, itemname)'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
@@ -81,6 +83,7 @@ class User extends CActiveRecord
 			'active' => 'Active',
 			'auth_type' => 'Auth Type',
 			'email' => 'Email',
+			'entries' => 'Entries',
 		);
 	}
 
@@ -110,6 +113,7 @@ class User extends CActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('auth_type',$this->auth_type,true);
 		$criteria->compare('email',$this->email,true);
+		$criteria->compare('entries',$this->entries);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -126,7 +130,7 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-        
+                
         /**
          * Returns the current user
          * @return User User object currently connected
