@@ -51,7 +51,7 @@ class RbacCommand extends CConsoleCommand {
         //Temp user assignment, this must be doing by the administration interface
         $auth=Yii::app()->authManager;
         $auth->assign('administrator',1);
-        $auth->assign('operator',2);        
+        $auth->assign('operator',2);
         $auth->assign('user',3);        
 
         //provide a message indicating success
