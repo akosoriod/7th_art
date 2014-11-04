@@ -33,7 +33,7 @@
     <body>
         <?php require_once(Yii::app()->basePath . '/views/layouts/header.php'); ?>
         <?php require_once(Yii::app()->basePath . '/views/layouts/services.php'); ?>
-        <!-- Menú My Account -->
+        <!-- Menï¿½ My Account -->
         <?php (!Yii::app()->user->isGuest) ? require_once(Yii::app()->basePath . '/views/layouts/myAccount.php') : '' ?>
             <div id="mainmenu">
                 <?php
@@ -42,7 +42,7 @@
                     'items' => array(
 //                        array('label' => 'Home', 'url' => array('/site/index')),
 //                        array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+//                        array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
                     ),
                 ));
                 ?>
