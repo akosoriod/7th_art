@@ -5,5 +5,43 @@ body,.admin_page{
     background: #fff;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 30px;
     width: 1240px;
+}
+
+#container .section{
+    border: solid 1px #ddd;
+    margin: 10px;
+    padding: 10px;
+}
+#container .section .section_title{
+    float: left;
+    height: 30px;
+    margin-bottom: 0;
+    width: 380px;
+}
+#container .section .list{
+    margin-top: 30px;
+}
+#container #activitySets .activitySet{
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+#container #activitySets .buttons{
+    float: left;
+}
+
+#container #users .user{
+    margin-bottom: 15px;
+}
+
+/****  CREAR SETS DE ACTIVIDADES  ****/
+.create_activity_set .field{
+    margin-top: 10px;
+}
+.create_activity_set .field label{
+    display: block;
+}
+.create_activity_set .field input,.create_activity_set .field select{
+    width: 200px;
 }

@@ -143,4 +143,19 @@ class User extends CActiveRecord
             );
             return $user;
         }
+        
+        /**
+	 * Retrieves an array of User of a user type
+         * @param Int $role_id Role id of the user
+	 * @return Array an array of TaxiModel.
+	 */
+	public static function getUserSelect($role_id=2){
+            $array=array();
+            foreach (self::model()->findAll() as $user){
+                if($user->roles[0]->id==$role_id){
+                    $array[$user->id]=$user->name." ".$user->lastname;
+                }
+            }
+            return $array;
+	}
 }

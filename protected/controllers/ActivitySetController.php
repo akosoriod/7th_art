@@ -70,6 +70,9 @@ class ActivitySetController extends Controller
 		if(isset($_POST['ActivitySet']))
 		{
 			$model->attributes=$_POST['ActivitySet'];
+                        $name=strtolower(preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})",'',$model->title));
+                        $model->name=str_replace(" ","_", $name);
+                        $model->status_id=1;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -160,7 +163,9 @@ class ActivitySetController extends Controller
 		$model=new ActivitySet();
 		$this->render('admin',array(
                     'model'=>$model,
-                    'activitySets'=>ActivitySet::model()->findAll()
+                    'activitySets'=>ActivitySet::model()->findAll(),
+                    'currentUser'=>User::getCurrentUser(),
+                    'users'=>User::model()->findAll()
 		));
             }else{
                 $this->redirect(array('site/index'));

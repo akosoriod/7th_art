@@ -1,19 +1,13 @@
 <?php
 /* @var $this ActivitySetController */
+/* @var $activitySets ActivitySet */
+/* @var $currentUser User */
+/* @var $users User */
 $this->breadcrumbs=array(
 	'Administrador',
 );
 
-
-//Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrator.css');
-//Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/colorpicker/spectrum.css');
-//Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/jqueryte/jquery-te-1.4.0.css');
-//Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
-//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/colorpicker/spectrum.js');
-//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinymce/jquery.tinymce.min.js');
-//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Objeto.js');
-//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
 ?>
 <script type="text/javascript">
     $( document ).ready(function(){
@@ -37,15 +31,27 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
     );
     ?>
     <div id="container">
-        
-        
-        
-        <div id="activitySets">
-            <h3>Sets de actividades</h3>
-            <div id="list">
+        <div id="activitySets" class="section">
+            <h3 class="section_title">Sets de actividades</h3>
+            <div class="buttons">
+                <?php echo CHtml::link("Crear Set de Actividades", array('create')); ?>
+            </div>
+            <div class="list">
                 <?php
                     foreach ($activitySets as $activitySet) {
                         $this->renderPartial('_admin_view',array('data'=>$activitySet));
+                    }
+                ?>
+            </div>
+        </div>
+        <div id="users" class="section">
+            <h3 class="section_title">Administradores y Operadores</h3>
+            <div class="list">
+                <?php
+                    foreach ($users as $user) {
+                        if($currentUser->id!=$user->id&&$user->roles[0]->name!="user"){
+                            $this->renderPartial('/user/_view',array('data'=>$user));
+                        }
                     }
                 ?>
             </div>
