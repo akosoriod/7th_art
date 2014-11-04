@@ -1,0 +1,9 @@
+body,.admin_page{
+    background: #eee;
+}
+#container{
+    background: #fff;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1240px;
+}

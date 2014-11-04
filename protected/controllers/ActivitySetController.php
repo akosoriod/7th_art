@@ -124,7 +124,7 @@ class ActivitySetController extends Controller
             if(Yii::app()->user->checkAccess('manageActivitySets')){
                 $dataProvider=new CActiveDataProvider('ActivitySet');
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+                    'dataProvider'=>$dataProvider,
 		));
             }else{
                 $this->redirect(array('site/index')); 
@@ -155,16 +155,16 @@ class ActivitySetController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
-	{
-		$model=new ActivitySet('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ActivitySet']))
-			$model->attributes=$_GET['ActivitySet'];
-
+	public function actionAdmin(){
+            if(Yii::app()->user->checkAccess('createActivitySet')){
+		$model=new ActivitySet();
 		$this->render('admin',array(
-			'model'=>$model,
+                    'model'=>$model,
+                    'activitySets'=>ActivitySet::model()->findAll()
 		));
+            }else{
+                $this->redirect(array('site/index'));
+            }
 	}
 
 	/**
