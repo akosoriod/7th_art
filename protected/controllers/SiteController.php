@@ -37,7 +37,7 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicaci�n
+                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicación
                 $this->redirect(array('site/aboutus'));
             }
         }
