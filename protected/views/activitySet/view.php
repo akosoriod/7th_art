@@ -16,14 +16,15 @@ $this->menu=array(
 );
 ?>
 
-<h1>View ActivitySet #<?php echo $model->id; ?></h1>
+<h1>Visualizando Set de Actividades: <?php echo $model->title; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php
+    $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
 		'title',
-		'status',
+//		array('status',$model->status->name),
 		'publication',
 		'tagline',
 		'director',

@@ -37,8 +37,8 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicación
-                $this->redirect(array('site/aboutus'));
+                //Redirecciona al index donde se define a qué vista pasar
+                $this->redirect(array('index'));
             }
         }
         $this->render('login', array('model' => $model));
@@ -76,10 +76,22 @@ class SiteController extends Controller {
         if(Yii::app()->user->isGuest){
             $this->redirect(array('login'));
         }else{
-            if(Yii::app()->user->checkAccess('designer')){
-                $this->redirect(array('designer/index')); 
+            //Acceso del administrador
+            if(Yii::app()->user->checkAccess('createActivitySet')){
+                $this->redirect(array('activitySet/admin')); 
+            //Acceso del operador
+            }else if(Yii::app()->user->checkAccess('designer')){
+                $this->redirect(array('designer/index'));
             }else if(Yii::app()->user->checkAccess('application')){
-                $this->render('index');
+                //Se valida si es la primera vez que ingresa al sitio
+                $user=User::getCurrentUser();
+                if(intval($user->entries)===0){
+                    $this->redirect(array('site/aboutus'));
+                }else{
+                    $this->render('index');
+                    $user->entries++;
+                    $user->update();
+                }
             }else{
                 // renders the view file 'protected/views/site/index.php'
                 // using the default layout 'protected/views/layouts/main.php'
@@ -133,16 +145,20 @@ class SiteController extends Controller {
     }
 
     /**
-	 * Displays the about_us page
-	 */
-	public function actionAboutUs() {
-		if(isset($_POST['AGREE'])) {
-			$this->render('index');
-		} elseif (isset($_POST['DECLINE'])) {
-			 $this->redirect(array('site/logout'));
-		} else {
-            $this->render('about_us');
+    * Displays the about_us page
+    */
+    public function actionAboutUs() {
+        if(isset($_POST['AGREE'])) {
+            //Si acepta, se auenta el contador de entradas y se redirecciona al index
+            $user=User::getCurrentUser();
+            $user->entries++;
+            $user->update();
+            $this->render('index');
+        } elseif (isset($_POST['DECLINE'])) {
+            $this->redirect(array('site/logout'));
+        } else {
+           $this->render('about_us');
         }
-	}
+    }
 
 }

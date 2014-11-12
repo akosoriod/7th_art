@@ -80,16 +80,16 @@ class ActivitySet extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'title' => 'Title',
-			'publication' => 'Publication',
+			'name' => 'Nombre',
+			'title' => 'Título',
+			'publication' => 'Publicación',
 			'tagline' => 'Tagline',
 			'director' => 'Director',
-			'year' => 'Year',
+			'year' => 'Año',
 			'soundtrack_id' => 'Soundtrack',
 			'image_id' => 'Image',
-			'operator_id' => 'Operator',
-			'status_id' => 'Status',
+			'operator_id' => 'Operador',
+			'status_id' => 'Estado',
 		);
 	}
 
@@ -140,6 +140,26 @@ class ActivitySet extends CActiveRecord
 	}
         
         /**
+         * Retorna el estado del activitySet en Español
+         * @return string Status en español
+         */
+        public function statusSpanish(){
+            $status="";
+            switch ($this->status->name) {
+                case "editing":
+                    $status="editando";
+                    break;
+                case "revised":
+                    $status="revisado";
+                    break;
+                case "published":
+                    $status="publicado";
+                    break;
+            }
+            return $status;
+        }
+        
+        /**
          * Returns the ActivitySet from the name
          * @param string $name Name of the ActivitySet
          * @return ActivitySet ActivitySet object
@@ -151,4 +171,6 @@ class ActivitySet extends CActiveRecord
             );
             return $object;
         }
+        
+        
 }
