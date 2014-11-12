@@ -39,38 +39,76 @@ class UserIdentity extends CUserIdentity
 		// Ref: https://www.exchangecore.com/blog/yii-active-directory-useridentity-login-authentication/
 		// Inicio autenticaci&oacute;n LDAP
 		/**/
-                $options = Yii::app()->params['ldap'];
-                $dc_string = "dc=" . implode(",dc=", $options['dc']);
+		$options = Yii::app()->params['ldap'];
 
-                $this->errorCode = self::ERROR_NONE;
-                if ($this->username != '' && $this->password != '') {
+		$this->errorCode = self::ERROR_NONE;
+		if ($this->username != '' && $this->password != '') {
 
-                    //connect to the first available domain controller in our list
-                    foreach ($options['servers'] as $server) {
-                        $connection = ldap_connect($server);
-                        ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
-                        ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
-                        if ($connection) {
-                            foreach ($options['ou'] as $ou) {
-                                if ($bind = @ldap_bind($connection, "uid={$this->username},ou={$ou},{$dc_string}", $this->password)) {
-                                    break; //we connected to one successfully
-                                }
-                            }
-                        }
-                    }
+			//connect to the first available domain controller in our list
+			$bind = false;
+			foreach ($options['servers'] as $server) {
+				
+				// Se establece la conexión con el servidor LDAP.
+				$connection = ldap_connect($server);
+				
+				if ($connection) {
+					ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+					ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
 
-                    if (!$bind) {
-                        $this->errorCode = self::ERROR_PASSWORD_INVALID;
-                    } else {
-                        $this->errorCode = self::ERROR_NONE;
-                    }
-                } else {
-                    //if username or password is blank don't even try to authenticate
-                    $this->errorCode = self::ERROR_INVALID_CREDENTIALS;
-                }
-                /**/
-		// Fin autenticaci&oacute;n LDAP
+					foreach ($options['oSede'] as $o) {
+						foreach ($options['ou'] as $ou) {
+							$uid = "uid={$this->username}";
+							$rdn = "ou={$ou},o={$o},o={$options['oUNal']}";
+							
+							//$bind = @ldap_bind($connection, "uid=pperezp,ou=people,o=bogota,o=unal.edu.co", 'secretPwd')
+							$bind = @ldap_bind($connection, $uid.','.$rdn, $this->password);
+							if ($bind) {
+
+								// La búsqueda se hace a través del atributo uid (login del usuario)
+								$sr = ldap_search($connection, $rdn, $uid);  
+								$info = ldap_get_entries($connection, $sr);
+
+								for ($i=0; $i<$info["count"]; $i++) {
+									// Se obtienen los datos del usuario del directorio LDAP.
+									$_cn = $info[$i]["cn"][0];
+									$_uid = $info[$i]["uid"][0];
+									$_givenName = $info[$i]["givenname"][0];
+									$_sn = $info[$i]["sn"][0];
+									$_employeeNumber = $info[$i]["employeenumber"][0];
+									$_mail = $info[$i]["mail"][0];
+									
+									// Los datos se almacenan en la sesión del usuario.
+									$this->setState('_cn', $_cn);
+									$this->setState('_uid', $_uid);
+									$this->setState('_givenName', $_givenName);
+									$this->setState('_sn', $_sn);
+									$this->setState('_employeeNumber', $_employeeNumber);
+									$this->setState('_mail', $_mail);
+									
+								}
+
+								break 3; //we connected to one successfully
+							}
+						}
+					}
+				}
+			}
+
+			if (!$bind) {
+				$this->errorCode = self::ERROR_PASSWORD_INVALID;
+			} else {
+				ldap_unbind($connection);
+				$this->errorCode = self::ERROR_NONE;
+			}
+
+		} else {
+			//if username or password is blank don't even try to authenticate
+			$this->errorCode = self::ERROR_INVALID_CREDENTIALS;
+		}
+		/**/
 		
+		// Fin autenticaci&oacute;n LDAP
 		return !$this->errorCode;
 	}
+
 }
