@@ -6,13 +6,15 @@
  * The followings are the available columns in table 'image':
  * @property integer $id
  * @property string $path
+ * @property string $filename
+ * @property string $extension
  * @property string $copyright
- * @property integer $file_type_id
+ * @property integer $height
+ * @property string $width
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
  * @property Exercise[] $exercises
- * @property FileType $fileType
  * @property Object[] $objects
  * @property Prize[] $prizes
  */
@@ -34,12 +36,13 @@ class Image extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('path, file_type_id', 'required'),
-			array('file_type_id', 'numerical', 'integerOnly'=>true),
+			array('path, filename', 'required'),
+			array('height', 'numerical', 'integerOnly'=>true),
+			array('filename, extension, width', 'length', 'max'=>45),
 			array('copyright', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, path, copyright, file_type_id', 'safe', 'on'=>'search'),
+			array('id, path, filename, extension, copyright, height, width', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,7 +56,6 @@ class Image extends CActiveRecord
 		return array(
 			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'image_id'),
 			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_image(image_id, exercise_id)'),
-			'fileType' => array(self::BELONGS_TO, 'FileType', 'file_type_id'),
 			'objects' => array(self::MANY_MANY, 'Object', 'object_image(image_id, object_id)'),
 			'prizes' => array(self::HAS_MANY, 'Prize', 'image_id'),
 		);
@@ -67,8 +69,11 @@ class Image extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'path' => 'Path',
+			'filename' => 'Filename',
+			'extension' => 'Extension',
 			'copyright' => 'Copyright',
-			'file_type_id' => 'File Type',
+			'height' => 'Height',
+			'width' => 'Width',
 		);
 	}
 
@@ -92,8 +97,11 @@ class Image extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('path',$this->path,true);
+		$criteria->compare('filename',$this->filename,true);
+		$criteria->compare('extension',$this->extension,true);
 		$criteria->compare('copyright',$this->copyright,true);
-		$criteria->compare('file_type_id',$this->file_type_id);
+		$criteria->compare('height',$this->height);
+		$criteria->compare('width',$this->width,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
