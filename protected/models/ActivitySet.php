@@ -12,12 +12,10 @@
  * @property string $director
  * @property integer $year
  * @property integer $soundtrack_id
- * @property integer $image_id
  * @property integer $operator_id
  * @property integer $status_id
  *
  * The followings are the available model relations:
- * @property Image $image
  * @property Audio $soundtrack
  * @property User $operator
  * @property Status $status
@@ -45,12 +43,12 @@ class ActivitySet extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, title, operator_id, status_id', 'required'),
-			array('year, soundtrack_id, image_id, operator_id, status_id', 'numerical', 'integerOnly'=>true),
+			array('year, soundtrack_id, operator_id, status_id', 'numerical', 'integerOnly'=>true),
 			array('name, title, publication, director', 'length', 'max'=>45),
 			array('tagline', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, title, publication, tagline, director, year, soundtrack_id, image_id, operator_id, status_id', 'safe', 'on'=>'search'),
+			array('id, name, title, publication, tagline, director, year, soundtrack_id, operator_id, status_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +60,6 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'image' => array(self::BELONGS_TO, 'Image', 'image_id'),
 			'soundtrack' => array(self::BELONGS_TO, 'Audio', 'soundtrack_id'),
 			'operator' => array(self::BELONGS_TO, 'User', 'operator_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
@@ -87,7 +84,6 @@ class ActivitySet extends CActiveRecord
 			'director' => 'Director',
 			'year' => 'Año',
 			'soundtrack_id' => 'Soundtrack',
-			'image_id' => 'Image',
 			'operator_id' => 'Operador',
 			'status_id' => 'Estado',
 		);
@@ -119,7 +115,6 @@ class ActivitySet extends CActiveRecord
 		$criteria->compare('director',$this->director,true);
 		$criteria->compare('year',$this->year);
 		$criteria->compare('soundtrack_id',$this->soundtrack_id);
-		$criteria->compare('image_id',$this->image_id);
 		$criteria->compare('operator_id',$this->operator_id);
 		$criteria->compare('status_id',$this->status_id);
 
