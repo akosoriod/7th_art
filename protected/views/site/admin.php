@@ -23,7 +23,7 @@
             <div class="form">
                 <?php
                 $form = $this->beginWidget('CActiveForm', array(
-                    'id' => 'loginform',
+                    'id' => 'loginformadmin',
                     'enableClientValidation' => true,
                     'clientOptions' => array(
                         'validateOnSubmit' => true,
@@ -32,7 +32,7 @@
                 ?>
                 <div class="row">
                     <?php echo $form->labelEx($model, 'username'); ?>
-                    <?php echo $form->textField($model, 'username') . '@unal.edu.co'; ?>
+                    <?php echo $form->textField($model, 'username'); ?>
                     <?php echo $form->error($model, 'username'); ?>
                 </div>
 

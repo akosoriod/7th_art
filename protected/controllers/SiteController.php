@@ -51,14 +51,14 @@ class SiteController extends Controller {
         if(!Yii::app()->user->isGuest){
             $this->redirect(array('index'));
         }
-        $model = new LoginForm;
+        $model = new LoginFormAdmin;
         // if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
-        if (isset($_POST['LoginForm'])) {
-            $model->attributes = $_POST['LoginForm'];
+        if (isset($_POST['LoginFormAdmin'])) {
+            $model->attributes = $_POST['LoginFormAdmin'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
                 $this->redirect(array('designer/'));

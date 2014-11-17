@@ -350,3 +350,46 @@ div.preferences {
     padding-left: 10px;
 }
 div.preferences div {float: left; width: 33%;}
+
+/* Estilos para Progress Details */
+.Table { display: table; position: relative; }
+.Title {
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+.Heading {
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+}
+.Row { display: table-row; }
+.Cell {
+    display: table-cell;
+    border: solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.TitleCell {
+    display: table-cell;
+    padding-right: 85px;
+    width: 33%;
+}
+.Right {
+    display: table-cell;
+    position: absolute;
+    top: 5%;
+    bottom: 0;
+    width: 100px;
+    border: solid;
+    border-width: thin;
+}
+.NestedCell {
+    width: 100%;
+}
+.caption {
+    display: table-caption;
+    border: 1px solid #000;
+}
