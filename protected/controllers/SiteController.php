@@ -61,7 +61,11 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginFormAdmin'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                $this->redirect(array('designer/'));
+                if(Yii::app()->user->checkAccess('createActivitySet')){
+                    $this->redirect(array('activitySet/admin'));
+                }else{
+                    $this->redirect(array('designer/'));
+                }
             }
         }
         $this->render('admin', array('model' => $model));
@@ -140,8 +144,14 @@ class SiteController extends Controller {
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
-        Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
+        $redirectTo=Yii::app()->homeUrl;
+        if(Yii::app()->user->checkAccess('designer')){
+            Yii::app()->user->logout();
+             $this->redirect(array('site/admin'));
+        }else{
+            Yii::app()->user->logout();
+            $this->redirect(Yii::app()->homeUrl);
+        }
     }
 
     /**
