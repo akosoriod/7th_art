@@ -185,4 +185,16 @@ class ActivitySet extends CActiveRecord
             );
             return $object;
         }
+        
+        /**
+         * Retorna los activitySets que están publicados
+         * @return ActivitySet[] Array de ActivitySets
+         */
+        public static function getPublished(){
+            $list=self::model()->findAll(
+                'status_id=:statusId',
+                array(':statusId'=>3)
+            );
+            return $list;
+        }
 }

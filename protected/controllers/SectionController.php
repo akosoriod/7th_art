@@ -120,12 +120,22 @@ class SectionController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
+	public function actionIndex(){
+            $activitySet=false;
+            $section=false;
+            if(isset($_GET['movie'])&&isset($_GET['section'])){
+                $activitySet=ActivitySet::getByName($_GET['movie']);
+                $section=Section::getByName($activitySet,$_GET['section']);
+            }
+            if($section){
 		$dataProvider=new CActiveDataProvider('Section');
 		$this->render('index',array(
+			'model'=>$section,
 			'dataProvider'=>$dataProvider,
 		));
+            }else{
+                $this->redirect(array('activitySet/home/movie/'.$activitySet->name));
+            }
 	}
 
 	/**

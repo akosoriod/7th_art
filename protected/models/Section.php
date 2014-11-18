@@ -102,4 +102,22 @@ class Section extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Retorna una sección de un set de actividades
+         * @param ActivitySet $activitySet Description
+         * @param string $sectionName Nombre de la sección
+         * @return Section Objeto de tipo Section
+         */
+        public static function getByName($activitySet,$sectionName){
+            $output=false;
+            $sections=$activitySet->sections;
+            foreach ($sections as $section) {
+                if($section->sectionType->name==$sectionName){
+                    $output=$section;
+                    break;
+                }
+            }
+            return $output;
+        }
 }

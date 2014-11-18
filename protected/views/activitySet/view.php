@@ -61,7 +61,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
                 <h4>Soundtrack</h4>
                 <div class='soundtrack'>
                     <audio controls>
-                        <source src="<?php echo Yii::app()->baseUrl.'/'.$model->soundtrack ?>" type="audio/ogg">
+                        <source src="<?php echo Yii::app()->baseUrl.'/'.$model->soundtrack.'?'.rand(1,1000000); ?>" type="audio/ogg">
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -70,7 +70,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
                 <h4>Póster</h4>
                 <div class='poster'>
                 <?php
-                    echo CHtml::image(Yii::app()->baseUrl.'/'.$model->poster,"Póster");
+                    echo CHtml::image(Yii::app()->baseUrl.'/'.$model->poster.'?'.rand(1,1000000),"Póster");
                 ?>
                 </div>
             </div>
@@ -78,7 +78,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
                 <h4>Fondo</h4>
                 <div class='fondo'>
                 <?php
-                    echo CHtml::image(Yii::app()->baseUrl.'/'.$model->background,"Fondo");
+                    echo CHtml::image(Yii::app()->baseUrl.'/'.$model->background.'?'.rand(1,1000000),"Fondo");
                 ?>
                 </div>
             </div>
@@ -86,13 +86,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
                 <h4>Parallax</h4>
                 <div class='parallax'>
                     <div class="parallax-layer" style="width:693px; height:200px;">
-                        <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_1,"Paralax 1",array("id"=>"parallax1")); ?>
+                        <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_1.'?'.rand(1,1000000),"Paralax 1",array("id"=>"parallax1")); ?>
                     </div>
                     <div class="parallax-layer" style="width:1100px; height:200px;">
-                        <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_2,"Paralax 2",array("id"=>"parallax2")); ?>
+                        <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_2.'?'.rand(1,1000000),"Paralax 2",array("id"=>"parallax2")); ?>
                     </div>
                     <div class="parallax-layer" style="width:1360px; height:200px;">
-                        <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_3,"Paralax 3",array("id"=>"parallax3")); ?>
+                        <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_3.'?'.rand(1,1000000),"Paralax 3",array("id"=>"parallax3")); ?>
                     </div>
                 </div>
             </div>

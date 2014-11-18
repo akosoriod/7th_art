@@ -1,14 +1,17 @@
 <?php
 /* @var $this SectionController */
 /* @var $dataProvider CActiveDataProvider */
+/* @var $model Section */
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
 ?>
 <script>
-    jQuery(document).ready(function($) {
+    $(document).ready(function($) {
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
-
+        $('body').css({
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->activitySet->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
+        });
         $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
         
         //Revisa los objectos de la secciñón y los redimensiona
@@ -28,11 +31,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
 
 <main class="detalle">
     <div class="breadcrumb-class">
-        Está en:&nbsp;<a href="http://unal.edu.co" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Secci&oacute;n</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>Página</b>
+        Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$model->activitySet->name; ?>" target="_self" title="<?php echo $model->activitySet->title; ?>"><?php echo $model->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->sectionType->label; ?></b>
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
-            <h2>PERFUME: The Story of a Murderer</h2>
+            <h2><?php echo $model->activitySet->title; ?></h2>
         </div>
         <div id="credits-movies" class="col-xs-12 col-sm-12 col-md-4">
             <img src="" alt="" />

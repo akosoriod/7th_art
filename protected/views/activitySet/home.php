@@ -1,16 +1,23 @@
 <?php
 /* @var $this ActivitySetController */
+/* @var $model ActivitySet */
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/parallax/jquery.parallax.min.js');
 ?>
 <script>
-    jQuery(document).ready(function($) {
+    $(document).ready(function($) {
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
 
         //Prueba del parallax
-        jQuery('.parallax-layer').parallax({
-            mouseport: jQuery('#parallax')
+        $('.parallax-layer').parallax({
+            mouseport: $("#parallax"),
+            yparallax:false,
+            xorigin: 'center'
+        });
+        
+        $('body').css({
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
         });
         
         $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
@@ -18,11 +25,15 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
 </script>
 <main class="detalle">
     <div class="breadcrumb-class">
-        Está en:&nbsp;<a href="http://unal.edu.co" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Sección</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>Página</b>
+        Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->title; ?></b>
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
-            <h2>PERFUME: The Story of a Murderer</h2>
+            <h2><?php echo $model->title; ?></h2>
+            <audio autoplay loop>
+                <source src="<?php echo Yii::app()->baseUrl.'/'.$model->soundtrack.'?'.rand(1,1000000); ?>" type="audio/ogg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
         <div id="credits-movies" class="col-xs-12 col-sm-12 col-md-4">
             <img src="" alt="" />
@@ -58,13 +69,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     <div class="row row4">
         <div id="parallax" class="col-xs-12 col-sm-12 col-md-12">
             <div class="parallax-layer" style="width:920px; height:274px;">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/1_mountains.png" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_1.'?'.rand(1,1000000); ?>" alt="" />
             </div>
             <div class="parallax-layer" style="width:1100px; height:284px;">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/2_hill.png" alt="" style="position:absolute; top:40px; left:0;" />
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_2.'?'.rand(1,1000000); ?>" alt="" style="position:absolute; top:40px; left:0;" />
             </div>
             <div class="parallax-layer" style="width:1360px; height:320px;">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/3_wood.png" alt="" style="position:absolute; top:96px; left:0;"/>
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_3.'?'.rand(1,1000000); ?>" alt="" style="position:absolute; top:96px; left:0;"/>
             </div>
         </div>
     </div>

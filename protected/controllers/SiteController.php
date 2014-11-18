@@ -103,7 +103,9 @@ class SiteController extends Controller {
                 if(intval($user->entries)===0){
                     $this->redirect(array('site/aboutus'));
                 }else{
-                    $this->render('index');
+                    $this->render('index',array(
+                        'activitySets'=>ActivitySet::getPublished()
+                    ));
                     $user->entries++;
                     $user->update();
                 }
