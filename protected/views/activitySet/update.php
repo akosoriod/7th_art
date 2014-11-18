@@ -2,20 +2,25 @@
 /* @var $this ActivitySetController */
 /* @var $model ActivitySet */
 
-$this->breadcrumbs=array(
-	'Activity Sets'=>array('index'),
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrator.css');
+?>
+<main class="admin_page" id="update_activity_set">
+    <?php
+    $this->breadcrumbs=array(
+        'Activity Sets'=>array('index'),
 	$model->title=>array('view','id'=>$model->id),
 	'Update',
-);
-
-$this->menu=array(
-	array('label'=>'List ActivitySet', 'url'=>array('index')),
-	array('label'=>'Create ActivitySet', 'url'=>array('create')),
-	array('label'=>'View ActivitySet', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage ActivitySet', 'url'=>array('admin')),
-);
-?>
-
-<h1>Update ActivitySet <?php echo $model->id; ?></h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+    );
+    ?>
+    <div id="container">
+        <div id="activitySets" class="section">
+            <h3 class="section_title">Actualizando Set de Actividades: <?php echo $model->title; ?></h3>
+            <div class="buttons">
+                <?php echo CHtml::link("Volver al inicio", array('admin')); ?>
+            </div>
+            <div class="data">
+                <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+            </div>
+        </div>
+    </div>
+</main>

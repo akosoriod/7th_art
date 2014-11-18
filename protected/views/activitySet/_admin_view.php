@@ -4,6 +4,13 @@
 ?>
 
 <div class="activitySet">
+        <div class='poster'>
+        <?php
+            echo CHtml::image(Yii::app()->baseUrl.'/'.$data->poster,"Póster");
+        ?>
+        </div>
+        <br />
+        
 	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
 	<?php echo CHtml::encode($data->title); ?>
 	<br />

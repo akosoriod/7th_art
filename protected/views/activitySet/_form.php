@@ -13,6 +13,7 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -23,11 +24,15 @@
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 
-	<!--<div class="field">-->
-		<?php // echo $form->labelEx($model,'status'); ?>
-		<?php // echo $form->textField($model,'status',array('size'=>45,'maxlength'=>45)); ?>
-		<?php // echo $form->error($model,'status'); ?>
-	<!--</div>-->
+        <?php 
+            if(!$model->isNewRecord){
+                echo '<div class="field">';
+                echo $form->labelEx($model,'status');
+                echo CHtml::dropDownList('status',$model->status_id,Status::model()->getStatusList());
+		echo $form->error($model,'status');
+                echo '</div>';
+            }
+        ?>
 
 	<!--<div class="field">-->
 		<?php // echo $form->labelEx($model,'publication'); ?>
@@ -54,15 +59,49 @@
 	</div>
 
 	<div class="field">
-		<?php echo $form->labelEx($model,'soundtrack_id'); ?>
-		<?php echo $form->textField($model,'soundtrack_id'); ?>
-		<?php echo $form->error($model,'soundtrack_id'); ?>
+            <?php
+                echo $form->labelEx($model, 'poster');
+                echo $form->fileField($model, 'poster',array('accept'=>'image/*'));
+                echo $form->error($model, 'poster');
+            ?>
 	</div>
 
 	<div class="field">
-		<?php echo $form->labelEx($model,'image_id'); ?>
-		<?php echo $form->textField($model,'image_id'); ?>
-		<?php echo $form->error($model,'image_id'); ?>
+            <?php
+                echo $form->labelEx($model, 'background');
+                echo $form->fileField($model, 'background',array('accept'=>'image/*'));
+                echo $form->error($model, 'background');
+            ?>
+	</div>
+	
+        <div class="field">
+            <?php
+                echo $form->labelEx($model, 'paralax_1');
+                echo $form->fileField($model, 'paralax_1',array('accept'=>'image/*'));
+                echo $form->error($model, 'paralax_1');
+            ?>
+	</div>
+	
+        <div class="field">
+            <?php
+                echo $form->labelEx($model, 'paralax_2');
+                echo $form->fileField($model, 'paralax_2',array('accept'=>'image/*'));
+                echo $form->error($model, 'paralax_2');
+            ?>
+	</div>
+	
+        <div class="field">
+            <?php
+                echo $form->labelEx($model, 'paralax_3');
+                echo $form->fileField($model, 'paralax_3',array('accept'=>'image/*'));
+                echo $form->error($model, 'paralax_3');
+            ?>
+	</div>
+        
+        <div class="field">
+		<?php echo $form->labelEx($model,'soundtrack'); ?>
+                <?php echo CHtml::activeFileField($model, 'soundtrack',array('accept'=>'audio/*')); ?>
+		<?php echo $form->error($model,'soundtrack'); ?>
 	</div>
         
         <div class="field">
@@ -72,7 +111,7 @@
         </div>
 
 	<div class="field">
-            <?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Save'); ?>
+            <?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar',array("id"=>"saveButton")); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

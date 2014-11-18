@@ -62,24 +62,62 @@ class ActivitySetController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ActivitySet;
+            $model=new ActivitySet;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            //El directorio donde se creara la información para las 
+            $setsPath=Yii::app()->baseUrl.Yii::app()->params['setsPath'];
+            if(isset($_POST['ActivitySet'])){
+                $model->attributes=$_POST['ActivitySet'];
+                $name=strtolower(preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})",'',$model->title));
+                $model->name=str_replace(" ","_", $name);
+                if($model->isNewRecord){
+                    $model->status_id=1;
+                }
+                if($model->save()){
+                    //Crea el directorio del set de actividades
+                    $pathSet="protected/data/sets/".$model->name;
+                    if(!file_exists($pathSet)){
+                        mkdir($pathSet);
+                    }
+                    //Almacena las imágenes y el audio
+                    if($_FILES['ActivitySet']['name']['poster']){
+                        $model->poster=CUploadedFile::getInstance($model,'poster');
+                        $model->poster->saveAs($pathSet.'/poster.jpg');
+                        $model->poster=$pathSet.'/poster.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['background']){
+                        $model->background=CUploadedFile::getInstance($model,'background');
+                        $model->background->saveAs($pathSet.'/background.jpg');
+                        $model->background=$pathSet.'/background.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_1']){
+                        $model->paralax_1=CUploadedFile::getInstance($model,'paralax_1');
+                        $model->paralax_1->saveAs($pathSet.'/paralax_1.jpg');
+                        $model->paralax_1=$pathSet.'/paralax_1.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_2']){
+                        $model->paralax_2=CUploadedFile::getInstance($model,'paralax_2');
+                        $model->paralax_2->saveAs($pathSet.'/paralax_2.jpg');
+                        $model->paralax_2=$pathSet.'/paralax_2.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_3']){
+                        $model->paralax_3=CUploadedFile::getInstance($model,'paralax_3');
+                        $model->paralax_3->saveAs($pathSet.'/paralax_3.jpg');
+                        $model->paralax_3=$pathSet.'/paralax_3.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['soundtrack']){
+                        $model->soundtrack=CUploadedFile::getInstance($model,'soundtrack');
+                        $model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
+                        $model->soundtrack=$pathSet.'/soundtrack.ogg';
+                    }
+                    $model->update();
+                    $this->redirect(array('view','id'=>$model->id));
+                }
+            }
 
-		if(isset($_POST['ActivitySet']))
-		{
-			$model->attributes=$_POST['ActivitySet'];
-                        $name=strtolower(preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})",'',$model->title));
-                        $model->name=str_replace(" ","_", $name);
-                        $model->status_id=1;
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+            $this->render('create',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**
@@ -87,23 +125,52 @@ class ActivitySetController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['ActivitySet']))
-		{
-			$model->attributes=$_POST['ActivitySet'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+	public function actionUpdate($id){
+            $model=$this->loadModel($id);
+            if(isset($_POST['ActivitySet'])){
+                $model->attributes=$_POST['ActivitySet'];
+                $model->status_id=intval($_POST['status']);
+                if($model->save()){
+                    //Crea el directorio del set de actividades
+                    $pathSet="protected/data/sets/".$model->name;
+                    //Almacena las imágenes y el audio
+                    if($_FILES['ActivitySet']['name']['poster']){
+                        $model->poster=CUploadedFile::getInstance($model,'poster');
+                        $model->poster->saveAs($pathSet.'/poster.jpg');
+                        $model->poster=$pathSet.'/poster.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['background']){
+                        $model->background=CUploadedFile::getInstance($model,'background');
+                        $model->background->saveAs($pathSet.'/background.jpg');
+                        $model->background=$pathSet.'/background.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_1']){
+                        $model->paralax_1=CUploadedFile::getInstance($model,'paralax_1');
+                        $model->paralax_1->saveAs($pathSet.'/paralax_1.jpg');
+                        $model->paralax_1=$pathSet.'/paralax_1.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_2']){
+                        $model->paralax_2=CUploadedFile::getInstance($model,'paralax_2');
+                        $model->paralax_2->saveAs($pathSet.'/paralax_2.jpg');
+                        $model->paralax_2=$pathSet.'/paralax_2.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_3']){
+                        $model->paralax_3=CUploadedFile::getInstance($model,'paralax_3');
+                        $model->paralax_3->saveAs($pathSet.'/paralax_3.jpg');
+                        $model->paralax_3=$pathSet.'/paralax_3.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['soundtrack']){
+                        $model->soundtrack=CUploadedFile::getInstance($model,'soundtrack');
+                        $model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
+                        $model->soundtrack=$pathSet.'/soundtrack.ogg';
+                    }
+                    $model->update();
+                    $this->redirect(array('view','id'=>$model->id));
+                }
+            }
+            $this->render('update',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**

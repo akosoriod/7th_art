@@ -11,24 +11,41 @@ body,.admin_page{
 
 #container .section{
     border: solid 1px #ddd;
+    height: 500px;
     margin: 10px;
     padding: 10px;
 }
 #container .section .section_title{
-    float: left;
     height: 30px;
     margin-bottom: 0;
-    width: 380px;
+    width: 1000px;
 }
 #container .section .list{
-    margin-top: 30px;
+    height: 430px;
+    overflow: auto;
 }
 #container #activitySets .activitySet{
-    margin-bottom: 15px;
-    margin-top: 10px;
-}
-#container #activitySets .buttons{
+    background: #eee;
+    border: solid 1px #ddd;
+    border-radius: 7px;
     float: left;
+    height: 250px;
+    margin: 15px;
+    padding: 5px;
+    width: 180px;
+    
+}
+#container #activitySets .activitySet .poster{
+    margin-left: auto;
+    margin-right: auto;
+    width: 130px;
+}
+#container #activitySets .activitySet .poster img{
+    height: 130px;
+    width: 130px;
+}
+
+#container #activitySets .buttons{
 }
 
 #container #users .user{
@@ -36,12 +53,75 @@ body,.admin_page{
 }
 
 /****  CREAR SETS DE ACTIVIDADES  ****/
-.create_activity_set .field{
+#create_activity_set .section,
+#update_activity_set .section{
+    height: auto;
+}
+#create_activity_set .field,
+#update_activity_set .field{
     margin-top: 10px;
 }
-.create_activity_set .field label{
+#create_activity_set .field label,
+#update_activity_set .field label{
     display: block;
 }
-.create_activity_set .field input,.create_activity_set .field select{
+#create_activity_set .field input,#create_activity_set .field select,
+#update_activity_set .field input,#update_activity_set .field select{
+    width: 340px;
+}
+#create_activity_set #saveButton,
+#update_activity_set #saveButton{
+    font-size: 1.2em;
+    font-weight: bold;
+    height: 40px;
+}
+
+/****  VER SETS DE ACTIVIDADES  ****/
+#admin_view_page #container .section{
+    height: auto;
+}
+#admin_view_page #container .section .field{
+    height: 35px;
+    margin-top: 13px;
+}
+#admin_view_page #container .section .field .value{
+    font-size: 1.5em;
+    margin-top: 3px;
+    text-indent: 10px;
+}
+#admin_view_page #container #multimedia{
+    height: 750px;
+}
+#admin_view_page #container .section .media{
+    float: left;
+    margin-right: 10px;
+}
+#admin_view_page #container .section .soundtrack{
+    float: none;
+    width: 1050px;
+}
+#admin_view_page #container .section .soundtrack audio{
+    margin-top: 5px;
+    width: 410px;
+}
+#admin_view_page #container .section .poster{
+    height: 200px;
+}
+
+#admin_view_page #container .section .poster img{
+    height: 200px;
     width: 200px;
+}
+#admin_view_page #container .section .fondo img{
+    height: 200px;
+    width: 200px;
+}
+#admin_view_page #container .section .parallax{
+    height: 320px;
+    overflow:hidden;
+    position:relative;
+    width: 1040px;
+}
+#admin_view_page #container .section .parallax .parallax-layer{
+    position: absolute;
 }

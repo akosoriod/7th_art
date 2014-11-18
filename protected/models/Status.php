@@ -96,4 +96,16 @@ class Status extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+	 * Retorna una lista cde estados para un Activity set
+	 * @return Array array de objetos Status
+	 */
+	public static function getStatusList(){
+            $array=array();
+            foreach (self::model()->findAll() as $status){
+                $array[$status->id]=$status->name;
+            }
+            return $array;
+	}
 }

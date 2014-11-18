@@ -13,7 +13,6 @@
  * @property string $width
  *
  * The followings are the available model relations:
- * @property ActivitySet[] $activitySets
  * @property Exercise[] $exercises
  * @property Object[] $objects
  * @property Prize[] $prizes
@@ -54,7 +53,6 @@ class Image extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'image_id'),
 			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_image(image_id, exercise_id)'),
 			'objects' => array(self::MANY_MANY, 'Object', 'object_image(image_id, object_id)'),
 			'prizes' => array(self::HAS_MANY, 'Prize', 'image_id'),
