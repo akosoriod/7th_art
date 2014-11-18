@@ -136,7 +136,11 @@ class User extends CActiveRecord
          * @return User User object currently connected
          */
         public static function getCurrentUser(){
-            $username=Yii::app()->user->name;
+            try{
+                $username=Yii::app()->user->_uid;
+            } catch (Exception $ex) {
+                $username=Yii::app()->user->name;
+            }
             $user=self::model()->find(
                 'username=:username',
                 array(':username'=>$username)
@@ -158,4 +162,47 @@ class User extends CActiveRecord
             }
             return $array;
 	}
+        
+        /**
+	 * Retorna un usuario a partir de su nombre de usuario
+         * @param string $username Nombre de usuario para verificar
+	 * @return User Objeto de tipo User
+	 */
+	public static function getByUsername($username){
+            return User::model()->findByAttributes(
+                array('username'=>$username)
+            );
+	}
+        
+        /**
+         * Crea un usuario en la base de datos que ha sido previamente cargado 
+         * por LDAP
+         * @param string $name Nombres del nuevo usuario
+         * @param string $lastname Apellidos del nuevo usuario
+         * @param string $username Nombre de usuario del nuevo usuario
+         * @param string $email Email del nuevo usuario
+         */
+        public static function createLDAPUser($name,$lastname,$username,$email){
+            $user=new User();
+            $user->name=$name;
+            $user->lastname=$lastname;
+            $user->username=$username;
+            $user->password=md5(rand(1000,10000000));
+            $user->active=true;
+            $user->auth_type='LDAP';
+            $user->email=$email;
+            $user->entries=0;
+            $user->save();
+            //Crea la relación entre el usuario LDAP y el rol
+            $userRole=new UserRole();
+            $userRole->role_id=3;
+            $userRole->user_id=$user->id;
+            $userRole->save();
+            //Asocia al usuario con los permisos para acceder la aplicación
+            $authAssignment=new AuthAssignment();
+            $authAssignment->itemname='user';
+            $authAssignment->userid=$user->id;
+            $authAssignment->data='N;';
+            $authAssignment->save();
+        }
 }

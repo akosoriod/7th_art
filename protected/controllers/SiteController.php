@@ -37,8 +37,19 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                //Redirecciona al index donde se define a qué vista pasar
-                $this->redirect(array('index'));
+                try{
+                    //Se verifica si el usuario existe en la base de datos, sino se crea
+                    $dbUser=User::getByUsername(Yii::app()->user->_uid);
+                    if(!$dbUser){
+                        User::createLDAPUser(Yii::app()->user->_givenName,Yii::app()->user->_sn,Yii::app()->user->_uid,Yii::app()->user->_mail);
+                        $dbUser=User::getByUsername(Yii::app()->user->_uid);
+                    }
+                    Yii::app()->user->id=$dbUser->id;
+                    //Redirecciona al index donde se define a qué vista pasar
+                    $this->redirect(array('index'));
+                }catch(Exception $e){
+                    Yii::app()->user->logout();
+                }
             }
         }
         $this->render('login', array('model' => $model));
