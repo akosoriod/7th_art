@@ -31,10 +31,16 @@ class DesignerController extends Controller {
      */
     public function actionIndex() {
         if(Yii::app()->user->checkAccess('designer')){
-            $this->render('index');
-        }else{
-            $this->redirect((array('site/index')));
+            if(array_key_exists('activitySet',$_GET)){
+                $activitySet=ActivitySet::getByName($_GET['activitySet']);
+                if($activitySet){
+                    $this->render('index',array(
+                        'activitySet'=>$activitySet
+                    ));
+                }
+            }
         }
+        $this->redirect((array('site/index')));
     }
     
     

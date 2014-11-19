@@ -1,5 +1,6 @@
 <?php
 /* @var $this DesignerController */
+/* @var $activitySet ActivitySet */
 
 $this->breadcrumbs=array(
 	'Designer',
@@ -38,86 +39,35 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
 	'Activity Sets',
     );
     ?>
-    
-    
-    
-    
-    
-    
-    
     <div id="container">
         <nav id="navigation">
-            Perfume
+            <?php echo $activitySet->title; ?>
             <ul>
-                <li>                  
-                    Film Credits
-                </li>
-                <li>
-                    Film Activity Credits
-                </li>
-                <li>
-                    Synopsis
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Pre-Viewing
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Who's Who in...?
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Film-Based
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Spidermap
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    After-Viewing
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    The Expert Says...
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Did you know that...?
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Acknoledgements
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
+            <?php
+                foreach ($activitySet->sections as $section) {
+                    echo '<li>'.$section->sectionType->label;
+                        echo '<ul>';
+                            foreach ($section->versions as $version) {
+                                echo '<li>'.$version->name.'</li>';
+                                echo '<ul>';
+                                    $count=0;
+                                    foreach ($version->activities as $activity) {
+                                        $count++;
+                                        echo '<li>Actividad '.$count.'</li>';
+                                        echo '<ul>';
+                                            $countSteps=0;
+                                            foreach ($activity->steps as $step) {
+                                                $countSteps++;
+                                                echo '<li>Paso '.$countSteps.'</li>';
+                                            }
+                                        echo '</ul>';
+                                    }
+                                echo '</ul>';
+                            }
+                        echo '</ul>';
+                    echo '</li>';
+                }
+            ?> 
             </ul>
         </nav>
         <div id="area">

@@ -78,6 +78,7 @@ class ActivitySetController extends Controller
                     $pathSet="protected/data/sets/".$model->name;
                     if(!file_exists($pathSet)){
                         mkdir($pathSet);
+                        mkdir($pathSet."/css");
                     }
                     //Almacena las imágenes y el audio
                     if($_FILES['ActivitySet']['name']['poster']){
@@ -117,7 +118,35 @@ class ActivitySetController extends Controller
                         $section->activity_set_id=$model->id;
                         $section->section_type_id=$sectionType->id;
                         $section->save();
+                        //Crea una versión para cada sección
+                        $version=new Version();
+                        $version->name='Versión 1';
+                        $version->visible=true;
+                        $version->selected=true;
+                        $version->section_id=$section->id;
+                        $version->status_id=3;
+                        $version->insert();
                         
+                        //TODO: Permitir crear los objetos en el editor.
+                        $activity=new Activity();
+                        $activity->visible=true;
+                        $activity->instruction="Esta es la instrucción de la actividad de: ".$model->title;
+                        $activity->version_id=$version->id;
+                        $activity->insert();
+                        
+                        //Crea un css para el Paso
+                        $css=new Css();
+                        $css->name="Css de paso 1";
+                        $css->description="";
+                        $css->path=$pathSet."/css/step_1";
+                        $css->insert();
+                        
+                        //Crea un paso
+                        $step=new Step();
+                        $step->instruction="Esta es la instrucción del paso para: ".$model->title;
+                        $step->activity_id=$activity->id;
+                        $step->css_id=$css->id;
+                        $step->insert();
                     }
                     $model->update();
                     $this->redirect(array('view','id'=>$model->id));

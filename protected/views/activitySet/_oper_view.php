@@ -4,6 +4,13 @@
 ?>
 
 <div class="activitySet">
+        <div class='poster'>
+        <?php
+            echo CHtml::image(Yii::app()->baseUrl.'/'.$data->poster,"Póster");
+        ?>
+        </div>
+        <br />
+        
 	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
 	<?php echo CHtml::encode($data->title); ?>
 	<br />
@@ -41,7 +48,7 @@
 	<?php /* echo CHtml::encode($data->getAttributeLabel('operator_id')); ?>:</b>
 	<?php echo CHtml::encode($data->operator->name." ".$data->operator->lastname); */ ?>
         
-	<?php echo CHtml::link("Editar", array('designer/index')); ?>
+	<?php echo CHtml::link("Editar", array('designer/index','activitySet'=>$data->name)); ?>
 	<!-- <?php echo CHtml::link("Editar Set de Actividades", array('edit')); ?> -->
 	<br />
 
