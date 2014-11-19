@@ -46,7 +46,7 @@ class SiteController extends Controller {
                     }
                     Yii::app()->user->id=$dbUser->id;
                     //Redirecciona al index donde se define a qué vista pasar
-                    $this->redirect(array('index'));
+                    $this->redirect(array('site/index'));
                 }catch(Exception $e){
                     Yii::app()->user->logout();
                 }
@@ -75,7 +75,7 @@ class SiteController extends Controller {
                 if(Yii::app()->user->checkAccess('createActivitySet')){
                     $this->redirect(array('activitySet/admin'));
                 }else{
-                    $this->redirect(array('designer/'));
+                    $this->redirect(array('activitySet/oper'));
                 }
             }
         }
@@ -96,8 +96,7 @@ class SiteController extends Controller {
                 $this->redirect(array('activitySet/admin')); 
             //Acceso del operador
             }else if(Yii::app()->user->checkAccess('designer')){
-                //$this->redirect(array('designer/index'));
-		$this->redirect(array('activitySet/oper')); 
+		$this->redirect(array('activitySet/oper'));
             }else if(Yii::app()->user->checkAccess('application')){
                 //Se valida si es la primera vez que ingresa al sitio
                 $user=User::getCurrentUser();
