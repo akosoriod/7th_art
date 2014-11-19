@@ -96,7 +96,8 @@ class SiteController extends Controller {
                 $this->redirect(array('activitySet/admin')); 
             //Acceso del operador
             }else if(Yii::app()->user->checkAccess('designer')){
-                $this->redirect(array('designer/index'));
+                //$this->redirect(array('designer/index'));
+		$this->redirect(array('activitySet/oper')); 
             }else if(Yii::app()->user->checkAccess('application')){
                 //Se valida si es la primera vez que ingresa al sitio
                 $user=User::getCurrentUser();

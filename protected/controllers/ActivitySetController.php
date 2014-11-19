@@ -121,6 +121,32 @@ class ActivitySetController extends Controller
 	}
 
 	/**
+	 * TODO Edit --- Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionEdit()
+	{
+		$model=new ActivitySet;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		/*if(isset($_POST['ActivitySet']))
+		{
+			$model->attributes=$_POST['ActivitySet'];
+                        $name=strtolower(preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})",'',$model->title));
+                        $model->name=str_replace(" ","_", $name);
+                        $model->status_id=1;
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}*/
+
+		$this->render('edit',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
@@ -229,6 +255,23 @@ class ActivitySetController extends Controller
             if(Yii::app()->user->checkAccess('createActivitySet')){
 		$model=new ActivitySet();
 		$this->render('admin',array(
+                    'model'=>$model,
+                    'activitySets'=>ActivitySet::model()->findAll(),
+                    'currentUser'=>User::getCurrentUser(),
+                    'users'=>User::model()->findAll()
+		));
+            }else{
+                $this->redirect(array('site/index'));
+            }
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionOper(){
+            if(Yii::app()->user->checkAccess('designer')){
+		$model=new ActivitySet();
+		$this->render('oper',array(
                     'model'=>$model,
                     'activitySets'=>ActivitySet::model()->findAll(),
                     'currentUser'=>User::getCurrentUser(),
