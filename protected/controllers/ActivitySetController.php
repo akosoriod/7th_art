@@ -110,6 +110,15 @@ class ActivitySetController extends Controller
                         $model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
                         $model->soundtrack=$pathSet.'/soundtrack.ogg';
                     }
+                    
+                    //Crea las secciones para el set de actividades
+                    foreach (SectionType::model()->findAll() as $sectionType) {
+                        $section=new Section();
+                        $section->activity_set_id=$model->id;
+                        $section->section_type_id=$sectionType->id;
+                        $section->save();
+                        
+                    }
                     $model->update();
                     $this->redirect(array('view','id'=>$model->id));
                 }
