@@ -81,7 +81,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="toolbar">
                     <div class="button object" id="button-object" title="Arrastrar un objeto"></div>
                     <!--<div class="button" id="button-object-list" title="Arrastrar una lista de objetos"></div>-->
-                    <div class="button true_false" id="button-true-false" title="Plantilla True-False"></div>
+                    <div class="button true_false" id="button-true-false" title="Objeto True-False"></div>
+                    <div class="button fill" id="button-fill" title="Objeto Llenar"></div>
 <!--                    <div class="button" id="button2" title="I'm a prototype"></div>
                     <div class="button" id="button3" title="I'm a prototype"></div>-->
                     <div class="button" id="save" title="Guardar actividad"></div>

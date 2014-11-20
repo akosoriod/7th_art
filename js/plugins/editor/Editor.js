@@ -59,13 +59,24 @@ var Editor = function(params,callback){
             opacity: 0.8,
             scroll: false
         });
-        
+        //True False
         self.toolbar.find("#button-true-false").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
             helper: function(){
                 return $( "<div class='object-true-false-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+        //Fill
+        self.toolbar.find("#button-fill").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='object-fill-helper'></div>" );
             },
             opacity: 0.8,
             scroll: false
@@ -111,7 +122,12 @@ var Editor = function(params,callback){
                                 '<input type="radio" id="radio2" name="radio" checked="checked"><label for="radio2">False</label>'+
                             '</div>';
                         var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
-                        attachEventsTrueFalse(object);
+                        attachObjectEvents(object);
+                    }else if(ui.draggable.hasClass("fill")){
+                        var displacement=$("#workspace").offset();
+                        var html='<input type="text" class="editor-fill-object"/>';
+                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
+                        attachObjectEvents(object);
                     }else{
                         alert("En construcción");
                     }
@@ -266,8 +282,9 @@ var Editor = function(params,callback){
      * Agrega los eventos TrueFalse a un objeto
      * @param {object} object Objeto al que se le asignarán lso eventos
      */
-    function attachEventsTrueFalse(object){
+    function attachObjectEvents(object){
         object.find(".editor-radio-object").buttonset();
+//        object.find(".editor-fill-object").buttonset();
     }
     
     /**************************************************************************/

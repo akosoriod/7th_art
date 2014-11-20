@@ -97,6 +97,14 @@
     height: 48px;
     width: 48px;
 }
+#container #area #editor #button-fill{
+    background-image: url('../images/editor/button2.png');
+}
+.object-fill-helper{
+    background-image: url('../images/editor/button2.png');
+    height: 48px;
+    width: 48px;
+}
 #container #area #editor #workspace{
     background-image: url('../images/editor/background2.jpg');
     bottom: 0;
