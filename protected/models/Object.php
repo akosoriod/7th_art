@@ -132,4 +132,41 @@ class Object extends CActiveRecord
             ';
             return $html;
         }
+        
+        /**
+         * Retorna una lista de objetos a partir de una Sección
+         * @param Section $section Objeto de tipo Section
+         * @return Object[] Lista de Objetos de la Sección
+         */
+        public static function getObjectsBySection($section){
+            $objectList=array();
+            foreach ($section->versions as $version) {
+                foreach ($version->activities as $activity) {
+                    foreach ($activity->steps as $step) {
+                        $stepObjects=self::getObjectsByStep($step);
+                        if(is_array($stepObjects)){
+                            $objectList=array_merge(self::getObjectsByStep($step),$objectList);
+                        }
+                    }
+                }
+            }
+            return $objectList;
+        }
+        
+        /**
+         * Retorna una lista de objetos a partir de un paso
+         * @param Paso $step Objeto de tipo Paso
+         * @return Object[] Lista de Objetos del Paso
+         */
+        public static function getObjectsByStep($step){
+            $objects=array();
+            foreach ($step->exercises as $exercise) {
+                foreach ($exercise->objectLists as $objectList) {
+                    foreach ($objectList->objects as $object) {
+                        $objects[]=$object;
+                    }
+                }
+            }
+            return $objects;
+        }
 }

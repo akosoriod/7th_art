@@ -31,10 +31,16 @@ class DesignerController extends Controller {
      */
     public function actionIndex() {
         if(Yii::app()->user->checkAccess('designer')){
-            $this->render('index');
-        }else{
-            $this->redirect((array('site/index')));
+            if(array_key_exists('activitySet',$_GET)){
+                $activitySet=ActivitySet::getByName($_GET['activitySet']);
+                if($activitySet){
+                    $this->render('index',array(
+                        'activitySet'=>$activitySet
+                    ));
+                }
+            }
         }
+        $this->redirect((array('site/index')));
     }
     
     
@@ -46,7 +52,10 @@ class DesignerController extends Controller {
         $success=true;
         //Get the client data
         $dataObjects=$_POST['objects'];
-        $prevObjects=Object::model()->findAll();
+        $stepId=intval($_POST['stepId']);
+        $step=Step::model()->findByPk($stepId);
+        $prevObjects=Object::getObjectsByStep($step);
+        $objectListId=$step->exercises[0]->objectLists[0]->id;
         foreach ($prevObjects as $prevObject) {
             $prevObject->delete();
         }
@@ -58,7 +67,7 @@ class DesignerController extends Controller {
             $object->top=intval($dataObject['top']);
             $object->height=intval($dataObject['height']);
             $object->width=intval($dataObject['width']);
-            $object->object_list_id=1;
+            $object->object_list_id=$objectListId;
             $object->save();
         }
         //Return the result of save schedule

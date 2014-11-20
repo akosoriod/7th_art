@@ -1,5 +1,6 @@
 <?php
 /* @var $this DesignerController */
+/* @var $activitySet ActivitySet */
 
 $this->breadcrumbs=array(
 	'Designer',
@@ -25,11 +26,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
             appUrl:appUrl
         });
         editor.init();
-
-        var sections=$("#navigation").children("ul");
-        sections.click(function(){
-            alert("only a prototype");
-        });
     });
 </script>
 <main id="editor_page">
@@ -38,86 +34,46 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
 	'Activity Sets',
     );
     ?>
-    
-    
-    
-    
-    
-    
-    
     <div id="container">
         <nav id="navigation">
-            Perfume
+            <?php echo $activitySet->title; ?>
             <ul>
-                <li>                  
-                    Film Credits
-                </li>
-                <li>
-                    Film Activity Credits
-                </li>
-                <li>
-                    Synopsis
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Pre-Viewing
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Who's Who in...?
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Film-Based
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Spidermap
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    After-Viewing
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    The Expert Says...
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Did you know that...?
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
-                <li>
-                    Acknoledgements
-                    <ul>
-                        <li>version 1</li>
-                        <li>version 2</li>
-                    </ul>
-                </li>
+            <?php
+                foreach ($activitySet->sections as $section) {
+                    echo '<li>'.$section->sectionType->label;
+                        echo '<ul>';
+                            foreach ($section->versions as $version) {
+                                echo '<li>'.$version->name.'</li>';
+                                echo '<ul>';
+                                    $count=0;
+                                    foreach ($version->activities as $activity) {
+                                        $count++;
+                                        echo '<li>Actividad '.$count.'</li>';
+                                        echo '<ul>';
+                                            $countSteps=0;
+                                            foreach ($activity->steps as $step) {
+                                                $countSteps++;
+                                                echo '<li class="step" '
+                                                    . 'data-step-id="'.$step->id.'" '
+                                                    . 'data-step-name="Paso '.$countSteps.'" '
+                                                    . 'data-activity-id="'.$activity->id.'" '
+                                                    . 'data-activity-name="Actividad '.$count.'" '
+                                                    . 'data-version-id="'.$version->id.'" '
+                                                    . 'data-version-name="'.$version->name.'" '
+                                                    . 'data-section-id="'.$section->id.'" '
+                                                    . 'data-section-name="'.$section->sectionType->label.'" '
+                                                    . 'data-activity-set-id="'.$activitySet->id.'" '
+                                                    . 'data-activity-set-title="'.$activitySet->title.'" '
+                                                .'>Paso '.$countSteps.'</li>';
+                                            }
+                                        echo '</ul>';
+                                    }
+                                echo '</ul>';
+                            }
+                        echo '</ul>';
+                    echo '</li>';
+                }
+            ?> 
             </ul>
         </nav>
         <div id="area">
@@ -128,6 +84,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
 <!--                    <div class="button" id="button2" title="I'm a prototype"></div>
                     <div class="button" id="button3" title="I'm a prototype"></div>-->
                     <div class="button" id="save" title="Guardar actividad"></div>
+                    <div id="editing_path">
+                        Editando: <span id="message"><?php echo $activitySet->title; ?></span>
+                    </div>
                 </div>
                 <div id="workspace" class="droppable"></div>
 

@@ -37,8 +37,19 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                // TODO: Se debe validar si es la primera vez que el usuario ingresa a la aplicaci�n
-                $this->redirect(array('site/aboutus'));
+                try{
+                    //Se verifica si el usuario existe en la base de datos, sino se crea
+                    $dbUser=User::getByUsername(Yii::app()->user->_uid);
+                    if(!$dbUser){
+                        User::createLDAPUser(Yii::app()->user->_givenName,Yii::app()->user->_sn,Yii::app()->user->_uid,Yii::app()->user->_mail);
+                        $dbUser=User::getByUsername(Yii::app()->user->_uid);
+                    }
+                    Yii::app()->user->id=$dbUser->id;
+                    //Redirecciona al index donde se define a qué vista pasar
+                    $this->redirect(array('site/index'));
+                }catch(Exception $e){
+                    Yii::app()->user->logout();
+                }
             }
         }
         $this->render('login', array('model' => $model));
@@ -51,17 +62,21 @@ class SiteController extends Controller {
         if(!Yii::app()->user->isGuest){
             $this->redirect(array('index'));
         }
-        $model = new LoginForm;
+        $model = new LoginFormAdmin;
         // if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
-        if (isset($_POST['LoginForm'])) {
-            $model->attributes = $_POST['LoginForm'];
+        if (isset($_POST['LoginFormAdmin'])) {
+            $model->attributes = $_POST['LoginFormAdmin'];
             // validate user input and redirect to the next page if valid
             if ($model->validate() && $model->login()){
-                $this->redirect(array('designer/'));
+                if(Yii::app()->user->checkAccess('createActivitySet')){
+                    $this->redirect(array('activitySet/admin'));
+                }else{
+                    $this->redirect(array('activitySet/oper'));
+                }
             }
         }
         $this->render('admin', array('model' => $model));
@@ -76,10 +91,24 @@ class SiteController extends Controller {
         if(Yii::app()->user->isGuest){
             $this->redirect(array('login'));
         }else{
-            if(Yii::app()->user->checkAccess('designer')){
-                $this->redirect(array('designer/index')); 
+            //Acceso del administrador
+            if(Yii::app()->user->checkAccess('createActivitySet')){
+                $this->redirect(array('activitySet/admin')); 
+            //Acceso del operador
+            }else if(Yii::app()->user->checkAccess('designer')){
+		$this->redirect(array('activitySet/oper'));
             }else if(Yii::app()->user->checkAccess('application')){
-                $this->render('index');
+                //Se valida si es la primera vez que ingresa al sitio
+                $user=User::getCurrentUser();
+                if(intval($user->entries)===0){
+                    $this->redirect(array('site/aboutus'));
+                }else{
+                    $this->render('index',array(
+                        'activitySets'=>ActivitySet::getPublished()
+                    ));
+                    $user->entries++;
+                    $user->update();
+                }
             }else{
                 // renders the view file 'protected/views/site/index.php'
                 // using the default layout 'protected/views/layouts/main.php'
@@ -128,21 +157,31 @@ class SiteController extends Controller {
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
-        Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
+        $redirectTo=Yii::app()->homeUrl;
+        if(Yii::app()->user->checkAccess('designer')){
+            Yii::app()->user->logout();
+             $this->redirect(array('site/admin'));
+        }else{
+            Yii::app()->user->logout();
+            $this->redirect(Yii::app()->homeUrl);
+        }
     }
 
     /**
-	 * Displays the about_us page
-	 */
-	public function actionAboutUs() {
-		if(isset($_POST['AGREE'])) {
-			$this->render('index');
-		} elseif (isset($_POST['DECLINE'])) {
-			 $this->redirect(array('site/logout'));
-		} else {
-            $this->render('about_us');
+    * Displays the about_us page
+    */
+    public function actionAboutUs() {
+        if(isset($_POST['AGREE'])) {
+            //Si acepta, se auenta el contador de entradas y se redirecciona al index
+            $user=User::getCurrentUser();
+            $user->entries++;
+            $user->update();
+            $this->redirect(array('site/index'));
+        } elseif (isset($_POST['DECLINE'])) {
+            $this->redirect(array('site/logout'));
+        } else {
+           $this->render('about_us');
         }
-	}
+    }
 
 }

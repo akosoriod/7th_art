@@ -91,13 +91,18 @@ return array(
 		// https://www.exchangecore.com/blog/yii-active-directory-useridentity-login-authentication/
 		'ldap' => array (
             'servers' => array(
+                'undirectorio.unal.edu.co',
                 'localhost',
-                '127.0.0.1',
             ),
-			'dc' => array('unal','edu','co'),
+			'oUNal' => 'unal.edu.co',
             'ou'=>array(
-                'estudiantes',
-                'profesores',
+                'people',
+                'institucional',
+            ),
+			'oSede'=>array(
+                'bogota',
+                'medellin',
+                'manizales',
             ),
         ),
 	),

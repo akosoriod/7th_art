@@ -12,6 +12,7 @@
  * @property string $active
  * @property string $auth_type
  * @property string $email
+ * @property integer $entries
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
@@ -41,11 +42,12 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password', 'required'),
+			array('entries', 'numerical', 'integerOnly'=>true),
 			array('name, lastname, username, password, active, auth_type', 'length', 'max'=>45),
 			array('email', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, lastname, username, password, active, auth_type, email', 'safe', 'on'=>'search'),
+			array('id, name, lastname, username, password, active, auth_type, email, entries', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +59,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_id)'),
+			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_set_id)'),
 			'authItems' => array(self::MANY_MANY, 'AuthItem', 'auth_assignment(userid, itemname)'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
@@ -81,6 +83,7 @@ class User extends CActiveRecord
 			'active' => 'Active',
 			'auth_type' => 'Auth Type',
 			'email' => 'Email',
+			'entries' => 'Entries',
 		);
 	}
 
@@ -110,6 +113,7 @@ class User extends CActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('auth_type',$this->auth_type,true);
 		$criteria->compare('email',$this->email,true);
+		$criteria->compare('entries',$this->entries);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -126,17 +130,79 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-        
+                
         /**
          * Returns the current user
          * @return User User object currently connected
          */
         public static function getCurrentUser(){
-            $username=Yii::app()->user->name;
+            try{
+                $username=Yii::app()->user->_uid;
+            } catch (Exception $ex) {
+                $username=Yii::app()->user->name;
+            }
             $user=self::model()->find(
                 'username=:username',
                 array(':username'=>$username)
             );
             return $user;
+        }
+        
+        /**
+	 * Retrieves an array of User of a user type
+         * @param Int $role_id Role id of the user
+	 * @return Array an array of TaxiModel.
+	 */
+	public static function getUserSelect($role_id=2){
+            $array=array();
+            foreach (self::model()->findAll() as $user){
+                if($user->roles[0]->id==$role_id){
+                    $array[$user->id]=$user->name." ".$user->lastname;
+                }
+            }
+            return $array;
+	}
+        
+        /**
+	 * Retorna un usuario a partir de su nombre de usuario
+         * @param string $username Nombre de usuario para verificar
+	 * @return User Objeto de tipo User
+	 */
+	public static function getByUsername($username){
+            return User::model()->findByAttributes(
+                array('username'=>$username)
+            );
+	}
+        
+        /**
+         * Crea un usuario en la base de datos que ha sido previamente cargado 
+         * por LDAP
+         * @param string $name Nombres del nuevo usuario
+         * @param string $lastname Apellidos del nuevo usuario
+         * @param string $username Nombre de usuario del nuevo usuario
+         * @param string $email Email del nuevo usuario
+         */
+        public static function createLDAPUser($name,$lastname,$username,$email){
+            $user=new User();
+            $user->name=$name;
+            $user->lastname=$lastname;
+            $user->username=$username;
+            $user->password=md5(rand(1000,10000000));
+            $user->active=true;
+            $user->auth_type='LDAP';
+            $user->email=$email;
+            $user->entries=0;
+            $user->save();
+            //Crea la relación entre el usuario LDAP y el rol
+            $userRole=new UserRole();
+            $userRole->role_id=3;
+            $userRole->user_id=$user->id;
+            $userRole->save();
+            //Asocia al usuario con los permisos para acceder la aplicación
+            $authAssignment=new AuthAssignment();
+            $authAssignment->itemname='user';
+            $authAssignment->userid=$user->id;
+            $authAssignment->data='N;';
+            $authAssignment->save();
         }
 }

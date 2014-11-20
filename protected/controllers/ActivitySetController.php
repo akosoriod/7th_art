@@ -2,7 +2,7 @@
 
 class ActivitySetController extends Controller
 {
-	/**
+	/** 
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
@@ -62,19 +62,139 @@ class ActivitySetController extends Controller
 	 */
 	public function actionCreate()
 	{
+            $model=new ActivitySet;
+
+            //El directorio donde se creara la información para las 
+            $setsPath=Yii::app()->baseUrl.Yii::app()->params['setsPath'];
+            if(isset($_POST['ActivitySet'])){
+                $model->attributes=$_POST['ActivitySet'];
+                $name=strtolower(preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})",'',$model->title));
+                $model->name=str_replace(" ","_", $name);
+                if($model->isNewRecord){
+                    $model->status_id=1;
+                }
+                if($model->save()){
+                    //Crea el directorio del set de actividades
+                    $pathSet="protected/data/sets/".$model->name;
+                    if(!file_exists($pathSet)){
+                        mkdir($pathSet);
+                    }
+                    if(!file_exists($pathSet."/css")){
+                        mkdir($pathSet."/css");
+                    }
+                    //Almacena las imágenes y el audio
+                    if($_FILES['ActivitySet']['name']['poster']){
+                        $model->poster=CUploadedFile::getInstance($model,'poster');
+                        $model->poster->saveAs($pathSet.'/poster.jpg');
+                        $model->poster=$pathSet.'/poster.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['background']){
+                        $model->background=CUploadedFile::getInstance($model,'background');
+                        $model->background->saveAs($pathSet.'/background.jpg');
+                        $model->background=$pathSet.'/background.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_1']){
+                        $model->paralax_1=CUploadedFile::getInstance($model,'paralax_1');
+                        $model->paralax_1->saveAs($pathSet.'/paralax_1.jpg');
+                        $model->paralax_1=$pathSet.'/paralax_1.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_2']){
+                        $model->paralax_2=CUploadedFile::getInstance($model,'paralax_2');
+                        $model->paralax_2->saveAs($pathSet.'/paralax_2.jpg');
+                        $model->paralax_2=$pathSet.'/paralax_2.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_3']){
+                        $model->paralax_3=CUploadedFile::getInstance($model,'paralax_3');
+                        $model->paralax_3->saveAs($pathSet.'/paralax_3.jpg');
+                        $model->paralax_3=$pathSet.'/paralax_3.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['soundtrack']){
+                        $model->soundtrack=CUploadedFile::getInstance($model,'soundtrack');
+                        $model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
+                        $model->soundtrack=$pathSet.'/soundtrack.ogg';
+                    }
+                    
+                    //Crea las secciones para el set de actividades
+                    foreach (SectionType::model()->findAll() as $sectionType) {
+                        $section=new Section();
+                        $section->activity_set_id=$model->id;
+                        $section->section_type_id=$sectionType->id;
+                        $section->save();
+                        //Crea una versión para cada sección
+                        $version=new Version();
+                        $version->name='Versión 1';
+                        $version->visible=true;
+                        $version->selected=true;
+                        $version->section_id=$section->id;
+                        $version->status_id=3;
+                        $version->insert();
+                        
+                        //TODO: Permitir crear los objetos en el editor.
+                        $activity=new Activity();
+                        $activity->visible=true;
+                        $activity->instruction="Esta es la instrucción de la actividad de: ".$model->title;
+                        $activity->version_id=$version->id;
+                        $activity->insert();
+                        
+                        //Crea un css para el Paso
+                        $css=new Css();
+                        $css->name="Css de paso 1";
+                        $css->description="";
+                        $css->path=$pathSet."/css/step_1";
+                        $css->insert();
+                        
+                        //Crea un paso
+                        $step=new Step();
+                        $step->instruction="Esta es la instrucción del paso para: ".$model->title;
+                        $step->activity_id=$activity->id;
+                        $step->css_id=$css->id;
+                        $step->insert();
+                        
+                        //Crea un ejercicio
+                        $exercise=new Exercise();
+                        $exercise->exercise_type_id=1;
+                        $exercise->step_id=$step->id;
+                        $exercise->insert();
+                        
+                        //Crea un object list
+                        $objectList=new ObjectList();
+                        $objectList->static=false;
+                        $objectList->connected=false;
+                        $objectList->exercise_id=$exercise->id;
+                        $objectList->insert();
+                    }
+                    $model->update();
+                    $this->redirect(array('view','id'=>$model->id));
+                }
+            }
+
+            $this->render('create',array(
+                    'model'=>$model,
+            ));
+	}
+
+	/**
+	 * TODO Edit --- Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionEdit()
+	{
 		$model=new ActivitySet;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ActivitySet']))
+		/*if(isset($_POST['ActivitySet']))
 		{
 			$model->attributes=$_POST['ActivitySet'];
+                        $name=strtolower(preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})",'',$model->title));
+                        $model->name=str_replace(" ","_", $name);
+                        $model->status_id=1;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-		}
+		}*/
 
-		$this->render('create',array(
+		$this->render('edit',array(
 			'model'=>$model,
 		));
 	}
@@ -84,23 +204,52 @@ class ActivitySetController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['ActivitySet']))
-		{
-			$model->attributes=$_POST['ActivitySet'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+	public function actionUpdate($id){
+            $model=$this->loadModel($id);
+            if(isset($_POST['ActivitySet'])){
+                $model->attributes=$_POST['ActivitySet'];
+                $model->status_id=intval($_POST['status']);
+                if($model->save()){
+                    //Crea el directorio del set de actividades
+                    $pathSet="protected/data/sets/".$model->name;
+                    //Almacena las imágenes y el audio
+                    if($_FILES['ActivitySet']['name']['poster']){
+                        $model->poster=CUploadedFile::getInstance($model,'poster');
+                        $model->poster->saveAs($pathSet.'/poster.jpg');
+                        $model->poster=$pathSet.'/poster.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['background']){
+                        $model->background=CUploadedFile::getInstance($model,'background');
+                        $model->background->saveAs($pathSet.'/background.jpg');
+                        $model->background=$pathSet.'/background.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_1']){
+                        $model->paralax_1=CUploadedFile::getInstance($model,'paralax_1');
+                        $model->paralax_1->saveAs($pathSet.'/paralax_1.jpg');
+                        $model->paralax_1=$pathSet.'/paralax_1.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_2']){
+                        $model->paralax_2=CUploadedFile::getInstance($model,'paralax_2');
+                        $model->paralax_2->saveAs($pathSet.'/paralax_2.jpg');
+                        $model->paralax_2=$pathSet.'/paralax_2.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['paralax_3']){
+                        $model->paralax_3=CUploadedFile::getInstance($model,'paralax_3');
+                        $model->paralax_3->saveAs($pathSet.'/paralax_3.jpg');
+                        $model->paralax_3=$pathSet.'/paralax_3.jpg';
+                    }
+                    if($_FILES['ActivitySet']['name']['soundtrack']){
+                        $model->soundtrack=CUploadedFile::getInstance($model,'soundtrack');
+                        $model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
+                        $model->soundtrack=$pathSet.'/soundtrack.ogg';
+                    }
+                    $model->update();
+                    $this->redirect(array('view','id'=>$model->id));
+                }
+            }
+            $this->render('update',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**
@@ -124,7 +273,7 @@ class ActivitySetController extends Controller
             if(Yii::app()->user->checkAccess('manageActivitySets')){
                 $dataProvider=new CActiveDataProvider('ActivitySet');
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+                    'dataProvider'=>$dataProvider,
 		));
             }else{
                 $this->redirect(array('site/index')); 
@@ -155,16 +304,35 @@ class ActivitySetController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
-	{
-		$model=new ActivitySet('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ActivitySet']))
-			$model->attributes=$_GET['ActivitySet'];
-
+	public function actionAdmin(){
+            if(Yii::app()->user->checkAccess('createActivitySet')){
+		$model=new ActivitySet();
 		$this->render('admin',array(
-			'model'=>$model,
+                    'model'=>$model,
+                    'activitySets'=>ActivitySet::model()->findAll(),
+                    'currentUser'=>User::getCurrentUser(),
+                    'users'=>User::model()->findAll()
 		));
+            }else{
+                $this->redirect(array('site/index'));
+            }
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionOper(){
+            if(Yii::app()->user->checkAccess('designer')){
+		$model=new ActivitySet();
+		$this->render('oper',array(
+                    'model'=>$model,
+                    'activitySets'=>ActivitySet::model()->findAll(),
+                    'currentUser'=>User::getCurrentUser(),
+                    'users'=>User::model()->findAll()
+		));
+            }else{
+                $this->redirect(array('site/index'));
+            }
 	}
 
 	/**

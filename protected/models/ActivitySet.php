@@ -11,14 +11,16 @@
  * @property string $tagline
  * @property string $director
  * @property integer $year
- * @property integer $soundtrack_id
- * @property integer $image_id
+ * @property string $poster
+ * @property string $background
+ * @property string $paralax_1
+ * @property string $paralax_2
+ * @property string $paralax_3
+ * @property string $soundtrack
  * @property integer $operator_id
  * @property integer $status_id
  *
  * The followings are the available model relations:
- * @property Image $image
- * @property Audio $soundtrack
  * @property User $operator
  * @property Status $status
  * @property Genre[] $genres
@@ -45,12 +47,18 @@ class ActivitySet extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, title, operator_id, status_id', 'required'),
-			array('year, soundtrack_id, image_id, operator_id, status_id', 'numerical', 'integerOnly'=>true),
+			array('year, operator_id, status_id', 'numerical', 'integerOnly'=>true),
 			array('name, title, publication, director', 'length', 'max'=>45),
 			array('tagline', 'length', 'max'=>100),
+                        array('poster', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
+                        array('background', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
+                        array('paralax_1', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
+                        array('paralax_2', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
+                        array('paralax_3', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
+                        array('soundtrack', 'file', 'types'=>'ogg','allowEmpty' => true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, title, publication, tagline, director, year, soundtrack_id, image_id, operator_id, status_id', 'safe', 'on'=>'search'),
+			array('id, name, title, publication, tagline, director, year, poster, operator_id, status_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,8 +70,6 @@ class ActivitySet extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'image' => array(self::BELONGS_TO, 'Image', 'image_id'),
-			'soundtrack' => array(self::BELONGS_TO, 'Audio', 'soundtrack_id'),
 			'operator' => array(self::BELONGS_TO, 'User', 'operator_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
 			'genres' => array(self::MANY_MANY, 'Genre', 'genre_activity_set(activity_set_id, genre_id)'),
@@ -80,16 +86,20 @@ class ActivitySet extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'title' => 'Title',
-			'publication' => 'Publication',
+			'name' => 'Nombre',
+			'title' => 'Título',
+			'publication' => 'Publicación',
 			'tagline' => 'Tagline',
 			'director' => 'Director',
-			'year' => 'Year',
-			'soundtrack_id' => 'Soundtrack',
-			'image_id' => 'Image',
-			'operator_id' => 'Operator',
-			'status_id' => 'Status',
+			'year' => 'Año',
+			'poster' => 'Póster',
+                        'background' => 'Fondo',
+			'paralax_1' => 'Paralax 1',
+			'paralax_2' => 'Paralax 2',
+			'paralax_3' => 'Paralax 3',
+			'soundtrack' => 'Soundtrack',
+			'operator_id' => 'Operador',
+			'status_id' => 'Estado',
 		);
 	}
 
@@ -118,8 +128,12 @@ class ActivitySet extends CActiveRecord
 		$criteria->compare('tagline',$this->tagline,true);
 		$criteria->compare('director',$this->director,true);
 		$criteria->compare('year',$this->year);
-		$criteria->compare('soundtrack_id',$this->soundtrack_id);
-		$criteria->compare('image_id',$this->image_id);
+		$criteria->compare('poster',$this->poster,true);
+                $criteria->compare('background',$this->background,true);
+		$criteria->compare('paralax_1',$this->paralax_1,true);
+		$criteria->compare('paralax_2',$this->paralax_2,true);
+		$criteria->compare('paralax_3',$this->paralax_3,true);
+		$criteria->compare('soundtrack',$this->soundtrack,true);
 		$criteria->compare('operator_id',$this->operator_id);
 		$criteria->compare('status_id',$this->status_id);
 
@@ -140,6 +154,26 @@ class ActivitySet extends CActiveRecord
 	}
         
         /**
+         * Retorna el estado del activitySet en Español
+         * @return string Status en español
+         */
+        public function statusSpanish(){
+            $status="";
+            switch ($this->status->name) {
+                case "editing":
+                    $status="editando";
+                    break;
+                case "revised":
+                    $status="revisado";
+                    break;
+                case "published":
+                    $status="publicado";
+                    break;
+            }
+            return $status;
+        }
+        
+        /**
          * Returns the ActivitySet from the name
          * @param string $name Name of the ActivitySet
          * @return ActivitySet ActivitySet object
@@ -150,5 +184,17 @@ class ActivitySet extends CActiveRecord
                 array(':name'=>$name)
             );
             return $object;
+        }
+        
+        /**
+         * Retorna los activitySets que están publicados
+         * @return ActivitySet[] Array de ActivitySets
+         */
+        public static function getPublished(){
+            $list=self::model()->findAll(
+                'status_id=:statusId',
+                array(':statusId'=>3)
+            );
+            return $list;
         }
 }

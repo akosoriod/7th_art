@@ -1,16 +1,23 @@
 <?php
 /* @var $this ActivitySetController */
+/* @var $model ActivitySet */
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/parallax/jquery.parallax.min.js');
 ?>
 <script>
-    jQuery(document).ready(function($) {
+    $(document).ready(function($) {
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
 
         //Prueba del parallax
-        jQuery('.parallax-layer').parallax({
-            mouseport: jQuery('#parallax')
+        $('.parallax-layer').parallax({
+            mouseport: $("#parallax"),
+            yparallax:false,
+            xorigin: 'center'
+        });
+        
+        $('body').css({
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
         });
         
         $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
@@ -18,11 +25,15 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
 </script>
 <main class="detalle">
     <div class="breadcrumb-class">
-        Está en:&nbsp;<a href="http://unal.edu.co" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Sección</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>Página</b>
+        Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->title; ?></b>
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
-            <h2>PERFUME: The Story of a Murderer</h2>
+            <h2><?php echo $model->title; ?></h2>
+            <audio autoplay loop>
+                <source src="<?php echo Yii::app()->baseUrl.'/'.$model->soundtrack.'?'.rand(1,1000000); ?>" type="audio/ogg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
         <div id="credits-movies" class="col-xs-12 col-sm-12 col-md-4">
             <img src="" alt="" />
@@ -31,15 +42,15 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     </div>
     <div class="row row2">
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
-            <a id="mnu_synopsis" class="mnu_button" href="../../../section/index/movie/<?php echo $model->name; ?>/section/synopsis">Synopsis</a>
-            <a id="mnu_pre" class="mnu_button" href="perfume/set_previewing.html">Pre-Viewing <span class="caret"></span></a>
-            <a id="mnu_who" class="mnu_button" href="perfume/set_whoiswho.html">Who's Who in...?</a>
-            <a id="mnu_film" class="mnu_button" href="perfume/set_filmbased.html">Film-Based <span class="caret"></span></a>
-            <a id="mnu_spider" class="mnu_button" href="perfume/set_spidermap.html">Spidermap</a>
-            <a id="mnu_after" class="mnu_button" href="perfume/set_afterviewing.html">After-Viewing <span class="caret"></span></a>
-            <a id="mnu_expert" class="mnu_button" href="perfume/set_expertsays.html">The Expert Says...</a>
-            <a id="mnu_did" class="mnu_button" href="perfume/set_didyouknow.html">Did you know that...?</a>
-            <a id="mnu_ack" class="mnu_button" href="perfume/set_aknowledgements.html">Acknoledgments</a>
+            <a id="mnu_synopsis" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/synopsis">Synopsis</a>
+            <a id="mnu_pre" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/pre_viewing">Pre-Viewing <span class="caret"></span></a>
+            <a id="mnu_who" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/whos">Who's Who in...?</a>
+            <a id="mnu_film" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/film_based">Film-Based <span class="caret"></span></a>
+            <a id="mnu_spider" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/spider_map">Spidermap</a>
+            <a id="mnu_after" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/after_viewing">After-Viewing <span class="caret"></span></a>
+            <a id="mnu_expert" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/experts">The Expert Says...</a>
+            <a id="mnu_did" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/did_you_know">Did you know that...?</a>
+            <a id="mnu_ack" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name; ?>/section/acknoledgments">Acknoledgments</a>
         </div>
     </div>
     <div class="row row3">
@@ -58,13 +69,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     <div class="row row4">
         <div id="parallax" class="col-xs-12 col-sm-12 col-md-12">
             <div class="parallax-layer" style="width:920px; height:274px;">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/1_mountains.png" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_1.'?'.rand(1,1000000); ?>" alt="" />
             </div>
             <div class="parallax-layer" style="width:1100px; height:284px;">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/2_hill.png" alt="" style="position:absolute; top:40px; left:0;" />
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_2.'?'.rand(1,1000000); ?>" alt="" style="position:absolute; top:40px; left:0;" />
             </div>
             <div class="parallax-layer" style="width:1360px; height:320px;">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/3_wood.png" alt="" style="position:absolute; top:96px; left:0;"/>
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_3.'?'.rand(1,1000000); ?>" alt="" style="position:absolute; top:96px; left:0;"/>
             </div>
         </div>
     </div>
