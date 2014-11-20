@@ -26,11 +26,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
             appUrl:appUrl
         });
         editor.init();
-
-        var sections=$("#navigation").children("ul");
-        sections.click(function(){
-            alert("only a prototype");
-        });
     });
 </script>
 <main id="editor_page">
@@ -58,7 +53,18 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                             $countSteps=0;
                                             foreach ($activity->steps as $step) {
                                                 $countSteps++;
-                                                echo '<li>Paso '.$countSteps.'</li>';
+                                                echo '<li class="step" '
+                                                    . 'data-step-id="'.$step->id.'" '
+                                                    . 'data-step-name="Paso '.$countSteps.'" '
+                                                    . 'data-activity-id="'.$activity->id.'" '
+                                                    . 'data-activity-name="Actividad '.$count.'" '
+                                                    . 'data-version-id="'.$version->id.'" '
+                                                    . 'data-version-name="'.$version->name.'" '
+                                                    . 'data-section-id="'.$section->id.'" '
+                                                    . 'data-section-name="'.$section->sectionType->label.'" '
+                                                    . 'data-activity-set-id="'.$activitySet->id.'" '
+                                                    . 'data-activity-set-title="'.$activitySet->title.'" '
+                                                .'>Paso '.$countSteps.'</li>';
                                             }
                                         echo '</ul>';
                                     }
@@ -78,6 +84,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
 <!--                    <div class="button" id="button2" title="I'm a prototype"></div>
                     <div class="button" id="button3" title="I'm a prototype"></div>-->
                     <div class="button" id="save" title="Guardar actividad"></div>
+                    <div id="editing_path">
+                        Editando: <span id="message"><?php echo $activitySet->title; ?></span>
+                    </div>
                 </div>
                 <div id="workspace" class="droppable"></div>
 

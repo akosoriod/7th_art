@@ -70,13 +70,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
     </div>
     <div id="workspace" class="row row4 row_activities">
         <?php
-            $objects=Object::model()->findAll();
+            $objects=Object::getObjectsBySection($model);
             foreach ($objects as $object) {
-                echo $object->getHtml();
+                //TODO: Calcular automáticamente
+                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
+                echo $html;
             }
-            
-            
-            
         ?>
 <!--        <div id="activities" class="col-xs-12 col-sm-12 col-md-12">
             <div id="set_1" class="set">

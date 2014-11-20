@@ -57,6 +57,10 @@
     height: 54px;
     width: 100%;
 }
+#container #area #editor #toolbar #editing_path{
+    float: right;
+    margin: 5px 5px 0 0;
+}
 #container #area #editor .button{
     cursor: pointer;
     float: left;

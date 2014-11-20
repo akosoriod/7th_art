@@ -78,6 +78,8 @@ class ActivitySetController extends Controller
                     $pathSet="protected/data/sets/".$model->name;
                     if(!file_exists($pathSet)){
                         mkdir($pathSet);
+                    }
+                    if(!file_exists($pathSet."/css")){
                         mkdir($pathSet."/css");
                     }
                     //Almacena las imágenes y el audio
@@ -147,6 +149,19 @@ class ActivitySetController extends Controller
                         $step->activity_id=$activity->id;
                         $step->css_id=$css->id;
                         $step->insert();
+                        
+                        //Crea un ejercicio
+                        $exercise=new Exercise();
+                        $exercise->exercise_type_id=1;
+                        $exercise->step_id=$step->id;
+                        $exercise->insert();
+                        
+                        //Crea un object list
+                        $objectList=new ObjectList();
+                        $objectList->static=false;
+                        $objectList->connected=false;
+                        $objectList->exercise_id=$exercise->id;
+                        $objectList->insert();
                     }
                     $model->update();
                     $this->redirect(array('view','id'=>$model->id));

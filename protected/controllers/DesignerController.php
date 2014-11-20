@@ -52,7 +52,10 @@ class DesignerController extends Controller {
         $success=true;
         //Get the client data
         $dataObjects=$_POST['objects'];
-        $prevObjects=Object::model()->findAll();
+        $stepId=intval($_POST['stepId']);
+        $step=Step::model()->findByPk($stepId);
+        $prevObjects=Object::getObjectsByStep($step);
+        $objectListId=$step->exercises[0]->objectLists[0]->id;
         foreach ($prevObjects as $prevObject) {
             $prevObject->delete();
         }
@@ -64,7 +67,7 @@ class DesignerController extends Controller {
             $object->top=intval($dataObject['top']);
             $object->height=intval($dataObject['height']);
             $object->width=intval($dataObject['width']);
-            $object->object_list_id=1;
+            $object->object_list_id=$objectListId;
             $object->save();
         }
         //Return the result of save schedule
