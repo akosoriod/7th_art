@@ -25,6 +25,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
                 overflow:'auto',
                 position:'absolute'
             });
+            
+            //Agrega los eventos a los objetos
+            $(this).find(".editor-radio-object").buttonset();
         });
     });
 </script>

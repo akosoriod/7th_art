@@ -89,6 +89,14 @@
 #container #area #editor #save{
     background-image: url('../images/editor/button4.png');
 }
+#container #area #editor #button-true-false{
+    background-image: url('../images/editor/button1.png');
+}
+.object-true-false-helper{
+    background-image: url('../images/editor/button1.png');
+    height: 48px;
+    width: 48px;
+}
 #container #area #editor #workspace{
     background-image: url('../images/editor/background2.jpg');
     bottom: 0;

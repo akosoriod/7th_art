@@ -53,9 +53,19 @@ var Editor = function(params,callback){
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
-//                    helper: "clone",
             helper: function(){
                 return $( "<div class='object-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+        
+        self.toolbar.find("#button-true-false").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='object-true-false-helper'></div>" );
             },
             opacity: 0.8,
             scroll: false
@@ -92,80 +102,16 @@ var Editor = function(params,callback){
             drop: function( event, ui ) {
                 if(self.currentStep){
                     if(ui.draggable.hasClass("object")){
-                        self.countObjects++;
-                        $(this).append('<div class="draggable object" id="object'+self.countObjects+'" data-id="'+self.countObjects+'"><div class="content"><div class="text"><div class="textContent"></div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
-                        var object=$(this).find('#object'+self.countObjects);
-                        object.draggable({
-                            containment: "#workspace",
-                            cursor: "move",
-                            opacity: 0.4,
-                            scroll: false
-                        }).resizable({
-    //                        containment:"parent"
-                        });
                         var displacement=$("#workspace").offset();
-                        object.css({
-                            left:ui.position.left-displacement.left,
-                            top:ui.position.top-displacement.top
-                        });
-                        object.find(".deleteObject").click(function(){
-                            object.remove();
-                        });
-                        object.find(".config").click(function(){
-                            var id=parseInt($(this).parent().attr("data-id"));
-                            $("#properties").attr("data-object",id);
-                            $("#properties").dialog("open");
-                        });
-
-                        var text=object.find(".text");
-                        text.dblclick(function(){
-                            var textObj=$(this);
-                            $('<div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
-                                height:500,
-                                title:"Contenido del objeto",
-                                modal:true,
-                                width:800,
-                                buttons:{
-                                    Cancelar:function(){
-                                        $(this).find("#dialogTextValue").tinymce().remove();
-                                        $(this).dialog("close");$(this).dialog('destroy').remove();
-                                    },
-                                    Aceptar:function(){
-                                        textObj.find('.textContent').html($(this).find('#dialogTextValue').val());
-                                        $(this).find("#dialogTextValue").tinymce().remove();
-                                        $(this).dialog("close");$(this).dialog('destroy').remove();
-                                    }
-                                },
-                                open:function(){
-                                    var textEditor=$(this).find("#dialogTextValue");
-                                    textEditor.tinymce({
-                                         // Location of TinyMCE script
-                                        script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
-                                        language : 'es_MX',
-                                        height:290,
-                                        plugins: [
-                                            "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
-                                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-                                            "save table contextmenu directionality template paste textcolor textcolor jbimages"
-                                        ],
-                                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect "+
-                                                "searchreplace wordcount fullscreen "+
-                                                "autolink link image media lists preview spellchecker table | link image jbimages",
-                                        menubar : false,
-                                        oninit:function(){
-                                            tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
-                                            tinyMCE.DOM.setStyle('body', 'background-color', 'red');
-                                        }
-                                    });
-                                },
-                                close:function(){
-                                    try{
-                                        $(this).find("#dialogTextValue").tinymce().remove();
-                                        $(this).dialog("close");$(this).dialog('destroy').remove();
-                                    }catch(e){};
-                                }
-                            });
-                        });
+                        addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top);
+                    }else if(ui.draggable.hasClass("true_false")){
+                        var displacement=$("#workspace").offset();
+                        var html='<div class="editor-radio-object">'+
+                                '<input type="radio" id="radio1" name="radio"><label for="radio1">True</label>'+
+                                '<input type="radio" id="radio2" name="radio" checked="checked"><label for="radio2">False</label>'+
+                            '</div>';
+                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
+                        attachEventsTrueFalse(object);
                     }else{
                         alert("En construcción");
                     }
@@ -227,6 +173,103 @@ var Editor = function(params,callback){
         
     };
     
+    
+    /**
+     * Agrega un objeto al workspace
+     * @param {int} left Distancia a la izquierda del workspace
+     * @param {int} top Distancia arriba del workspace
+     * @param {string} content Contenido opcional para el objeto
+     */
+    function addNewObject(left,top,content){
+        if(!content){
+            content="";
+        }
+        self.countObjects++;
+        self.workspace.append('<div class="draggable object" id="object'+self.countObjects+'" data-id="'+self.countObjects+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
+        var object=self.workspace.find('#object'+self.countObjects);
+        object.draggable({
+            containment: "#workspace",
+            cursor: "move",
+            opacity: 0.4,
+            scroll: false
+        }).resizable({
+//                        containment:"parent"
+        });
+        object.css({
+            left:left,
+            top:top
+        });
+        object.find(".deleteObject").click(function(){
+            object.remove();
+        });
+        object.find(".config").click(function(){
+            var id=parseInt($(this).parent().attr("data-id"));
+            $("#properties").attr("data-object",id);
+            $("#properties").dialog("open");
+        });
+
+        var text=object.find(".text");
+        text.dblclick(function(){
+            var textObj=$(this);
+            $('<div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
+                height:500,
+                title:"Contenido del objeto",
+                modal:true,
+                width:800,
+                buttons:{
+                    Cancelar:function(){
+                        $(this).find("#dialogTextValue").tinymce().remove();
+                        $(this).dialog("close");$(this).dialog('destroy').remove();
+                    },
+                    Aceptar:function(){
+                        textObj.find('.textContent').html($(this).find('#dialogTextValue').val());
+                        $(this).find("#dialogTextValue").tinymce().remove();
+                        $(this).dialog("close");$(this).dialog('destroy').remove();
+                    }
+                },
+                open:function(){
+                    var textEditor=$(this).find("#dialogTextValue");
+                    textEditor.tinymce({
+                         // Location of TinyMCE script
+                        script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
+                        language : 'es_MX',
+                        height:290,
+                        plugins: [
+                            "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
+                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
+                            "save table contextmenu directionality template paste textcolor textcolor jbimages"
+                        ],
+                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect "+
+                                "searchreplace wordcount fullscreen "+
+                                "autolink link image media lists preview spellchecker table | link image jbimages code",
+                        menubar : false,
+                        oninit:function(){
+                            tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
+                            tinyMCE.DOM.setStyle('body', 'background-color', 'red');
+                        }
+                    });
+                },
+                close:function(){
+                    try{
+                        $(this).find("#dialogTextValue").tinymce().remove();
+                        $(this).dialog("close");$(this).dialog('destroy').remove();
+                    }catch(e){};
+                }
+            });
+        });
+        return object;
+    };
+    
+    
+    
+    /**
+     * Agrega los eventos TrueFalse a un objeto
+     * @param {object} object Objeto al que se le asignarán lso eventos
+     */
+    function attachEventsTrueFalse(object){
+        object.find(".editor-radio-object").buttonset();
+    }
+    
     /**************************************************************************/
     /********************************** METHODS *******************************/
     /**************************************************************************/
@@ -242,7 +285,16 @@ var Editor = function(params,callback){
     function parseObject(objectElem){
         var text=objectElem.find('.text');
         var pos=objectElem.position();
-        var asd=new Objeto();
+        
+        
+        //Elimina la funcionalidad para agregarla en el usuario
+        try{
+            objectElem.find(".editor-radio-object").buttonset( "destroy" );
+        }catch(e){
+            
+        }
+
+        
         var object={
             id:parseInt(objectElem.attr('data-id')),
             css:text.attr('style')===undefined?"background: #fff;":text.attr('style'),
@@ -254,6 +306,17 @@ var Editor = function(params,callback){
                 content:text.html()
             }
         };
+        
+        
+        
+        //Vuelve a agregar la funcionalidad para visualizar en el editor
+        try{
+            objectElem.find(".editor-radio-object").buttonset();
+        }catch(e){
+            
+        }
+        
+        
         return object;
     };
     
