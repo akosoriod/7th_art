@@ -4,20 +4,401 @@ Universidad Nacional de Colombia
 7thart_bog@unal.edu.co
 2014
 */
+
 /*
 ARCHIVO CREADO USANDO LESS
 NO EDITAR DIRECTAMENTE EL CSS
 */
+
 /* HTML GENERAL */
+
 body {
-  background: #FFFFFF;
+  background: white;
 }
 /* LAYOUT GENERAL */
+
 main.detalle {
+<<<<<<< HEAD
+  font-family: 'Roboto', sans-serif !important;
+  margin: 0 auto 10px;
+  max-width: 1010px;
+  /* ==================== TYPOGRAFIA Y CLASES GENERAL PARA TODO EL CONTENIDO CENTRAL ==================== */
+
+  /* ==================== /TYPOGRAFIA Y CLASES GENERAL PARA TODO EL CONTENIDO CENTRAL ==================== */
+
+=======
   margin: 0 10% 10px;
+>>>>>>> 1bb2f29a7c4c4122838eaf0dc7dc115bd0e1ff00
 }
 main.detalle .breadcrumb-class {
   margin: 10px 0;
+}
+main.detalle h1 {
+  font-size: 30px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h2 {
+  font-size: 25px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h3 {
+  font-size: 20px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+  border: none;
+}
+main.detalle h4 {
+  font-size: 18px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h5 {
+  font-size: 16px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h6 {
+  font-size: 15px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle *,
+main.detalle input,
+main.detalle button,
+main.detalle select,
+main.detalle textarea {
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+}
+main.detalle p {
+  margin: 0 0 20px 0;
+}
+main.detalle .fa {
+  font-family: FontAwesome !important;
+}
+main.detalle table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+main.detalle table tr th {
+  background-color: rgba(253, 253, 253, 0.7);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: #e5e5e5;
+  border-right: 1px solid;
+  color: #666666;
+  font-weight: bold;
+  padding: 9px 20px;
+  text-align: left;
+}
+main.detalle table tr td {
+  background-color: rgba(253, 253, 253, 0.7);
+  border-color: #e5e5e5;
+  border-right: 1px solid;
+  padding: 9px 20px;
+}
+main.detalle table,
+main.detalle table tr,
+main.detalle table tr td,
+main.detalle table tr th {
+  border-color: #e5e5e5;
+}
+main.detalle .dropcap {
+  float: left;
+  font-size: 29px;
+  height: 32px;
+  line-height: 30px;
+  margin: 2px 7px 0 2px;
+  text-align: center;
+  width: 32px;
+}
+main.detalle .dropcap.circle {
+  background-color: #444444;
+  border-radius: 16px;
+  color: white;
+  font-size: 18px;
+  margin-right: 10px;
+}
+main.detalle blockquote,
+main.detalle q {
+  background: url("../css/images/blockquote.png") no-repeat scroll 18px 14px rgba(253, 253, 253, 0.7);
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  padding: 15px 15px 0 50px;
+  quotes: none;
+}
+main.detalle blockquote:before,
+main.detalle q:before,
+main.detalle blockquote:after,
+main.detalle q:after {
+  content: none;
+}
+main.detalle blockquote p,
+main.detalle q p {
+  font-size: 1.1em;
+}
+main.detalle ol,
+main.detalle ul {
+  line-height: 20px;
+  margin-bottom: 15px;
+  padding: 0 0 0 25px;
+}
+main.detalle ul {
+  list-style: outside none none;
+  padding-left: 0;
+}
+main.detalle ul li {
+  background-position: 0 0.8em;
+  background-repeat: no-repeat;
+  border: none;
+  list-style-position: inside;
+  list-style-type: none;
+}
+main.detalle ul li.style1 {
+  background-image: url("../css/images/li-style1.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style2 {
+  background-image: url("../css/images/li-style2.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style3 {
+  background-image: url("../css/images/li-style3.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style4 {
+  background-image: url("../css/images/li-style4.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style5 {
+  background-image: url("../css/images/li-style5.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style6 {
+  background-image: url("../css/images/li-style6.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li,
+main.detalle ol li {
+  border: none;
+  font-size: 1em;
+}
+main.detalle .highlight {
+  background: none repeat scroll 0 0 #50992e;
+  color: white;
+}
+main.detalle a:link {
+  color: #50992e;
+}
+main.detalle .notification {
+  font-size: 1.2em;
+  margin: 5px 0;
+  padding: 13px 40px 13px 18px;
+}
+main.detalle .notification.error,
+main.detalle .notification.error strong {
+  background-color: #ffe9e9;
+  color: #de5959;
+}
+main.detalle .notification.success,
+main.detalle .notification.success strong {
+  background-color: #ebf6e0;
+  color: #5f9025;
+}
+main.detalle .notification.warning,
+main.detalle .notification.warning strong {
+  background-color: #fbfadd;
+  color: #8f872e;
+}
+main.detalle .notification.notice,
+main.detalle .notification.notice strong {
+  background-color: #e9f7fe;
+  color: #5091b2;
+}
+main.detalle .notification p {
+  margin: 0;
+}
+main.detalle .boxes {
+  clear: both;
+  color: white !important;
+  content: "";
+  display: table;
+  text-align: center;
+}
+main.detalle .boxes .box-color-green {
+  background-color: #38c782;
+}
+main.detalle .boxes .box-color-blue {
+  background-color: #0e83cd;
+}
+main.detalle .boxes .box-color-violet {
+  background-color: #a558a6;
+}
+main.detalle .boxes .box-color-yellow {
+  background-color: #ffba35;
+}
+main.detalle .boxes a {
+  color: white !important;
+  text-decoration: underline;
+}
+main.detalle .boxes * {
+  color: white !important;
+}
+main.detalle .user-photo img {
+  border-radius: 50%;
+  display: block;
+  height: 80px;
+  margin: 0 auto 11px;
+  width: 80px;
+}
+main.detalle .buttons {
+  clear: both;
+  content: "";
+  display: table;
+}
+main.detalle .buttons a {
+  color: white;
+  float: right;
+  font-size: 14px;
+  margin: 5px 0 0;
+  padding: 8px 15px;
+}
+main.detalle .buttons a:hover {
+  background-color: silver !important;
+}
+main.detalle .buttons a:visited {
+  color: white;
+}
+main.detalle .buttons a.button-color-green {
+  background-color: #38c782;
+}
+main.detalle .buttons a.button-color-blue {
+  background-color: #0e83cd;
+}
+main.detalle .buttons a.button-color-violet {
+  background-color: #a558a6;
+}
+main.detalle .buttons a.button-color-yellow {
+  background-color: #ffba35;
+}
+main.detalle .tabsdiv .tabs-nav {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+main.detalle .tabsdiv .tabs-nav li {
+  background-color: #f6f6f6;
+  border: none;
+  color: white;
+  float: left;
+  line-height: 38px;
+  list-style-image: none;
+  margin: 0 1px 1px 0;
+  overflow: hidden;
+  padding: 2px 20px;
+  position: relative;
+  vertical-align: baseline;
+}
+main.detalle .tabsdiv .tabs-nav li.active {
+  background-color: #38c782;
+}
+main.detalle .tabsdiv .tabs-nav li.active a {
+  color: white;
+}
+main.detalle .tabsdiv .tabs-nav li a {
+  transition: all 0.2s ease-in-out 0s;
+}
+main.detalle .tabsdiv .tabs-container {
+  background-color: rgba(253, 253, 253, 0.7);
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  overflow: hidden;
+  width: 100%;
+}
+main.detalle .tabsdiv .tab-content {
+  margin: 0;
+  padding: 15px;
+  vertical-align: baseline;
+}
+main.detalle .accordionsdiv .accordions-nav {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+main.detalle .accordionsdiv .accordions-nav li {
+  background-color: #f6f6f6;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 26px;
+  margin-bottom: 1px;
+  outline: medium none;
+  padding: 10px 16px;
+  position: relative;
+  transition: background-color 200ms ease-in-out 0s;
+}
+main.detalle .accordionsdiv .accordions-nav li.active {
+  background-color: #38c782;
+}
+main.detalle .accordionsdiv .accordions-nav li.active a {
+  color: white;
+}
+main.detalle .accordionsdiv .accordions-nav li a {
+  transition: all 0.2s ease-in-out 0s;
+}
+main.detalle .accordionsdiv .accordions-nav li:before {
+  color: #38c782;
+  content: "";
+  display: block;
+  float: right;
+  font-family: "FontAwesome";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  margin: 2px 4px 0 0;
+}
+main.detalle .accordionsdiv .accordions-nav li.active:before {
+  color: white;
+  content: "";
+}
+main.detalle .accordionsdiv .accordions-container {
+  background-color: rgba(253, 253, 253, 0.7);
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  overflow: hidden;
+  width: 100%;
+}
+main.detalle .accordionsdiv .accordion-content {
+  margin: 0;
+  padding: 15px;
+  vertical-align: baseline;
+}
+main.detalle li.jjactive:before {
+  color: white;
+  content: "";
 }
 #investment_project {
   margin-top: 90px;
@@ -43,6 +424,7 @@ main.detalle .breadcrumb-class {
   font-weight: bold;
 }
 /* PAGE FRONT, INTRO */
+
 .front form#loginform {
   margin: 70px auto 0;
   width: 300px;
@@ -58,6 +440,7 @@ main.detalle .breadcrumb-class {
   width: 400px;
 }
 /* PAGE ABOUT_US */
+
 .page-about_us #div_img_camera {
   margin-top: 20px;
 }
@@ -80,25 +463,19 @@ main.detalle .breadcrumb-class {
   width: 120px;
 }
 .page-about_us #steps .step {
-  border: 1px solid #000;
+  border: 1px solid black;
   border-radius: 10px;
   height: 15px;
   margin-left: 3px;
   text-align: center;
   width: 15px;
 }
-/* PAGE HOME */
+/* PAGE HOME - donde están todas las películas*/
+
 .page-home #tools .tool {
   float: left;
 }
-.page-home #sets .set {
-  background: orange;
-  float: left;
-  height: 130px;
-  margin: 12px;
-  width: 130px;
-}
-.page-home #sets .set .percent {
+.page-home #sets .percent {
   background: url(../images/percentage.png) no-repeat left top transparent;
   display: block;
   height: 47px;
@@ -107,16 +484,73 @@ main.detalle .breadcrumb-class {
   position: absolute;
   width: 47px;
 }
-.page-home #sets .set .info {
-  color: #fff;
+.page-home #sets .info {
+  color: white;
   margin-top: -18px;
 }
-.page-home #sets .set .info .attribute.title {
+.page-home #sets .info .attribute.title {
   background: transparent;
   text-align: center;
 }
-.page-home #sets .set .info .hidden {
+.page-home #sets .info .hidden {
   display: none;
+}
+.page-home .opcion1 {
+  margin-bottom: 120px;
+}
+.page-home .opcion1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.page-home .opcion1 #sets .set {
+  background: orange;
+  float: left;
+  height: 151px;
+  margin: 25px;
+  width: 151px;
+}
+.page-home .opcion1 #sets .set img {
+  height: 151px !important;
+  width: 151px !important;
+}
+.page-home .opcion2 {
+  margin-bottom: 120px;
+}
+.page-home .opcion2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.page-home .opcion2 #sets .set {
+  background: orange;
+  float: left;
+  height: 208px;
+  margin: 16px;
+  width: 170px;
+}
+.page-home .opcion2 #sets .set img {
+  height: 208px !important;
+  width: 170px !important;
+}
+.page-home .opcion3 {
+  margin-bottom: 120px;
+}
+.page-home .opcion3:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.page-home .opcion3 #sets .set {
+  background: orange;
+  float: left;
+  height: 250px;
+  margin: 12px;
+  width: 175px;
+}
+.page-home .opcion3 #sets .set img {
+  height: 250px !important;
+  width: 175px !important;
 }
 .page-home .row1 {
   margin: 0 0 40px 0;
@@ -127,12 +561,13 @@ main.detalle .breadcrumb-class {
   width: 250px;
 }
 /* HOME PAGE -FOR ALL- MOVIES */
+
 #menu-movies {
   height: 20px;
 }
 #menu-movies a.mnu_button {
-  background-color: #50992E;
-  color: #fff;
+  background-color: #50992e;
+  color: white;
   float: left;
   font-size: 16px;
   margin-left: 2px;
@@ -163,13 +598,13 @@ main.detalle .breadcrumb-class {
   overflow: hidden;
   position: relative;
   /* relative, absolute, fixed */
-
   width: 100%;
 }
 .page-set .parallax-layer {
   position: absolute;
 }
 /* SET ACTIVITIES PAGE -FOR ALL- MOVIES */
+
 .row_activities {
   background-color: rgba(255, 255, 255, 0.5);
   padding-bottom: 20px;
@@ -183,22 +618,35 @@ main.detalle .breadcrumb-class {
   padding: 10px;
 }
 /* PAGE MOVIE PERFUME */
+
 .movie-perfume {
   background: url(../images/perfume.4.filmmenu_muro.png) repeat center top transparent;
 }
 /******************** TEMPORALES *************************/
+
 /* QUITAR MENUS QUE NO SE VEN EN CADA PAGINA
         YA QUE CARGAN DINÁMICAMENTE */
+
 .front .navbar-,
 .page-about_us .navbar-,
 .page-home .navbar- {
   display: none;
 }
+<<<<<<< HEAD
+/* ACTIVIDAD DE PERFUME WHO IS WHO
+        estos estilos supongo se crean desde el editor
+        se trabajan aquí sólamente para presentación en la web */
+
+.whoswhoin .divTable {
+  background-color: #ffead7;
+  display: table;
+=======
 /* OTROS CREADOS POR MIGUEL */
 /* estilos de los pasos en la introducción a la herramienta */
 #steps .step {
   float: left;
   margin-left: 2px;
+>>>>>>> 1bb2f29a7c4c4122838eaf0dc7dc115bd0e1ff00
 }
 #steps .step_active {
   background: orange;
@@ -227,21 +675,35 @@ main.detalle .breadcrumb-class {
 .divNoBorder {
   border: 0 !important;
 }
+<<<<<<< HEAD
+.whoswhoin .headRow .divCell {
+  background-color: #bb80a8;
+  color: white;
+=======
 
 .taWhoIsWho {
   padding: 0px;
   resize: none;
   overflow: auto;
   width: 147px;
+>>>>>>> 1bb2f29a7c4c4122838eaf0dc7dc115bd0e1ff00
 }
 
 /* estilos aplicados en Perfume - After Viewing */
 div.columns {
   width: 900px;
 }
+<<<<<<< HEAD
+/* OTROS CREADOS POR MIGUEL */
+
+/* estilos de los pasos en la introducción a la herramienta */
+
+#steps .step {
+=======
 
 div.columns div {
   width: 300px;
+>>>>>>> 1bb2f29a7c4c4122838eaf0dc7dc115bd0e1ff00
   float: left;
   text-align: justify;
   padding: 20px;
