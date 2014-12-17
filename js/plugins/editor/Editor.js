@@ -255,9 +255,10 @@ var Editor = function(params,callback){
                             "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
                             "save table contextmenu directionality template paste textcolor textcolor jbimages"
                         ],
-                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect "+
-                                "searchreplace wordcount fullscreen "+
-                                "autolink link image media lists preview spellchecker table | link image jbimages code",
+                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
+                                " searchreplace wordcount fullscreen |"+
+                                " autolink link image media lists preview spellchecker table | jbimages code |" +
+                                " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
                         menubar : false,
                         oninit:function(){
                             tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
