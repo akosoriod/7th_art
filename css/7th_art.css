@@ -171,12 +171,11 @@ main.detalle .breadcrumb-class {
 }
 .page-set #parallax {
   background-color: transparent;
-  height: 350px;
+  height: 465px;
   overflow: hidden;
   position: relative;
   /* relative, absolute, fixed */
-
-  width: 100%;
+  width: 1038px;
 }
 .page-set .parallax-layer {
   position: absolute;
@@ -301,7 +300,7 @@ main.detalle .breadcrumb-class {
   background: orange;
 }
 
-/** Estilos para el menú My Account */
+/** Estilos para el menï¿½ My Account */
 #myAccount{background:repeat-y #333 url(../images/myAccountBck.png);position:fixed;right:-800px;top:150px;transition:all .25s ease-out;z-index:20000}
 #myAccount.active{right:0}
 #myAccount ul{margin:0;overflow-x:hidden;padding:0 10px;}
@@ -324,7 +323,7 @@ main.detalle .breadcrumb-class {
 #myAccount ul ul li{border-bottom:1px solid #222;border-top:1px solid #444;height:52px;padding:10px 0;width:240px}
 #myAccount ul li div img{display:block;margin: auto;float:none; max-width: 100%; max-height: 100%; height: auto;width: auto;}
 
-/** Estilos para la opción Progress */
+/** Estilos para la opciï¿½n Progress */
 div.progress {
     height: 30px;
     margin-left: auto;
@@ -338,7 +337,7 @@ div.progress {
 }
 div.progress div {float: left; width: 25%;}
 
-/** Estilos para la opción Preferences */
+/** Estilos para la opciï¿½n Preferences */
 div.preferences {
     margin-left: auto;
     margin-right: auto;
