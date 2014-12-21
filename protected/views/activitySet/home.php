@@ -69,13 +69,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     <div class="row row4">
         <div id="parallax" class="col-xs-12 col-sm-12 col-md-12">
             <div class="parallax-layer" style="width:1238px; height:543px;">
-                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_1.'?'.rand(1,1000000); ?>" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_1.'?'.rand(1,1000000); ?>" alt=""/>
             </div>
             <div class="parallax-layer" style="width:1338px; height:543px;">
-                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_2.'?'.rand(1,1000000); ?>" alt="" style="position:absolute; top:40px; left:0;" />
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_2.'?'.rand(1,1000000); ?>" alt=""/>
             </div>
             <div class="parallax-layer" style="width:1438px; height:543px;">
-                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_3.'?'.rand(1,1000000); ?>" alt="" style="position:absolute; top:96px; left:0;"/>
+                <img src="<?php echo Yii::app()->request->baseUrl.'/'.$model->paralax_3.'?'.rand(1,1000000); ?>" alt=""/>
             </div>
         </div>
     </div>
