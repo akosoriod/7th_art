@@ -55,7 +55,7 @@ class ActivitySet extends CActiveRecord
                         array('paralax_1', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
                         array('paralax_2', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
                         array('paralax_3', 'file', 'types'=>'jpg, gif, png','allowEmpty' => true),
-                        array('soundtrack', 'file', 'types'=>'ogg','allowEmpty' => true),
+                        array('soundtrack', 'file', 'types'=>'ogg','allowEmpty' => true,'maxSize'=>1024 * 1024 * 50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, name, title, publication, tagline, director, year, poster, operator_id, status_id', 'safe', 'on'=>'search'),
