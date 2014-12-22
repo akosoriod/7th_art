@@ -105,6 +105,19 @@ var Editor = function(params,callback){
                 self.currentStep.stepName
             );
             self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
+            
+            
+            //Se cargan los anteriores objetos
+            loadStep(self.currentStep.stepId,function(err,response){
+                if(err){
+                    alert("No se pueden cargar el paso, por favor intente de nuevo.");
+                }else{
+                    for(var i in response.objects){
+                        addObject(response.objects[i]);
+                    }
+                }
+            });
+            
         });
         
         
@@ -189,6 +202,89 @@ var Editor = function(params,callback){
         
     };
     
+    /**
+     * Agrega un objeto precargado al workspace
+     * @param {object} object Objeto que se quiere mostrar en el editor
+     */
+    function addObject(objectLoaded){
+        self.countObjects++;
+        self.workspace.append('<div class="draggable object" id="object'+objectLoaded.id+'" data-id="'+objectLoaded.id+'"><div class="content"><div class="text"><div class="textContent">'+objectLoaded.text.content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
+        var object=self.workspace.find('#object'+objectLoaded.id);
+        object.draggable({
+            containment: "#workspace",
+            cursor: "move",
+            opacity: 0.4,
+            scroll: false
+        }).resizable({
+//                        containment:"parent"
+        });
+        object.css({
+            height:objectLoaded.height,
+            left:objectLoaded.left,
+            top:objectLoaded.top,
+            width:objectLoaded.width
+        });
+        object.find(".deleteObject").click(function(){
+            object.remove();
+        });
+        object.find(".config").click(function(){
+            var id=parseInt($(this).parent().attr("data-id"));
+            $("#properties").attr("data-object",id);
+            $("#properties").dialog("open");
+        });
+
+        var text=object.find(".text");
+        text.dblclick(function(){
+            var textObj=$(this);
+            $('<div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
+                height:500,
+                title:"Contenido del objeto",
+                modal:true,
+                width:800,
+                buttons:{
+                    Cancelar:function(){
+                        $(this).find("#dialogTextValue").tinymce().remove();
+                        $(this).dialog("close");$(this).dialog('destroy').remove();
+                    },
+                    Aceptar:function(){
+                        textObj.find('.textContent').html($(this).find('#dialogTextValue').val());
+                        $(this).find("#dialogTextValue").tinymce().remove();
+                        $(this).dialog("close");$(this).dialog('destroy').remove();
+                    }
+                },
+                open:function(){
+                    var textEditor=$(this).find("#dialogTextValue");
+                    textEditor.tinymce({
+                         // Location of TinyMCE script
+                        script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
+                        language : 'es_MX',
+                        height:290,
+                        plugins: [
+                            "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
+                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
+                            "save table contextmenu directionality template paste textcolor textcolor jbimages"
+                        ],
+                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
+                                " searchreplace wordcount fullscreen |"+
+                                " autolink link image media lists preview spellchecker table | jbimages code |" +
+                                " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
+                        menubar : false,
+                        oninit:function(){
+                            tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
+                            tinyMCE.DOM.setStyle('body', 'background-color', 'red');
+                        }
+                    });
+                },
+                close:function(){
+                    try{
+                        $(this).find("#dialogTextValue").tinymce().remove();
+                        $(this).dialog("close");$(this).dialog('destroy').remove();
+                    }catch(e){};
+                }
+            });
+        });
+        return object;
+    };
     
     /**
      * Agrega un objeto al workspace
@@ -276,8 +372,7 @@ var Editor = function(params,callback){
         });
         return object;
     };
-    
-    
+        
     
     /**
      * Agrega los eventos TrueFalse a un objeto
@@ -349,7 +444,7 @@ var Editor = function(params,callback){
     /**************************************************************************/
     
     /**
-     * Saves the driver collect
+     * Guarda la lista de objetos
      * @param {function} callback Function to return the response
      */
     function saveObjects(stepId,objects,callback){
@@ -359,6 +454,33 @@ var Editor = function(params,callback){
             data:{
                 stepId:stepId,
                 objects:objects
+            }
+        }).done(function(response) {
+            var data = JSON.parse(response);
+            if(callback){callback(false,data);}
+        }).fail(function(error) {
+            if(error.status===403){
+                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                window.location=self.ajaxUrl;
+            }else{
+                if(callback){callback(error);}
+            }
+        }).always(function(){
+            
+        });
+    };
+    
+    /**
+     * Carga la lista de objetos para un paso de la base de datos (si existen) y los
+     * retorna a través del callback
+     * @param {function} callback Function to return the response
+     */
+    function loadStep(stepId,callback){
+        $.ajax({
+            url: self.ajaxUrl+'loadStepByAjax',
+            type: "POST",
+            data:{
+                stepId:stepId
             }
         }).done(function(response) {
             var data = JSON.parse(response);

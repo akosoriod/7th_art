@@ -73,4 +73,31 @@ class DesignerController extends Controller {
         //Return the result of save schedule
         echo json_encode(array("success"=>$success));
     }
+    
+    /**
+    * Saves a schedule in database by ajax. Returns true if success
+    * @param JSONAjax $schedule JSON with the schedule by ajax
+    */
+    public function actionLoadStepByAjax(){
+        $list=array();
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $step=Step::model()->findByPk($stepId);
+        $objects=Object::getObjectsByStep($step);
+        foreach ($objects as $object) {
+            $list[]=array(
+                "id"=>intval($object->id),
+                "text"=>array(
+                    "content"=>$object->content
+                ),
+                "css"=>$object->css,
+                "left"=>intval($object->left),
+                "top"=>intval($object->top),
+                "height"=>intval($object->height),
+                "width"=>intval($object->width)
+            );
+        }
+        //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("objects"=>$list));
+    }
 }
