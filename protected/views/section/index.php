@@ -27,7 +27,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
             });
             
             //Agrega los eventos a los objetos
-            $(this).find(".editor-radio-object").buttonset();
+//            $(this).find(".editor-radio-object").buttonset();
         });
     });
 </script>
