@@ -1,29 +1,34 @@
 <?php
 
 /**
- * This is the model class for table "image".
+ * This is the model class for table "object_state".
  *
- * The followings are the available columns in table 'image':
+ * The followings are the available columns in table 'object_state':
  * @property integer $id
- * @property string $path
- * @property string $filename
- * @property string $extension
- * @property string $copyright
+ * @property integer $left
+ * @property integer $top
  * @property integer $height
- * @property string $width
+ * @property integer $width
+ * @property string $content
+ * @property string $css
+ * @property string $value
+ * @property integer $object_state_type_id
+ * @property integer $object_id
+ * @property integer $value_type_id
  *
  * The followings are the available model relations:
- * @property Exercise[] $exercises
- * @property Prize[] $prizes
+ * @property ObjectStateType $objectStateType
+ * @property Object $object
+ * @property ValueType $valueType
  */
-class Image extends CActiveRecord
+class ObjectState extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'image';
+		return 'object_state';
 	}
 
 	/**
@@ -34,13 +39,13 @@ class Image extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('path, filename', 'required'),
-			array('height', 'numerical', 'integerOnly'=>true),
-			array('filename, extension, width', 'length', 'max'=>45),
-			array('copyright', 'safe'),
+			array('object_state_type_id, object_id, value_type_id', 'required'),
+			array('left, top, height, width, object_state_type_id, object_id, value_type_id', 'numerical', 'integerOnly'=>true),
+			array('css', 'length', 'max'=>45),
+			array('content, value', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, path, filename, extension, copyright, height, width', 'safe', 'on'=>'search'),
+			array('id, left, top, height, width, content, css, value, object_state_type_id, object_id, value_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +57,9 @@ class Image extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_image(image_id, exercise_id)'),
-			'prizes' => array(self::HAS_MANY, 'Prize', 'image_id'),
+			'objectStateType' => array(self::BELONGS_TO, 'ObjectStateType', 'object_state_type_id'),
+			'object' => array(self::BELONGS_TO, 'Object', 'object_id'),
+			'valueType' => array(self::BELONGS_TO, 'ValueType', 'value_type_id'),
 		);
 	}
 
@@ -64,12 +70,16 @@ class Image extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'path' => 'Path',
-			'filename' => 'Filename',
-			'extension' => 'Extension',
-			'copyright' => 'Copyright',
+			'left' => 'Left',
+			'top' => 'Top',
 			'height' => 'Height',
 			'width' => 'Width',
+			'content' => 'Content',
+			'css' => 'Css',
+			'value' => 'Value',
+			'object_state_type_id' => 'Object State Type',
+			'object_id' => 'Object',
+			'value_type_id' => 'Value Type',
 		);
 	}
 
@@ -92,12 +102,16 @@ class Image extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('path',$this->path,true);
-		$criteria->compare('filename',$this->filename,true);
-		$criteria->compare('extension',$this->extension,true);
-		$criteria->compare('copyright',$this->copyright,true);
+		$criteria->compare('left',$this->left);
+		$criteria->compare('top',$this->top);
 		$criteria->compare('height',$this->height);
-		$criteria->compare('width',$this->width,true);
+		$criteria->compare('width',$this->width);
+		$criteria->compare('content',$this->content,true);
+		$criteria->compare('css',$this->css,true);
+		$criteria->compare('value',$this->value,true);
+		$criteria->compare('object_state_type_id',$this->object_state_type_id);
+		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('value_type_id',$this->value_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -108,7 +122,7 @@ class Image extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Image the static model class
+	 * @return ObjectState the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

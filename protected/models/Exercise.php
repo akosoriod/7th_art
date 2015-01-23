@@ -11,16 +11,12 @@
  * @property string $question
  *
  * The followings are the available model relations:
- * @property Answer[] $answers
  * @property ExerciseType $exerciseType
  * @property Exercise $exercise
  * @property Exercise[] $exercises
  * @property Step $step
  * @property Image[] $images
  * @property Object[] $objects
- * @property ObjectList[] $objectLists
- * @property Target[] $targets
- * @property UserExercise[] $userExercises
  */
 class Exercise extends CActiveRecord
 {
@@ -57,16 +53,12 @@ class Exercise extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'answers' => array(self::HAS_MANY, 'Answer', 'exercise_id'),
 			'exerciseType' => array(self::BELONGS_TO, 'ExerciseType', 'exercise_type_id'),
 			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 			'exercises' => array(self::HAS_MANY, 'Exercise', 'exercise_id'),
 			'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
 			'images' => array(self::MANY_MANY, 'Image', 'exercise_image(exercise_id, image_id)'),
-			'objects' => array(self::MANY_MANY, 'Object', 'exercise_object(exercise_id, object_id)'),
-			'objectLists' => array(self::HAS_MANY, 'ObjectList', 'exercise_id'),
-			'targets' => array(self::HAS_MANY, 'Target', 'exercise_id'),
-			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'exercise_id'),
+			'objects' => array(self::HAS_MANY, 'Object', 'exercise_id'),
 		);
 	}
 

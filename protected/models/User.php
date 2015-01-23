@@ -16,10 +16,10 @@
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
+ * @property Answer[] $answers
  * @property AuthItem[] $authItems
  * @property Comment[] $comments
  * @property Session[] $sessions
- * @property UserExercise[] $userExercises
  * @property UserParameter[] $userParameters
  * @property Role[] $roles
  */
@@ -60,10 +60,10 @@ class User extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'activitySets' => array(self::MANY_MANY, 'ActivitySet', 'user_activity_set(user_id, activity_set_id)'),
+			'answers' => array(self::HAS_MANY, 'Answer', 'user_id'),
 			'authItems' => array(self::MANY_MANY, 'AuthItem', 'auth_assignment(userid, itemname)'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'user_id'),
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
-			'userExercises' => array(self::HAS_MANY, 'UserExercise', 'user_id'),
 			'userParameters' => array(self::HAS_MANY, 'UserParameter', 'user_id'),
 			'roles' => array(self::MANY_MANY, 'Role', 'user_role(user_id, role_id)'),
 		);
@@ -130,7 +130,7 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-                
+        
         /**
          * Returns the current user
          * @return User User object currently connected

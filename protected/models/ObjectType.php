@@ -1,20 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "object_image".
+ * This is the model class for table "object_type".
  *
- * The followings are the available columns in table 'object_image':
- * @property integer $object_id
- * @property integer $image_id
+ * The followings are the available columns in table 'object_type':
+ * @property integer $id
+ * @property string $name
+ * @property string $label
+ *
+ * The followings are the available model relations:
+ * @property Object[] $objects
  */
-class ObjectImage extends CActiveRecord
+class ObjectType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'object_image';
+		return 'object_type';
 	}
 
 	/**
@@ -25,11 +29,10 @@ class ObjectImage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_id, image_id', 'required'),
-			array('object_id, image_id', 'numerical', 'integerOnly'=>true),
+			array('name, label', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('object_id, image_id', 'safe', 'on'=>'search'),
+			array('id, name, label', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,6 +44,7 @@ class ObjectImage extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'objects' => array(self::HAS_MANY, 'Object', 'object_type_id'),
 		);
 	}
 
@@ -50,8 +54,9 @@ class ObjectImage extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'object_id' => 'Object',
-			'image_id' => 'Image',
+			'id' => 'ID',
+			'name' => 'Name',
+			'label' => 'Label',
 		);
 	}
 
@@ -73,8 +78,9 @@ class ObjectImage extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('object_id',$this->object_id);
-		$criteria->compare('image_id',$this->image_id);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('label',$this->label,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -85,7 +91,7 @@ class ObjectImage extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ObjectImage the static model class
+	 * @return ObjectType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

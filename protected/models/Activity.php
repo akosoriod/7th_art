@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'activity':
  * @property integer $id
- * @property string $visible
+ * @property integer $visible
  * @property string $instruction
  * @property integer $version_id
  *
@@ -32,8 +32,8 @@ class Activity extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('version_id', 'required'),
-			array('version_id', 'numerical', 'integerOnly'=>true),
-			array('visible, instruction', 'length', 'max'=>45),
+			array('visible, version_id', 'numerical', 'integerOnly'=>true),
+			array('instruction', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, visible, instruction, version_id', 'safe', 'on'=>'search'),
@@ -85,7 +85,7 @@ class Activity extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('visible',$this->visible,true);
+		$criteria->compare('visible',$this->visible);
 		$criteria->compare('instruction',$this->instruction,true);
 		$criteria->compare('version_id',$this->version_id);
 

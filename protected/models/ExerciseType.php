@@ -31,7 +31,7 @@ class ExerciseType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, template_id', 'required'),
+			array('name, template_id', 'required'),
 			array('template_id', 'numerical', 'integerOnly'=>true),
 			array('name, description', 'length', 'max'=>45),
 			// The following rule is used by search().

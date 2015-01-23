@@ -32,7 +32,7 @@ class Template extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description, path, css_id', 'required'),
+			array('name, css_id', 'required'),
 			array('css_id', 'numerical', 'integerOnly'=>true),
 			array('name, description, path', 'length', 'max'=>45),
 			// The following rule is used by search().

@@ -1,26 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "user_exercise".
+ * This is the model class for table "value_type".
  *
- * The followings are the available columns in table 'user_exercise':
+ * The followings are the available columns in table 'value_type':
  * @property integer $id
- * @property integer $exercise_id
- * @property integer $user_id
+ * @property string $name
+ * @property string $label
  *
  * The followings are the available model relations:
- * @property Exercise $exercise
- * @property User $user
  * @property Answer[] $answers
+ * @property ObjectState[] $objectStates
  */
-class UserExercise extends CActiveRecord
+class ValueType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user_exercise';
+		return 'value_type';
 	}
 
 	/**
@@ -31,11 +30,10 @@ class UserExercise extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise_id, user_id', 'required'),
-			array('exercise_id, user_id', 'numerical', 'integerOnly'=>true),
+			array('name, label', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise_id, user_id', 'safe', 'on'=>'search'),
+			array('id, name, label', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,9 +45,8 @@ class UserExercise extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
-			'answers' => array(self::MANY_MANY, 'Answer', 'user_exercise_answer(user_exercise_id, answer_id)'),
+			'answers' => array(self::HAS_MANY, 'Answer', 'value_type_id'),
+			'objectStates' => array(self::HAS_MANY, 'ObjectState', 'value_type_id'),
 		);
 	}
 
@@ -60,8 +57,8 @@ class UserExercise extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'exercise_id' => 'Exercise',
-			'user_id' => 'User',
+			'name' => 'Name',
+			'label' => 'Label',
 		);
 	}
 
@@ -84,8 +81,8 @@ class UserExercise extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('exercise_id',$this->exercise_id);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('label',$this->label,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -96,7 +93,7 @@ class UserExercise extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return UserExercise the static model class
+	 * @return ValueType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

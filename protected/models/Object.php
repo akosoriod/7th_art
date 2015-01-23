@@ -5,19 +5,20 @@
  *
  * The followings are the available columns in table 'object':
  * @property integer $id
- * @property string $content
- * @property string $css
- * @property integer $left
- * @property integer $top
- * @property integer $height
- * @property integer $width
- * @property integer $object_list_id
+ * @property integer $exercise_id
+ * @property integer $optional
+ * @property integer $countable
+ * @property double $peso
+ * @property integer $parent_id
+ * @property integer $object_type_id
  *
  * The followings are the available model relations:
- * @property Exercise[] $exercises
- * @property ObjectList $objectList
- * @property Image[] $images
- * @property Relation[] $relations
+ * @property Answer[] $answers
+ * @property Exercise $exercise
+ * @property Object $parent
+ * @property Object[] $objects
+ * @property ObjectType $objectType
+ * @property ObjectState[] $objectStates
  */
 class Object extends CActiveRecord
 {
@@ -37,11 +38,12 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('left, top, height, width, object_list_id', 'numerical', 'integerOnly'=>true),
-			array('content, css', 'safe'),
+			array('exercise_id, object_type_id', 'required'),
+			array('exercise_id, optional, countable, parent_id, object_type_id', 'numerical', 'integerOnly'=>true),
+			array('peso', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, content, css, left, top, height, width, object_list_id', 'safe', 'on'=>'search'),
+			array('id, exercise_id, optional, countable, peso, parent_id, object_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,10 +55,12 @@ class Object extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercises' => array(self::MANY_MANY, 'Exercise', 'exercise_object(object_id, exercise_id)'),
-			'objectList' => array(self::BELONGS_TO, 'ObjectList', 'object_list_id'),
-			'images' => array(self::MANY_MANY, 'Image', 'object_image(object_id, image_id)'),
-			'relations' => array(self::MANY_MANY, 'Relation', 'object_relation(object_id, relation_id)'),
+			'answers' => array(self::HAS_MANY, 'Answer', 'object_id'),
+			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
+			'parent' => array(self::BELONGS_TO, 'Object', 'parent_id'),
+			'objects' => array(self::HAS_MANY, 'Object', 'parent_id'),
+			'objectType' => array(self::BELONGS_TO, 'ObjectType', 'object_type_id'),
+			'objectStates' => array(self::HAS_MANY, 'ObjectState', 'object_id'),
 		);
 	}
 
@@ -67,13 +71,12 @@ class Object extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'content' => 'Content',
-			'css' => 'Css',
-			'left' => 'Left',
-			'top' => 'Top',
-			'height' => 'Height',
-			'width' => 'Width',
-			'object_list_id' => 'Object List',
+			'exercise_id' => 'Exercise',
+			'optional' => 'Optional',
+			'countable' => 'Countable',
+			'peso' => 'Peso',
+			'parent_id' => 'Parent',
+			'object_type_id' => 'Object Type',
 		);
 	}
 
@@ -96,13 +99,12 @@ class Object extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('content',$this->content,true);
-		$criteria->compare('css',$this->css,true);
-		$criteria->compare('left',$this->left);
-		$criteria->compare('top',$this->top);
-		$criteria->compare('height',$this->height);
-		$criteria->compare('width',$this->width);
-		$criteria->compare('object_list_id',$this->object_list_id);
+		$criteria->compare('exercise_id',$this->exercise_id);
+		$criteria->compare('optional',$this->optional);
+		$criteria->compare('countable',$this->countable);
+		$criteria->compare('peso',$this->peso);
+		$criteria->compare('parent_id',$this->parent_id);
+		$criteria->compare('object_type_id',$this->object_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -146,7 +148,7 @@ class Object extends CActiveRecord
                         $stepObjects=self::getObjectsByStep($step);
                         if(is_array($stepObjects)){
                             $objectList=array_merge(self::getObjectsByStep($step),$objectList);
-                        }
+}
                     }
                 }
             }

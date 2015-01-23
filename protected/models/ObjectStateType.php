@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "relation".
+ * This is the model class for table "object_state_type".
  *
- * The followings are the available columns in table 'relation':
+ * The followings are the available columns in table 'object_state_type':
  * @property integer $id
- * @property integer $answer_id
+ * @property string $name
+ * @property string $label
  *
  * The followings are the available model relations:
- * @property Object[] $objects
- * @property Answer $answer
+ * @property ObjectState[] $objectStates
  */
-class Relation extends CActiveRecord
+class ObjectStateType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'relation';
+		return 'object_state_type';
 	}
 
 	/**
@@ -29,11 +29,10 @@ class Relation extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('answer_id', 'required'),
-			array('answer_id', 'numerical', 'integerOnly'=>true),
+			array('name, label', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, answer_id', 'safe', 'on'=>'search'),
+			array('id, name, label', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +44,7 @@ class Relation extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'objects' => array(self::MANY_MANY, 'Object', 'object_relation(relation_id, object_id)'),
-			'answer' => array(self::BELONGS_TO, 'Answer', 'answer_id'),
+			'objectStates' => array(self::HAS_MANY, 'ObjectState', 'object_state_type_id'),
 		);
 	}
 
@@ -57,7 +55,8 @@ class Relation extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'answer_id' => 'Answer',
+			'name' => 'Name',
+			'label' => 'Label',
 		);
 	}
 
@@ -80,7 +79,8 @@ class Relation extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('answer_id',$this->answer_id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('label',$this->label,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,7 +91,7 @@ class Relation extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Relation the static model class
+	 * @return ObjectStateType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
