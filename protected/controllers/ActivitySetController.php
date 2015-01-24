@@ -159,11 +159,11 @@ class ActivitySetController extends Controller
                         $exercise->insert();
                         
                         //Crea un object list
-                        $objectList=new ObjectList();
-                        $objectList->static=false;
-                        $objectList->connected=false;
-                        $objectList->exercise_id=$exercise->id;
-                        $objectList->insert();
+//                        $objectList=new ObjectList();
+//                        $objectList->static=false;
+//                        $objectList->connected=false;
+//                        $objectList->exercise_id=$exercise->id;
+//                        $objectList->insert();
                     }
                     $model->update();
                     $this->redirect(array('view','id'=>$model->id));

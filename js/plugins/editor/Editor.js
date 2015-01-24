@@ -127,7 +127,16 @@ var Editor = function(params,callback){
                 if(self.currentStep){
                     if(ui.draggable.hasClass("object")){
                         var displacement=$("#workspace").offset();
-                        addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top);
+                        
+                        var objeto=new Objeto({
+                            pos:{
+                                left:ui.position.left-displacement.left,
+                                top:ui.position.top-displacement.top
+                            }
+                        });
+                        console.debug(objeto);
+                        
+//                        addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top);
                     }else if(ui.draggable.hasClass("true_false")){
                         var displacement=$("#workspace").offset();
                         var html='<div class="editor-radio-object">'+

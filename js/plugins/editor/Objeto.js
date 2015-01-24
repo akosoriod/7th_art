@@ -3,7 +3,7 @@
  * Universidad Nacional de Colombia
  * 7th @rt The Power & Magic of Films to Learn English
  * 7thart_bog@unal.edu.co
- * 2014
+ * 2015
  * @param {object} params Object with the class parameters
  */
 var Objeto = function(params){
@@ -17,9 +17,20 @@ var Objeto = function(params){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
-        
+        pos:{
+            left:0,
+            top:0
+        },
+        optional:false,
+        countable:true,
+        weight:0,
+        subobjects:false
     };
-    self.params = $.extend(def, params);
+    var options = $.extend(def, params);
+    self.optional=options.optional;
+    self.countable=options.countable;
+    self.weight=options.weight;
+    self.subobjects=options.subobjects;
     /**
      * Constructor Method 
      */
