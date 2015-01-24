@@ -17,20 +17,20 @@ var Objeto = function(params){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
-        pos:{
-            left:0,
-            top:0
-        },
-        optional:false,
         countable:true,
+        id:false,
+        optional:false,
+        subobjects:false,
         weight:0,
-        subobjects:false
+        zindex:0
     };
     var options = $.extend(def, params);
+    self.id=options.id;
     self.optional=options.optional;
     self.countable=options.countable;
     self.weight=options.weight;
     self.subobjects=options.subobjects;
+    self.zindex=options.zindex;
     /**
      * Constructor Method 
      */

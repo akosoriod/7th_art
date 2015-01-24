@@ -8,7 +8,8 @@
  * @property integer $exercise_id
  * @property integer $optional
  * @property integer $countable
- * @property double $peso
+ * @property double $weight
+ * @property integer $zindex
  * @property integer $parent_id
  * @property integer $object_type_id
  *
@@ -39,11 +40,11 @@ class Object extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('exercise_id, object_type_id', 'required'),
-			array('exercise_id, optional, countable, parent_id, object_type_id', 'numerical', 'integerOnly'=>true),
-			array('peso', 'numerical'),
+			array('exercise_id, optional, countable, zindex, parent_id, object_type_id', 'numerical', 'integerOnly'=>true),
+			array('weight', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise_id, optional, countable, peso, parent_id, object_type_id', 'safe', 'on'=>'search'),
+			array('id, exercise_id, optional, countable, weight, zindex, parent_id, object_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +75,8 @@ class Object extends CActiveRecord
 			'exercise_id' => 'Exercise',
 			'optional' => 'Optional',
 			'countable' => 'Countable',
-			'peso' => 'Peso',
+			'weight' => 'Weight',
+			'zindex' => 'Zindex',
 			'parent_id' => 'Parent',
 			'object_type_id' => 'Object Type',
 		);
@@ -102,7 +104,8 @@ class Object extends CActiveRecord
 		$criteria->compare('exercise_id',$this->exercise_id);
 		$criteria->compare('optional',$this->optional);
 		$criteria->compare('countable',$this->countable);
-		$criteria->compare('peso',$this->peso);
+		$criteria->compare('weight',$this->weight);
+		$criteria->compare('zindex',$this->zindex);
 		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('object_type_id',$this->object_type_id);
 
@@ -140,35 +143,35 @@ class Object extends CActiveRecord
          * @param Section $section Objeto de tipo Section
          * @return Object[] Lista de Objetos de la Sección
          */
-        public static function getObjectsBySection($section){
-            $objectList=array();
-            foreach ($section->versions as $version) {
-                foreach ($version->activities as $activity) {
-                    foreach ($activity->steps as $step) {
-                        $stepObjects=self::getObjectsByStep($step);
-                        if(is_array($stepObjects)){
-                            $objectList=array_merge(self::getObjectsByStep($step),$objectList);
-}
-                    }
-                }
-            }
-            return $objectList;
-        }
-        
-        /**
-         * Retorna una lista de objetos a partir de un paso
-         * @param Paso $step Objeto de tipo Paso
-         * @return Object[] Lista de Objetos del Paso
-         */
-        public static function getObjectsByStep($step){
-            $objects=array();
-            foreach ($step->exercises as $exercise) {
-                foreach ($exercise->objectLists as $objectList) {
-                    foreach ($objectList->objects as $object) {
-                        $objects[]=$object;
-                    }
-                }
-            }
-            return $objects;
-        }
+//        public static function getObjectsBySection($section){
+//            $objectList=array();
+//            foreach ($section->versions as $version) {
+//                foreach ($version->activities as $activity) {
+//                    foreach ($activity->steps as $step) {
+//                        $stepObjects=self::getObjectsByStep($step);
+//                        if(is_array($stepObjects)){
+//                            $objectList=array_merge(self::getObjectsByStep($step),$objectList);
+//}
+//                    }
+//                }
+//            }
+//            return $objectList;
+//        }
+//        
+//        /**
+//         * Retorna una lista de objetos a partir de un paso
+//         * @param Paso $step Objeto de tipo Paso
+//         * @return Object[] Lista de Objetos del Paso
+//         */
+//        public static function getObjectsByStep($step){
+//            $objects=array();
+//            foreach ($step->exercises as $exercise) {
+//                foreach ($exercise->objectLists as $objectList) {
+//                    foreach ($objectList->objects as $object) {
+//                        $objects[]=$object;
+//                    }
+//                }
+//            }
+//            return $objects;
+//        }
 }

@@ -11,6 +11,7 @@
  * @property integer $width
  * @property string $content
  * @property string $css
+ * @property integer $hidden
  * @property string $value
  * @property integer $object_state_type_id
  * @property integer $object_id
@@ -40,12 +41,12 @@ class ObjectState extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('object_state_type_id, object_id, value_type_id', 'required'),
-			array('left, top, height, width, object_state_type_id, object_id, value_type_id', 'numerical', 'integerOnly'=>true),
+			array('left, top, height, width, hidden, object_state_type_id, object_id, value_type_id', 'numerical', 'integerOnly'=>true),
 			array('css', 'length', 'max'=>45),
 			array('content, value', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, left, top, height, width, content, css, value, object_state_type_id, object_id, value_type_id', 'safe', 'on'=>'search'),
+			array('id, left, top, height, width, content, css, hidden, value, object_state_type_id, object_id, value_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +77,7 @@ class ObjectState extends CActiveRecord
 			'width' => 'Width',
 			'content' => 'Content',
 			'css' => 'Css',
+			'hidden' => 'Hidden',
 			'value' => 'Value',
 			'object_state_type_id' => 'Object State Type',
 			'object_id' => 'Object',
@@ -108,6 +110,7 @@ class ObjectState extends CActiveRecord
 		$criteria->compare('width',$this->width);
 		$criteria->compare('content',$this->content,true);
 		$criteria->compare('css',$this->css,true);
+		$criteria->compare('hidden',$this->hidden);
 		$criteria->compare('value',$this->value,true);
 		$criteria->compare('object_state_type_id',$this->object_state_type_id);
 		$criteria->compare('object_id',$this->object_id);

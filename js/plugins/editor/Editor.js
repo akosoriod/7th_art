@@ -32,7 +32,7 @@ var Editor = function(params,callback){
     var Editor = function() {
         self.div=$("#editor_page");
         self.toolbar=self.div.find("#toolbar");
-        self.workspace=self.div.find("#workspace");
+//        self.workspace=self.div.find("#workspace");
         self.stepsDivs=$("#navigation").find(".step");
         self.editingPathDiv=$("#editing_path");
     }();
@@ -40,7 +40,21 @@ var Editor = function(params,callback){
      * Initialize the editor
      */
     self.init=function(){
-        assignEvents();
+        self.workspace=new Workspace("#workspace");
+        
+        self.workspace.addObjeto(new Objeto());
+        self.workspace.addObjeto(new Objeto());
+        self.workspace.addObjeto(new Objeto());
+        self.workspace.addObjeto(new Objeto());
+        self.workspace.addObjeto(new Objeto());
+        self.workspace.addObjeto(new Objeto());
+        
+        self.workspace.deleteObjeto(-4);
+        
+        console.debug(self.workspace);
+        console.debug(self.workspace.numberObjects());
+        
+//        assignEvents();
     };
     /**************************************************************************/
     /****************************** SETUP METHODS *****************************/
