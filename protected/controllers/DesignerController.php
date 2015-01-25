@@ -39,8 +39,9 @@ class DesignerController extends Controller {
                     ));
                 }
             }
+        }else{
+            $this->redirect((array('site/index')));
         }
-        $this->redirect((array('site/index')));
     }
     
     
