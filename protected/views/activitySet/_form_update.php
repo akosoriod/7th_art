@@ -57,7 +57,7 @@
 		<?php echo $form->textField($model,'year'); ?>
 		<?php echo $form->error($model,'year'); ?>
 	</div>
-<!--
+
 	<div class="field">
             <?php
                 echo $form->labelEx($model, 'poster');
@@ -103,7 +103,7 @@
                 <?php echo CHtml::activeFileField($model, 'soundtrack',array('accept'=>'audio/*')); ?>
 		<?php echo $form->error($model,'soundtrack'); ?>
 	</div>
--->
+
         <div class="field">
             <?php echo $form->labelEx($model, 'operator_id'); ?>
             <?php echo $form->dropDownList($model, 'operator_id',User::model()->getUserSelect(2)); ?>

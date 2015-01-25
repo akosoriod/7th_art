@@ -83,36 +83,38 @@ class ActivitySetController extends Controller
                         mkdir($pathSet."/css");
                     }
                     //Almacena las imágenes y el audio
-                    if($_FILES['ActivitySet']['name']['poster']){
-                        $model->poster=CUploadedFile::getInstance($model,'poster');
-                        $model->poster->saveAs($pathSet.'/poster.jpg');
-                        $model->poster=$pathSet.'/poster.jpg';
-                    }
-                    if($_FILES['ActivitySet']['name']['background']){
-                        $model->background=CUploadedFile::getInstance($model,'background');
-                        $model->background->saveAs($pathSet.'/background.jpg');
-                        $model->background=$pathSet.'/background.jpg';
-                    }
-                    if($_FILES['ActivitySet']['name']['paralax_1']){
-                        $model->paralax_1=CUploadedFile::getInstance($model,'paralax_1');
-                        $model->paralax_1->saveAs($pathSet.'/paralax_1.jpg');
-                        $model->paralax_1=$pathSet.'/paralax_1.jpg';
-                    }
-                    if($_FILES['ActivitySet']['name']['paralax_2']){
-                        $model->paralax_2=CUploadedFile::getInstance($model,'paralax_2');
-                        $model->paralax_2->saveAs($pathSet.'/paralax_2.jpg');
-                        $model->paralax_2=$pathSet.'/paralax_2.jpg';
-                    }
-                    if($_FILES['ActivitySet']['name']['paralax_3']){
-                        $model->paralax_3=CUploadedFile::getInstance($model,'paralax_3');
-                        $model->paralax_3->saveAs($pathSet.'/paralax_3.jpg');
-                        $model->paralax_3=$pathSet.'/paralax_3.jpg';
-                    }
-                    if($_FILES['ActivitySet']['name']['soundtrack']){
-                        $model->soundtrack=CUploadedFile::getInstance($model,'soundtrack');
-                        $model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
-                        $model->soundtrack=$pathSet.'/soundtrack.ogg';
-                    }
+					if(isset($_FILES) && !empty($_FILES)) {
+						if($_FILES['ActivitySet']['name']['poster']){
+							$model->poster=CUploadedFile::getInstance($model,'poster');
+							$model->poster->saveAs($pathSet.'/poster.jpg');
+							$model->poster=$pathSet.'/poster.jpg';
+						}
+						if($_FILES['ActivitySet']['name']['background']){
+							$model->background=CUploadedFile::getInstance($model,'background');
+							$model->background->saveAs($pathSet.'/background.jpg');
+							$model->background=$pathSet.'/background.jpg';
+						}
+						if($_FILES['ActivitySet']['name']['paralax_1']){
+							$model->paralax_1=CUploadedFile::getInstance($model,'paralax_1');
+							$model->paralax_1->saveAs($pathSet.'/paralax_1.jpg');
+							$model->paralax_1=$pathSet.'/paralax_1.jpg';
+						}
+						if($_FILES['ActivitySet']['name']['paralax_2']){
+							$model->paralax_2=CUploadedFile::getInstance($model,'paralax_2');
+							$model->paralax_2->saveAs($pathSet.'/paralax_2.jpg');
+							$model->paralax_2=$pathSet.'/paralax_2.jpg';
+						}
+						if($_FILES['ActivitySet']['name']['paralax_3']){
+							$model->paralax_3=CUploadedFile::getInstance($model,'paralax_3');
+							$model->paralax_3->saveAs($pathSet.'/paralax_3.jpg');
+							$model->paralax_3=$pathSet.'/paralax_3.jpg';
+						}
+						if($_FILES['ActivitySet']['name']['soundtrack']){
+							$model->soundtrack=CUploadedFile::getInstance($model,'soundtrack');
+							$model->soundtrack->saveAs($pathSet.'/soundtrack.ogg');
+							$model->soundtrack=$pathSet.'/soundtrack.ogg';
+						}
+					}
                     
                     //Crea las secciones para el set de actividades
                     foreach (SectionType::model()->findAll() as $sectionType) {
@@ -138,7 +140,7 @@ class ActivitySetController extends Controller
                         
                         //Crea un css para el Paso
                         $css=new Css();
-                        $css->name="Css de paso 1";
+                        $css->name="Css paso 1: ".$model->title." - ".$sectionType->id;
                         $css->description="";
                         $css->path=$pathSet."/css/step_1";
                         $css->insert();
