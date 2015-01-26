@@ -42,13 +42,33 @@
             <a href="#">Wall</a>
         </li>
         <li>
+            <?php
+            $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+                'id'=>'faq',
+                'options'=>array(
+                    'title'=>'FAQ',
+                    'width'=>480,
+                    'height'=>580,
+                    'autoOpen'=>false,
+                    'resizable' => false,
+                ),
+            ));
+            require_once(Yii::app()->basePath . '/views/faq/list.php');
+            $this->endWidget('zii.widgets.jui.CJuiDialog');
+            ?>
+            
             <?php 
                 echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/icnServCall.png","",array(
                     'width'=>32,
                     'height'=>32
                 )); 
             ?>
-            <a href="#">FAQs</a>
+            <?php
+                print CHtml::link('FAQ',
+                    array('controller/action','param1'=>'value1'),
+                    array('onclick'=>'$("#faq").dialog("open"); return false;')
+                );
+            ?>
         </li>
         <li>
             <?php 

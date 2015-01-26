@@ -313,7 +313,8 @@ class ActivitySetController extends Controller
                     'model'=>$model,
                     'activitySets'=>ActivitySet::model()->findAll(),
                     'currentUser'=>User::getCurrentUser(),
-                    'users'=>User::model()->findAll()
+                    'users'=>User::model()->findAll(),
+					'faqs'=>Faq::model()->findAll()
 		));
             }else{
                 $this->redirect(array('site/index'));
