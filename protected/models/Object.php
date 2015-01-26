@@ -9,7 +9,6 @@
  * @property integer $optional
  * @property integer $countable
  * @property double $weight
- * @property integer $zindex
  * @property integer $parent_id
  * @property integer $object_type_id
  *
@@ -40,11 +39,11 @@ class Object extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('exercise_id, object_type_id', 'required'),
-			array('exercise_id, optional, countable, zindex, parent_id, object_type_id', 'numerical', 'integerOnly'=>true),
+			array('exercise_id, optional, countable, parent_id, object_type_id', 'numerical', 'integerOnly'=>true),
 			array('weight', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise_id, optional, countable, weight, zindex, parent_id, object_type_id', 'safe', 'on'=>'search'),
+			array('id, exercise_id, optional, countable, weight, parent_id, object_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,7 +75,6 @@ class Object extends CActiveRecord
 			'optional' => 'Optional',
 			'countable' => 'Countable',
 			'weight' => 'Weight',
-			'zindex' => 'Zindex',
 			'parent_id' => 'Parent',
 			'object_type_id' => 'Object Type',
 		);
@@ -105,7 +103,6 @@ class Object extends CActiveRecord
 		$criteria->compare('optional',$this->optional);
 		$criteria->compare('countable',$this->countable);
 		$criteria->compare('weight',$this->weight);
-		$criteria->compare('zindex',$this->zindex);
 		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('object_type_id',$this->object_type_id);
 
