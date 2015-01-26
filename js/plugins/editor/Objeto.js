@@ -12,6 +12,9 @@ var Objeto = function(params){
     /**************************************************************************/
     var self = this;
     
+    self.container=false;   //Elemento contenedor del div del objeto
+    self.div=false;         //Elemento del objeto
+    
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
     /**************************************************************************/

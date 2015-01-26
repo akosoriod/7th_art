@@ -42,12 +42,24 @@ var Editor = function(params,callback){
     self.init=function(){
         self.workspace=new Workspace("#workspace");
         
-        self.workspace.addObjeto(new Objeto());
-        self.workspace.addObjeto(new Objeto());
-        self.workspace.addObjeto(new Objeto());
-        self.workspace.addObjeto(new Objeto());
-        self.workspace.addObjeto(new Objeto());
-        self.workspace.addObjeto(new Objeto());
+        self.workspace.addObjeto(new Objeto({
+            pos:{left:10,top:10}
+        }));
+        self.workspace.addObjeto(new Objeto({
+            pos:{left:20,top:20}
+        }));
+        self.workspace.addObjeto(new Objeto({
+            pos:{left:30,top:30}
+        }));
+        self.workspace.addObjeto(new Objeto({
+            pos:{left:40,top:40}
+        }));
+        self.workspace.addObjeto(new Objeto({
+            pos:{left:50,top:50}
+        }));
+        self.workspace.addObjeto(new Objeto({
+            pos:{left:60,top:60}
+        }));
         
         self.workspace.deleteObjeto(-4);
         
@@ -135,43 +147,7 @@ var Editor = function(params,callback){
         });
         
         
-        self.workspace.droppable({
-            accept: ".button",
-            drop: function( event, ui ) {
-                if(self.currentStep){
-                    if(ui.draggable.hasClass("object")){
-                        var displacement=$("#workspace").offset();
-                        
-                        var objeto=new Objeto({
-                            pos:{
-                                left:ui.position.left-displacement.left,
-                                top:ui.position.top-displacement.top
-                            }
-                        });
-                        console.debug(objeto);
-                        
-//                        addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top);
-                    }else if(ui.draggable.hasClass("true_false")){
-                        var displacement=$("#workspace").offset();
-                        var html='<div class="editor-radio-object">'+
-                                '<input type="radio" id="radio1" name="radio"><label for="radio1">True</label>'+
-                                '<input type="radio" id="radio2" name="radio" checked="checked"><label for="radio2">False</label>'+
-                            '</div>';
-                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
-                        attachObjectEvents(object);
-                    }else if(ui.draggable.hasClass("fill")){
-                        var displacement=$("#workspace").offset();
-                        var html='<input type="text" class="editor-fill-object"/>';
-                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
-                        attachObjectEvents(object);
-                    }else{
-                        alert("En construcción");
-                    }
-                }else{
-                    alert("Seleccione un paso para editar");
-                }
-            }
-        });
+        
         
         
         self.div.find("#properties").dialog({

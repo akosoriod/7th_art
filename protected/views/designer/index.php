@@ -95,7 +95,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="workspace" class="droppable"></div>
 
 
-                <div id="properties" title="Propiedades">
+<!--                <div id="properties" title="Propiedades">
                     <form>
                         <fieldset>
                             <label for="id">Identificador</label>
@@ -107,7 +107,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                             <input type="text" name="borders" id="borders" value="#000" class="text ui-widget-content ui-corner-all">
                         </fieldset>
                     </form>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

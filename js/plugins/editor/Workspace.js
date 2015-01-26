@@ -67,11 +67,14 @@ var Workspace = function(params){
                 self.currentZindex++;
                 objeto.id=-self.tempObjetos;
                 objeto.zindex=self.currentZindex;
+                objeto.setZindex(self.currentZindex);
             }
             self.objects.push(objeto);
         }else{
             self.updateObjeto(objeto);
         }
+        objeto.container=self.div;
+        objeto.draw();
     };
     
     /**
@@ -131,15 +134,58 @@ var Workspace = function(params){
         return self.objects.length;
     };
     
+    /**
+     * Reinicia el Workspace, elimina todos los objetos del workspace.
+     */
+    self.clear=function(){
+        
+    };
+    
     
     /**************************************************************************/
-    /******************************* HTML METHODS *****************************/
+    /******************************** GUI METHODS *****************************/
     /**************************************************************************/
     /**
-     * Crea la estructura del workspace
+     * Crea la estructura del workspace y lo hace droppable
      */
     function structure(){
-        
+        self.div.droppable({
+            accept: ".objeto",
+            drop: function( event, ui ) {
+                if(self.currentStep){
+                    if(ui.draggable.hasClass("object")){
+                        var displacement=$("#workspace").offset();
+                        
+                        var objeto=new Objeto({
+                            pos:{
+                                left:ui.position.left-displacement.left,
+                                top:ui.position.top-displacement.top
+                            }
+                        });
+                        console.debug(objeto);
+                        
+//                        addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top);
+                    }else if(ui.draggable.hasClass("true_false")){
+                        var displacement=$("#workspace").offset();
+                        var html='<div class="editor-radio-object">'+
+                                '<input type="radio" id="radio1" name="radio"><label for="radio1">True</label>'+
+                                '<input type="radio" id="radio2" name="radio" checked="checked"><label for="radio2">False</label>'+
+                            '</div>';
+                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
+                        attachObjectEvents(object);
+                    }else if(ui.draggable.hasClass("fill")){
+                        var displacement=$("#workspace").offset();
+                        var html='<input type="text" class="editor-fill-object"/>';
+                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
+                        attachObjectEvents(object);
+                    }else{
+                        alert("En construcción");
+                    }
+                }else{
+                    alert("Seleccione un paso para editar");
+                }
+            }
+        });
     };
     
     /**************************************************************************/
