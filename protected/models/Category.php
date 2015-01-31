@@ -12,6 +12,13 @@
  */
 class Category extends CActiveRecord
 {
+
+	// Class constants
+	const RECORDING = 1;
+	const WRITING = 2;
+	const GRAMMAR = 3;
+	const COMMENTSANDSUGGESTIONS = 4;
+
 	/**
 	 * @return string the associated database table name
 	 */

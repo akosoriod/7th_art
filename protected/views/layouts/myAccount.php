@@ -33,13 +33,32 @@
             <?php require_once(Yii::app()->basePath . '/views/layouts/preferences.php'); ?>
         </li>
         <li>
+            <?php
+            $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+                'id'=>'wall',
+                'options'=>array(
+                    'title'=>'Wall',
+                    'width'=>580,
+                    'height'=>450,
+                    'autoOpen'=>false,
+                    'resizable' => false,
+                ),
+            ));
+            $this->renderPartial('/wall/list');
+            $this->endWidget('zii.widgets.jui.CJuiDialog');
+            ?>
             <?php 
                 echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/icnServCall.png","",array(
                     'width'=>32,
                     'height'=>32
                 )); 
             ?>
-            <a href="#">Wall</a>
+            <?php
+                print CHtml::link('Wall',
+                    '#',
+                    array('onclick'=>'$("#wall").dialog("open"); return false;')
+                );
+            ?>
         </li>
         <li>
             <?php
