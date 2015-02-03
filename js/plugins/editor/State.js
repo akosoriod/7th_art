@@ -26,9 +26,9 @@ var State = function(params){
             left:0,
             top:0
         },
-        shape:{
-            height:0,
-            width:0
+        size:{
+            height:160,
+            width:100
         },
         content:"",
         style:"",
@@ -39,7 +39,7 @@ var State = function(params){
     var options = $.extend(def, params);
     self.type=options.type;
     self.pos=options.pos;
-    self.shape=options.shape;
+    self.size=options.size;
     self.content=options.content;
     self.style=options.style;
     self.value=options.value;
@@ -64,7 +64,7 @@ var State = function(params){
      * @param {element} container Elemento en el que se dibujará el estado
      */
     self.draw=function(container){
-        container.append
+//        container.append
         
         
         

@@ -111,6 +111,7 @@
     box-shadow: 1px 1px 4px 0 #444444 inset;
     height: 600px;
     left: 0;
+    overflow: hidden;
     position: relative;
     right: 0;
     top: 0;
@@ -120,13 +121,14 @@
     border: solid 1px #C75C5C;
     border-radius: 5px 5px 0 0;
     cursor: move;
-    height: 160px;
+    /*height: 160px;*/
     min-height: 10px;
     min-width: 10px;
     position: absolute;
-    width: 100px;
+    /*width: 100px;*/
 }
 #container #area #editor #workspace .draggable .content{
+    overflow: auto;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -171,4 +173,9 @@
 #container #area #editor #workspace .draggable .config{
     background-image: url('../images/editor/properties.png');
     right: 22px;
+}
+
+
+#container #area #editor #workspace .objeto-hover{
+    border: solid 2px red;
 }

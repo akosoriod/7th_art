@@ -48,7 +48,7 @@ var Workspace = function(params){
      * Constructor Method 
      */
     var Workspace = function() {
-        structure();
+        attachEvents();
     }();
     
     /**************************************************************************/
@@ -73,7 +73,7 @@ var Workspace = function(params){
         }else{
             self.updateObjeto(objeto);
         }
-        objeto.container=self.div;
+        objeto.workspace=self;
         objeto.draw();
     };
     
@@ -119,6 +119,7 @@ var Workspace = function(params){
         var output=false;
         for(var i in self.objects){
             if(self.objects[i].id===objetoId){
+                self.objects[i].deleteHtml();
                 self.objects.splice(i,1);
                 break;
             }
@@ -148,41 +149,18 @@ var Workspace = function(params){
     /**
      * Crea la estructura del workspace y lo hace droppable
      */
-    function structure(){
+    function attachEvents(){
         self.div.droppable({
-            accept: ".objeto",
+            accept: ".button",
             drop: function( event, ui ) {
-                if(self.currentStep){
-                    if(ui.draggable.hasClass("object")){
-                        var displacement=$("#workspace").offset();
-                        
-                        var objeto=new Objeto({
-                            pos:{
-                                left:ui.position.left-displacement.left,
-                                top:ui.position.top-displacement.top
-                            }
-                        });
-                        console.debug(objeto);
-                        
-//                        addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top);
-                    }else if(ui.draggable.hasClass("true_false")){
-                        var displacement=$("#workspace").offset();
-                        var html='<div class="editor-radio-object">'+
-                                '<input type="radio" id="radio1" name="radio"><label for="radio1">True</label>'+
-                                '<input type="radio" id="radio2" name="radio" checked="checked"><label for="radio2">False</label>'+
-                            '</div>';
-                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
-                        attachObjectEvents(object);
-                    }else if(ui.draggable.hasClass("fill")){
-                        var displacement=$("#workspace").offset();
-                        var html='<input type="text" class="editor-fill-object"/>';
-                        var object=addNewObject(ui.position.left-displacement.left,ui.position.top-displacement.top,html);
-                        attachObjectEvents(object);
-                    }else{
-                        alert("En construcción");
-                    }
-                }else{
-                    alert("Seleccione un paso para editar");
+                if(ui.draggable.hasClass("object")){
+                    var displacement=$("#workspace").offset();
+                    self.addObjeto(new Objeto({
+                        pos:{
+                            left:ui.position.left-displacement.left,
+                            top:ui.position.top-displacement.top
+                        }
+                    }));
                 }
             }
         });
