@@ -105,6 +105,37 @@ var Editor = function(params,callback){
 //            opacity: 0.8,
 //            scroll: false
 //        });
+        //Opción múltiple
+        self.toolbar.find("#button-multi-single").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='object-fill-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+        self.toolbar.find("#button-multi-multi").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='object-fill-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+        self.toolbar.find("#button-true-false").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='object-fill-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
 //        
 //        //Eventos de los pasos
 //        self.stepsDivs.click(function(){

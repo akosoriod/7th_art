@@ -100,6 +100,12 @@
 #container #area #editor #button-fill{
     background-image: url('../images/editor/button2.png');
 }
+#container #area #editor #button-multi-single{
+    background-image: url('../images/editor/button2.png');
+}
+#container #area #editor #button-multi-multi{
+    background-image: url('../images/editor/button2.png');
+}
 .object-fill-helper{
     background-image: url('../images/editor/button2.png');
     height: 48px;

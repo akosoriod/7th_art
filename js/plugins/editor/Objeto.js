@@ -46,6 +46,7 @@ var Objeto = function(params){
             'passive':new State({
                 type:'passive',
                 pos:options.pos,
+                size:options.size,
                 style:"backgound:red"
             }),
             'active':new State({
@@ -93,6 +94,9 @@ var Objeto = function(params){
         
         //Muestra el estado definido en stateName
         self.showState(self.getState(stateName));
+        
+        
+        self.div.find('.textContent').append(self.getState('passive').content);
         
         
 //        self.workspace.append('<div class="draggable object" id="object'+self.countObjects+'" data-id="'+self.countObjects+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');

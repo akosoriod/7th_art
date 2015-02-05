@@ -85,6 +85,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <!--<div class="button" id="button-object-list" title="Arrastrar una lista de objetos"></div>-->
                     <div class="button true_false" id="button-true-false" title="Objeto True-False"></div>
                     <div class="button fill" id="button-fill" title="Objeto Llenar"></div>
+                    <div class="button multi-single" id="button-multi-single" title="Objeto Opción Múltiple, única respuesta"></div>
+                    <div class="button multi-multi" id="button-multi-multi" title="Objeto Opción Múltiple, múltiple respuesta"></div>
 <!--                    <div class="button" id="button2" title="I'm a prototype"></div>
                     <div class="button" id="button3" title="I'm a prototype"></div>-->
                     <div class="button" id="save" title="Guardar actividad"></div>
