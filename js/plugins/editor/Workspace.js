@@ -95,9 +95,7 @@ var Workspace = function(params){
         }
         entity.workspace=self;
         entity.draw();
-        
         if(self.logHistory){self.saveHistory();}
-        
         return entity;
     };
     
@@ -132,9 +130,7 @@ var Workspace = function(params){
                 break;
             }
         }
-        
-        if(self.logHistory){self.saveHistory();}        
-        
+        if(self.logHistory){self.saveHistory();}
         return output;
     };
     
@@ -155,9 +151,7 @@ var Workspace = function(params){
         //Elimina la entidad
         self.entities[entityId].deleteHtml();
         delete self.entities[entityId];
-        
         if(self.logHistory){self.saveHistory();}
-        
     };
     
     /**
@@ -197,7 +191,7 @@ var Workspace = function(params){
             accept: ".button",
             drop: function( event, ui ) {
                 if(ui.draggable.hasClass("single")){
-                    var displacement=$("#workspace").offset();
+                    var displacement=self.div.offset();
                     self.addEntity(new Entity({
                         pos:{
                             left:ui.position.left-displacement.left,
@@ -205,7 +199,7 @@ var Workspace = function(params){
                         }
                     }));
                 }else if(ui.draggable.hasClass("multi-single")){
-                    var displacement=$("#workspace").offset();
+                    var displacement=self.div.offset();
                     var defaultOptions=4;
                     var left=ui.position.left-displacement.left;
                     var top=ui.position.top-displacement.top;

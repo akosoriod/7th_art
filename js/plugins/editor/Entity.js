@@ -75,8 +75,7 @@ var Entity = function(params){
      */
     self.getState=function(stateName){
         return self.states[stateName];
-    };
-    
+    };    
     
     /**
      * Asocia los eventos básicos a la entidad
@@ -92,11 +91,7 @@ var Entity = function(params){
                 var diffLeft=ui.position.left-ui.originalPosition.left;
                 var diffTop=ui.position.top-ui.originalPosition.top;
                 self.updatePositionByDiff(diffLeft,diffTop);
-                
-                
-                if(self.workspace.logHistory){self.workspace.saveHistory();}
-                
-                
+                self.saveHistory();
             }
         }).resizable({
             containment: self.container,
@@ -104,8 +99,7 @@ var Entity = function(params){
                 var diffHeight=ui.size.height-ui.originalSize.height;
                 var diffWidth=ui.size.width-ui.originalSize.width;
                 self.updateSizeByDiff(diffHeight,diffWidth);
-                
-                if(self.workspace.logHistory){self.workspace.saveHistory();}
+                self.saveHistory();
             }
         }).droppable({
             accept: ".entity",
@@ -149,6 +143,15 @@ var Entity = function(params){
 //        });
     };
     
+    /**
+     * Dispara el método para guardar la historia en el workspace
+     */
+    self.saveHistory=function(){
+        if(self.workspace.logHistory){
+            self.workspace.saveHistory();
+        }
+    };
+    
     /**************************************************************************/
     /******************************* GUI METHODS ******************************/
     /**************************************************************************/
@@ -159,15 +162,7 @@ var Entity = function(params){
      */
     self.draw=function(stateName){
         self.container=self.workspace.div;
-        
-        
-        
         if(self.container){
-            
-            
-            
-            
-            
             if(stateName===undefined||!stateName){
                 stateName='passive';
             }

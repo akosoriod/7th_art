@@ -89,8 +89,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="button multi-multi" id="button-multi-multi" title="Opción Múltiple, múltiple respuesta"></div>
                     <!--<div class="button redo" id="button-redo" title="Rehacer"></div> TODO: Arreglar el comportamiento de redo-->
                     <div class="button undo" id="button-undo" title="Deshacer"></div>
-<!--                    <div class="button" id="button2" title="I'm a prototype"></div>
-                    <div class="button" id="button3" title="I'm a prototype"></div>-->
                     <div class="button" id="save" title="Guardar actividad"></div>
                     <div id="editing_path">
                         Editando: <span id="message"><?php echo $activitySet->title; ?></span>
