@@ -120,17 +120,13 @@ var Editor = function(params,callback){
      * Guarda una versión del estado de las entidades del wokspace para "deshacer"
      */
     self.saveHistory=function(){
-        
         self.historyStack.splice(self.historyIndex+1,self.historyStack.length);
-        
         var entities=self.workspace.objectify();
         if(self.historyStack.length>=self.historyMax){
             self.historyStack.shift();
         }
         self.historyStack.push(JSON.stringify(entities));
         self.historyIndex=self.historyStack.length-1;
-        
-        console.debug(self.historyStack);
     };
     
     

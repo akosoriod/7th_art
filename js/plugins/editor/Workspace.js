@@ -196,7 +196,7 @@ var Workspace = function(params){
         self.div.droppable({
             accept: ".button",
             drop: function( event, ui ) {
-                if(ui.draggable.hasClass("entity")){
+                if(ui.draggable.hasClass("single")){
                     var displacement=$("#workspace").offset();
                     self.addEntity(new Entity({
                         pos:{

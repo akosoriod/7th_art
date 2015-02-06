@@ -81,7 +81,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="area">
             <div id="editor">
                 <div id="toolbar">
-                    <div class="button entity" id="button-entity" title="Arrastrar una entidad"></div>
+                    <div class="button single" id="button-entity" title="Arrastrar una entidad"></div>
                     <!--<div class="button" id="button-entity-list" title="Arrastrar una lista de entidades"></div>-->
                     <div class="button true_false" id="button-true-false" title="True-False"></div>
                     <div class="button fill" id="button-fill" title="Llenar"></div>
