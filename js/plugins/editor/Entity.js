@@ -125,7 +125,7 @@ var Entity = function(params){
         
         
         self.div.find(".deleteEntity").click(function(){
-            self.workspace.deleteEntity(self.id);
+            self.workspace.removeEntity(self.id);
         });
         self.div.dblclick(function(){
             console.warn(self);
@@ -321,11 +321,22 @@ var Entity = function(params){
     };
     
     /**
-     * Agrega una entidad a la entidad actual
-     * @param {Entity} entity Entidad que se incluirá dentro de las entidades
+     * Elimina una entidad de la entidad actual
+     * @param {Entity} entity Entidad que se eliminará de las entidades
      */
     self.removeEntity=function(entity){
         delete self.entities[entity.id];
+    };
+    
+    /**
+     * Elimina una entidad de la entidad actual o de las subentidades
+     * @param {Entity} entity Entidad que se eliminará de las entidades
+     */
+    self.removeEntityRecursive=function(entity){
+        for(var i in self.entities){
+            self.entities[i].removeEntityRecursive(entity);
+        }
+        self.removeEntity(entity);
     };
     
     /**

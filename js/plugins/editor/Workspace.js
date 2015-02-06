@@ -125,16 +125,19 @@ var Workspace = function(params){
      * Elimina una entidad a partir de su id
      * @param {int} entityId Identificador de la entidad
      */
-    self.deleteEntity=function(entityId){
-        var output=false;
+    self.removeEntity=function(entityId){
+        var entity=self.entities[entityId];
+        //Elimina la entidad de las entidades o subentidades 
         for(var i in self.entities){
-            if(self.entities[i].id===entityId){
-                self.entities[i].deleteHtml();
-                self.entities.splice(i,1);
-                break;
-            }
+            self.entities[i].removeEntityRecursive(entity);
         }
-        return output;
+        //Elimina las subentidades de la entidad a eliminar
+        for(var j in entity.entities){
+            self.removeEntity(entity.entities[j].id);
+        }
+        //Elimina la entidad
+        self.entities[entityId].deleteHtml();
+        delete self.entities[entityId];
     };
     
     /**
