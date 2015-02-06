@@ -4,7 +4,7 @@
  * 7th @rt The Power & Magic of Films to Learn English
  * 7thart_bog@unal.edu.co
  * 2014
- * @param {object} params OObject with the class parameters
+ * @param {object} params Object with the class parameters
  * @param {function} callback Function to return the results
  */
 var Editor = function(params,callback){
@@ -12,8 +12,6 @@ var Editor = function(params,callback){
     /******************************* ATTRIBUTES *******************************/
     /**************************************************************************/
     var self = this;
-    
-    self.countObjects=0;
     
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
@@ -72,12 +70,12 @@ var Editor = function(params,callback){
      * Assign the events to the buttons
      */
     function assignEvents(){
-        self.toolbar.find("#button-object").draggable({
+        self.toolbar.find("#button-entity").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
             helper: function(){
-                return $( "<div class='object-helper'></div>" );
+                return $( "<div class='entity-helper'></div>" );
             },
             opacity: 0.8,
             scroll: false,
@@ -111,7 +109,7 @@ var Editor = function(params,callback){
             containment: "#workspace",
             cursor: "move",
             helper: function(){
-                return $( "<div class='object-fill-helper'></div>" );
+                return $( "<div class='entity-fill-helper'></div>" );
             },
             opacity: 0.8,
             scroll: false
@@ -121,7 +119,7 @@ var Editor = function(params,callback){
             containment: "#workspace",
             cursor: "move",
             helper: function(){
-                return $( "<div class='object-fill-helper'></div>" );
+                return $( "<div class='entity-fill-helper'></div>" );
             },
             opacity: 0.8,
             scroll: false
@@ -131,7 +129,7 @@ var Editor = function(params,callback){
             containment: "#workspace",
             cursor: "move",
             helper: function(){
-                return $( "<div class='object-fill-helper'></div>" );
+                return $( "<div class='entity-fill-helper'></div>" );
             },
             opacity: 0.8,
             scroll: false

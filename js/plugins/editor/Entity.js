@@ -1,20 +1,20 @@
 /* 
- * Pseudo-Clase para el manejo del Objetos en 7th @rt
+ * Pseudo-Clase para el manejo del Entidades en 7th @rt
  * Universidad Nacional de Colombia
  * 7th @rt The Power & Magic of Films to Learn English
  * 7thart_bog@unal.edu.co
  * 2015
  * @param {object} params Object with the class parameters
  */
-var Objeto = function(params){
+var Entity = function(params){
     /**************************************************************************/
     /******************************* ATTRIBUTES *******************************/
     /**************************************************************************/
     var self = this;
     
-    self.workspace=false;           //Workspace en el que está el objeto
-    self.container=false;           //Elemento contenedor del div del objeto (div del workspace)
-    self.div=false;                 //Elemento del objeto
+    self.workspace=false;           //Workspace en el que está la entidad
+    self.container=false;           //Elemento contenedor del div de la entidad (div del workspace)
+    self.div=false;                 //Elemento de la entidad
     self.statesFixedPos=true;       //Si la posición de los estados cambia con el del estado principal
     self.statesFixedSize=true;      //Si el tamaño de los estados cambia con el del estado principal
     
@@ -26,7 +26,7 @@ var Objeto = function(params){
         countable:true,
         id:false,
         optional:false,
-        subobjects:{},
+        entities:{},
         weight:0
     };
     var options = $.extend(def, params);
@@ -34,13 +34,13 @@ var Objeto = function(params){
     self.optional=options.optional;
     self.countable=options.countable;
     self.weight=options.weight;
-    self.subobjects=options.subobjects;
+    self.entities=options.entities;
     /**
      * Constructor Method 
      */
-    var Objeto = function() {
+    var Entity = function() {
         self.states={
-            /* Define los defaults para el estado pasivo (estado del objeto en el editor) */
+            /* Define los defaults para el estado pasivo (estado de la entidad en el editor) */
             'passive':new State({
                 type:'passive',
                 pos:options.pos,
@@ -67,9 +67,9 @@ var Objeto = function(params){
     /**************************************************************************/
     
     /**
-     * Retorna un estado del objeto a partir de su nombre
+     * Retorna un estado de la entidad a partir de su nombre
      * @param {string} stateName Nombre del estado a retornar
-     * @returns {State} Estado del objeto
+     * @returns {State} Estado de la entidad
      */
     self.getState=function(stateName){
         return self.states[stateName];
@@ -79,7 +79,7 @@ var Objeto = function(params){
     /******************************* GUI METHODS ******************************/
     /**************************************************************************/
     /**
-     * Método que dibuja el objeto actual
+     * Método que dibuja la entidad actual
      * @param {string} stateName Estado que se quiere dibujar, si no se pasa, se dibuja
      * el estado passive.
      */
@@ -87,7 +87,7 @@ var Objeto = function(params){
         if(stateName===undefined||!stateName){
             stateName='passive';
         }
-        //Carga el objeto del workspace si existe
+        //Carga la entidad del workspace si existe
         loadDiv();
         
         //Muestra el estado definido en stateName
@@ -97,9 +97,9 @@ var Objeto = function(params){
         self.div.find('.textContent').append(self.getState('passive').content);
         
         
-//        self.workspace.append('<div class="draggable object" id="object'+self.countObjects+'" data-id="'+self.countObjects+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
-//        var object=self.workspace.find('#object'+self.countObjects);
-//        object.draggable({
+//        self.workspace.append('<div class="draggable entity" id="entity'+self.countEntities+'" data-id="'+self.countEntities+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="entityButton config"></div><div class="entityButton deleteEntity">x</div></div>');
+//        var entity=self.workspace.find('#entity'+self.countEntities);
+//        entity.draggable({
 //            containment: "#workspace",
 //            cursor: "move",
 //            opacity: 0.4,
@@ -107,22 +107,22 @@ var Objeto = function(params){
 //        }).resizable({
 ////                        containment:"parent"
 //        });
-//        object.css({
+//        entity.css({
 //            left:left,
 //            top:top
 //        });
-//        object.find(".deleteObject").click(function(){
-//            object.remove();
+//        entity.find(".deleteEntities").click(function(){
+//            entity.remove();
 //        });
-//        object.find(".config").click(function(){
+//        entity.find(".config").click(function(){
 //            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-object",id);
+//            $("#properties").attr("data-entity",id);
 //            $("#properties").dialog("open");
 //        });
     };
     
     /**
-     * Muestra el estado de un objeto a partir de su nombre
+     * Muestra el estado de una entidad a partir de su nombre
      * @returns {State} state Estado que se quiere visualizar
      */
     self.showState=function(state){
@@ -137,23 +137,23 @@ var Objeto = function(params){
     
     
     /**
-     * Carga el div del objeto en self.div
+     * Carga el div de la entidad en self.div
      */
     function loadDiv(){
         self.container=self.workspace.div;
         //Si no existe el div, se inserta
         if(!self.div.length){
             self.container.append(getHtml());
-            self.div=self.container.find('#objeto'+self.id);
-            //Se asocian los eventos del objeto
+            self.div=self.container.find('#entity'+self.id);
+            //Se asocian los eventos de la entidad
             attachEvents();
         }else{
-            self.div=self.container.find('#objeto'+self.id);
+            self.div=self.container.find('#entity'+self.id);
         }
     };
     
     /**
-     * Asocia los eventos básicos al objeto
+     * Asocia los eventos básicos a la entidad
      */
     function attachEvents(){
         self.div.draggable({
@@ -165,9 +165,9 @@ var Objeto = function(params){
                 var diffLeft=ui.position.left-ui.originalPosition.left;
                 var diffTop=ui.position.top-ui.originalPosition.top;
                 self.updatePositionByDiff(diffLeft,diffTop);
-                for(var i in self.subobjects){
-                    self.subobjects[i].updatePositionByDiff(diffLeft,diffTop);
-                    self.subobjects[i].draw();
+                for(var i in self.entities){
+                    self.entities[i].updatePositionByDiff(diffLeft,diffTop);
+                    self.entities[i].draw();
                 }
                 self.draw();
             },
@@ -180,24 +180,24 @@ var Objeto = function(params){
                 self.updateSizeByDiff(diffHeight,diffWidth);
             }
         }).droppable({
-            accept: ".objeto",
-            hoverClass: "objeto-hover",
+            accept: ".entity",
+            hoverClass: "entity-hover",
             tolerance: "fit",
             drop: function(event,ui){
-                var objetoId=getIdFromElement(ui.draggable);
-                var objeto=self.workspace.getObjeto(objetoId);
-                self.addObject(objeto);
+                var entityId=getIdFromElement(ui.draggable);
+                var entity=self.workspace.getEntity(entityId);
+                self.addEntity(entity);
             },
             out: function(event,ui){
-                var objetoId=getIdFromElement(ui.draggable);
-                var objeto=self.workspace.getObjeto(objetoId);
-                self.removeObject(objeto);
+                var entityId=getIdFromElement(ui.draggable);
+                var entity=self.workspace.getEntity(entityId);
+                self.removeEntity(entity);
             }
         });
         
         
-        self.div.find(".deleteObject").click(function(){
-            self.workspace.deleteObjeto(self.id);
+        self.div.find(".deleteEntity").click(function(){
+            self.workspace.deleteEntity(self.id);
         });
         self.div.dblclick(function(){
             console.warn(self);
@@ -205,16 +205,16 @@ var Objeto = function(params){
             console.debug(passive.pos);
             console.debug(passive.size);
         });
-//        object.find(".config").click(function(){
+//        entity.find(".config").click(function(){
 //            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-object",id);
+//            $("#properties").attr("data-entity",id);
 //            $("#properties").dialog("open");
 //        });
     };
     
     /**
-     * Actualiza el container del objeto
-     * @param {element} newContainer El nuevo elemento contenedor del objeto
+     * Actualiza el container de la entidad
+     * @param {element} newContainer El nuevo elemento contenedor de la entidad
      */
     self.updateContainer=function(newContainer){
         self.container=newContainer;
@@ -226,7 +226,7 @@ var Objeto = function(params){
     };
     
     /**
-     * Establece el zindex para el estado / los estados del objeto
+     * Establece el zindex para el estado / los estados de la entidad
      * @param {int} zindex Zindex a establecer
      * @param {string} stateName (optional) si se pasa, establece el z-index del
      *                           estado, sino, establece el de todos los estados
@@ -295,24 +295,24 @@ var Objeto = function(params){
     };
     
     /**************************************************************************/
-    /************************** MÉTODOS DE SUBOBJETOS *************************/
+    /************************* MÉTODOS DE SUBENTIDADES ************************/
     /**************************************************************************/
     
     /**
-     * Agrega un subobjeto al objeto actual
-     * @param {Objeto} object Objeto que se incluirá dentro de los objetos
+     * Agrega una entidad a la entidad actual
+     * @param {Entity} entity Entidad que se incluirá dentro de las entidades
      */
-    self.addObject=function(object){
-        object.setZindex(self.getZindex()+1);
-        self.subobjects[object.id]=object;
+    self.addEntity=function(entity){
+        entity.setZindex(self.getZindex()+1);
+        self.entities[entity.id]=entity;
     };
     
     /**
-     * Agrega un subobjeto al objeto actual
-     * @param {Objeto} object Objeto que se incluirá dentro de los objetos
+     * Agrega una entidad a la entidad actual
+     * @param {Entity} entity Entidad que se incluirá dentro de las entidades
      */
-    self.removeObject=function(object){
-        delete self.subobjects[object.id];
+    self.removeEntity=function(entity){
+        delete self.entities[entity.id];
     };
     
     
@@ -322,32 +322,32 @@ var Objeto = function(params){
     
     
     /**
-     * Retorna el html del objeto
+     * Retorna el html de la entidad
      */
     function getHtml(){
-        return '<div class="draggable objeto" id="objeto'+self.id+'" data-id="'+self.id+'">'+
+        return '<div class="draggable entity" id="entity'+self.id+'" data-id="'+self.id+'">'+
                 '<div class="content">'+
                     '<div class="text">'+
                         '<div class="textContent"></div>'+
                     '</div>'+
                 '</div>'+
-                '<div class="objectButton config"></div>'+
-                '<div class="objectButton deleteObject">x</div>'+
+                '<div class="entityButton config"></div>'+
+                '<div class="entityButton deleteEntity">x</div>'+
             '</div>'
         ;
     };
     
     /**
-     * Elimina el elemento del objeto del DOM
+     * Elimina el elemento de la entidad del DOM
      */
     self.deleteHtml=function(){
-        self.container.find('#objeto'+self.id).remove();
+        self.container.find('#entity'+self.id).remove();
     };
     
     /**
-     * Retorna el Id del un objeto a partir de un elemento del DOM
-     * @param {element} element Elemento de objeto
-     * @returns {int} el id del objeto
+     * Retorna el Id de una entidad a partir de un elemento del DOM
+     * @param {element} element Elemento de entidad
+     * @returns {int} el id de la entidad
      */
     function getIdFromElement(element){
         return parseInt(element.attr('data-id'));

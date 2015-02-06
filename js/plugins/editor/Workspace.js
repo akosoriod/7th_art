@@ -12,19 +12,19 @@ var Workspace = function(params){
     /**************************************************************************/
     var self = this;
     
-    /***** Manejo de objetos *****/
+    /***** Manejo de entidades *****/
     
     /**
-     * Cuenta los objetos temporales creados hasta el momento. A cada nuevo objeto 
-     * le asigna un id negativo, así se reconoce como un objeto temporal al que
+     * Cuenta las entidades temporales creadas hasta el momento. A cada nueva entidad 
+     * le asigna un id negativo, así se reconoce como una entidad temporal a la que
      * se le asigna un id positivo cuando se almacena en la base de datos.
      * @type int
      */
-    self.tempObjetos=0;
+    self.tempEntities=0;
     
     /**
-     * Zindex del último objeto insertado en el workspace. Solo se asigna a un 
-     * objeto que no tenga zindex definido.
+     * Zindex de la última entdad insertada en el workspace. Solo se asigna a una
+     * entidad que no tenga zindex definido.
      * @type int
      */
     self.currentZindex=0;
@@ -36,13 +36,13 @@ var Workspace = function(params){
     var def = {
         div:"#workspace",
         height:600,
-        objects:new Array(),
-        width:1040
+        width:1040,
+        entities:{}
     };
     var options = $.extend(def, params);
     self.div=$(options.div);
     self.height=options.height;    
-    self.objects=options.objects;
+    self.entities=options.entities;
     self.width=options.width;
     /**
      * Constructor Method 
@@ -55,41 +55,41 @@ var Workspace = function(params){
     /********************************** METHODS *******************************/
     /**************************************************************************/
     /**
-     * Agrega un objeto al Workspace, si tiene un id, lo actualiza.
-     * @param {object} objeto Objeto que se quiere agregar al workspace
-     * @return {Objeto} Objeto creado o actualizado
+     * Agrega una entidad al Workspace, si tiene un id, la actualiza.
+     * @param {Entity} entity Entidad que se quiere agregar al workspace
+     * @return {Entity} Entidad creada o actualizada
      */
-    self.addObjeto=function(objeto){
-        var obtainedObjeto=self.getObjeto(objeto.id);
-        if(!obtainedObjeto){
-            if(objeto.id===false){
-                //Usa un id temporal para el objeto
-                self.tempObjetos++;
+    self.addEntity=function(entity){
+        var obtainedEntity=self.getEntity(entity.id);
+        if(!obtainedEntity){
+            if(entity.id===false){
+                //Usa un id temporal para la entidad
+                self.tempEntities++;
                 self.currentZindex++;
-                objeto.id=-self.tempObjetos;
-                objeto.zindex=self.currentZindex;
-                objeto.setZindex(self.currentZindex);
+                entity.id=-self.tempEntities;
+                entity.zindex=self.currentZindex;
+                entity.setZindex(self.currentZindex);
             }
-            self.objects.push(objeto);
+            self.entities[entity.id]=entity;
         }else{
-            self.updateObjeto(objeto);
+            self.updateEntity(entity);
         }
-        objeto.workspace=self;
-        objeto.draw();
-        return objeto;
+        entity.workspace=self;
+        entity.draw();
+        return entity;
     };
     
     /**
-     * Retorna un objeto a partir de su id, si no existe en el Workspace, retorna
+     * Retorna una entidad a partir de su id, si no existe en el Workspace, retorna
      * false
-     * @param {int} objetoId Identificador del objeto
-     * @returns {Mixed} Objeto a partir del id, Falso si no lo encuentra
+     * @param {int} entityId Identificador de la entidad
+     * @returns {Mixed} Entidad a partir del id, Falso si no lo encuentra
      */
-    self.getObjeto=function(objetoId){
+    self.getEntity=function(entityId){
         var output=false;
-        for(var i in self.objects){
-            if(self.objects[i].id===objetoId){
-                output=self.objects[i];
+        for(var i in self.entities){
+            if(self.entities[i].id===entityId){
+                output=self.entities[i];
                 break;
             }
         }
@@ -97,16 +97,16 @@ var Workspace = function(params){
     };
     
     /**
-     * Actualiza un objeto
-     * @param {objeto} objeto Objeto a actualizar, debe tener un id
-     * @returns {objeto} Objeto actualizado
+     * Actualiza una entidad
+     * @param {Entity} entity Entidad a actualizar, debe tener un id
+     * @returns {Entity} Entidad actualizada
      */
-    self.updateObjeto=function(objeto){
+    self.updateEntity=function(entity){
         var output=false;
-        for(var i in self.objects){
-            if(self.objects[i].id===objeto.id){
-                self.objects[i]=objeto;
-                output=self.objects[i];
+        for(var i in self.entities){
+            if(self.entities[i].id===entity.id){
+                self.entities[i]=entity;
+                output=self.entities[i];
                 break;
             }
         }
@@ -114,15 +114,15 @@ var Workspace = function(params){
     };
     
     /**
-     * Elimina un objeto a partir de su id
-     * @param {int} objetoId Identificador del objeto
+     * Elimina una entidad a partir de su id
+     * @param {int} entityId Identificador de la entidad
      */
-    self.deleteObjeto=function(objetoId){
+    self.deleteEntity=function(entityId){
         var output=false;
-        for(var i in self.objects){
-            if(self.objects[i].id===objetoId){
-                self.objects[i].deleteHtml();
-                self.objects.splice(i,1);
+        for(var i in self.entities){
+            if(self.entities[i].id===entity){
+                self.entities[i].deleteHtml();
+                self.entities.splice(i,1);
                 break;
             }
         }
@@ -130,15 +130,15 @@ var Workspace = function(params){
     };
     
     /**
-     * Retorna la cantidad de objetos
-     * @returns {int} cantidad de objetos primarios en el workspace
+     * Retorna la cantidad de entidades
+     * @returns {int} cantidad de entidades en el workspace
      */
-    self.numberObjects=function(){
-        return self.objects.length;
+    self.numberEntities=function(){
+        return self.entities.length;
     };
     
     /**
-     * Reinicia el Workspace, elimina todos los objetos del workspace.
+     * Reinicia el Workspace, elimina todas las entidades del workspace.
      */
     self.clear=function(){
         
@@ -155,9 +155,9 @@ var Workspace = function(params){
         self.div.droppable({
             accept: ".button",
             drop: function( event, ui ) {
-                if(ui.draggable.hasClass("object")){
+                if(ui.draggable.hasClass("entity")){
                     var displacement=$("#workspace").offset();
-                    self.addObjeto(new Objeto({
+                    self.addEntity(new Entity({
                         pos:{
                             left:ui.position.left-displacement.left,
                             top:ui.position.top-displacement.top
@@ -170,7 +170,7 @@ var Workspace = function(params){
                     var top=ui.position.top-displacement.top;
                     var options=new Array();
                     var id=parseInt(Math.random()*1000);
-                    var objeto=new Objeto({
+                    var entity=new Entity({
                         pos:{
                             left:left,
                             top:top
@@ -180,10 +180,10 @@ var Workspace = function(params){
                             width:350
                         }
                     });
-                    self.addObjeto(objeto);
-                    objeto.draw();
+                    self.addEntity(entity);
+                    entity.draw();
                     for(var i=0;i<defaultOptions;i++){
-                        var obj=objeto.addObjeto(new Objeto({
+                        var obj=entity.addEntity(new Entity({
                             pos:{
                                 left:left+(10),
                                 top:top+(30*i)
@@ -205,7 +205,7 @@ var Workspace = function(params){
 //                    var top=ui.position.top-displacement.top;
 //                    var options=new Array();
 ////                    for(var i=0;i<defaultOptions;i++){
-//                        var obj=self.addObjeto(new Objeto({
+//                        var obj=self.addEntity(new Entity({
 ////                            pos:{
 ////                                left:left+(10),
 ////                                top:top+(30*i)
@@ -231,7 +231,7 @@ var Workspace = function(params){
 //                    var top=ui.position.top-displacement.top;
 //                    var options=new Array();
 //                    for(var i=0;i<defaultOptions;i++){
-//                        var obj=self.addObjeto(new Objeto({
+//                        var obj=self.addEntity(new Entity({
 //                            pos:{
 //                                left:left+(10),
 //                                top:top+(30*i)

@@ -68,29 +68,6 @@ var State = function(params){
         
         
         
-        
-//        self.workspace.append('<div class="draggable object" id="object'+self.countObjects+'" data-id="'+self.countObjects+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
-//        var object=self.workspace.find('#object'+self.countObjects);
-//        object.draggable({
-//            containment: "#workspace",
-//            cursor: "move",
-//            opacity: 0.4,
-//            scroll: false
-//        }).resizable({
-////                        containment:"parent"
-//        });
-//        object.css({
-//            left:left,
-//            top:top
-//        });
-//        object.find(".deleteObject").click(function(){
-//            object.remove();
-//        });
-//        object.find(".config").click(function(){
-//            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-object",id);
-//            $("#properties").dialog("open");
-//        });
     };
     
     /**************************************************************************/
