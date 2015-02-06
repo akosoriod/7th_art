@@ -26,9 +26,8 @@ var Objeto = function(params){
         countable:true,
         id:false,
         optional:false,
-        subobjects:false,
-        weight:0,
-        zindex:0
+        subobjects:{},
+        weight:0
     };
     var options = $.extend(def, params);
     self.id=options.id;
@@ -36,7 +35,6 @@ var Objeto = function(params){
     self.countable=options.countable;
     self.weight=options.weight;
     self.subobjects=options.subobjects;
-    self.zindex=options.zindex;
     /**
      * Constructor Method 
      */
@@ -167,6 +165,11 @@ var Objeto = function(params){
                 var diffLeft=ui.position.left-ui.originalPosition.left;
                 var diffTop=ui.position.top-ui.originalPosition.top;
                 self.updatePositionByDiff(diffLeft,diffTop);
+                for(var i in self.subobjects){
+                    self.subobjects[i].updatePositionByDiff(diffLeft,diffTop);
+                    self.subobjects[i].draw();
+                }
+                self.draw();
             },
             zIndex: 10000
         }).resizable({
@@ -176,8 +179,21 @@ var Objeto = function(params){
                 var diffWidth=ui.size.width-ui.originalSize.width;
                 self.updateSizeByDiff(diffHeight,diffWidth);
             }
+        }).droppable({
+            accept: ".objeto",
+            hoverClass: "objeto-hover",
+            tolerance: "fit",
+            drop: function(event,ui){
+                var objetoId=getIdFromElement(ui.draggable);
+                var objeto=self.workspace.getObjeto(objetoId);
+                self.addObject(objeto);
+            },
+            out: function(event,ui){
+                var objetoId=getIdFromElement(ui.draggable);
+                var objeto=self.workspace.getObjeto(objetoId);
+                self.removeObject(objeto);
+            }
         });
-        
         
         
         self.div.find(".deleteObject").click(function(){
@@ -227,6 +243,22 @@ var Objeto = function(params){
     };
     
     /**
+     * Retorna el zindex de un estado / si no se pasa, retorna el de passive
+     * @param {string} stateName (optional) si se pasa, retorna el z-index del
+     *                           estado, sino, establece el de passive
+     */
+    self.getZindex=function(stateName){
+        var zindex=0;
+        if(stateName){
+            var state=self.getState(stateName);
+            zindex=state.zindex;
+        }else{
+            zindex=self.states.passive.zindex;
+        }
+        return zindex;
+    };
+    
+    /**
      * Actualiza la posición del estado pasivo, hace los desplazamientos en cada
      * estado
      * @param {int} diffLeft Diferencia de posición desde la izquierda
@@ -261,6 +293,28 @@ var Objeto = function(params){
             }
         }
     };
+    
+    /**************************************************************************/
+    /************************** MÉTODOS DE SUBOBJETOS *************************/
+    /**************************************************************************/
+    
+    /**
+     * Agrega un subobjeto al objeto actual
+     * @param {Objeto} object Objeto que se incluirá dentro de los objetos
+     */
+    self.addObject=function(object){
+        object.setZindex(self.getZindex()+1);
+        self.subobjects[object.id]=object;
+    };
+    
+    /**
+     * Agrega un subobjeto al objeto actual
+     * @param {Objeto} object Objeto que se incluirá dentro de los objetos
+     */
+    self.removeObject=function(object){
+        delete self.subobjects[object.id];
+    };
+    
     
     /**************************************************************************/
     /******************************* HTML METHODS *****************************/
