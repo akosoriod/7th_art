@@ -170,8 +170,20 @@ var Workspace = function(params){
                     var top=ui.position.top-displacement.top;
                     var options=new Array();
                     var id=parseInt(Math.random()*1000);
+                    var objeto=new Objeto({
+                        pos:{
+                            left:left,
+                            top:top
+                        },
+                        size:{
+                            height:150,
+                            width:350
+                        }
+                    });
+                    self.addObjeto(objeto);
+                    objeto.draw();
                     for(var i=0;i<defaultOptions;i++){
-                        var obj=self.addObjeto(new Objeto({
+                        var obj=objeto.addObjeto(new Objeto({
                             pos:{
                                 left:left+(10),
                                 top:top+(30*i)
@@ -184,55 +196,56 @@ var Workspace = function(params){
                         var passive=obj.getState('passive');
                         passive.content='<input type="radio" name="radio'+id+'" value="Opción 1">Opción 1';
                         obj.draw();
+                        
                     }
-                }else if(ui.draggable.hasClass("true_false")){
-                    var displacement=$("#workspace").offset();
-                    var defaultOptions=4;
-                    var left=ui.position.left-displacement.left;
-                    var top=ui.position.top-displacement.top;
-                    var options=new Array();
+//                }else if(ui.draggable.hasClass("true_false")){
+//                    var displacement=$("#workspace").offset();
+//                    var defaultOptions=4;
+//                    var left=ui.position.left-displacement.left;
+//                    var top=ui.position.top-displacement.top;
+//                    var options=new Array();
+////                    for(var i=0;i<defaultOptions;i++){
+//                        var obj=self.addObjeto(new Objeto({
+////                            pos:{
+////                                left:left+(10),
+////                                top:top+(30*i)
+////                            },
+//                            size:{
+//                                height:30,
+//                                width:300
+//                            }
+//                        }));
+//                        var passive=obj.getState('passive');
+//                        var id=parseInt(Math.random()*1000);
+//                        passive.content='<select>'+
+//                            '<option name="'+id+'">Opción 1</option>'+
+//                            '<option name="'+id+'">Opción 2</option>'+
+//                            '<option name="'+id+'">Opción 3</option>'+
+//                        '</select>';
+//                        obj.draw();
+////                    }
+//                }else if(ui.draggable.hasClass("multi-multi")){
+//                    var displacement=$("#workspace").offset();
+//                    var defaultOptions=4;
+//                    var left=ui.position.left-displacement.left;
+//                    var top=ui.position.top-displacement.top;
+//                    var options=new Array();
 //                    for(var i=0;i<defaultOptions;i++){
-                        var obj=self.addObjeto(new Objeto({
+//                        var obj=self.addObjeto(new Objeto({
 //                            pos:{
 //                                left:left+(10),
 //                                top:top+(30*i)
 //                            },
-                            size:{
-                                height:30,
-                                width:300
-                            }
-                        }));
-                        var passive=obj.getState('passive');
-                        var id=parseInt(Math.random()*1000);
-                        passive.content='<select>'+
-                            '<option name="'+id+'">Opción 1</option>'+
-                            '<option name="'+id+'">Opción 2</option>'+
-                            '<option name="'+id+'">Opción 3</option>'+
-                        '</select>';
-                        obj.draw();
+//                            size:{
+//                                height:30,
+//                                width:300
+//                            }
+//                        }));
+//                        var passive=obj.getState('passive');
+//                        var id=parseInt(Math.random()*1000);
+//                        passive.content='<input type="checkbox" name="'+id+'" value="Opción '+(i+1)+'">Opción 1';
+//                        obj.draw();
 //                    }
-                }else if(ui.draggable.hasClass("multi-multi")){
-                    var displacement=$("#workspace").offset();
-                    var defaultOptions=4;
-                    var left=ui.position.left-displacement.left;
-                    var top=ui.position.top-displacement.top;
-                    var options=new Array();
-                    for(var i=0;i<defaultOptions;i++){
-                        var obj=self.addObjeto(new Objeto({
-                            pos:{
-                                left:left+(10),
-                                top:top+(30*i)
-                            },
-                            size:{
-                                height:30,
-                                width:300
-                            }
-                        }));
-                        var passive=obj.getState('passive');
-                        var id=parseInt(Math.random()*1000);
-                        passive.content='<input type="checkbox" name="'+id+'" value="Opción '+(i+1)+'">Opción 1';
-                        obj.draw();
-                    }
                 }
             }
         });
