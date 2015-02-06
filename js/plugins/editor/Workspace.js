@@ -29,6 +29,14 @@ var Workspace = function(params){
      */
     self.currentZindex=0;
     
+    /**
+     * Mantiene un registro de las entidades droppable con el mayor zindex, sirve para
+     * identificar cual es la entidad en la que se agregará la entidad que se 
+     * está arrastrando.
+     * @type Entity[]
+     */
+    self.droppableStack={};
+    
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
     /**************************************************************************/
@@ -120,7 +128,7 @@ var Workspace = function(params){
     self.deleteEntity=function(entityId){
         var output=false;
         for(var i in self.entities){
-            if(self.entities[i].id===entity){
+            if(self.entities[i].id===entityId){
                 self.entities[i].deleteHtml();
                 self.entities.splice(i,1);
                 break;
@@ -168,7 +176,6 @@ var Workspace = function(params){
                     var defaultOptions=4;
                     var left=ui.position.left-displacement.left;
                     var top=ui.position.top-displacement.top;
-                    var options=new Array();
                     var id=parseInt(Math.random()*1000);
                     var entity=new Entity({
                         pos:{
@@ -181,9 +188,8 @@ var Workspace = function(params){
                         }
                     });
                     self.addEntity(entity);
-                    entity.draw();
                     for(var i=0;i<defaultOptions;i++){
-                        var obj=entity.addEntity(new Entity({
+                        var ent=self.addEntity(new Entity({
                             pos:{
                                 left:left+(10),
                                 top:top+(30*i)
@@ -193,11 +199,14 @@ var Workspace = function(params){
                                 width:300
                             }
                         }));
-                        var passive=obj.getState('passive');
-                        passive.content='<input type="radio" name="radio'+id+'" value="Opción 1">Opción 1';
-                        obj.draw();
-                        
+                        //Se agregan las como subentidades a la entidad contenedora
+                        entity.addEntity(ent);
                     }
+                    
+                    
+                    
+                    
+                    
 //                }else if(ui.draggable.hasClass("true_false")){
 //                    var displacement=$("#workspace").offset();
 //                    var defaultOptions=4;
@@ -205,7 +214,7 @@ var Workspace = function(params){
 //                    var top=ui.position.top-displacement.top;
 //                    var options=new Array();
 ////                    for(var i=0;i<defaultOptions;i++){
-//                        var obj=self.addEntity(new Entity({
+//                        var ent=self.addEntity(new Entity({
 ////                            pos:{
 ////                                left:left+(10),
 ////                                top:top+(30*i)
@@ -215,14 +224,14 @@ var Workspace = function(params){
 //                                width:300
 //                            }
 //                        }));
-//                        var passive=obj.getState('passive');
+//                        var passive=ent.getState('passive');
 //                        var id=parseInt(Math.random()*1000);
 //                        passive.content='<select>'+
 //                            '<option name="'+id+'">Opción 1</option>'+
 //                            '<option name="'+id+'">Opción 2</option>'+
 //                            '<option name="'+id+'">Opción 3</option>'+
 //                        '</select>';
-//                        obj.draw();
+//                        ent.draw();
 ////                    }
 //                }else if(ui.draggable.hasClass("multi-multi")){
 //                    var displacement=$("#workspace").offset();
@@ -231,7 +240,7 @@ var Workspace = function(params){
 //                    var top=ui.position.top-displacement.top;
 //                    var options=new Array();
 //                    for(var i=0;i<defaultOptions;i++){
-//                        var obj=self.addEntity(new Entity({
+//                        var ent=self.addEntity(new Entity({
 //                            pos:{
 //                                left:left+(10),
 //                                top:top+(30*i)
@@ -241,14 +250,29 @@ var Workspace = function(params){
 //                                width:300
 //                            }
 //                        }));
-//                        var passive=obj.getState('passive');
+//                        var passive=ent.getState('passive');
 //                        var id=parseInt(Math.random()*1000);
 //                        passive.content='<input type="checkbox" name="'+id+'" value="Opción '+(i+1)+'">Opción 1';
-//                        obj.draw();
+//                        ent.draw();
 //                    }
                 }
             }
         });
+    };
+    
+    /**
+     * Retorna el droppable de self.maxDroppableStack={}; con el mayor zindex
+     * @return {Entity} Entidad dropable con el mayor zindex
+     */
+    self.maxDroppableStack=function(){
+        var maxZindex=0;
+        var dropable=false;
+        for(var i in self.droppableStack){
+            if(self.droppableStack[i].zindex>maxZindex){
+                dropable=self.droppableStack[i];
+            }
+        }
+        return dropable;
     };
     
     /**************************************************************************/

@@ -75,6 +75,71 @@ var Entity = function(params){
         return self.states[stateName];
     };
     
+    
+    /**
+     * Asocia los eventos básicos a la entidad
+     */
+    function attachEvents(){
+        self.div.draggable({
+            containment: self.container,
+            cursor: "move",
+            opacity: 0.4,
+            scroll: false,
+            zIndex: 10000,
+            stop:function(event,ui){
+                var diffLeft=ui.position.left-ui.originalPosition.left;
+                var diffTop=ui.position.top-ui.originalPosition.top;
+                self.updatePositionByDiff(diffLeft,diffTop);
+            }
+        }).resizable({
+            containment: self.container,
+            stop:function(event,ui){
+                var diffHeight=ui.size.height-ui.originalSize.height;
+                var diffWidth=ui.size.width-ui.originalSize.width;
+                self.updateSizeByDiff(diffHeight,diffWidth);
+            }
+        }).droppable({
+            accept: ".entity",
+            hoverClass: "entity-hover",
+            greedy: true,
+            tolerance: "fit",
+            drop: function(e,ui){
+                var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
+                if(self.id===self.workspace.maxDroppableStack().id){
+                    self.addEntity(entity);
+                    self.workspace.droppableStack={};
+                }else{
+                    self.removeEntity(entity);
+                }
+                return false;
+            },
+            out: function(e,ui){
+                var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
+                self.removeEntity(entity);
+                delete self.workspace.droppableStack[self.id];
+            },
+            over: function(e,ui){
+                self.workspace.droppableStack[self.id]=self;
+            }
+        });
+        
+        
+        self.div.find(".deleteEntity").click(function(){
+            self.workspace.deleteEntity(self.id);
+        });
+        self.div.dblclick(function(){
+            console.warn(self);
+            var passive=self.getState('passive');
+            console.debug(passive.pos);
+            console.debug(passive.size);
+        });
+//        entity.find(".config").click(function(){
+//            var id=parseInt($(this).parent().attr("data-id"));
+//            $("#properties").attr("data-entity",id);
+//            $("#properties").dialog("open");
+//        });
+    };
+    
     /**************************************************************************/
     /******************************* GUI METHODS ******************************/
     /**************************************************************************/
@@ -84,18 +149,20 @@ var Entity = function(params){
      * el estado passive.
      */
     self.draw=function(stateName){
-        if(stateName===undefined||!stateName){
-            stateName='passive';
+        self.container=self.workspace.div;
+        if(self.container){
+            if(stateName===undefined||!stateName){
+                stateName='passive';
+            }
+            //Carga la entidad del workspace si existe
+            loadDiv();
+
+            //Muestra el estado definido en stateName
+            self.showState(self.getState(stateName));
+
+
+            self.div.find('.textContent').append(self.getState('passive').content);
         }
-        //Carga la entidad del workspace si existe
-        loadDiv();
-        
-        //Muestra el estado definido en stateName
-        self.showState(self.getState(stateName));
-        
-        
-        self.div.find('.textContent').append(self.getState('passive').content);
-        
         
 //        self.workspace.append('<div class="draggable entity" id="entity'+self.countEntities+'" data-id="'+self.countEntities+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="entityButton config"></div><div class="entityButton deleteEntity">x</div></div>');
 //        var entity=self.workspace.find('#entity'+self.countEntities);
@@ -140,7 +207,6 @@ var Entity = function(params){
      * Carga el div de la entidad en self.div
      */
     function loadDiv(){
-        self.container=self.workspace.div;
         //Si no existe el div, se inserta
         if(!self.div.length){
             self.container.append(getHtml());
@@ -152,65 +218,7 @@ var Entity = function(params){
         }
     };
     
-    /**
-     * Asocia los eventos básicos a la entidad
-     */
-    function attachEvents(){
-        self.div.draggable({
-            containment: self.container,
-            cursor: "move",
-            opacity: 0.4,
-            scroll: false,
-            stop:function(event,ui){
-                var diffLeft=ui.position.left-ui.originalPosition.left;
-                var diffTop=ui.position.top-ui.originalPosition.top;
-                self.updatePositionByDiff(diffLeft,diffTop);
-                for(var i in self.entities){
-                    self.entities[i].updatePositionByDiff(diffLeft,diffTop);
-                    self.entities[i].draw();
-                }
-                self.draw();
-            },
-            zIndex: 10000
-        }).resizable({
-            containment: self.container,
-            stop:function(event,ui){
-                var diffHeight=ui.size.height-ui.originalSize.height;
-                var diffWidth=ui.size.width-ui.originalSize.width;
-                self.updateSizeByDiff(diffHeight,diffWidth);
-            }
-        }).droppable({
-            accept: ".entity",
-            hoverClass: "entity-hover",
-            tolerance: "fit",
-            drop: function(event,ui){
-                var entityId=getIdFromElement(ui.draggable);
-                var entity=self.workspace.getEntity(entityId);
-                self.addEntity(entity);
-            },
-            out: function(event,ui){
-                var entityId=getIdFromElement(ui.draggable);
-                var entity=self.workspace.getEntity(entityId);
-                self.removeEntity(entity);
-            }
-        });
-        
-        
-        self.div.find(".deleteEntity").click(function(){
-            self.workspace.deleteEntity(self.id);
-        });
-        self.div.dblclick(function(){
-            console.warn(self);
-            var passive=self.getState('passive');
-            console.debug(passive.pos);
-            console.debug(passive.size);
-        });
-//        entity.find(".config").click(function(){
-//            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-entity",id);
-//            $("#properties").dialog("open");
-//        });
-    };
+    
     
     /**
      * Actualiza el container de la entidad
@@ -274,6 +282,10 @@ var Entity = function(params){
                 self.states[i].pos.top=self.states[i].pos.top+diffTop;
             }
         }
+        for(var j in self.entities){
+            self.entities[j].updatePositionByDiff(diffLeft,diffTop);
+        }
+        self.draw();
     };
     
     /**
@@ -303,8 +315,9 @@ var Entity = function(params){
      * @param {Entity} entity Entidad que se incluirá dentro de las entidades
      */
     self.addEntity=function(entity){
-        entity.setZindex(self.getZindex()+1);
+        entity.updateZindex(self.getZindex()+1);
         self.entities[entity.id]=entity;
+        return self.entities[entity.id];
     };
     
     /**
@@ -313,6 +326,28 @@ var Entity = function(params){
      */
     self.removeEntity=function(entity){
         delete self.entities[entity.id];
+    };
+    
+    /**
+     * Retorna la cantidad de entidades
+     * @returns {int} cantidad de entidades en el workspace
+     */
+    self.numberEntities=function(){
+        return self.entities.length;
+    };
+    
+    /**
+     * Actualiza el zindex de la entidad y los de las subentidades
+     * @param {int} zindex Zindex base a partir del cuál los demás se calculan,
+     *              se asigna el zindex a la entidad actual y se calcula la diferencia
+     *              con las subentidades.
+     */
+    self.updateZindex=function(zindex){
+        for(var i in self.entities){
+            var zindexDiff=self.entities[i].getZindex()-self.getZindex();
+            self.entities[i].updateZindex(zindex+zindexDiff);
+        }
+        self.setZindex(zindex);
     };
     
     
