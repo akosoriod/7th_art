@@ -106,6 +106,12 @@
 #container #area #editor #button-multi-multi{
     background-image: url('../images/editor/button2.png');
 }
+#container #area #editor #button-redo{
+    background-image: url('../images/editor/edit-redo.png');
+}
+#container #area #editor #button-undo{
+    background-image: url('../images/editor/edit-undo.png');
+}
 .entity-fill-helper{
     background-image: url('../images/editor/button2.png');
     height: 48px;
