@@ -73,6 +73,8 @@ var Editor = function(params,callback){
                 var entities=self.historyStack[self.historyIndex];
                 self.workspace.deobjectify(JSON.parse(entities));
                 self.workspace.logHistory=true;
+                
+                console.debug(self.workspace.entities);
             }
         });
         
