@@ -44,12 +44,16 @@ var Workspace = function(params){
     var def = {
         div:"#workspace",
         height:600,
+        logHistory:true,
+        saveHistory:function(){},
         width:1040,
         entities:{}
     };
     var options = $.extend(def, params);
     self.div=$(options.div);
     self.height=options.height;    
+    self.logHistory=options.logHistory;
+    self.saveHistory=options.saveHistory;
     self.entities=options.entities;
     self.width=options.width;
     /**
@@ -77,6 +81,13 @@ var Workspace = function(params){
                 entity.id=-self.tempEntities;
                 entity.zindex=self.currentZindex;
                 entity.setZindex(self.currentZindex);
+            }else{
+                if(entity.id<0&&Math.abs(entity.id)>self.tempEntities){
+                    self.tempEntities=Math.abs(entity.id);
+                }
+                if(entity.getZindex()>self.currentZindex){
+                    self.currentZindex=entity.getZindex();
+                }
             }
             self.entities[entity.id]=entity;
         }else{
@@ -84,6 +95,9 @@ var Workspace = function(params){
         }
         entity.workspace=self;
         entity.draw();
+        
+        if(self.logHistory){self.saveHistory();}
+        
         return entity;
     };
     
@@ -118,6 +132,9 @@ var Workspace = function(params){
                 break;
             }
         }
+        
+        if(self.logHistory){self.saveHistory();}        
+        
         return output;
     };
     
@@ -138,6 +155,9 @@ var Workspace = function(params){
         //Elimina la entidad
         self.entities[entityId].deleteHtml();
         delete self.entities[entityId];
+        
+        if(self.logHistory){self.saveHistory();}
+        
     };
     
     /**
@@ -146,6 +166,16 @@ var Workspace = function(params){
      */
     self.numberEntities=function(){
         return self.entities.length;
+    };
+    
+    /**
+     * Redibuja todas las entidades
+     * @returns {undefined}
+     */
+    self.redraw=function(){
+        for(var i in self.entities){
+            self.entities[i].draw();
+        }
     };
     
     /**
@@ -281,5 +311,42 @@ var Workspace = function(params){
     /**************************************************************************/
     /****************************** OTHER METHODS *****************************/
     /**************************************************************************/
+    
+    /**
+     * Retorna las entidades del workspace en texto
+     */
+    self.objectify=function(){
+        var entities=[];
+        for(var i in self.entities){
+            entities.push(self.entities[i].objectify());
+        }
+        return entities;
+    };
+    
+    /**
+     * Retorna el workspace a un estado anterior a partir de una lista de entidades
+     * generadas con self.objectify()
+     * @param {object[]} entities Array de entidades creadas con .objectify()
+     */
+    self.deobjectify=function(entities){
+        for(var i in entities){
+            var entity=new Entity();
+            entity.deobjectify(entities[i]);
+            self.addEntity(entity);
+        }
+        //Se asocian de nuevo las entidades hijas
+        for(var i in self.entities){
+            self.entities[i].entities={};
+            for(var j in entities){
+                var storedEntity=entities[j];
+                if(storedEntity.id===self.entities[i].id){
+                    for(var k in storedEntity.entities){
+                        var subentity=self.getEntity(storedEntity.entities[k]);
+                        self.entities[i].addEntity(subentity);
+                    }
+                }
+            }
+        }
+    };
     
 };

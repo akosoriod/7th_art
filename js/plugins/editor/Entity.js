@@ -18,6 +18,8 @@ var Entity = function(params){
     self.statesFixedPos=true;       //Si la posición de los estados cambia con el del estado principal
     self.statesFixedSize=true;      //Si el tamaño de los estados cambia con el del estado principal
     
+    self.parent=false;
+    
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
     /**************************************************************************/
@@ -90,6 +92,11 @@ var Entity = function(params){
                 var diffLeft=ui.position.left-ui.originalPosition.left;
                 var diffTop=ui.position.top-ui.originalPosition.top;
                 self.updatePositionByDiff(diffLeft,diffTop);
+                
+                
+                if(self.workspace.logHistory){self.workspace.saveHistory();}
+                
+                
             }
         }).resizable({
             containment: self.container,
@@ -97,6 +104,8 @@ var Entity = function(params){
                 var diffHeight=ui.size.height-ui.originalSize.height;
                 var diffWidth=ui.size.width-ui.originalSize.width;
                 self.updateSizeByDiff(diffHeight,diffWidth);
+                
+                if(self.workspace.logHistory){self.workspace.saveHistory();}
             }
         }).droppable({
             accept: ".entity",
@@ -150,12 +159,21 @@ var Entity = function(params){
      */
     self.draw=function(stateName){
         self.container=self.workspace.div;
+        
+        
+        
         if(self.container){
+            
+            
+            
+            
+            
             if(stateName===undefined||!stateName){
                 stateName='passive';
             }
             //Carga la entidad del workspace si existe
             loadDiv();
+            
 
             //Muestra el estado definido en stateName
             self.showState(self.getState(stateName));
@@ -316,6 +334,7 @@ var Entity = function(params){
      */
     self.addEntity=function(entity){
         entity.updateZindex(self.getZindex()+1);
+        entity.parent=self.id;
         self.entities[entity.id]=entity;
         return self.entities[entity.id];
     };
@@ -325,6 +344,7 @@ var Entity = function(params){
      * @param {Entity} entity Entidad que se eliminará de las entidades
      */
     self.removeEntity=function(entity){
+        entity.parent=false;
         delete self.entities[entity.id];
     };
     
@@ -402,5 +422,52 @@ var Entity = function(params){
     /**************************************************************************/
     /****************************** OTHER METHODS *****************************/
     /**************************************************************************/
+    
+    
+    /**
+     * Retorna la entidad como un objeto almacenable en la base de datos
+     * @returns {String}
+     */
+    self.objectify=function(){
+        var objectified={};
+        var entities=[];
+        var noCopy=[
+            "workspace","container","div",
+            "entities"
+        ];
+        //A cada entidad se le asocian los id de las entidades hijas
+        for(var i in self.entities){
+            entities.push(self.entities[i].id);
+        }
+        //Solo copia los valores necesarios
+        for(var i in self){
+            if($.inArray(i,noCopy)===-1){
+                if(!$.isFunction(self[i])){
+                    objectified[i]=self[i];
+                }
+            }
+        }
+        objectified['entities']=entities;
+        return objectified;
+    };
+    
+    /**
+     * Retorna la entidad a un estado anterior generado por self.objectify().
+     * @param {objet} entity Entidad generada con self.objectify()
+     */
+    self.deobjectify=function(entity){
+        for(var i in entity){
+            self[i]=entity[i];
+        }
+        
+    };
+    
+    /**
+     * Convierte a texto una entidad
+     * @returns {String}
+     */
+    self.stringify=function(){
+        return JSON.stringify(self.objectify());
+    };
     
 };

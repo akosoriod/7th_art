@@ -13,6 +13,10 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
+    self.historyStack=[];   //Almacena versiones del workspace para volver a estados anteriores
+    self.historyMax=30;      //Cantidad de estados del workspace que almacena
+    self.historyIndex=0;    //Índice de el workspace que se está visualizando
+    
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
     /**************************************************************************/
@@ -38,7 +42,53 @@ var Editor = function(params,callback){
      * Initialize the editor
      */
     self.init=function(){
-        self.workspace=new Workspace("#workspace");
+        self.workspace=new Workspace({
+            saveHistory:self.saveHistory
+        });
+        
+        self.saveHistory();
+        
+        
+        $("#button-undo").click(function(){
+            if(self.historyIndex>0){
+                self.historyIndex--;
+                self.workspace=new Workspace({
+                    logHistory:false,
+                    saveHistory:self.saveHistory
+                });
+                self.workspace.div.empty();
+                var entities=self.historyStack[self.historyIndex];
+                self.workspace.deobjectify(JSON.parse(entities));
+                self.workspace.logHistory=true;
+            }
+        });
+        $("#button-redo").click(function(){
+            if(self.historyIndex<self.historyStack.length-1){
+                self.historyIndex++;
+                self.workspace=new Workspace({
+                    logHistory:false,
+                    saveHistory:self.saveHistory
+                });
+                self.workspace.div.empty();
+                var entities=self.historyStack[self.historyIndex];
+                self.workspace.deobjectify(JSON.parse(entities));
+                self.workspace.logHistory=true;
+            }
+        });
+        
+        $("#save").click(function(){
+            for(var i in self.workspace.entities){
+                var states=self.workspace.entities[i].states;
+                
+//                console.debug(self.workspace.entities[i].stringify());
+                
+//                for(var j in states){
+//                    console.debug(states[j].stringify());
+//                }
+                
+            }
+        });
+        
         
 //        self.workspace.addObjeto(new Objeto({
 //            pos:{left:10,top:10}
@@ -63,6 +113,29 @@ var Editor = function(params,callback){
         
         assignEvents();
     };
+    
+    /**
+     * Guarda una versión del estado de las entidades del wokspace para "deshacer"
+     */
+    self.saveHistory=function(){
+        
+        self.historyStack.splice(self.historyIndex+1,self.historyStack.length);
+        
+        var entities=self.workspace.objectify();
+        if(self.historyStack.length>=self.historyMax){
+            self.historyStack.shift();
+        }
+        self.historyStack.push(JSON.stringify(entities));
+        self.historyIndex=self.historyStack.length-1;
+        
+        console.debug(self.historyStack);
+    };
+    
+    
+    
+    
+    
+    
     /**************************************************************************/
     /****************************** SETUP METHODS *****************************/
     /**************************************************************************/
@@ -469,32 +542,32 @@ var Editor = function(params,callback){
 //    /******************************* SYNC METHODS *****************************/
 //    /**************************************************************************/
 //    
-//    /**
-//     * Guarda la lista de objetos
-//     * @param {function} callback Function to return the response
-//     */
-//    function saveObjects(stepId,objects,callback){
-//        $.ajax({
-//            url: self.ajaxUrl+'saveObjectsByAjax',
-//            type: "POST",
-//            data:{
-//                stepId:stepId,
-//                objects:objects
-//            }
-//        }).done(function(response) {
-//            var data = JSON.parse(response);
-//            if(callback){callback(false,data);}
-//        }).fail(function(error) {
-//            if(error.status===403){
-//                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
-//                window.location=self.ajaxUrl;
-//            }else{
-//                if(callback){callback(error);}
-//            }
-//        }).always(function(){
-//            
-//        });
-//    };
+    /**
+     * Guarda la lista de objetos
+     * @param {function} callback Function to return the response
+     */
+    function saveEntities(stepId,entities,callback){
+        $.ajax({
+            url: self.ajaxUrl+'saveObjectsByAjax',
+            type: "POST",
+            data:{
+                stepId:stepId,
+                objects:entities
+            }
+        }).done(function(response) {
+            var data = JSON.parse(response);
+            if(callback){callback(false,data);}
+        }).fail(function(error) {
+            if(error.status===403){
+                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                window.location=self.ajaxUrl;
+            }else{
+                if(callback){callback(error);}
+            }
+        }).always(function(){
+            
+        });
+    };
 //    
 //    /**
 //     * Carga la lista de objetos para un paso de la base de datos (si existen) y los
