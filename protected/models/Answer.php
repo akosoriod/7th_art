@@ -7,13 +7,13 @@
  * @property integer $id
  * @property string $value
  * @property integer $user_id
- * @property integer $object_id
+ * @property integer $entity_id
  * @property integer $value_type_id
  *
  * The followings are the available model relations:
  * @property User $user
  * @property ValueType $valueType
- * @property Object $object
+ * @property Entity $entity
  */
 class Answer extends CActiveRecord
 {
@@ -33,12 +33,12 @@ class Answer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, object_id, value_type_id', 'required'),
-			array('user_id, object_id, value_type_id', 'numerical', 'integerOnly'=>true),
+			array('user_id, entity_id, value_type_id', 'required'),
+			array('user_id, entity_id, value_type_id', 'numerical', 'integerOnly'=>true),
 			array('value', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, value, user_id, object_id, value_type_id', 'safe', 'on'=>'search'),
+			array('id, value, user_id, entity_id, value_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +52,7 @@ class Answer extends CActiveRecord
 		return array(
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'valueType' => array(self::BELONGS_TO, 'ValueType', 'value_type_id'),
-			'object' => array(self::BELONGS_TO, 'Object', 'object_id'),
+			'entity' => array(self::BELONGS_TO, 'Entity', 'entity_id'),
 		);
 	}
 
@@ -65,7 +65,7 @@ class Answer extends CActiveRecord
 			'id' => 'ID',
 			'value' => 'Value',
 			'user_id' => 'User',
-			'object_id' => 'Object',
+			'entity_id' => 'Entity',
 			'value_type_id' => 'Value Type',
 		);
 	}
@@ -91,7 +91,7 @@ class Answer extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('value',$this->value,true);
 		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('entity_id',$this->entity_id);
 		$criteria->compare('value_type_id',$this->value_type_id);
 
 		return new CActiveDataProvider($this, array(

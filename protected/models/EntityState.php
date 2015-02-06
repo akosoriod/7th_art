@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "object_state".
+ * This is the model class for table "entity_state".
  *
- * The followings are the available columns in table 'object_state':
+ * The followings are the available columns in table 'entity_state':
  * @property integer $id
  * @property integer $left
  * @property integer $top
@@ -14,23 +14,23 @@
  * @property integer $hidden
  * @property string $value
  * @property integer $zindex
- * @property integer $object_state_type_id
- * @property integer $object_id
+ * @property integer $entity_state_type_id
+ * @property integer $entity_id
  * @property integer $value_type_id
  *
  * The followings are the available model relations:
- * @property ObjectStateType $objectStateType
- * @property Object $object
+ * @property EntityStateType $entityStateType
+ * @property Entity $entity
  * @property ValueType $valueType
  */
-class ObjectState extends CActiveRecord
+class EntityState extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'object_state';
+		return 'entity_state';
 	}
 
 	/**
@@ -41,13 +41,13 @@ class ObjectState extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('object_state_type_id, object_id, value_type_id', 'required'),
-			array('left, top, height, width, hidden, zindex, object_state_type_id, object_id, value_type_id', 'numerical', 'integerOnly'=>true),
+			array('entity_state_type_id, entity_id, value_type_id', 'required'),
+			array('left, top, height, width, hidden, zindex, entity_state_type_id, entity_id, value_type_id', 'numerical', 'integerOnly'=>true),
 			array('css', 'length', 'max'=>45),
 			array('content, value', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, left, top, height, width, content, css, hidden, value, zindex, object_state_type_id, object_id, value_type_id', 'safe', 'on'=>'search'),
+			array('id, left, top, height, width, content, css, hidden, value, zindex, entity_state_type_id, entity_id, value_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,8 +59,8 @@ class ObjectState extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'objectStateType' => array(self::BELONGS_TO, 'ObjectStateType', 'object_state_type_id'),
-			'object' => array(self::BELONGS_TO, 'Object', 'object_id'),
+			'entityStateType' => array(self::BELONGS_TO, 'EntityStateType', 'entity_state_type_id'),
+			'entity' => array(self::BELONGS_TO, 'Entity', 'entity_id'),
 			'valueType' => array(self::BELONGS_TO, 'ValueType', 'value_type_id'),
 		);
 	}
@@ -81,8 +81,8 @@ class ObjectState extends CActiveRecord
 			'hidden' => 'Hidden',
 			'value' => 'Value',
 			'zindex' => 'Zindex',
-			'object_state_type_id' => 'Object State Type',
-			'object_id' => 'Object',
+			'entity_state_type_id' => 'Entity State Type',
+			'entity_id' => 'Entity',
 			'value_type_id' => 'Value Type',
 		);
 	}
@@ -115,8 +115,8 @@ class ObjectState extends CActiveRecord
 		$criteria->compare('hidden',$this->hidden);
 		$criteria->compare('value',$this->value,true);
 		$criteria->compare('zindex',$this->zindex);
-		$criteria->compare('object_state_type_id',$this->object_state_type_id);
-		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('entity_state_type_id',$this->entity_state_type_id);
+		$criteria->compare('entity_id',$this->entity_id);
 		$criteria->compare('value_type_id',$this->value_type_id);
 
 		return new CActiveDataProvider($this, array(
@@ -128,7 +128,7 @@ class ObjectState extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ObjectState the static model class
+	 * @return EntityState the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

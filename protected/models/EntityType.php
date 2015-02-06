@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "object_state_type".
+ * This is the model class for table "entity_type".
  *
- * The followings are the available columns in table 'object_state_type':
+ * The followings are the available columns in table 'entity_type':
  * @property integer $id
  * @property string $name
  * @property string $label
  *
  * The followings are the available model relations:
- * @property ObjectState[] $objectStates
+ * @property Entity[] $entities
  */
-class ObjectStateType extends CActiveRecord
+class EntityType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'object_state_type';
+		return 'entity_type';
 	}
 
 	/**
@@ -44,7 +44,7 @@ class ObjectStateType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'objectStates' => array(self::HAS_MANY, 'ObjectState', 'object_state_type_id'),
+			'entities' => array(self::HAS_MANY, 'Entity', 'entity_type_id'),
 		);
 	}
 
@@ -91,7 +91,7 @@ class ObjectStateType extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ObjectStateType the static model class
+	 * @return EntityType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

@@ -1,33 +1,33 @@
 <?php
 
 /**
- * This is the model class for table "object".
+ * This is the model class for table "entity".
  *
- * The followings are the available columns in table 'object':
+ * The followings are the available columns in table 'entity':
  * @property integer $id
  * @property integer $exercise_id
  * @property integer $optional
  * @property integer $countable
  * @property double $weight
  * @property integer $parent_id
- * @property integer $object_type_id
+ * @property integer $entity_type_id
  *
  * The followings are the available model relations:
  * @property Answer[] $answers
  * @property Exercise $exercise
- * @property Object $parent
- * @property Object[] $objects
- * @property ObjectType $objectType
- * @property ObjectState[] $objectStates
+ * @property Entity $parent
+ * @property Entity[] $entities
+ * @property EntityType $entityType
+ * @property EntityState[] $entityStates
  */
-class Object extends CActiveRecord
+class Entity extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'object';
+		return 'entity';
 	}
 
 	/**
@@ -38,12 +38,12 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise_id, object_type_id', 'required'),
-			array('exercise_id, optional, countable, parent_id, object_type_id', 'numerical', 'integerOnly'=>true),
+			array('exercise_id, entity_type_id', 'required'),
+			array('exercise_id, optional, countable, parent_id, entity_type_id', 'numerical', 'integerOnly'=>true),
 			array('weight', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise_id, optional, countable, weight, parent_id, object_type_id', 'safe', 'on'=>'search'),
+			array('id, exercise_id, optional, countable, weight, parent_id, entity_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,12 +55,12 @@ class Object extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'answers' => array(self::HAS_MANY, 'Answer', 'object_id'),
+			'answers' => array(self::HAS_MANY, 'Answer', 'entity_id'),
 			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
-			'parent' => array(self::BELONGS_TO, 'Object', 'parent_id'),
-			'objects' => array(self::HAS_MANY, 'Object', 'parent_id'),
-			'objectType' => array(self::BELONGS_TO, 'ObjectType', 'object_type_id'),
-			'objectStates' => array(self::HAS_MANY, 'ObjectState', 'object_id'),
+			'parent' => array(self::BELONGS_TO, 'Entity', 'parent_id'),
+			'entities' => array(self::HAS_MANY, 'Entity', 'parent_id'),
+			'entityType' => array(self::BELONGS_TO, 'EntityType', 'entity_type_id'),
+			'entityStates' => array(self::HAS_MANY, 'EntityState', 'entity_id'),
 		);
 	}
 
@@ -76,7 +76,7 @@ class Object extends CActiveRecord
 			'countable' => 'Countable',
 			'weight' => 'Weight',
 			'parent_id' => 'Parent',
-			'object_type_id' => 'Object Type',
+			'entity_type_id' => 'Entity Type',
 		);
 	}
 
@@ -104,7 +104,7 @@ class Object extends CActiveRecord
 		$criteria->compare('countable',$this->countable);
 		$criteria->compare('weight',$this->weight);
 		$criteria->compare('parent_id',$this->parent_id);
-		$criteria->compare('object_type_id',$this->object_type_id);
+		$criteria->compare('entity_type_id',$this->entity_type_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,12 +115,13 @@ class Object extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Object the static model class
+	 * @return Entity the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+        
         
         /**
          * Returns the object in HTML format

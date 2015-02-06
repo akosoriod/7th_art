@@ -10,7 +10,7 @@
  *
  * The followings are the available model relations:
  * @property Answer[] $answers
- * @property ObjectState[] $objectStates
+ * @property EntityState[] $entityStates
  */
 class ValueType extends CActiveRecord
 {
@@ -46,7 +46,7 @@ class ValueType extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'answers' => array(self::HAS_MANY, 'Answer', 'value_type_id'),
-			'objectStates' => array(self::HAS_MANY, 'ObjectState', 'value_type_id'),
+			'entityStates' => array(self::HAS_MANY, 'EntityState', 'value_type_id'),
 		);
 	}
 
