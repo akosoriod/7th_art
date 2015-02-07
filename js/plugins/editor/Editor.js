@@ -502,6 +502,7 @@ var Editor = function(params,callback){
      */
     function attachEventsDialogEntity(){
         self.dialogEditEntity=self.div.find("#edit_entity");
+        self.copyPassiveState=self.div.find(".copy_passive");
         self.dialogEditEntity.dialog({
             autoOpen:false,
             height:620,
@@ -539,6 +540,13 @@ var Editor = function(params,callback){
                 at: "center", 
                 of: self.workspace.div
             }
+        });
+        self.copyPassiveState.click(function(){
+            var passive=self.editingEntity.getState("passive");
+            for(var i in self.editingEntity.states){
+                self.editingEntity.states[i].content=passive.content;
+            }
+            self.dialogEditEntity.find(".selected").click();
         });
     };
     
@@ -615,7 +623,6 @@ var Editor = function(params,callback){
                 of: self.dialogEditEntity
             }
         });
-        
     };
     
     /**
