@@ -12,7 +12,7 @@ class DesignerController extends Controller {
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array(
                         'index',
-                        'saveObjectsByAjax'
+                        'saveEntitiesByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -46,30 +46,31 @@ class DesignerController extends Controller {
     
     
     /**
-    * Saves a schedule in database by ajax. Returns true if success
-    * @param JSONAjax $schedule JSON with the schedule by ajax
+    * Guarda un conjunto de entidades en un paso
     */
-    public function actionSaveObjectsByAjax(){
+    public function actionSaveEntitiesByAjax(){
         $success=true;
         //Get the client data
-        $dataObjects=$_POST['objects'];
+        $dataEntities=$_POST['entities'];
         $stepId=intval($_POST['stepId']);
+        
+//        print_r($dataEntities);
+        
         $step=Step::model()->findByPk($stepId);
-        $prevObjects=Object::getObjectsByStep($step);
-        $objectListId=$step->exercises[0]->objectLists[0]->id;
-        foreach ($prevObjects as $prevObject) {
-            $prevObject->delete();
+        $prevEntities=Entity::getEntitiesByStep($step);
+        foreach ($prevEntities as $prevEntity) {
+            $prevEntity->delete();
         }
-        foreach ($dataObjects as $dataObject) {
-            $object=new Object();
-            $object->content=$dataObject['text']['content'];
-            $object->css=$dataObject['css'];
-            $object->left=intval($dataObject['left']);
-            $object->top=intval($dataObject['top']);
-            $object->height=intval($dataObject['height']);
-            $object->width=intval($dataObject['width']);
-            $object->object_list_id=$objectListId;
-            $object->save();
+        foreach ($dataEntities as $dataEntity) {
+            $entity=new Entity();
+//            $entity->content=$dataEntity['content'];
+//            $entity->css=$dataEntity['css'];
+//            $entity->left=intval($dataEntity['left']);
+//            $entity->top=intval($dataEntity['top']);
+//            $entity->height=intval($dataEntity['height']);
+//            $entity->width=intval($dataEntity['width']);
+//            $entity->object_list_id=$objectListId;
+            $entity->save();
         }
         //Return the result of save schedule
         echo json_encode(array("success"=>$success));

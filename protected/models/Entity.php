@@ -156,20 +156,18 @@ class Entity extends CActiveRecord
 //            return $objectList;
 //        }
 //        
-//        /**
-//         * Retorna una lista de objetos a partir de un paso
-//         * @param Paso $step Objeto de tipo Paso
-//         * @return Object[] Lista de Objetos del Paso
-//         */
-//        public static function getObjectsByStep($step){
-//            $objects=array();
-//            foreach ($step->exercises as $exercise) {
-//                foreach ($exercise->objectLists as $objectList) {
-//                    foreach ($objectList->objects as $object) {
-//                        $objects[]=$object;
-//                    }
-//                }
-//            }
-//            return $objects;
-//        }
+        /**
+         * Retorna una lista de entidades a partir de un paso
+         * @param Paso $step Objeto de tipo Paso
+         * @return Entity[] Lista de Entidades del Paso
+         */
+        public static function getEntitiesByStep($step){
+            $entities=array();
+            foreach ($step->exercises as $exercise) {
+                foreach ($exercise->entities as $entity) {
+                    $entities[]=$entity;
+                }
+            }
+            return $entities;
+        }
 }

@@ -325,63 +325,7 @@ var Editor = function(params,callback){
 //    function resetEditor(){
 //        self.workspace.empty();
 //    };
-//    /**************************************************************************/
-//    /******************************* SYNC METHODS *****************************/
-//    /**************************************************************************/
-//    
-//    /**
-//     * Guarda la lista de objetos
-//     * @param {function} callback Function to return the response
-//     */
-//    function saveEntities(stepId,entities,callback){
-//        $.ajax({
-//            url: self.ajaxUrl+'saveObjectsByAjax',
-//            type: "POST",
-//            data:{
-//                stepId:stepId,
-//                objects:entities
-//            }
-//        }).done(function(response) {
-//            var data = JSON.parse(response);
-//            if(callback){callback(false,data);}
-//        }).fail(function(error) {
-//            if(error.status===403){
-//                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
-//                window.location=self.ajaxUrl;
-//            }else{
-//                if(callback){callback(error);}
-//            }
-//        }).always(function(){
-//            
-//        });
-//    };
-//    
-//    /**
-//     * Carga la lista de objetos para un paso de la base de datos (si existen) y los
-//     * retorna a través del callback
-//     * @param {function} callback Function to return the response
-//     */
-//    function loadStep(stepId,callback){
-//        $.ajax({
-//            url: self.ajaxUrl+'loadStepByAjax',
-//            type: "POST",
-//            data:{
-//                stepId:stepId
-//            }
-//        }).done(function(response) {
-//            var data = JSON.parse(response);
-//            if(callback){callback(false,data);}
-//        }).fail(function(error) {
-//            if(error.status===403){
-//                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
-//                window.location=self.ajaxUrl;
-//            }else{
-//                if(callback){callback(error);}
-//            }
-//        }).always(function(){
-//            
-//        });
-//    };
+
 //    
 //    
 //    /**************************************************************************/
@@ -499,9 +443,12 @@ var Editor = function(params,callback){
         });
         
         self.toolbar.find("#save").click(function(){
-            for(var i in self.workspace.entities){
-                var states=self.workspace.entities[i].states;
-            }
+            var entities=self.workspace.objectify();
+            saveEntities(1,entities,function(err){
+                if(err){
+                    
+                }
+            });
         });
     };
     
@@ -652,4 +599,62 @@ var Editor = function(params,callback){
             attachEventsEditingEntity(stateName);
         });
     };
+    
+    /**************************************************************************/
+    /******************************* SYNC METHODS *****************************/
+    /**************************************************************************/
+    
+    /**
+     * Guarda la lista de objetos
+     * @param {function} callback Function to return the response
+     */
+    function saveEntities(stepId,entities,callback){
+        $.ajax({
+            url: self.ajaxUrl+'saveEntitiesByAjax',
+            type: "POST",
+            data:{
+                stepId:stepId,
+                entities:entities
+            }
+        }).done(function(response) {
+            var data = JSON.parse(response);
+            if(callback){callback(false,data);}
+        }).fail(function(error) {
+            if(error.status===403){
+                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                window.location=self.ajaxUrl;
+            }else{
+                if(callback){callback(error);}
+            }
+        }).always(function(){
+            
+        });
+    };
+    
+    /**
+     * Carga la lista de objetos para un paso de la base de datos (si existen) y los
+     * retorna a través del callback
+     * @param {function} callback Function to return the response
+     */
+//    function loadStep(stepId,callback){
+//        $.ajax({
+//            url: self.ajaxUrl+'loadStepByAjax',
+//            type: "POST",
+//            data:{
+//                stepId:stepId
+//            }
+//        }).done(function(response) {
+//            var data = JSON.parse(response);
+//            if(callback){callback(false,data);}
+//        }).fail(function(error) {
+//            if(error.status===403){
+//                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+//                window.location=self.ajaxUrl;
+//            }else{
+//                if(callback){callback(error);}
+//            }
+//        }).always(function(){
+//            
+//        });
+//    };
 };
