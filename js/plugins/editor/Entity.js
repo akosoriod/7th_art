@@ -41,25 +41,30 @@ var Entity = function(params){
      * Constructor Method 
      */
     var Entity = function() {
+        if(!options.pos){
+            options.pos={left:0,top:0};
+        }
         self.states={
             /* Define los defaults para el estado pasivo (estado de la entidad en el editor) */
             'passive':new State({
                 type:'passive',
-                pos:options.pos,
-                size:options.size,
-                style:"backgound:red"
+                pos:{left:options.pos.left,top:options.pos.top}
             }),
             'active':new State({
-                type:'active'
+                type:'active',
+                pos:{left:options.pos.left,top:options.pos.top}
             }),
             'solved':new State({
-                type:'solved'
+                type:'solved',
+                pos:{left:options.pos.left,top:options.pos.top}
             }),
             'right':new State({
-                type:'right'
+                type:'right',
+                pos:{left:options.pos.left,top:options.pos.top}
             }),
             'wrong':new State({
-                type:'wrong'
+                type:'wrong',
+                pos:{left:options.pos.left,top:options.pos.top}
             })
         };
     }();
