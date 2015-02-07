@@ -97,4 +97,17 @@ class EntityType extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Returns the Model by name
+         * @param string $name Name of the model
+         * @return EntityType EntityType object
+         */
+        public static function getByName($name){
+            $object=self::model()->find(
+                'name=:name',
+                array(':name'=>$name)
+            );
+            return $object;
+        }
 }

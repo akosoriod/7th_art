@@ -31,7 +31,8 @@ var State = function(params){
             width:100
         },
         content:"",
-        style:"",
+        hidden:false,
+        css:"",
         value:false,
         valueType:'boolean',
         zindex:0
@@ -41,7 +42,8 @@ var State = function(params){
     self.pos=options.pos;
     self.size=options.size;
     self.content=options.content;
-    self.style=options.style;
+    self.hidden=options.content;
+    self.css=options.css;
     self.value=options.value;
     self.valueType=options.valueType;
     self.zindex=options.zindex;

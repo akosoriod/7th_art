@@ -461,7 +461,8 @@ var Entity = function(params){
         for(var i in entity.states){
             self.states[i].size=entity.states[i].size;
             self.states[i].content=entity.states[i].content;
-            self.states[i].style=entity.states[i].style;
+            self.states[i].hidden=entity.states[i].hidden;
+            self.states[i].css=entity.states[i].css;
             self.states[i].value=entity.states[i].value;
             self.states[i].valueType=entity.states[i].valueType;
             self.states[i].zindex=entity.states[i].zindex;
