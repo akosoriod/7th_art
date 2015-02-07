@@ -24,7 +24,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     $( document ).ready(function(){
         $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Designer');
         var appUrl="<?php echo Yii::app()->baseUrl."/"; ?>";
-        var editor=new Editor({
+        window.editor=new Editor({
             appUrl:appUrl
         });
         editor.init();
@@ -110,6 +110,64 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                         </fieldset>
                     </form>
                 </div>-->
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <div id="dialogs">
+        <div id="edit_entity" title="Editando entidad">
+            <div id="tabs">
+                <ul>
+                    <li><a href="#design">Diseño</a></li>
+                    <li><a href="#options">Opciones</a></li>
+                </ul>
+                <div id="design">
+                    <div class="navigator">
+                        <div class="state_buttons">
+                            <div class="state_button passive selected" data-state="passive" title="Estado inicial de la entidad, como se mostrará antes de iniciar el ejercicio">Pasivo (por defecto)</div>
+                            <div class="state_button active" data-state="active" title="Como se verá cuando el estudiante esté modificando la entidad">Activo</div>
+                            <div class="state_button solved" data-state="solved" title="Como se verá después de que el estudiante haya modificado la entidad">Resuelto</div>
+                            <div class="state_button right" data-state="right" title="Como se verá si al verificar la respuesta es correcta">Correcto</div>
+                            <div class="state_button wrong" data-state="wrong" title="Como se verá si al verificar la respuesta es incorrecta">Incorrecto</div>
+                        </div>
+                    </div>
+                    <div class="state_container"></div>
+                </div>
+                <div id="options">
+                    <div class="field">
+                        <div class="title">¿Es obligatorio resolver?</div>
+                        <div class="description">Indica si el estudiante debe dar una respuesta para el ejercicio o si puede terminar sin resolver.</div>
+                        <select class="selection">
+                            <option value="true">Es obligatorio resolver</option>
+                            <option value="false">No es obligatorio resolver</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="title">¿Contar en los resultados?</div>
+                        <div class="description">Permite que una entidad se cuente dentro de los resultados del ejercicio.</div>
+                        <select class="selection">
+                            <option value="true">Contar dentro del cálculo de resultados</option>
+                            <option value="false">No contar dentro del cálculo de resultados</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="title">Peso en el ejercicio</div>
+                        <div class="description">Define cuanta importancia tiene una entidad en la solución del ejercicio. Un mayor número denota mayor importancia.</div>
+                        <select class="selection">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

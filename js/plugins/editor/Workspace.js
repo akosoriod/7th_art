@@ -307,6 +307,17 @@ var Workspace = function(params){
     /**************************************************************************/
     
     /**
+     * Actualiza una entidad a partir de otra pasada como parámetro
+     * @param {Entity} entity Entidad fuente con la que se actualizará la entidad
+     *                        debe tener el id de la entidad objetivo
+     */
+    self.updateEntityAfterEditing=function(entity){
+        self.entities[entity.id].updateAfterEditing(entity);
+        self.entities[entity.id].draw();
+        if(self.logHistory){self.saveHistory();}
+    };
+    
+    /**
      * Retorna las entidades del workspace en texto
      */
     self.objectify=function(){

@@ -33,9 +33,9 @@ var Entity = function(params){
     };
     var options = $.extend(def, params);
     self.id=options.id;
-    self.optional=options.optional;
-    self.countable=options.countable;
-    self.weight=options.weight;
+    self.optional=options.optional;     //Si se debe resolver para el éxito del ejercicio
+    self.countable=options.countable;   //Si se cuenta dentro del cálculo del total de ejercicios
+    self.weight=options.weight;         //Peso de la entidad en el total de ejercicios
     self.entities=options.entities;
     /**
      * Constructor Method 
@@ -131,10 +131,7 @@ var Entity = function(params){
             self.workspace.removeEntity(self.id);
         });
         self.div.dblclick(function(){
-            console.warn(self);
-            var passive=self.getState('passive');
-            console.debug(passive.pos);
-            console.debug(passive.size);
+            editor.editEntity(self);
         });
 //        entity.find(".config").click(function(){
 //            var id=parseInt($(this).parent().attr("data-id"));
@@ -161,7 +158,9 @@ var Entity = function(params){
      * el estado passive.
      */
     self.draw=function(stateName){
-        self.container=self.workspace.div;
+        if(!self.container){
+            self.container=self.workspace.div;
+        }
         if(self.container){
             if(stateName===undefined||!stateName){
                 stateName='passive';
@@ -174,7 +173,7 @@ var Entity = function(params){
             self.showState(self.getState(stateName));
 
 
-            self.div.find('.textContent').append(self.getState('passive').content);
+            
         }
         
 //        self.workspace.append('<div class="draggable entity" id="entity'+self.countEntities+'" data-id="'+self.countEntities+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="entityButton config"></div><div class="entityButton deleteEntity">x</div></div>');
@@ -206,6 +205,7 @@ var Entity = function(params){
      * @returns {State} state Estado que se quiere visualizar
      */
     self.showState=function(state){
+        self.div.attr("data-state",state.type);
         self.div.css({
             'height':state.size.height,
             'left':state.pos.left,
@@ -213,6 +213,7 @@ var Entity = function(params){
             'width':state.size.width,
             'z-index':state.zindex
         });
+        self.div.find(".content").empty().append(state.content);
     };
     
     
@@ -280,6 +281,30 @@ var Entity = function(params){
     };
     
     /**
+     * Actualiza la posición del estado pasivo, actualiza los demás estados si
+     * aplica
+     * @param {int} left Posición desde la izquierda
+     * @param {int} top Posición desde arriba
+     */
+    self.updatePosition=function(left,top){
+        for(var i in self.states){
+            if(self.statesFixedPos){
+                self.states[i].pos.left=left;
+                self.states[i].pos.top=top;
+            }else if(i==='passive'){
+                self.states[i].pos.left=left;
+                self.states[i].pos.top=top;
+            }
+        }
+        for(var j in self.entities){
+            if(typeof(self.entities)==="object"){
+                self.entities[j].updatePosition(left,top);
+            }
+        }
+        self.draw();
+    };
+    
+    /**
      * Actualiza la posición del estado pasivo, hace los desplazamientos en cada
      * estado
      * @param {int} diffLeft Diferencia de posición desde la izquierda
@@ -296,7 +321,9 @@ var Entity = function(params){
             }
         }
         for(var j in self.entities){
-            self.entities[j].updatePositionByDiff(diffLeft,diffTop);
+            if(typeof(self.entities)==="object"){
+                self.entities[j].updatePositionByDiff(diffLeft,diffTop);
+            }
         }
         self.draw();
     };
@@ -387,10 +414,8 @@ var Entity = function(params){
      */
     function getHtml(){
         return '<div class="draggable entity" id="entity'+self.id+'" data-id="'+self.id+'">'+
-                '<div class="content">'+
-                    '<div class="text">'+
-                        '<div class="textContent"></div>'+
-                    '</div>'+
+                '<div class="box">'+
+                    '<div class="content grid"></div>'+
                 '</div>'+
                 '<div class="entityButton config"></div>'+
                 '<div class="entityButton deleteEntity">x</div>'+
@@ -418,6 +443,25 @@ var Entity = function(params){
     /****************************** OTHER METHODS *****************************/
     /**************************************************************************/
     
+    /**
+     * Actualiza la entidad a partir de los atributos de la entidad parámetro
+     * después de ser editada.
+     * @param {Entity} entity Entidad con la que se actualizará la entidad actual
+     */
+    self.updateAfterEditing=function(entity){
+        self.id=entity.id;
+        self.optional=entity.optional;
+        self.countable=entity.countable;
+        self.weight=entity.weight;
+        for(var i in entity.states){
+            self.states[i].size=entity.states[i].size;
+            self.states[i].content=entity.states[i].content;
+            self.states[i].style=entity.states[i].style;
+            self.states[i].value=entity.states[i].value;
+            self.states[i].valueType=entity.states[i].valueType;
+            self.states[i].zindex=entity.states[i].zindex;
+        }
+    };
     
     /**
      * Retorna la entidad como un objeto almacenable en la base de datos
@@ -454,7 +498,6 @@ var Entity = function(params){
         for(var i in entity){
             self[i]=entity[i];
         }
-        
     };
     
     /**
@@ -465,4 +508,14 @@ var Entity = function(params){
         return JSON.stringify(self.objectify());
     };
     
+    /**
+     * Retorna una copia de la entidad (otra instancia)
+     * @return {Entity} Compia de la entidad
+     * @todo Verificar funcionamiento, no copia los divs
+     */
+    self.clone=function(){
+        var entity=$.extend({},self);
+        entity.div=entity.div.clone(true,true);
+        return entity;
+    };    
 };

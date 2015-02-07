@@ -118,7 +118,7 @@
     width: 48px;
 }
 #container #area #editor #workspace{
-    background-image: url('../images/editor/background2.jpg');
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYV2NkIBIwEqmOYVQh3pAiNnh8AAq1AFfmdEIyAAAAAElFTkSuQmCC)repeat;
     bottom: 0;
     box-shadow: 1px 1px 4px 0 #444444 inset;
     height: 600px;
@@ -129,7 +129,7 @@
     top: 0;
     width: 1040px;
 }
-#container #area #editor #workspace .draggable{
+.entity{
     border: solid 1px #C75C5C;
     border-radius: 5px 5px 0 0;
     cursor: move;
@@ -139,13 +139,29 @@
     position: absolute;
     /*width: 100px;*/
 }
-#container #area #editor #workspace .draggable .content{
+.entity .box{
     overflow: auto;
     position: absolute;
     height: 100%;
     width: 100%;
 }
-#container #area #editor #workspace .draggable .image{
+.entity .content{
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+    position: absolute;
+    top: 5px;
+    width: 100%;
+}
+.grid{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAHklEQVQYV2NkYGCQBGKCgBGq8DkhlaMK8YYQ0cEDACL8CSQmAiAoAAAAAElFTkSuQmCC)repeat rgba(255,255,255,1);
+}
+
+
+
+
+/*#container #area #editor #workspace .draggable .image{
     background: #4F5D73;
     background-image: url('../images/editor/image.png');
     margin-left: auto;
@@ -163,7 +179,7 @@
     position: absolute;
     top: 5px;
     width: 100%;
-}
+}*/
 #container #area #editor #workspace .draggable .entityButton{
     background: #C75C5C;
     background-position:center;
@@ -190,4 +206,41 @@
 
 #container #area #editor #workspace .entity-hover{
     border: solid 2px red;
+}
+
+
+
+
+
+/* ESTILOS DE LOS DIÁLOGOS */
+#edit_entity #design{
+    padding: 0;
+}
+#edit_entity #design .navigator{
+    float: left;
+    height: 100%;
+    width: 165px;
+}
+#edit_entity #design .navigator .state_buttons{
+    margin-top: 20px;
+}
+#edit_entity #design .navigator .state_button{
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    text-indent: 10px;
+}
+#edit_entity #design .navigator .state_button:hover{
+    box-shadow: 1px 1px 3px 0 #555;
+}
+#edit_entity #design .navigator .selected{
+    box-shadow: 1px 1px 3px 0 #555 inset;
+}
+#edit_entity #design .state_container{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYV2NkIBIwEqmOYVQh3pAiNnh8AAq1AFfmdEIyAAAAAElFTkSuQmCC)repeat;
+    box-shadow: 1px 1px 4px 0 #444444 inset;
+    float: left;
+    height: 100%;
+    overflow: hidden;
+    width: 765px;
 }

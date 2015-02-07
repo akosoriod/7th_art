@@ -13,9 +13,12 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
-    self.historyStack=[];   //Almacena versiones del workspace para volver a estados anteriores
-    self.historyMax=30;      //Cantidad de estados del workspace que almacena
-    self.historyIndex=0;    //Índice de el workspace que se está visualizando
+    self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
+    self.historyMax=30;             //Cantidad de estados del workspace que almacena
+    self.historyIndex=0;            //Índice de el workspace que se está visualizando
+    
+    self.dialogEditEntity=false;    //Diálogo para editar entidad
+    self.editingEntity=false;       //Entidad que se está editando en el diálogo
     
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
@@ -34,7 +37,6 @@ var Editor = function(params,callback){
     var Editor = function() {
         self.div=$("#editor_page");
         self.toolbar=self.div.find("#toolbar");
-//        self.workspace=self.div.find("#workspace");
         self.stepsDivs=$("#navigation").find(".step");
         self.editingPathDiv=$("#editing_path");
     }();
@@ -45,75 +47,8 @@ var Editor = function(params,callback){
         self.workspace=new Workspace({
             saveHistory:self.saveHistory
         });
-        
         self.saveHistory();
-        
-        
-        $("#button-undo").click(function(){
-            if(self.historyIndex>0){
-                self.historyIndex--;
-                self.workspace=new Workspace({
-                    logHistory:false,
-                    saveHistory:self.saveHistory
-                });
-                self.workspace.div.empty();
-                var entities=self.historyStack[self.historyIndex];
-                self.workspace.deobjectify(JSON.parse(entities));
-                self.workspace.logHistory=true;
-            }
-        });
-        $("#button-redo").click(function(){
-            if(self.historyIndex<self.historyStack.length-1){
-                self.historyIndex++;
-                self.workspace=new Workspace({
-                    logHistory:false,
-                    saveHistory:self.saveHistory
-                });
-                self.workspace.div.empty();
-                var entities=self.historyStack[self.historyIndex];
-                self.workspace.deobjectify(JSON.parse(entities));
-                self.workspace.logHistory=true;
-                
-                console.debug(self.workspace.entities);
-            }
-        });
-        
-        $("#save").click(function(){
-            for(var i in self.workspace.entities){
-                var states=self.workspace.entities[i].states;
-                
-//                console.debug(self.workspace.entities[i].stringify());
-                
-//                for(var j in states){
-//                    console.debug(states[j].stringify());
-//                }
-                
-            }
-        });
-        
-        
-//        self.workspace.addObjeto(new Objeto({
-//            pos:{left:10,top:10}
-//        }));
-//        self.workspace.addObjeto(new Objeto({
-//            pos:{left:20,top:20}
-//        }));
-//        self.workspace.addObjeto(new Objeto({
-//            pos:{left:30,top:30}
-//        }));
-//        self.workspace.addObjeto(new Objeto({
-//            pos:{left:40,top:40}
-//        }));
-//        self.workspace.addObjeto(new Objeto({
-//            pos:{left:50,top:50}
-//        }));
-//        self.workspace.addObjeto(new Objeto({
-//            pos:{left:60,top:60}
-//        }));
-//        
-//        self.workspace.deleteObjeto(-4);
-        
-        assignEvents();
+        attachEvents();
     };
     
     /**
@@ -131,173 +66,27 @@ var Editor = function(params,callback){
     
     
     
-    
+    /**
+     * Muestra las opciones de edición para una entidad
+     * @param {Entity} entity Entidad a editar
+     */
+    self.editEntity=function(entity){
+        self.editingEntity=new Entity();
+        self.editingEntity.deobjectify(JSON.parse(JSON.stringify(entity.objectify())));
+        self.dialogEditEntity.dialog("option","title","Editando entidad: "+entity.id);
+        self.dialogEditEntity.dialog("open");
+        
+        
+        
+//        entity.getState("passive").content="Hola editor";
+//        entity.draw();
+    };
     
     
     /**************************************************************************/
     /****************************** SETUP METHODS *****************************/
     /**************************************************************************/
-    /**
-     * Assign the events to the buttons
-     */
-    function assignEvents(){
-        self.toolbar.find("#button-entity").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false,
-            zIndex: 10000
-        });
-//        //True False
-//        self.toolbar.find("#button-true-false").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='object-true-false-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
-//        //Fill
-//        self.toolbar.find("#button-fill").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='object-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
-        //Opción múltiple
-        self.toolbar.find("#button-multi-single").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-        self.toolbar.find("#button-multi-multi").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-        self.toolbar.find("#button-true-false").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-//        
-//        //Eventos de los pasos
-//        self.stepsDivs.click(function(){
-//            resetEditor();
-//            self.currentStep={
-//                'stepId':parseInt($(this).attr('data-step-id')),
-//                'stepName':$(this).attr('data-step-name'),
-//                'activityId':parseInt($(this).attr('data-activity-id')),
-//                'activityName':$(this).attr('data-activity-name'),
-//                'versionId':parseInt($(this).attr('data-version-id')),
-//                'versionName':$(this).attr('data-version-name'),
-//                'sectionId':parseInt($(this).attr('data-section-id')),
-//                'sectionName':$(this).attr('data-section-name'),
-//                'activitySetId':$(this).attr('data-activity-set-id'),
-//                'activitySetTitle':$(this).attr('data-activity-set-title')
-//            };
-//            self.editingPathDiv.find("#message").text(
-//                self.currentStep.activitySetTitle+' > '+
-//                self.currentStep.sectionName+' > '+
-//                self.currentStep.versionName+' > '+
-//                self.currentStep.activityName+' > '+
-//                self.currentStep.stepName
-//            );
-//            self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
-//            
-//            
-//            //Se cargan los anteriores objetos
-//            loadStep(self.currentStep.stepId,function(err,response){
-//                if(err){
-//                    alert("No se pueden cargar el paso, por favor intente de nuevo.");
-//                }else{
-//                    for(var i in response.objects){
-//                        addObject(response.objects[i]);
-//                    }
-//                }
-//            });
-//            
-//        });
-//        
-//        
-//        
-//        
-//        
-//        self.div.find("#properties").dialog({
-//            autoOpen: false,
-//            modal:true,
-//            open: function(event,ui){
-//                var id=parseInt($(this).attr("data-object"));
-//                var object=$("#object"+id).find('.text');
-//                var props=$("#properties");
-//                props.find("#id").text(id);
-//                props.find("#background").spectrum({
-//                    showAlpha: true,
-//                    color: hexc(object.css("background-color"))
-//                });
-//                props.find("#borders").spectrum({
-//                    showAlpha: true,
-//                    color: hexc(object.css("border-bottom-color"))
-//                });
-//            },
-//            buttons: {
-//                "Ok": function() {
-//                    var props=$("#properties");
-//                    var background=props.find("#background");
-//                    var borders=props.find("#borders");
-//                    var bValid = true;
-//                    if (bValid){
-//                        var id=parseInt($(this).attr("data-object"));
-//                        var object=$("#object"+id).find('.text');
-//                        object.css({
-//                            'background':background.spectrum('get').toRgbString(),
-//                            'border-color':borders.spectrum('get').toRgbString()
-//                        });
-//                        $(this).dialog("close");
-//                    }
-//                },
-//                Cancel: function() {
-//                    $(this).dialog("close");
-//                }
-//            }
-//        });
-//        self.toolbar.find('#save').click(function(){
-//            var objects=parseObjects();
-//            if(objects.length>0){
-//                saveObjects(self.currentStep.stepId,objects,function(err){
-//                    if(!err){
-//                        alert('Se almacenaron los objetos correctamente');
-//                    }
-//                });
-//            }
-//        });
-        
-    };
+    
     
     /**
      * Agrega un objeto precargado al workspace
@@ -540,32 +329,32 @@ var Editor = function(params,callback){
 //    /******************************* SYNC METHODS *****************************/
 //    /**************************************************************************/
 //    
-    /**
-     * Guarda la lista de objetos
-     * @param {function} callback Function to return the response
-     */
-    function saveEntities(stepId,entities,callback){
-        $.ajax({
-            url: self.ajaxUrl+'saveObjectsByAjax',
-            type: "POST",
-            data:{
-                stepId:stepId,
-                objects:entities
-            }
-        }).done(function(response) {
-            var data = JSON.parse(response);
-            if(callback){callback(false,data);}
-        }).fail(function(error) {
-            if(error.status===403){
-                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
-                window.location=self.ajaxUrl;
-            }else{
-                if(callback){callback(error);}
-            }
-        }).always(function(){
-            
-        });
-    };
+//    /**
+//     * Guarda la lista de objetos
+//     * @param {function} callback Function to return the response
+//     */
+//    function saveEntities(stepId,entities,callback){
+//        $.ajax({
+//            url: self.ajaxUrl+'saveObjectsByAjax',
+//            type: "POST",
+//            data:{
+//                stepId:stepId,
+//                objects:entities
+//            }
+//        }).done(function(response) {
+//            var data = JSON.parse(response);
+//            if(callback){callback(false,data);}
+//        }).fail(function(error) {
+//            if(error.status===403){
+//                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+//                window.location=self.ajaxUrl;
+//            }else{
+//                if(callback){callback(error);}
+//            }
+//        }).always(function(){
+//            
+//        });
+//    };
 //    
 //    /**
 //     * Carga la lista de objetos para un paso de la base de datos (si existen) y los
@@ -619,4 +408,167 @@ var Editor = function(params,callback){
 //
 //        return color;
 //    }
+
+
+    /**************************************************************************/
+    /***************************** EVENTS METHODS *****************************/
+    /**************************************************************************/
+    /**
+     * Assign the events to the buttons
+     */
+    function attachEvents(){
+        $( document ).tooltip();
+        //Asigna los eventos
+        attachEventsBarEntities();
+        attachEventsBarActions();
+        attachEventsDialogEntity();
+    };    
+    
+    /**
+     * Eventos de la barra de entidades
+     */
+    function attachEventsBarEntities(){
+        self.toolbar.find("#button-entity").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='entity-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false,
+            zIndex: 10000
+        });
+        //Opción múltiple
+        self.toolbar.find("#button-multi-single").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='entity-fill-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+        self.toolbar.find("#button-multi-multi").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='entity-fill-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+        self.toolbar.find("#button-true-false").draggable({
+            appendTo: "body",
+            containment: "#workspace",
+            cursor: "move",
+            helper: function(){
+                return $( "<div class='entity-fill-helper'></div>" );
+            },
+            opacity: 0.8,
+            scroll: false
+        });
+    };
+    
+    /**
+     * Eventos de la barra de entidades
+     */
+    function attachEventsBarActions(){
+        self.toolbar.find("#button-undo").click(function(){
+            if(self.historyIndex>0){
+                self.historyIndex--;
+                self.workspace=new Workspace({
+                    logHistory:false,
+                    saveHistory:self.saveHistory
+                });
+                self.workspace.div.empty();
+                var entities=self.historyStack[self.historyIndex];
+                self.workspace.deobjectify(JSON.parse(entities));
+                self.workspace.logHistory=true;
+            }
+        });
+        
+        self.toolbar.find("#save").click(function(){
+            for(var i in self.workspace.entities){
+                var states=self.workspace.entities[i].states;
+            }
+        });
+    };
+    
+    /**
+     * Eventos del cuadro de diálogo de edición de entidades
+     */
+    function attachEventsDialogEntity(){
+        self.dialogEditEntity=self.div.find("#edit_entity");
+        self.dialogEditEntity.dialog({
+            autoOpen:false,
+            height:620,
+            modal:true,
+            resizable:false,
+            width:1000,
+            buttons:{
+                Cancelar:function(){
+                    $(this).dialog("close");
+                },
+                "Guardar valores":function(){
+                    self.workspace.updateEntityAfterEditing(self.editingEntity);
+                    $(this).dialog("close");
+                }
+            },
+            close:function(){
+                self.editingEntity=false;
+                self.dialogEditEntity.find(".state_container").empty();
+            },
+            open: function(e,ui){
+                self.dialogEditEntity.find("#tabs").tabs({
+                    heightStyle: "fill",
+                    create:function(){
+                        attachEventsDialogEntityStates($(this));
+                    },
+                    activate:function(e,ui){
+                        
+                    }
+                });
+                self.dialogEditEntity.find(".passive").click();
+            },
+            position:{
+                my: "center", 
+                at: "center", 
+                of: self.workspace.div
+            }
+        });
+    };
+    
+    /**
+     * Eventos del selector de estados en la edición de entidades
+     * @param {element} tabs Elemento Tabs del diálogo
+     */
+    function attachEventsDialogEntityStates(tabs){
+        var stateButtons=tabs.find(".state_button");
+        var container=tabs.find(".state_container");
+        stateButtons.click(function(){
+            var stateButton=$(this);
+            stateButtons.removeClass("selected");
+            stateButton.addClass("selected");
+            showEntityState(container,stateButton.attr("data-state"),self.editingEntity);
+        });
+    };
+    
+    /**
+     * Dibuja un estado de la entidad en el editor de estados
+     * @param {element} container Elemento donde se dibujará el estado de la entidad
+     * @param {string} stateName Nombre del estado a dibujar
+     * @param {Entity} entity Entidad a dibujar
+     */
+    function showEntityState(container,stateName,entity){
+        container.empty();
+        entity.container=container;
+        entity.entities={};
+        entity.updatePosition(0,0);
+        entity.draw(stateName);
+        entity.div.draggable("destroy");
+        entity.div.css("position","relative");
+    };
 };
