@@ -236,6 +236,17 @@
 #edit_entity #design .navigator .selected{
     box-shadow: 1px 1px 3px 0 #555 inset;
 }
+
+#edit_entity #design .navigator .action_buttons{
+    height: 280px;
+}
+#edit_entity #design .navigator .action_buttons .copy_passive{
+    cursor: pointer;
+    margin-top: 221px;
+    text-indent: 10px;
+    text-align: center;
+    white-space: normal !important; 
+}
 #edit_entity #design .state_container{
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYV2NkIBIwEqmOYVQh3pAiNnh8AAq1AFfmdEIyAAAAAElFTkSuQmCC)repeat;
     box-shadow: 1px 1px 4px 0 #444444 inset;

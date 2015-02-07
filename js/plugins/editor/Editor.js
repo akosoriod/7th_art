@@ -522,6 +522,7 @@ var Editor = function(params,callback){
                 self.dialogEditEntity.find(".state_container").empty();
             },
             open: function(e,ui){
+                self.dialogEditEntity.find(".copy_passive").button();
                 self.dialogEditEntity.find("#tabs").tabs({
                     heightStyle: "fill",
                     create:function(){
@@ -557,6 +558,67 @@ var Editor = function(params,callback){
     };
     
     /**
+     * Eventos de la entidad que se está editando
+     * @param {string} stateName Nombre del estado que se está editando
+     */
+    function attachEventsEditingEntity(stateName){
+        var entityContentDialog=$('<div id="edit_entity_content" title="Editando contenido de la entidad"><div id="text_content"></div></div>');
+        var textEditor=entityContentDialog.find("#text_content");
+        var state=self.editingEntity.getState(stateName);
+        entityContentDialog.dialog({
+            height:620,
+            modal:true,
+            resizable:false,
+            width:1000,
+            buttons:{
+                Cancelar:function(){
+                    $(this).dialog("close");
+                },
+                Guardar:function(){
+                    state.content=textEditor.val();
+                    self.editingEntity.draw(stateName);
+                    self.dialogEditEntity.find("."+stateName).click();
+                    $(this).dialog("close");
+                }
+            },
+            close:function(){
+                try{
+                    textEditor.tinymce().remove();
+                    $(this).dialog("close");
+                    $(this).dialog('destroy').remove();
+                }catch(e){};
+            },
+            open:function(){
+                textEditor.tinymce({
+                     // Location of TinyMCE script
+                    script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
+                    language : 'es_MX',
+                    height:360,
+                    plugins: [
+                        "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
+                        "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
+                        "save table contextmenu directionality template paste textcolor textcolor jbimages"
+                    ],
+                    toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
+                            " searchreplace wordcount fullscreen |"+
+                            " autolink link image media lists preview spellchecker table | jbimages code |" +
+                            " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
+                    menubar : false,
+                    oninit:function(){
+                        tinyMCE.activeEditor.setContent(state.content);
+                    }
+                });
+            },
+            position:{
+                my: "center", 
+                at: "center", 
+                of: self.dialogEditEntity
+            }
+        });
+        
+    };
+    
+    /**
      * Dibuja un estado de la entidad en el editor de estados
      * @param {element} container Elemento donde se dibujará el estado de la entidad
      * @param {string} stateName Nombre del estado a dibujar
@@ -569,6 +631,10 @@ var Editor = function(params,callback){
         entity.updatePosition(0,0);
         entity.draw(stateName);
         entity.div.draggable("destroy");
+        entity.div.attr("title","Doble click para editar el contenido");
         entity.div.css("position","relative");
+        self.editingEntity.div.dblclick(function(){
+            attachEventsEditingEntity(stateName);
+        });
     };
 };

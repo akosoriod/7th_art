@@ -132,6 +132,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                             <div class="state_button right" data-state="right" title="Como se verá si al verificar la respuesta es correcta">Correcto</div>
                             <div class="state_button wrong" data-state="wrong" title="Como se verá si al verificar la respuesta es incorrecta">Incorrecto</div>
                         </div>
+                        <div class="action_buttons">
+                            <div class="action_button copy_passive" title="Copiar el contenido del estado pasivo a los demás estados">Replicar contenido del estado pasivo</div>
+                        </div>
                     </div>
                     <div class="state_container"></div>
                 </div>
