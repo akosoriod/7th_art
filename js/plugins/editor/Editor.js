@@ -13,12 +13,19 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
+    self.editingStepId=1;           //Id del paso que se está editando actualmente
+    
     self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
     self.historyMax=30;             //Cantidad de estados del workspace que almacena
     self.historyIndex=0;            //Índice de el workspace que se está visualizando
     
     self.dialogEditEntity=false;    //Diálogo para editar entidad
     self.editingEntity=false;       //Entidad que se está editando en el diálogo
+    
+    self.numberLoadings=0;          //Cuenta el número de loadings para mostrar el gif
+    self.saving=false;              //Indica si está guardando, para no repetir el proceso
+    self.autosaveFrequency=120;      //Cada cuantos segundos se autoguarda
+    
     
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
@@ -44,11 +51,19 @@ var Editor = function(params,callback){
      * Initialize the editor
      */
     self.init=function(){
+        //Set the loading html
+        $('#toolbar').prepend(htmlLoading());
+        //Se crea el espacio de trabajo y se configura
         self.workspace=new Workspace({
             saveHistory:self.saveHistory
         });
         self.saveHistory();
         attachEvents();
+        
+        //Se inicia el proceso de autoguardado
+        if(self.autosaveFrequency>0){
+            setInterval(self.save,self.autosaveFrequency*1000);
+        }
     };
     
     /**
@@ -443,12 +458,7 @@ var Editor = function(params,callback){
         });
         
         self.toolbar.find("#save").click(function(){
-            var entities=self.workspace.objectify();
-            saveEntities(1,entities,function(err){
-                if(err){
-                    
-                }
-            });
+            self.save();
         });
     };
     
@@ -601,34 +611,78 @@ var Editor = function(params,callback){
     };
     
     /**************************************************************************/
+    /***************************** MESSAGING METHODS **************************/
+    /**************************************************************************/
+    
+    /**
+     * Shows a message in the interface
+     * @param {string} message description
+     * @param {object} options Options for the messenger
+     * @return {object} Object messenger to hide or anything
+     */
+    self.message=function(message,options){
+        alert(message);
+//        var defaults={
+//            message: message,
+//            type: 'info',
+//            showCloseButton: false
+//        };
+//        if (screen.width < 980){
+//            return self.alert(message);
+//        }
+//        else{
+//            return Messenger().post($.extend(defaults,options));
+//        }
+    };
+    
+    /**************************************************************************/
     /******************************* SYNC METHODS *****************************/
     /**************************************************************************/
+    
+    /**
+     * Guarda los cambios del editor para el paso seleccionado
+     */
+    self.save=function(){
+        var entities=self.workspace.objectify();
+        if(entities.length>0){
+            saveEntities(self.editingStepId,entities,function(err){
+                if(err){
+                    self.message("No se pueden guardar los cambios, por favor intente más tarde.");
+                }
+            });
+        }
+    };
     
     /**
      * Guarda la lista de objetos
      * @param {function} callback Function to return the response
      */
     function saveEntities(stepId,entities,callback){
-        $.ajax({
-            url: self.ajaxUrl+'saveEntitiesByAjax',
-            type: "POST",
-            data:{
-                stepId:stepId,
-                entities:entities
-            }
-        }).done(function(response) {
-            var data = JSON.parse(response);
-            if(callback){callback(false,data);}
-        }).fail(function(error) {
-            if(error.status===403){
-                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
-                window.location=self.ajaxUrl;
-            }else{
-                if(callback){callback(error);}
-            }
-        }).always(function(){
-            
-        });
+        if(!self.saving){
+            self.saving=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'saveEntitiesByAjax',
+                type: "POST",
+                data:{
+                    stepId:stepId,
+                    entities:entities
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.saving=false;
+            });
+        }
     };
     
     /**
@@ -657,4 +711,43 @@ var Editor = function(params,callback){
 //            
 //        });
 //    };
+
+    /**
+     * Add a show loading message to the pile
+     */
+    self.showLoading=function(){
+        self.numberLoadings++;
+        evaluateLoading();
+    };
+    /**
+     * Remove a show loading message for the pile
+     */
+    self.hideLoading=function(){
+        self.numberLoadings--;
+        evaluateLoading();
+    };
+    /**
+     * Evaluate if must show or hide the loader
+     */
+    function evaluateLoading(){
+        if(self.numberLoadings>0){
+            $('#loadingMessage').show();
+        }else{
+            $('#loadingMessage').hide();
+            self.numberLoadings=0;
+        }
+    };
+    
+    /**
+     * Return the html for the loading message
+     */
+    function htmlLoading(){
+        var html=
+            '<div id="loadingMessage">'+
+                '<div id="loading">'+
+                    '<img src="'+self.appUrl+'/images/loading.gif" alt="cargando...">'+
+                '</div>'+
+            '</div>';
+        return html;
+    }
 };

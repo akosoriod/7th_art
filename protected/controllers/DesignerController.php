@@ -53,24 +53,60 @@ class DesignerController extends Controller {
         //Get the client data
         $dataEntities=$_POST['entities'];
         $stepId=intval($_POST['stepId']);
-        
-//        print_r($dataEntities);
-        
         $step=Step::model()->findByPk($stepId);
         $prevEntities=Entity::getEntitiesByStep($step);
-        foreach ($prevEntities as $prevEntity) {
+        foreach ($prevEntities as $prevEntity){
+            foreach ($prevEntity->entityStates as $state) {
+                $state->delete();
+            }
             $prevEntity->delete();
         }
         foreach ($dataEntities as $dataEntity) {
             $entity=new Entity();
-//            $entity->content=$dataEntity['content'];
-//            $entity->css=$dataEntity['css'];
-//            $entity->left=intval($dataEntity['left']);
-//            $entity->top=intval($dataEntity['top']);
-//            $entity->height=intval($dataEntity['height']);
-//            $entity->width=intval($dataEntity['width']);
-//            $entity->object_list_id=$objectListId;
-            $entity->save();
+            /********* TODO: VALOR QUEMADO!!! *********/
+            /********* TODO: VALOR QUEMADO!!! *********/
+            /********* TODO: VALOR QUEMADO!!! *********/
+            /********* TODO: VALOR QUEMADO!!! *********/
+            $entity->exercise_id=1;
+            /********* TODO: VALOR QUEMADO!!! *********/
+            /********* TODO: VALOR QUEMADO!!! *********/
+            /********* TODO: VALOR QUEMADO!!! *********/
+            /********* TODO: VALOR QUEMADO!!! *********/
+            $entity->optional=boolval($dataEntity['optional']);
+            $entity->countable=boolval($dataEntity['countable']);
+            $entity->weight=intval($dataEntity['weight']);
+            if($dataEntity['parent']>0){
+                $entity->parent_id=$dataEntity['parent'];
+            }
+            if(array_key_exists('entityType',$dataEntity)){
+                $entityTypeName=$dataEntity['entityType'];
+            }else{
+                $entityTypeName="basic";
+            }
+            $entity->entity_type_id=EntityType::getByName($entityTypeName)->id;
+            $entity->insert();
+            
+            foreach ($dataEntity['states'] as $dataState) {
+                $state=new EntityState();
+                $state->left=$dataState['pos']['left'];
+                $state->top=$dataState['pos']['top'];
+                $state->height=$dataState['size']['height'];
+                $state->width=$dataState['size']['width'];
+                $state->content=$dataState['content'];
+                $state->css=$dataState['css'];
+                $state->hidden=$dataState['hidden'];
+                $state->value=$dataState['value'];
+                $state->zindex=$dataState['zindex'];
+                $state->entity_state_type_id=EntityStateType::getByName($dataState['type'])->id;
+                $state->entity_id=$entity->id;
+                if(array_key_exists('valueType',$dataState)){
+                    $valueType=ValueType::getByName($dataState['valueType'])->id;
+                }else{
+                    $valueType=ValueType::getByName($dataState['null'])->id;
+                }
+                $state->value_type_id=$valueType;
+                $state->insert();
+            }
         }
         //Return the result of save schedule
         echo json_encode(array("success"=>$success));
