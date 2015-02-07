@@ -179,6 +179,16 @@ var Workspace = function(params){
         
     };
     
+    /**
+     * Muestra todas las entidades en el estado seleccionado
+     * @param {string} stateName Nombre del estado que se quiere mostrar
+     */
+    self.showState=function(stateName){
+        for(var i in self.entities){
+            self.entities[i].draw(stateName);
+        }
+    };
+    
     
     /**************************************************************************/
     /******************************** GUI METHODS *****************************/

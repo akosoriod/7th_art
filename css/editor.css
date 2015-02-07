@@ -55,12 +55,42 @@
 #container #area #editor #toolbar{
     background: #E0E0D1;
     height: 54px;
+    position: relative;
     width: 100%;
 }
 #container #area #editor #toolbar #editing_path{
     float: right;
     margin: 5px 5px 0 0;
 }
+
+#container #area #editor #toolbar #states_bar{
+    bottom: -28px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+    width: 25px;
+    z-index: 10000;
+}
+#container #area #editor #toolbar #states_bar .state_button{
+    background-image: url('../images/editor/state_off.png');
+    cursor: pointer;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    opacity: 0.4;
+    text-align: center;
+    width: 24px;
+}
+#container #area #editor #toolbar #states_bar .state_button:hover{
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+}
+#container #area #editor #toolbar #states_bar .state_selected{
+    background-image: url('../images/editor/state_on.png');
+    color: #eee;
+}
+
+
 #container #area #editor .button{
     cursor: pointer;
     float: left;
@@ -255,3 +285,5 @@
     overflow: hidden;
     width: 765px;
 }
+
+

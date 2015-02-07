@@ -476,6 +476,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarActions(){
+        var stateButtons=self.toolbar.find(".state_button");
         self.toolbar.find("#button-undo").click(function(){
             if(self.historyIndex>0){
                 self.historyIndex--;
@@ -488,6 +489,13 @@ var Editor = function(params,callback){
                 self.workspace.deobjectify(JSON.parse(entities));
                 self.workspace.logHistory=true;
             }
+        });
+        
+        stateButtons.click(function(){
+            var stateButton=$(this);
+            stateButtons.removeClass("state_selected");
+            stateButton.addClass("state_selected");
+            self.workspace.showState(stateButton.attr("data-state"));
         });
         
         self.toolbar.find("#save").click(function(){

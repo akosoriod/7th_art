@@ -93,6 +93,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div id="editing_path">
                         Editando: <span id="message"><?php echo $activitySet->title; ?></span>
                     </div>
+                    <div id="states_bar">
+                        <div class="state_button state_selected" id="state_passive" title="Ver ejercicio en estado pasivo" data-state="passive">P</div>
+                        <div class="state_button" id="state_active" title="Ver ejercicio en estado activo" data-state="active">A</div>
+                        <div class="state_button" id="state_solved" title="Ver ejercicio en estado resuelto" data-state="solved">R</div>
+                        <div class="state_button" id="state_right" title="Ver ejercicio en estado correcto" data-state="right">C</div>
+                        <div class="state_button" id="state_wrong" title="Ver ejercicio en estado incorrecto" data-state="wrong">I</div>
+                    </div>
                 </div>
                 <div id="workspace" class="droppable"></div>
 
@@ -110,6 +117,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                         </fieldset>
                     </form>
                 </div>-->
+                
             </div>
         </div>
     </div>
