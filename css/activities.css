@@ -37,3 +37,15 @@
     margin: 0;
     padding: 1px 8px;
 }
+
+
+#activity_set_home #workspace, #activity_set_home .section_nav{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#activity_set_home .section_nav{
+    padding: 0 15px;
+    width: 1040px;
+}
+#activity_set_home .section_nav .step_id{
+    margin-left: 3px;
+}

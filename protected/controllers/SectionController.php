@@ -132,14 +132,20 @@ class SectionController extends Controller
                 }else{
                     $activity=$version->firstActivity();
                 }
+                if(isset($_GET['step'])){
+                    $step=Step::model()->findByPk(intval($_GET['step']));
+                }else{
+                    $step=$activity->firstStep();
+                }
             }
-            if($section){
+            if($section&&$version&&$activity&&$step){
 		$dataProvider=new CActiveDataProvider('Section');
 		$this->render('index',array(
                     'activitySet'=>$activitySet,
-                    'model'=>$section,
+                    'section'=>$section,
                     'version'=>$version,
                     'activity'=>$activity,
+                    'step'=>$step,
                     'dataProvider'=>$dataProvider,
 		));
             }else{

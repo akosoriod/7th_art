@@ -1,7 +1,7 @@
 <?php
 /* @var $this SectionController */
 /* @var $dataProvider CActiveDataProvider */
-/* @var $model Section */
+/* @var $section Section */
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
         $('body').css({
-            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->activitySet->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$section->activitySet->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
         });
         $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
         
@@ -43,11 +43,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
 
 <main id="activity_set_home" class="detalle">
     <div class="breadcrumb-class">
-        Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$model->activitySet->name; ?>" target="_self" title="<?php echo $model->activitySet->title; ?>"><?php echo $model->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->sectionType->label; ?></b>
+        Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
-            <h2><?php echo $model->activitySet->title; ?></h2>
+            <h2><?php echo $section->activitySet->title; ?></h2>
         </div>
         <div id="credits-movies" class="col-xs-12 col-sm-12 col-md-4">
             <img src="" alt="" />
@@ -57,15 +57,15 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
     <div class="row row2">
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
             <?php
-                foreach ($activitySet->sections as $section){
-                    $publishedVersion=$section->publishedVersion();
+                foreach ($activitySet->sections as $sectionIter){
+                    $publishedVersion=$sectionIter->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){
-                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+                            echo '<a id="mnu_'.$sectionIter->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'">'.$sectionIter->sectionType->label.'</a>';
                         }elseif(count($publishedVersion->activities)>1){
-                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
-                                foreach ($publishedVersion->activities as $activity) {
-                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
+                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$sectionIter->sectionType->label.'<span class="caret"></span></a><ul>';
+                                foreach ($publishedVersion->activities as $activityMenu) {
+                                    echo '<li><a id="mnu_'.$sectionIter->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'/activity/'.$activityMenu->id.'">'.$activityMenu->name.'</a></li>';
                                 }
                             echo '</ul></li></ul>';
                         }
@@ -87,20 +87,42 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
             </div>
         </div>
     </div>
+    <div class="section_nav row row4">
+        <h3 class="section_nav_name"><?php echo $section->sectionType->label; ?></h3>
+        <div class="section_nav_steps">
+            <?php
+                if(count($activity->steps)>1){
+                    $stepCounter=1;
+                    echo 'Page:';
+                    foreach ($activity->steps as $stepIter){
+                        $activeClass="";
+                        if($step->id==$stepIter->id){
+                            $activeClass=" active";
+                        }
+                        echo '<a class="step_id '.$activeClass.'" '.
+                            'href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$stepIter->activity->id.'/step/'.$stepIter->id.'"'.
+                            '>'.$stepCounter.'</a>';
+                        $stepCounter++;
+                    }
+                }
+            ?>
+        </div>
+        <div class="step_instruction"><?php echo $step->instruction; ?></div>
+    </div>
     <div id="workspace" class="row row4 row_activities">
         <?php
         
-            foreach ($activity->steps as $step) {
-                
-            }
-        
-        
-            $objects=$activity->steps;
-            foreach ($objects as $object) {
-                //TODO: Calcular automáticamente
-                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
-                echo $html;
-            }
+//            foreach ($activity->steps as $step) {
+//                
+//            }
+//        
+//        
+//            $objects=$activity->steps;
+//            foreach ($objects as $object) {
+//                //TODO: Calcular automáticamente
+//                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
+//                echo $html;
+//            }
         ?>
 <!--        <div id="activities" class="col-xs-12 col-sm-12 col-md-12">
             <div id="set_1" class="set">

@@ -108,4 +108,12 @@ class Activity extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+                        
+        /**
+         * Retorna el primer paso de una Actividad
+         * @return Version Versión conestado 3 => publicado
+         */
+        public function firstStep(){
+            return $this->steps[0];
+        }
 }
