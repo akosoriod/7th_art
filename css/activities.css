@@ -21,7 +21,8 @@
     
 }
 #menu-movies .activity_set_menu .title{
-    line-height: 0.8em;
+    line-height: 0.9em;
+    font-size: 16px;
     padding-left: 6px;
     padding-right: 6px;
 }
@@ -34,5 +35,5 @@
 #menu-movies .activity_set_menu .title li a{
     float: none;
     margin: 0;
-    padding: 3px 6px;
+    padding: 1px 8px;
 }
