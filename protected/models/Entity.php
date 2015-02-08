@@ -11,13 +11,14 @@
  * @property double $weight
  * @property integer $parent_id
  * @property integer $entity_type_id
+ * @property integer $step_id
  *
  * The followings are the available model relations:
  * @property Answer[] $answers
- * @property Exercise $exercise
  * @property Entity $parent
  * @property Entity[] $entities
  * @property EntityType $entityType
+ * @property Step $step
  * @property EntityState[] $entityStates
  */
 class Entity extends CActiveRecord
@@ -38,12 +39,12 @@ class Entity extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise_id, entity_type_id', 'required'),
-			array('exercise_id, optional, countable, parent_id, entity_type_id', 'numerical', 'integerOnly'=>true),
+			array('exercise_id, entity_type_id, step_id', 'required'),
+			array('exercise_id, optional, countable, parent_id, entity_type_id, step_id', 'numerical', 'integerOnly'=>true),
 			array('weight', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise_id, optional, countable, weight, parent_id, entity_type_id', 'safe', 'on'=>'search'),
+			array('id, exercise_id, optional, countable, weight, parent_id, entity_type_id, step_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,10 +57,10 @@ class Entity extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'answers' => array(self::HAS_MANY, 'Answer', 'entity_id'),
-			'exercise' => array(self::BELONGS_TO, 'Exercise', 'exercise_id'),
 			'parent' => array(self::BELONGS_TO, 'Entity', 'parent_id'),
 			'entities' => array(self::HAS_MANY, 'Entity', 'parent_id'),
 			'entityType' => array(self::BELONGS_TO, 'EntityType', 'entity_type_id'),
+			'step' => array(self::BELONGS_TO, 'Step', 'step_id'),
 			'entityStates' => array(self::HAS_MANY, 'EntityState', 'entity_id'),
 		);
 	}
@@ -77,6 +78,7 @@ class Entity extends CActiveRecord
 			'weight' => 'Weight',
 			'parent_id' => 'Parent',
 			'entity_type_id' => 'Entity Type',
+			'step_id' => 'Step',
 		);
 	}
 
@@ -105,6 +107,7 @@ class Entity extends CActiveRecord
 		$criteria->compare('weight',$this->weight);
 		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('entity_type_id',$this->entity_type_id);
+		$criteria->compare('step_id',$this->step_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
