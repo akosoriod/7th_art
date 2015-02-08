@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'entity':
  * @property integer $id
- * @property integer $exercise_id
  * @property integer $optional
  * @property integer $countable
  * @property double $weight
@@ -39,12 +38,12 @@ class Entity extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise_id, entity_type_id, step_id', 'required'),
-			array('exercise_id, optional, countable, parent_id, entity_type_id, step_id', 'numerical', 'integerOnly'=>true),
+			array('entity_type_id, step_id', 'required'),
+			array('optional, countable, parent_id, entity_type_id, step_id', 'numerical', 'integerOnly'=>true),
 			array('weight', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, exercise_id, optional, countable, weight, parent_id, entity_type_id, step_id', 'safe', 'on'=>'search'),
+			array('id, optional, countable, weight, parent_id, entity_type_id, step_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,7 +71,6 @@ class Entity extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'exercise_id' => 'Exercise',
 			'optional' => 'Optional',
 			'countable' => 'Countable',
 			'weight' => 'Weight',
@@ -101,7 +99,6 @@ class Entity extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('exercise_id',$this->exercise_id);
 		$criteria->compare('optional',$this->optional);
 		$criteria->compare('countable',$this->countable);
 		$criteria->compare('weight',$this->weight);
@@ -158,19 +155,4 @@ class Entity extends CActiveRecord
 //            }
 //            return $objectList;
 //        }
-//        
-        /**
-         * Retorna una lista de entidades a partir de un paso
-         * @param Paso $step Objeto de tipo Paso
-         * @return Entity[] Lista de Entidades del Paso
-         */
-        public static function getEntitiesByStep($step){
-            $entities=array();
-            foreach ($step->exercises as $exercise) {
-                foreach ($exercise->entities as $entity) {
-                    $entities[]=$entity;
-                }
-            }
-            return $entities;
-        }
 }

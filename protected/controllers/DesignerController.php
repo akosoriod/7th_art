@@ -55,21 +55,12 @@ class DesignerController extends Controller {
         $dataEntities=$_POST['entities'];
         $stepId=intval($_POST['stepId']);
         $step=Step::model()->findByPk($stepId);
-        $prevEntities=Entity::getEntitiesByStep($step);
-        foreach ($prevEntities as $prevEntity){
+        foreach ($step->entities as $prevEntity){
             $this->deleteEntity($prevEntity);
         }
-        foreach ($dataEntities as $i => $dataEntity){
+        foreach ($dataEntities as $dataEntity){
             $entity=new Entity();
-            /********* TODO: VALOR QUEMADO!!! *********/
-            /********* TODO: VALOR QUEMADO!!! *********/
-            /********* TODO: VALOR QUEMADO!!! *********/
-            /********* TODO: VALOR QUEMADO!!! *********/
-            $entity->exercise_id=1;
-            /********* TODO: VALOR QUEMADO!!! *********/
-            /********* TODO: VALOR QUEMADO!!! *********/
-            /********* TODO: VALOR QUEMADO!!! *********/
-            /********* TODO: VALOR QUEMADO!!! *********/
+            $entity->step_id=$step->id;
             $entity->optional=boolval($dataEntity['optional']);
             $entity->countable=boolval($dataEntity['countable']);
             $entity->weight=intval($dataEntity['weight']);
