@@ -126,12 +126,20 @@ class SectionController extends Controller
             if(isset($_GET['movie'])&&isset($_GET['section'])){
                 $activitySet=ActivitySet::getByName($_GET['movie']);
                 $section=Section::getByName($activitySet,$_GET['section']);
+                $version=$section->publishedVersion();
+                if(isset($_GET['activity'])){
+                    $activity=Activity::model()->findByPk(intval($_GET['activity']));
+                }else{
+                    $activity=$version->firstActivity();
+                }
             }
             if($section){
 		$dataProvider=new CActiveDataProvider('Section');
 		$this->render('index',array(
                     'activitySet'=>$activitySet,
                     'model'=>$section,
+                    'version'=>$version,
+                    'activity'=>$activity,
                     'dataProvider'=>$dataProvider,
 		));
             }else{

@@ -124,7 +124,7 @@ class Section extends CActiveRecord
         /**
          * Retorna una versión publicable de la Sección, si encuentra más de una
          * devuelve la primera, si no encuentra ninguna, retorna false
-         * @return Version Versión conestado 3 => publucado
+         * @return Version Versión publicada
          */
         public function publishedVersion(){
             $published=false;
