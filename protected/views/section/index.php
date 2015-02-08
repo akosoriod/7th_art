@@ -4,6 +4,11 @@
 /* @var $model Section */
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
+
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
+
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/ActivitySet.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dropit/dropit.js');
 ?>
 <script>
     $(document).ready(function($) {
@@ -14,25 +19,30 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
         });
         $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
         
+        
+        
+        var activitySet=new ActivitySet();
+        activitySet.init();
+        
         //Revisa los objectos de la secciñón y los redimensiona
-        $(".object").each(function(){
-            console.debug($(this));
-            $(this).css({
-                left:$(this).attr('data-left')+'px',
-                top:$(this).attr('data-top')+'px',
-                height:$(this).attr('data-height'),
-                width:$(this).attr('data-width'),
-                overflow:'auto',
-                position:'absolute'
-            });
-            
+//        $(".object").each(function(){
+//            console.debug($(this));
+//            $(this).css({
+//                left:$(this).attr('data-left')+'px',
+//                top:$(this).attr('data-top')+'px',
+//                height:$(this).attr('data-height'),
+//                width:$(this).attr('data-width'),
+//                overflow:'auto',
+//                position:'absolute'
+//            });
+//            
             //Agrega los eventos a los objetos
 //            $(this).find(".editor-radio-object").buttonset();
-        });
+//        });
     });
 </script>
 
-<main class="detalle">
+<main id="activity_set_index" class="detalle">
     <div class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$model->activitySet->name; ?>" target="_self" title="<?php echo $model->activitySet->title; ?>"><?php echo $model->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->sectionType->label; ?></b>
     </div>
@@ -47,15 +57,35 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
     </div>
     <div class="row row2">
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
-            <a id="mnu_synopsis" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/synopsis">Synopsis</a>
-            <a id="mnu_pre" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/pre_viewing">Pre-Viewing <span class="caret"></span></a>
-            <a id="mnu_who" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/whos">Who's Who in...?</a>
-            <a id="mnu_film" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/film_based">Film-Based <span class="caret"></span></a>
-            <a id="mnu_spider" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/spider_map">Spidermap</a>
-            <a id="mnu_after" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/after_viewing">After-Viewing <span class="caret"></span></a>
-            <a id="mnu_expert" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/experts">The Expert Says...</a>
-            <a id="mnu_did" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/did_you_know">Did you know that...?</a>
-            <a id="mnu_ack" class="mnu_button" href="<?php echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/acknoledgments">Acknoledgments</a>
+            <?php
+                foreach ($activitySet->sections as $section){
+                    $publishedVersion=$section->publishedVersion();
+                    if($publishedVersion){
+                        if(count($publishedVersion->activities)===1){
+                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+                        }elseif(count($publishedVersion->activities)>1){
+                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
+                                foreach ($publishedVersion->activities as $activity) {
+                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$section->sectionType->label.'aaaaaaaaaaaaaaaaa</a></li>';
+                                }
+                            echo '</ul></li></ul>';
+                        }
+                    }
+                }
+            ?>
+            
+            
+            
+            
+            
+<!--            <a id="mnu_pre" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/pre_viewing">Pre-Viewing <span class="caret"></span></a>
+            <a id="mnu_who" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/whos">Who's Who in...?</a>
+            <a id="mnu_film" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/film_based">Film-Based <span class="caret"></span></a>
+            <a id="mnu_spider" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/spider_map">Spidermap</a>
+            <a id="mnu_after" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/after_viewing">After-Viewing <span class="caret"></span></a>
+            <a id="mnu_expert" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/experts">The Expert Says...</a>
+            <a id="mnu_did" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/did_you_know">Did you know that...?</a>
+            <a id="mnu_ack" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/acknoledgments">Acknoledgments</a>-->
         </div>
     </div>
     <div class="row row3">
@@ -73,12 +103,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
     </div>
     <div id="workspace" class="row row4 row_activities">
         <?php
-            $objects=Object::getObjectsBySection($model);
-            foreach ($objects as $object) {
-                //TODO: Calcular automáticamente
-                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
-                echo $html;
-            }
+//            $objects=Object::getObjectsBySection($model);
+//            foreach ($objects as $object) {
+//                //TODO: Calcular automáticamente
+//                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
+//                echo $html;
+//            }
         ?>
 <!--        <div id="activities" class="col-xs-12 col-sm-12 col-md-12">
             <div id="set_1" class="set">

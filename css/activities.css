@@ -3,3 +3,36 @@
     position: relative;
     width: 1040px;
 }
+
+
+
+/* CORRECCIONES CSS */
+#menu-movies ul, #menu-movies li {
+    list-style-type: none !important;
+    list-style-image: none;
+}
+#menu-movies a {
+    color: #fff !important;
+}
+#menu-movies .activity_set_menu {
+    background-color: #50992e;
+    color: #fff !important;
+    float: left;
+    
+}
+#menu-movies .activity_set_menu .title{
+    line-height: 0.8em;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+#menu-movies .activity_set_menu .title li{
+    border: none;
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+}
+#menu-movies .activity_set_menu .title li a{
+    float: none;
+    margin: 0;
+    padding: 3px 6px;
+}

@@ -120,4 +120,20 @@ class Section extends CActiveRecord
             }
             return $output;
         }
+        
+        /**
+         * Retorna una versión publicable de la Sección, si encuentra más de una
+         * devuelve la primera, si no encuentra ninguna, retorna false
+         * @return Version Versión conestado 3 => publucado
+         */
+        public function publishedVersion(){
+            $published=false;
+            foreach ($this->versions as $version) {
+                if(intval($version->status_id)===3){
+                    $published=$version;
+                    break;
+                }
+            }
+            return $published;
+        }
 }

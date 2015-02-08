@@ -130,8 +130,9 @@ class SectionController extends Controller
             if($section){
 		$dataProvider=new CActiveDataProvider('Section');
 		$this->render('index',array(
-			'model'=>$section,
-			'dataProvider'=>$dataProvider,
+                    'activitySet'=>$activitySet,
+                    'model'=>$section,
+                    'dataProvider'=>$dataProvider,
 		));
             }else{
                 $this->redirect(array('activitySet/home/movie/'.$activitySet->name));
