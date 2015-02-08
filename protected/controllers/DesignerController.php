@@ -50,18 +50,16 @@ class DesignerController extends Controller {
     */
     public function actionSaveEntitiesByAjax(){
         $success=true;
+        $parentTables=array();  //Tabla para almacenar los id antiguos y nuevos de las entidades
         //Get the client data
         $dataEntities=$_POST['entities'];
         $stepId=intval($_POST['stepId']);
         $step=Step::model()->findByPk($stepId);
         $prevEntities=Entity::getEntitiesByStep($step);
         foreach ($prevEntities as $prevEntity){
-            foreach ($prevEntity->entityStates as $state) {
-                $state->delete();
-            }
-            $prevEntity->delete();
+            $this->deleteEntity($prevEntity);
         }
-        foreach ($dataEntities as $dataEntity) {
+        foreach ($dataEntities as $i => $dataEntity){
             $entity=new Entity();
             /********* TODO: VALOR QUEMADO!!! *********/
             /********* TODO: VALOR QUEMADO!!! *********/
@@ -75,9 +73,6 @@ class DesignerController extends Controller {
             $entity->optional=boolval($dataEntity['optional']);
             $entity->countable=boolval($dataEntity['countable']);
             $entity->weight=intval($dataEntity['weight']);
-            if($dataEntity['parent']>0){
-                $entity->parent_id=$dataEntity['parent'];
-            }
             if(array_key_exists('entityType',$dataEntity)){
                 $entityTypeName=$dataEntity['entityType'];
             }else{
@@ -85,6 +80,7 @@ class DesignerController extends Controller {
             }
             $entity->entity_type_id=EntityType::getByName($entityTypeName)->id;
             $entity->insert();
+            $parentTables[$dataEntity['id']]=$entity->id;
             
             foreach ($dataEntity['states'] as $dataState) {
                 $state=new EntityState();
@@ -108,8 +104,36 @@ class DesignerController extends Controller {
                 $state->insert();
             }
         }
+        
+        //Actualiza los valores de parent
+        foreach ($dataEntities as $dataEntity){
+            if($dataEntity["parent"]!=="false"){
+                $childId=$parentTables[$dataEntity['id']];
+                $parentId=$parentTables[intval($dataEntity["parent"])];
+                $child=Entity::model()->findByPk($childId);
+                $child->parent_id=$parentId;
+                $child->update();
+            }
+        }
         //Return the result of save schedule
         echo json_encode(array("success"=>$success));
+    }
+    
+    /**
+     * Elimina una entidad, sus estados y sus subentidades de la base de datos
+     * @param Entoty $entity Entidad a borrar
+     */
+    private function deleteEntity($entity){
+        //Elimina las subentidades
+        foreach ($entity->entities as $subentity) {
+            $this->deleteEntity($subentity);
+        }
+        //Elimina los estados
+        foreach ($entity->entityStates as $state) {
+            $state->delete();
+        }
+        //Elimina la entidad
+        $entity->delete();
     }
     
     /**

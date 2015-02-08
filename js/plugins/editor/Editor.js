@@ -492,6 +492,8 @@ var Editor = function(params,callback){
     
     /**
      * Guarda la lista de objetos
+     * @param {id} stepId Id del paso actual
+     * @param {Entity[]} entities Entidades a guardar
      * @param {function} callback Function to return the response
      */
     function saveEntities(stepId,entities,callback){
