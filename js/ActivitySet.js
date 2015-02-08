@@ -16,9 +16,11 @@ var ActivitySet = function(params){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
+        home:$("#activity_set_home"),
         index:$("#activity_set_index")
     };
     var options = $.extend(def, params);
+    self.home=options.home;
     self.index=options.index;
     /**
      * Constructor Method 
@@ -42,6 +44,7 @@ var ActivitySet = function(params){
      * Asigna los eventos a los elementos
      */
     function attachEvents(){
+        self.home.find(".activity_set_menu").dropit();
         self.index.find(".activity_set_menu").dropit();
     };
     

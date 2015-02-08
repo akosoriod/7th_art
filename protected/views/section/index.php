@@ -4,7 +4,6 @@
 /* @var $model Section */
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
-
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
 
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/ActivitySet.js');
@@ -42,7 +41,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
     });
 </script>
 
-<main id="activity_set_index" class="detalle">
+<main id="activity_set_home" class="detalle">
     <div class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$model->activitySet->name; ?>" target="_self" title="<?php echo $model->activitySet->title; ?>"><?php echo $model->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->sectionType->label; ?></b>
     </div>
@@ -90,12 +89,18 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
     </div>
     <div id="workspace" class="row row4 row_activities">
         <?php
-//            $objects=Object::getObjectsBySection($model);
-//            foreach ($objects as $object) {
-//                //TODO: Calcular automáticamente
-//                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
-//                echo $html;
-//            }
+        
+            foreach ($activity->steps as $step) {
+                
+            }
+        
+        
+            $objects=$activity->steps;
+            foreach ($objects as $object) {
+                //TODO: Calcular automáticamente
+                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
+                echo $html;
+            }
         ?>
 <!--        <div id="activities" class="col-xs-12 col-sm-12 col-md-12">
             <div id="set_1" class="set">
