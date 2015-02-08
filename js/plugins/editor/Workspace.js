@@ -176,7 +176,11 @@ var Workspace = function(params){
      * Reinicia el Workspace, elimina todas las entidades del workspace.
      */
     self.clear=function(){
-        
+        self.tempEntities=0;
+        self.currentZindex=0;
+        self.droppableStack={};
+        self.entities={};
+        self.div.empty();
     };
     
     /**
@@ -214,7 +218,6 @@ var Workspace = function(params){
                         var defaultOptions=4;
                         var left=ui.position.left-displacement.left;
                         var top=ui.position.top-displacement.top;
-                        var id=parseInt(Math.random()*1000);
                         var entity=new Entity({
                             pos:{
                                 left:left,
@@ -256,7 +259,7 @@ var Workspace = function(params){
         var maxZindex=0;
         var dropable=false;
         for(var i in self.droppableStack){
-            if(self.droppableStack[i].zindex>maxZindex){
+            if(self.droppableStack[i].getZindex()>maxZindex){
                 dropable=self.droppableStack[i];
             }
         }

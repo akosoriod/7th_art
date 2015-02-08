@@ -24,7 +24,8 @@ var Editor = function(params,callback){
     
     self.numberLoadings=0;          //Cuenta el número de loadings para mostrar el gif
     self.saving=false;              //Indica si está guardando, para no repetir el proceso
-    self.autosaveFrequency=60;      //Cada cuantos segundos se autoguarda
+    self.loading=false;             //Indica si está cargando, para no repetir el proceso
+    self.autosaveFrequency=0;      //Cada cuantos segundos se autoguarda
     
     
     /**************************************************************************/
@@ -192,6 +193,7 @@ var Editor = function(params,callback){
                 self.currentStep.stepName
             );
             self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
+            self.load();
         });
         
         //Eventos de los pasos
@@ -477,7 +479,7 @@ var Editor = function(params,callback){
     /**************************************************************************/
     
     /**
-     * Guarda los cambios del editor para el paso seleccionado
+     * Guarda los cambios del editor para el paso actual
      */
     self.save=function(){
         var entities=self.workspace.objectify();
@@ -485,9 +487,27 @@ var Editor = function(params,callback){
             saveEntities(self.currentStep.stepId,entities,function(err){
                 if(err){
                     self.message("No se pueden guardar los cambios, por favor intente más tarde.");
+                    editor.hideLoading();
+                    self.saving=false;
                 }
             });
         }
+    };
+    
+    /**
+     * Carga las entidades para el paso actual
+     */
+    self.load=function(){
+        self.workspace.clear();
+        loadEntities(self.currentStep.stepId,function(err,response){
+            if(err){
+                self.message("No se pueden cargar los datos, por favor intente más tarde.");
+                editor.hideLoading();
+                self.loading=false;
+            }else{
+                self.workspace.deobjectify(response.entities);
+            }
+        });
     };
     
     /**
@@ -505,7 +525,7 @@ var Editor = function(params,callback){
                 type: "POST",
                 data:{
                     stepId:stepId,
-                    entities:entities
+                    entities:JSON.stringify(entities)
                 }
             }).done(function(response) {
                 var data = JSON.parse(response);
@@ -525,31 +545,36 @@ var Editor = function(params,callback){
     };
     
     /**
-     * Carga la lista de objetos para un paso de la base de datos (si existen) y los
-     * retorna a través del callback
+     * Carga la lista de entidades para el paso seleccionado
+     * @param {id} stepId Id del paso actual
      * @param {function} callback Function to return the response
      */
-//    function loadStep(stepId,callback){
-//        $.ajax({
-//            url: self.ajaxUrl+'loadStepByAjax',
-//            type: "POST",
-//            data:{
-//                stepId:stepId
-//            }
-//        }).done(function(response) {
-//            var data = JSON.parse(response);
-//            if(callback){callback(false,data);}
-//        }).fail(function(error) {
-//            if(error.status===403){
-//                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
-//                window.location=self.ajaxUrl;
-//            }else{
-//                if(callback){callback(error);}
-//            }
-//        }).always(function(){
-//            
-//        });
-//    };
+    function loadEntities(stepId,callback){
+        if(!self.loading){
+            self.loading=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'loadEntitiesByAjax',
+                type: "POST",
+                data:{
+                    stepId:stepId
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.loading=false;
+            });
+        }
+    };
 
     /**
      * Add a show loading message to the pile

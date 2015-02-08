@@ -128,6 +128,7 @@ var Entity = function(params){
             },
             over: function(e,ui){
                 self.workspace.droppableStack[self.id]=self;
+                
             }
         });
         
