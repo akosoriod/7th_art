@@ -66,26 +66,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
                         }elseif(count($publishedVersion->activities)>1){
                             echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
                                 foreach ($publishedVersion->activities as $activity) {
-                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$section->sectionType->label.'aaaaaaaaaaaaaaaaa</a></li>';
+                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
                                 }
                             echo '</ul></li></ul>';
                         }
                     }
                 }
             ?>
-            
-            
-            
-            
-            
-<!--            <a id="mnu_pre" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/pre_viewing">Pre-Viewing <span class="caret"></span></a>
-            <a id="mnu_who" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/whos">Who's Who in...?</a>
-            <a id="mnu_film" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/film_based">Film-Based <span class="caret"></span></a>
-            <a id="mnu_spider" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/spider_map">Spidermap</a>
-            <a id="mnu_after" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/after_viewing">After-Viewing <span class="caret"></span></a>
-            <a id="mnu_expert" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/experts">The Expert Says...</a>
-            <a id="mnu_did" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/did_you_know">Did you know that...?</a>
-            <a id="mnu_ack" class="mnu_button" href="<?php // echo Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->activitySet->name; ?>/section/acknoledgments">Acknoledgments</a>-->
         </div>
     </div>
     <div class="row row3">

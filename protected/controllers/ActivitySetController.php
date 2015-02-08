@@ -132,6 +132,7 @@ class ActivitySetController extends Controller
                         $version->insert();
                         
                         $activity=new Activity();
+                        $activity->name="Primera actividad";
                         $activity->visible=true;
                         $activity->instruction="Esta es la instrucción de la actividad de: ".$model->title;
                         $activity->version_id=$version->id;
