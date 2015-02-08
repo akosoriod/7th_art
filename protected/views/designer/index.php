@@ -10,17 +10,17 @@ $this->breadcrumbs=array(
 Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/colorpicker/spectrum.css');
-//Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/jqueryte/jquery-te-1.4.0.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/colorpicker/spectrum.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinymce/jquery.tinymce.min.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tabelizer/jquery.tabelizer.min.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/State.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Entity.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Workspace.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
 ?>
 <script type="text/javascript">
-
     $( document ).ready(function(){
         $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Designer');
         var appUrl="<?php echo Yii::app()->baseUrl."/"; ?>";
@@ -38,45 +38,44 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     ?>
     <div id="container">
         <nav id="navigation">
-            <?php echo $activitySet->title; ?>
-            <ul>
-            <?php
-                foreach ($activitySet->sections as $section) {
-                    echo '<li>'.$section->sectionType->label;
-                        echo '<ul>';
+            <div class="activityset_name">
+                <?php echo $activitySet->title; ?>
+            </div>
+            <div class="activityset_sections">
+                <table id="sections_tree" class="controller">
+                    <?php
+                        $letter="a";
+                        foreach ($activitySet->sections as $section) {
+                            echo '<tr data-level="1" id="level_1_'.$letter.'"><td>'.$section->sectionType->label.'</td></tr>';
                             foreach ($section->versions as $version) {
-                                echo '<li>'.$version->name.'</li>';
-                                echo '<ul>';
-                                    $count=0;
-                                    foreach ($version->activities as $activity) {
-                                        $count++;
-                                        echo '<li>Actividad '.$count.'</li>';
-                                        echo '<ul>';
-                                            $countSteps=0;
-                                            foreach ($activity->steps as $step) {
-                                                $countSteps++;
-                                                echo '<li class="step" '
-                                                    . 'data-step-id="'.$step->id.'" '
-                                                    . 'data-step-name="Paso '.$countSteps.'" '
-                                                    . 'data-activity-id="'.$activity->id.'" '
-                                                    . 'data-activity-name="Actividad '.$count.'" '
-                                                    . 'data-version-id="'.$version->id.'" '
-                                                    . 'data-version-name="'.$version->name.'" '
-                                                    . 'data-section-id="'.$section->id.'" '
-                                                    . 'data-section-name="'.$section->sectionType->label.'" '
-                                                    . 'data-activity-set-id="'.$activitySet->id.'" '
-                                                    . 'data-activity-set-title="'.$activitySet->title.'" '
-                                                .'>Paso '.$countSteps.'</li>';
-                                            }
-                                        echo '</ul>';
+                                echo '<tr data-level="2" id="level_2_'.$letter.'"><td>'.$version->name.'</td></tr>';
+                                $count=0;
+                                foreach ($version->activities as $activity) {
+                                    $count++;
+                                    echo '<tr data-level="3" id="level_3_'.$letter.'"><td>Actividad '.$count.'</td></tr>';
+                                    $countSteps=0;
+                                    foreach ($activity->steps as $step) {
+                                        $countSteps++;
+                                        echo '<tr class="step" data-level="4" id="level_4_'.$letter.'" '
+                                            . 'data-step-id="'.$step->id.'" '
+                                            . 'data-step-name="Paso '.$countSteps.'" '
+                                            . 'data-activity-id="'.$activity->id.'" '
+                                            . 'data-activity-name="Actividad '.$count.'" '
+                                            . 'data-version-id="'.$version->id.'" '
+                                            . 'data-version-name="'.$version->name.'" '
+                                            . 'data-section-id="'.$section->id.'" '
+                                            . 'data-section-name="'.$section->sectionType->label.'" '
+                                            . 'data-activity-set-id="'.$activitySet->id.'" '
+                                            . 'data-activity-set-title="'.$activitySet->title.'" '
+                                        .'><td>Paso '.$countSteps.'</td></tr>';
                                     }
-                                echo '</ul>';
+                                }
                             }
-                        echo '</ul>';
-                    echo '</li>';
-                }
-            ?> 
-            </ul>
+                            $letter++;
+                        }
+                    ?> 
+                </table>
+            </div>
         </nav>
         <div id="area">
             <div id="editor">
@@ -91,7 +90,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="button undo" id="button-undo" title="Deshacer"></div>
                     <div class="button" id="save" title="Guardar actividad"></div>
                     <div id="editing_path">
-                        Editando: <span id="message"><?php echo $activitySet->title; ?></span>
+                        <span id="message"><?php echo $activitySet->title; ?></span>
                     </div>
                     <div id="states_bar">
                         <div class="state_button state_selected" id="state_passive" title="Ver ejercicio en estado pasivo" data-state="passive">P</div>

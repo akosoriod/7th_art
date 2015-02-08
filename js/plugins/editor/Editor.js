@@ -13,7 +13,7 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
-    self.editingStepId=1;           //Id del paso que se está editando actualmente
+    self.currentStep=false;           //Paso que se está editando actualmente
     
     self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
     self.historyMax=30;             //Cantidad de estados del workspace que almacena
@@ -24,7 +24,7 @@ var Editor = function(params,callback){
     
     self.numberLoadings=0;          //Cuenta el número de loadings para mostrar el gif
     self.saving=false;              //Indica si está guardando, para no repetir el proceso
-    self.autosaveFrequency=120;      //Cada cuantos segundos se autoguarda
+    self.autosaveFrequency=60;      //Cada cuantos segundos se autoguarda
     
     
     /**************************************************************************/
@@ -37,7 +37,6 @@ var Editor = function(params,callback){
     self.params = $.extend(def, params);
     self.appUrl=self.params.appUrl;
     self.ajaxUrl=self.appUrl+"index.php/designer/";
-    self.currentStep=false;
     /**
      * Constructor Method 
      */
@@ -90,199 +89,7 @@ var Editor = function(params,callback){
         self.editingEntity.deobjectify(JSON.parse(JSON.stringify(entity.objectify())));
         self.dialogEditEntity.dialog("option","title","Editando entidad: "+entity.id);
         self.dialogEditEntity.dialog("open");
-        
-        
-        
-//        entity.getState("passive").content="Hola editor";
-//        entity.draw();
     };
-    
-    
-    /**************************************************************************/
-    /****************************** SETUP METHODS *****************************/
-    /**************************************************************************/
-    
-    
-    /**
-     * Agrega un objeto precargado al workspace
-     * @param {object} object Objeto que se quiere mostrar en el editor
-     */
-//    function addObject(objectLoaded){
-//        self.countObjects++;
-//        self.workspace.append('<div class="draggable object" id="object'+objectLoaded.id+'" data-id="'+objectLoaded.id+'"><div class="content"><div class="text"><div class="textContent">'+objectLoaded.text.content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
-//        var object=self.workspace.find('#object'+objectLoaded.id);
-//        object.draggable({
-//            containment: "#workspace",
-//            cursor: "move",
-//            opacity: 0.4,
-//            scroll: false
-//        }).resizable({
-////                        containment:"parent"
-//        });
-//        object.css({
-//            height:objectLoaded.height,
-//            left:objectLoaded.left,
-//            top:objectLoaded.top,
-//            width:objectLoaded.width
-//        });
-//        object.find(".deleteObject").click(function(){
-//            object.remove();
-//        });
-//        object.find(".config").click(function(){
-//            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-object",id);
-//            $("#properties").dialog("open");
-//        });
-//
-//        var text=object.find(".text");
-//        text.dblclick(function(){
-//            var textObj=$(this);
-//            $('<div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
-//                height:500,
-//                title:"Contenido del objeto",
-//                modal:true,
-//                width:800,
-//                buttons:{
-//                    Cancelar:function(){
-//                        $(this).find("#dialogTextValue").tinymce().remove();
-//                        $(this).dialog("close");$(this).dialog('destroy').remove();
-//                    },
-//                    Aceptar:function(){
-//                        textObj.find('.textContent').html($(this).find('#dialogTextValue').val());
-//                        $(this).find("#dialogTextValue").tinymce().remove();
-//                        $(this).dialog("close");$(this).dialog('destroy').remove();
-//                    }
-//                },
-//                open:function(){
-//                    var textEditor=$(this).find("#dialogTextValue");
-//                    textEditor.tinymce({
-//                         // Location of TinyMCE script
-//                        script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
-//                        language : 'es_MX',
-//                        height:290,
-//                        plugins: [
-//                            "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
-//                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-//                            "save table contextmenu directionality template paste textcolor textcolor jbimages"
-//                        ],
-//                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
-//                                " searchreplace wordcount fullscreen |"+
-//                                " autolink link image media lists preview spellchecker table | jbimages code |" +
-//                                " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
-//                        menubar : false,
-//                        oninit:function(){
-//                            tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
-//                            tinyMCE.DOM.setStyle('body', 'background-color', 'red');
-//                        }
-//                    });
-//                },
-//                close:function(){
-//                    try{
-//                        $(this).find("#dialogTextValue").tinymce().remove();
-//                        $(this).dialog("close");$(this).dialog('destroy').remove();
-//                    }catch(e){};
-//                }
-//            });
-//        });
-//        return object;
-//    };
-//    
-//    /**
-//     * Agrega un objeto al workspace
-//     * @param {int} left Distancia a la izquierda del workspace
-//     * @param {int} top Distancia arriba del workspace
-//     * @param {string} content Contenido opcional para el objeto
-//     */
-//    function addNewObject(left,top,content){
-//        if(!content){
-//            content="";
-//        }
-//        self.countObjects++;
-//        self.workspace.append('<div class="draggable object" id="object'+self.countObjects+'" data-id="'+self.countObjects+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="objectButton config"></div><div class="objectButton deleteObject">x</div></div>');
-//        var object=self.workspace.find('#object'+self.countObjects);
-//        object.draggable({
-//            containment: "#workspace",
-//            cursor: "move",
-//            opacity: 0.4,
-//            scroll: false
-//        }).resizable({
-////                        containment:"parent"
-//        });
-//        object.css({
-//            left:left,
-//            top:top
-//        });
-//        object.find(".deleteObject").click(function(){
-//            object.remove();
-//        });
-//        object.find(".config").click(function(){
-//            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-object",id);
-//            $("#properties").dialog("open");
-//        });
-//
-//        var text=object.find(".text");
-//        text.dblclick(function(){
-//            var textObj=$(this);
-//            $('<div><textarea id="dialogTextValue" placeholder="Inserte el texto"></textarea></div>').dialog({
-//                height:500,
-//                title:"Contenido del objeto",
-//                modal:true,
-//                width:800,
-//                buttons:{
-//                    Cancelar:function(){
-//                        $(this).find("#dialogTextValue").tinymce().remove();
-//                        $(this).dialog("close");$(this).dialog('destroy').remove();
-//                    },
-//                    Aceptar:function(){
-//                        textObj.find('.textContent').html($(this).find('#dialogTextValue').val());
-//                        $(this).find("#dialogTextValue").tinymce().remove();
-//                        $(this).dialog("close");$(this).dialog('destroy').remove();
-//                    }
-//                },
-//                open:function(){
-//                    var textEditor=$(this).find("#dialogTextValue");
-//                    textEditor.tinymce({
-//                         // Location of TinyMCE script
-//                        script_url : self.appUrl+'js/plugins/tinymce/tinymce.min.js',
-//                        language : 'es_MX',
-//                        height:290,
-//                        plugins: [
-//                            "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
-//                            "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-//                            "save table contextmenu directionality template paste textcolor textcolor jbimages"
-//                        ],
-//                        toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
-//                                " searchreplace wordcount fullscreen |"+
-//                                " autolink link image media lists preview spellchecker table | jbimages code |" +
-//                                " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
-//                        menubar : false,
-//                        oninit:function(){
-//                            tinyMCE.activeEditor.setContent(textObj.find('.textContent').html());
-//                            tinyMCE.DOM.setStyle('body', 'background-color', 'red');
-//                        }
-//                    });
-//                },
-//                close:function(){
-//                    try{
-//                        $(this).find("#dialogTextValue").tinymce().remove();
-//                        $(this).dialog("close");$(this).dialog('destroy').remove();
-//                    }catch(e){};
-//                }
-//            });
-//        });
-//        return object;
-//    };
-//        
-//    
-//    /**
-//     * Agrega los eventos TrueFalse a un objeto
-//     * @param {object} object Objeto al que se le asignarán lso eventos
-//     */
-//    function attachObjectEvents(object){
-//        object.find(".editor-radio-object").buttonset();
-////        object.find(".editor-fill-object").buttonset();
-//    }
     
     /**************************************************************************/
     /********************************** METHODS *******************************/
@@ -341,33 +148,6 @@ var Editor = function(params,callback){
 //        self.workspace.empty();
 //    };
 
-//    
-//    
-//    /**************************************************************************/
-//    /****************************** OTHER METHODS *****************************/
-//    /**************************************************************************/
-//    function checkRegexp( o, regexp, n ) {
-//        if ( !( regexp.test( o.val() ) ) ) {
-//            o.addClass( "ui-state-error" );
-//            alert( n );
-//            return false;
-//        } else {
-//            return true;
-//        }
-//        }
-//    function hexc(colorval) {
-//        var color;
-//        var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-//        delete(parts[0]);
-//        for (var i = 1; i <= 3; ++i) {
-//            parts[i] = parseInt(parts[i]).toString(16);
-//            if (parts[i].length == 1) parts[i] = '0' + parts[i];
-//        }
-//        color = '#' + parts.join('');
-//
-//        return color;
-//    }
-
 
     /**************************************************************************/
     /***************************** EVENTS METHODS *****************************/
@@ -378,10 +158,67 @@ var Editor = function(params,callback){
     function attachEvents(){
         $( document ).tooltip();
         //Asigna los eventos
+        attachEventsNavbar();
         attachEventsBarEntities();
         attachEventsBarActions();
         attachEventsDialogEntity();
-    };    
+    };
+    
+    /**
+     * Eventos de la barra de entidades
+     */
+    function attachEventsNavbar(){
+        self.div.find('#sections_tree').tabelize({
+            fullRowClickable : true
+	});
+        var steps=self.div.find('#sections_tree').find('.step');
+        steps.click(function(){
+            self.currentStep={
+                'stepId':parseInt($(this).attr('data-step-id')),
+                'stepName':$(this).attr('data-step-name'),
+                'activityId':parseInt($(this).attr('data-activity-id')),
+                'activityName':$(this).attr('data-activity-name'),
+                'versionId':parseInt($(this).attr('data-version-id')),
+                'versionName':$(this).attr('data-version-name'),
+                'sectionId':parseInt($(this).attr('data-section-id')),
+                'sectionName':$(this).attr('data-section-name'),
+                'activitySetId':$(this).attr('data-activity-set-id'),
+                'activitySetTitle':$(this).attr('data-activity-set-title')
+            };
+            self.editingPathDiv.find("#message").text(
+                self.currentStep.sectionName+' > '+
+                self.currentStep.versionName+' > '+
+                self.currentStep.activityName+' > '+
+                self.currentStep.stepName
+            );
+            self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
+        });
+        
+        //Eventos de los pasos
+//        self.stepsDivs.click(function(){
+//            resetEditor();
+//            self.currentStep={
+//                'stepId':parseInt($(this).attr('data-step-id')),
+//                'stepName':$(this).attr('data-step-name'),
+//                'activityId':parseInt($(this).attr('data-activity-id')),
+//                'activityName':$(this).attr('data-activity-name'),
+//                'versionId':parseInt($(this).attr('data-version-id')),
+//                'versionName':$(this).attr('data-version-name'),
+//                'sectionId':parseInt($(this).attr('data-section-id')),
+//                'sectionName':$(this).attr('data-section-name'),
+//                'activitySetId':$(this).attr('data-activity-set-id'),
+//                'activitySetTitle':$(this).attr('data-activity-set-title')
+//            };
+//            self.editingPathDiv.find("#message").text(
+//                self.currentStep.activitySetTitle+' > '+
+//                self.currentStep.sectionName+' > '+
+//                self.currentStep.versionName+' > '+
+//                self.currentStep.activityName+' > '+
+//                self.currentStep.stepName
+//            );
+//            self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
+//        });
+    };
     
     /**
      * Eventos de la barra de entidades
@@ -645,7 +482,7 @@ var Editor = function(params,callback){
     self.save=function(){
         var entities=self.workspace.objectify();
         if(entities.length>0){
-            saveEntities(self.editingStepId,entities,function(err){
+            saveEntities(self.currentStep.stepId,entities,function(err){
                 if(err){
                     self.message("No se pueden guardar los cambios, por favor intente más tarde.");
                 }

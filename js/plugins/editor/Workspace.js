@@ -200,98 +200,49 @@ var Workspace = function(params){
         self.div.droppable({
             accept: ".button",
             drop: function( event, ui ) {
-                if(ui.draggable.hasClass("single")){
-                    var displacement=self.div.offset();
-                    self.addEntity(new Entity({
-                        pos:{
-                            left:ui.position.left-displacement.left,
-                            top:ui.position.top-displacement.top
-                        }
-                    }));
-                }else if(ui.draggable.hasClass("multi-single")){
-                    var displacement=self.div.offset();
-                    var defaultOptions=4;
-                    var left=ui.position.left-displacement.left;
-                    var top=ui.position.top-displacement.top;
-                    var id=parseInt(Math.random()*1000);
-                    var entity=new Entity({
-                        pos:{
-                            left:left,
-                            top:top
-                        },
-                        size:{
-                            height:150,
-                            width:350
-                        }
-                    });
-                    self.addEntity(entity);
-                    for(var i=0;i<defaultOptions;i++){
-                        var ent=self.addEntity(new Entity({
+                if(editor.currentStep){
+                    if(ui.draggable.hasClass("single")){
+                        var displacement=self.div.offset();
+                        self.addEntity(new Entity({
                             pos:{
-                                left:left+(10),
-                                top:top+(30*i)
-                            },
-                            size:{
-                                height:30,
-                                width:300
+                                left:ui.position.left-displacement.left,
+                                top:ui.position.top-displacement.top
                             }
                         }));
-                        //Se agregan las como subentidades a la entidad contenedora
-                        entity.addEntity(ent);
+                    }else if(ui.draggable.hasClass("multi-single")){
+                        var displacement=self.div.offset();
+                        var defaultOptions=4;
+                        var left=ui.position.left-displacement.left;
+                        var top=ui.position.top-displacement.top;
+                        var id=parseInt(Math.random()*1000);
+                        var entity=new Entity({
+                            pos:{
+                                left:left,
+                                top:top
+                            },
+                            size:{
+                                height:150,
+                                width:350
+                            }
+                        });
+                        self.addEntity(entity);
+                        for(var i=0;i<defaultOptions;i++){
+                            var ent=self.addEntity(new Entity({
+                                pos:{
+                                    left:left+(10),
+                                    top:top+(30*i)
+                                },
+                                size:{
+                                    height:30,
+                                    width:300
+                                }
+                            }));
+                            //Se agregan las como subentidades a la entidad contenedora
+                            entity.addEntity(ent);
+                        }
                     }
-                    
-                    
-                    
-                    
-                    
-//                }else if(ui.draggable.hasClass("true_false")){
-//                    var displacement=$("#workspace").offset();
-//                    var defaultOptions=4;
-//                    var left=ui.position.left-displacement.left;
-//                    var top=ui.position.top-displacement.top;
-//                    var options=new Array();
-////                    for(var i=0;i<defaultOptions;i++){
-//                        var ent=self.addEntity(new Entity({
-////                            pos:{
-////                                left:left+(10),
-////                                top:top+(30*i)
-////                            },
-//                            size:{
-//                                height:30,
-//                                width:300
-//                            }
-//                        }));
-//                        var passive=ent.getState('passive');
-//                        var id=parseInt(Math.random()*1000);
-//                        passive.content='<select>'+
-//                            '<option name="'+id+'">Opción 1</option>'+
-//                            '<option name="'+id+'">Opción 2</option>'+
-//                            '<option name="'+id+'">Opción 3</option>'+
-//                        '</select>';
-//                        ent.draw();
-////                    }
-//                }else if(ui.draggable.hasClass("multi-multi")){
-//                    var displacement=$("#workspace").offset();
-//                    var defaultOptions=4;
-//                    var left=ui.position.left-displacement.left;
-//                    var top=ui.position.top-displacement.top;
-//                    var options=new Array();
-//                    for(var i=0;i<defaultOptions;i++){
-//                        var ent=self.addEntity(new Entity({
-//                            pos:{
-//                                left:left+(10),
-//                                top:top+(30*i)
-//                            },
-//                            size:{
-//                                height:30,
-//                                width:300
-//                            }
-//                        }));
-//                        var passive=ent.getState('passive');
-//                        var id=parseInt(Math.random()*1000);
-//                        passive.content='<input type="checkbox" name="'+id+'" value="Opción '+(i+1)+'">Opción 1';
-//                        ent.draw();
-//                    }
+                }else{
+                    editor.message("Seleccione un paso en una sección para iniciar la edición.");
                 }
             }
         });
