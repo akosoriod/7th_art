@@ -201,54 +201,56 @@ var Workspace = function(params){
      * Crea la estructura del workspace y lo hace droppable
      */
     function attachEvents(){
-        self.div.droppable({
-            accept: ".button",
-            drop: function( event, ui ) {
-                if(editor.currentStep){
-                    if(ui.draggable.hasClass("single")){
-                        var displacement=self.div.offset();
-                        self.addEntity(new Entity({
-                            pos:{
-                                left:ui.position.left-displacement.left,
-                                top:ui.position.top-displacement.top
-                            }
-                        }));
-                    }else if(ui.draggable.hasClass("multi-single")){
-                        var displacement=self.div.offset();
-                        var defaultOptions=4;
-                        var left=ui.position.left-displacement.left;
-                        var top=ui.position.top-displacement.top;
-                        var entity=new Entity({
-                            pos:{
-                                left:left,
-                                top:top
-                            },
-                            size:{
-                                height:150,
-                                width:350
-                            }
-                        });
-                        self.addEntity(entity);
-                        for(var i=0;i<defaultOptions;i++){
-                            var ent=self.addEntity(new Entity({
+        if(editor.mode==="edition"){
+            self.div.droppable({
+                accept: ".button",
+                drop: function( event, ui ) {
+                    if(editor.currentStep){
+                        if(ui.draggable.hasClass("single")){
+                            var displacement=self.div.offset();
+                            self.addEntity(new Entity({
                                 pos:{
-                                    left:left+(10),
-                                    top:top+(30*i)
-                                },
-                                size:{
-                                    height:30,
-                                    width:300
+                                    left:ui.position.left-displacement.left,
+                                    top:ui.position.top-displacement.top
                                 }
                             }));
-                            //Se agregan las como subentidades a la entidad contenedora
-                            entity.addEntity(ent);
+                        }else if(ui.draggable.hasClass("multi-single")){
+                            var displacement=self.div.offset();
+                            var defaultOptions=4;
+                            var left=ui.position.left-displacement.left;
+                            var top=ui.position.top-displacement.top;
+                            var entity=new Entity({
+                                pos:{
+                                    left:left,
+                                    top:top
+                                },
+                                size:{
+                                    height:150,
+                                    width:350
+                                }
+                            });
+                            self.addEntity(entity);
+                            for(var i=0;i<defaultOptions;i++){
+                                var ent=self.addEntity(new Entity({
+                                    pos:{
+                                        left:left+(10),
+                                        top:top+(30*i)
+                                    },
+                                    size:{
+                                        height:30,
+                                        width:300
+                                    }
+                                }));
+                                //Se agregan las como subentidades a la entidad contenedora
+                                entity.addEntity(ent);
+                            }
                         }
+                    }else{
+                        editor.message("Seleccione un paso en una sección para iniciar la edición.");
                     }
-                }else{
-                    editor.message("Seleccione un paso en una sección para iniciar la edición.");
                 }
-            }
-        });
+            });
+        }
     };
     
     /**

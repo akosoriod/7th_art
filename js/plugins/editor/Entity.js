@@ -86,51 +86,53 @@ var Entity = function(params){
      * Asocia los eventos básicos a la entidad
      */
     function attachEvents(){
-        self.div.draggable({
-            containment: self.container,
-            cursor: "move",
-            opacity: 0.4,
-            scroll: false,
-            zIndex: 10000,
-            stop:function(event,ui){
-                var diffLeft=ui.position.left-ui.originalPosition.left;
-                var diffTop=ui.position.top-ui.originalPosition.top;
-                self.updatePositionByDiff(diffLeft,diffTop);
-                self.saveHistory();
-            }
-        }).resizable({
-            containment: self.container,
-            stop:function(event,ui){
-                var diffHeight=ui.size.height-ui.originalSize.height;
-                var diffWidth=ui.size.width-ui.originalSize.width;
-                self.updateSizeByDiff(diffHeight,diffWidth);
-                self.saveHistory();
-            }
-        }).droppable({
-            accept: ".entity",
-            hoverClass: "entity-hover",
-            greedy: true,
-            tolerance: "fit",
-            drop: function(e,ui){
-                var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
-                if(self.id===self.workspace.maxDroppableStack().id){
-                    self.addEntity(entity);
-                    self.workspace.droppableStack={};
-                }else{
-                    self.removeEntity(entity);
+        if(editor.mode==="edition"){
+            self.div.draggable({
+                containment: self.container,
+                cursor: "move",
+                opacity: 0.4,
+                scroll: false,
+                zIndex: 10000,
+                stop:function(event,ui){
+                    var diffLeft=ui.position.left-ui.originalPosition.left;
+                    var diffTop=ui.position.top-ui.originalPosition.top;
+                    self.updatePositionByDiff(diffLeft,diffTop);
+                    self.saveHistory();
                 }
-                return false;
-            },
-            out: function(e,ui){
-                var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
-                self.removeEntity(entity);
-                delete self.workspace.droppableStack[self.id];
-            },
-            over: function(e,ui){
-                self.workspace.droppableStack[self.id]=self;
-                
-            }
-        });
+            }).resizable({
+                containment: self.container,
+                stop:function(event,ui){
+                    var diffHeight=ui.size.height-ui.originalSize.height;
+                    var diffWidth=ui.size.width-ui.originalSize.width;
+                    self.updateSizeByDiff(diffHeight,diffWidth);
+                    self.saveHistory();
+                }
+            }).droppable({
+                accept: ".entity",
+                hoverClass: "entity-hover",
+                greedy: true,
+                tolerance: "fit",
+                drop: function(e,ui){
+                    var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
+                    if(self.id===self.workspace.maxDroppableStack().id){
+                        self.addEntity(entity);
+                        self.workspace.droppableStack={};
+                    }else{
+                        self.removeEntity(entity);
+                    }
+                    return false;
+                },
+                out: function(e,ui){
+                    var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
+                    self.removeEntity(entity);
+                    delete self.workspace.droppableStack[self.id];
+                },
+                over: function(e,ui){
+                    self.workspace.droppableStack[self.id]=self;
+
+                }
+            });
+        }
         
         
         self.div.find(".deleteEntity").click(function(){
@@ -173,37 +175,9 @@ var Entity = function(params){
             }
             //Carga la entidad del workspace si existe
             loadDiv();
-            
-
             //Muestra el estado definido en stateName
             self.showState(self.getState(stateName));
-
-
-            
         }
-        
-//        self.workspace.append('<div class="draggable entity" id="entity'+self.countEntities+'" data-id="'+self.countEntities+'"><div class="content"><div class="text"><div class="textContent">'+content+'</div></div></div><div class="entityButton config"></div><div class="entityButton deleteEntity">x</div></div>');
-//        var entity=self.workspace.find('#entity'+self.countEntities);
-//        entity.draggable({
-//            containment: "#workspace",
-//            cursor: "move",
-//            opacity: 0.4,
-//            scroll: false
-//        }).resizable({
-////                        containment:"parent"
-//        });
-//        entity.css({
-//            left:left,
-//            top:top
-//        });
-//        entity.find(".deleteEntities").click(function(){
-//            entity.remove();
-//        });
-//        entity.find(".config").click(function(){
-//            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-entity",id);
-//            $("#properties").dialog("open");
-//        });
     };
     
     /**
@@ -419,12 +393,21 @@ var Entity = function(params){
      * Retorna el html de la entidad
      */
     function getHtml(){
-        return '<div class="draggable entity" id="entity'+self.id+'" data-id="'+self.id+'">'+
+        var title="";
+        var grid="";
+        var buttons="";
+        var editing="";
+        if(editor.mode==="edition"){
+            title="Doble click para editar";
+            grid=" grid ";
+            buttons='<div class="entityButton deleteEntity">x</div>';
+            editing="entity_editing";
+        }
+        return '<div class="draggable entity '+editing+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
                 '<div class="box">'+
-                    '<div class="content grid"></div>'+
+                    '<div class="content '+grid+'"></div>'+
                 '</div>'+
-                '<div class="entityButton config"></div>'+
-                '<div class="entityButton deleteEntity">x</div>'+
+                buttons+
             '</div>'
         ;
     };

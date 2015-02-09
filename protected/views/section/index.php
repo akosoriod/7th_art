@@ -2,12 +2,20 @@
 /* @var $this SectionController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $section Section */
+Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
-
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
+Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/ActivitySet.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dropit/dropit.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tabelizer/jquery.tabelizer.min.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/State.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Entity.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Workspace.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
 ?>
 <script>
     $(document).ready(function($) {
@@ -22,6 +30,17 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
         
         var activitySet=new ActivitySet();
         activitySet.init();
+        
+        var appUrl="<?php echo Yii::app()->baseUrl."/"; ?>";
+        window.editor=new Editor({
+            appUrl:appUrl,
+            mode:'solution'
+        });
+        editor.init();
+        
+        var stepId=parseInt($("#activity_set_home").attr("data-step-id"));
+        editor.load(stepId);
+        console.debug(editor);
         
         //Revisa los objectos de la secciñón y los redimensiona
 //        $(".object").each(function(){
@@ -41,7 +60,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
     });
 </script>
 
-<main id="activity_set_home" class="detalle">
+<main id="activity_set_home" class="detalle" data-step-id="<?php echo $step->id; ?>">
     <div class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
     </div>
@@ -112,9 +131,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dr
     <div id="workspace" class="row row4 row_activities">
         <?php
         
-//            foreach ($activity->steps as $step) {
-//                
-//            }
+            foreach ($step->entities as $entity) {
+                print_r($entity);
+                print_r("<br>");
+                print_r("<br>");
+            }
 //        
 //        
 //            $objects=$activity->steps;

@@ -33,10 +33,12 @@ var Editor = function(params,callback){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
-        appUrl:''
+        appUrl:'',
+        mode:'edition'
     };
     self.params = $.extend(def, params);
     self.appUrl=self.params.appUrl;
+    self.mode=self.params.mode;
     self.ajaxUrl=self.appUrl+"index.php/designer/";
     /**
      * Constructor Method 
@@ -79,8 +81,6 @@ var Editor = function(params,callback){
         self.historyIndex=self.historyStack.length-1;
     };
     
-    
-    
     /**
      * Muestra las opciones de edición para una entidad
      * @param {Entity} entity Entidad a editar
@@ -91,64 +91,6 @@ var Editor = function(params,callback){
         self.dialogEditEntity.dialog("option","title","Editando entidad: "+entity.id);
         self.dialogEditEntity.dialog("open");
     };
-    
-    /**************************************************************************/
-    /********************************** METHODS *******************************/
-    /**************************************************************************/
-    
-//    function parseObjects(){
-//        var objects=new Array();
-//        self.workspace.find('.object').each(function(){
-//            objects.push(parseObject($(this)));
-//        });
-//        return objects;
-//    };
-//    
-//    function parseObject(objectElem){
-//        var text=objectElem.find('.text');
-//        var pos=objectElem.position();
-//        
-//        
-//        //Elimina la funcionalidad para agregarla en el usuario
-//        try{
-//            objectElem.find(".editor-radio-object").buttonset( "destroy" );
-//        }catch(e){
-//            
-//        }
-//
-//        
-//        var object={
-//            id:parseInt(objectElem.attr('data-id')),
-//            css:text.attr('style')===undefined?"background: #fff;":text.attr('style'),
-//            left:pos.left,
-//            top:pos.top,
-//            height:text.height(),
-//            width:text.width(),
-//            text:{
-//                content:text.html()
-//            }
-//        };
-//        
-//        
-//        
-//        //Vuelve a agregar la funcionalidad para visualizar en el editor
-//        try{
-//            objectElem.find(".editor-radio-object").buttonset();
-//        }catch(e){
-//            
-//        }
-//        
-//        
-//        return object;
-//    };
-//    
-//    /**
-//     * Clear all data
-//     */
-//    function resetEditor(){
-//        self.workspace.empty();
-//    };
-
 
     /**************************************************************************/
     /***************************** EVENTS METHODS *****************************/
@@ -195,31 +137,6 @@ var Editor = function(params,callback){
             self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
             self.load();
         });
-        
-        //Eventos de los pasos
-//        self.stepsDivs.click(function(){
-//            resetEditor();
-//            self.currentStep={
-//                'stepId':parseInt($(this).attr('data-step-id')),
-//                'stepName':$(this).attr('data-step-name'),
-//                'activityId':parseInt($(this).attr('data-activity-id')),
-//                'activityName':$(this).attr('data-activity-name'),
-//                'versionId':parseInt($(this).attr('data-version-id')),
-//                'versionName':$(this).attr('data-version-name'),
-//                'sectionId':parseInt($(this).attr('data-section-id')),
-//                'sectionName':$(this).attr('data-section-name'),
-//                'activitySetId':$(this).attr('data-activity-set-id'),
-//                'activitySetTitle':$(this).attr('data-activity-set-title')
-//            };
-//            self.editingPathDiv.find("#message").text(
-//                self.currentStep.activitySetTitle+' > '+
-//                self.currentStep.sectionName+' > '+
-//                self.currentStep.versionName+' > '+
-//                self.currentStep.activityName+' > '+
-//                self.currentStep.stepName
-//            );
-//            self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
-//        });
     };
     
     /**
@@ -497,9 +414,12 @@ var Editor = function(params,callback){
     /**
      * Carga las entidades para el paso actual
      */
-    self.load=function(){
+    self.load=function(stepId){
+        if(!stepId){
+            stepId=self.currentStep.stepId;
+        }
         self.workspace.clear();
-        loadEntities(self.currentStep.stepId,function(err,response){
+        loadEntities(stepId,function(err,response){
             if(err){
                 self.message("No se pueden cargar los datos, por favor intente más tarde.");
                 editor.hideLoading();

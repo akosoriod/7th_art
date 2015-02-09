@@ -208,14 +208,14 @@
     width: 1040px;
 }
 .entity{
-    border: solid 1px #C75C5C;
-    border-radius: 5px 5px 0 0;
-    cursor: move;
-    /*height: 160px;*/
     min-height: 10px;
     min-width: 10px;
     position: absolute;
-    /*width: 100px;*/
+}
+.entity_editing{
+    border: solid 1px #C75C5C;
+    border-radius: 5px 5px 0 0;
+    cursor: move;
 }
 .entity .box{
     overflow: auto;
@@ -262,10 +262,6 @@
 #container #area #editor #workspace .entity-hover{
     border: solid 2px red;
 }
-
-
-
-
 
 /* ESTILOS DE LOS DIÁLOGOS */
 #edit_entity #design{
