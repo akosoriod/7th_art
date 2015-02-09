@@ -88,6 +88,12 @@ var Workspace = function(params){
                 if(entity.getZindex()>self.currentZindex){
                     self.currentZindex=entity.getZindex();
                 }
+                //Si está en modo edición, cambia las url
+                if(editor.mode==="solution"){
+                    for(var i in entity.states){
+                        entity.states[i].content=entity.content=util.replace('src="../../','src="'+editor.appUrl,entity.states[i].content);
+                    }
+                }
             }
             self.entities[entity.id]=entity;
         }else{

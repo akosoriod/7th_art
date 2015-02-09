@@ -9,6 +9,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.c
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/Util.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/ActivitySet.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dropit/dropit.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tabelizer/jquery.tabelizer.min.js');
@@ -40,7 +41,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         
         var stepId=parseInt($("#activity_set_home").attr("data-step-id"));
         editor.load(stepId);
-        console.debug(editor);
         
         //Revisa los objectos de la secciñón y los redimensiona
 //        $(".object").each(function(){
@@ -132,7 +132,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <?php
         
             foreach ($step->entities as $entity) {
-                print_r($entity);
+//                print_r($entity);
                 print_r("<br>");
                 print_r("<br>");
             }

@@ -34,7 +34,7 @@ var Editor = function(params,callback){
     //Mix the user parameters with the default parameters
     var def = {
         appUrl:'',
-        mode:'edition'
+        mode:'edition' /*'solution'*/
     };
     self.params = $.extend(def, params);
     self.appUrl=self.params.appUrl;
