@@ -61,8 +61,8 @@ class DesignerController extends Controller {
         foreach ($dataEntities as $dataEntity){
             $entity=new Entity();
             $entity->step_id=$step->id;
-            $entity->optional=boolval($dataEntity->optional);
-            $entity->countable=boolval($dataEntity->countable);
+            $entity->optional=$dataEntity->optional;
+            $entity->countable=$dataEntity->countable;
             $entity->weight=intval($dataEntity->weight);
             if(property_exists($dataEntity,'entityType')){
                 $entityTypeName=$dataEntity->entityType;
@@ -80,7 +80,7 @@ class DesignerController extends Controller {
                 $state->width=intval($dataState->size->width);
                 $state->content=$dataState->content;
                 $state->css=$dataState->css;
-                $state->hidden=boolval($dataState->hidden);
+                $state->hidden=$dataState->hidden;
                 $state->value=$dataState->value;
                 $state->zindex=intval($dataState->zindex);
                 $state->entity_state_type_id=EntityStateType::getByName($dataState->type)->id;
@@ -94,7 +94,7 @@ class DesignerController extends Controller {
                 $state->insert();
             }
         }
-//        
+        
         //Actualiza los valores de parent
         foreach ($dataEntities as $dataEntityForParents){
             if($dataEntityForParents->parent){
@@ -149,7 +149,7 @@ class DesignerController extends Controller {
                     ),
                     'content'=>$state->content,
                     'css'=>$state->css,
-                    'hidden'=>boolval($state->hidden),
+                    'hidden'=>$state->hidden,
                     'value'=>$state->value,
                     'zindex'=>intval($state->zindex),
                     'type'=>$state->entityStateType->name,
@@ -163,8 +163,8 @@ class DesignerController extends Controller {
             $list[]=array(
                 'id'=>intval($entity->id),
                 'parent'=>$parent,
-                'optional'=>boolval($entity->optional),
-                'countable'=>boolval($entity->countable),
+                'optional'=>$entity->optional,
+                'countable'=>$entity->countable,
                 'weight'=>intval($entity->weight),
                 'entityType'=>$entity->entityType->name,
                 'states'=>$states
