@@ -82,10 +82,10 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="toolbar">
                     <div class="button single" id="button-entity" title="Arrastrar una entidad"></div>
                     <!--<div class="button" id="button-entity-list" title="Arrastrar una lista de entidades"></div>-->
-                    <div class="button true_false" id="button-true-false" title="True-False"></div>
-                    <div class="button fill" id="button-fill" title="Llenar"></div>
-                    <div class="button multi-single" id="button-multi-single" title="Opción Múltiple, única respuesta"></div>
-                    <div class="button multi-multi" id="button-multi-multi" title="Opción Múltiple, múltiple respuesta"></div>
+                    <!--<div class="button true_false" id="button-true-false" title="True-False"></div>-->
+                    <!--<div class="button fill" id="button-fill" title="Llenar"></div>-->
+                    <!--<div class="button multi-single" id="button-multi-single" title="Opción Múltiple, única respuesta"></div>-->
+                    <!--<div class="button multi-multi" id="button-multi-multi" title="Opción Múltiple, múltiple respuesta"></div>-->
                     <!--<div class="button redo" id="button-redo" title="Rehacer"></div> TODO: Arreglar el comportamiento de redo-->
                     <div class="button undo" id="button-undo" title="Deshacer"></div>
                     <div class="button" id="save" title="Guardar actividad"></div>
