@@ -67,6 +67,9 @@ var Entity = function(params){
                 pos:{left:options.pos.left,top:options.pos.top}
             })
         };
+        if(editor.mode==='solution'){
+            attachModeSolutionEvents();
+        }
     }();
     
     /**************************************************************************/
@@ -133,19 +136,12 @@ var Entity = function(params){
                 }
             });
         }
-        
-        
         self.div.find(".deleteEntity").click(function(){
             self.workspace.removeEntity(self.id);
         });
         self.div.dblclick(function(){
             editor.editEntity(self);
         });
-//        entity.find(".config").click(function(){
-//            var id=parseInt($(this).parent().attr("data-id"));
-//            $("#properties").attr("data-entity",id);
-//            $("#properties").dialog("open");
-//        });
     };
     
     /**
@@ -383,12 +379,10 @@ var Entity = function(params){
         self.setZindex(zindex);
     };
     
-    
     /**************************************************************************/
     /******************************* HTML METHODS *****************************/
     /**************************************************************************/
-    
-    
+       
     /**
      * Retorna el html de la entidad
      */
@@ -507,5 +501,15 @@ var Entity = function(params){
         var entity=$.extend({},self);
         entity.div=entity.div.clone(true,true);
         return entity;
-    };    
+    };
+    
+    /**************************************************************************/
+    /************************** SOLUTION MODE METHODS *************************/
+    /**************************************************************************/
+    /**
+     * Asigna los eventos a la entidad cuando se está en modo 'solution'
+     */
+    function attachModeSolutionEvents(){
+        
+    };
 };

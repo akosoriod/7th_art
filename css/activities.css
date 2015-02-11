@@ -49,3 +49,8 @@
 #activity_set_home .section_nav .step_id{
     margin-left: 3px;
 }
+
+/* Estilos de el userspace */
+#activity_set_home #check_button{
+    /*margin-top: -20px;*/
+}

@@ -128,56 +128,14 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         </div>
         <div class="step_instruction"><?php echo $step->instruction; ?></div>
     </div>
-    <div id="workspace" class="row row4 row_activities">
-        <?php
-        
-            foreach ($step->entities as $entity) {
-//                print_r($entity);
-                print_r("<br>");
-                print_r("<br>");
-            }
-//        
-//        
-//            $objects=$activity->steps;
-//            foreach ($objects as $object) {
-//                //TODO: Calcular automáticamente
-//                $html=str_replace('src="../../','src="/7th_art/',$object->getHtml());
-//                echo $html;
-//            }
-        ?>
-<!--        <div id="activities" class="col-xs-12 col-sm-12 col-md-12">
-            <div id="set_1" class="set">
-                <div id="activity_1" class="synopsis" data-template="354">
-                    <div class="title">
-                        <h4>Synopsis</h4>
-                    </div>
-                    <div class="content">
-                        <div id="object_2345" class="object" data-type="textarea">
-                            <textarea>Set in the illustrious XVIII Century in France, Perfume, Tom Tykwer's drama-thriller production, based on Patrick Sϋskind's heart-stopping masterpiece, portrays an interesting link between alchemy - misinterpreted as witchcraft - and poverty.
-
-Jean Baptiste Grenouille (Ben Whishaw), a newborn French boy is abandoned by his fish seller mother in a market in Orleans, and later taken to a local orphanage where he is severely mistreated for his strong sense of smell. Twenty years later, forced to work as a slave in a Parisian leather shop, he accidentally kills a plum seller and he then meets Giussepe Baldini (Dustin Hoffman), an old fame-thirsty Italian perfumer who uses Grenouille´s gift to, once again, be recognized as the best perfumer in France. Hence, he teaches Grenouille everything he knows about perfumery and alchemy, with the exception of an old mysterious technique, developed in Grasse called Enfleurage.
-
-During his long journey to Grasse, Grenouille becomes obsessed with the idea of not having his own scent, which differentiates him from the rest of the people. When he arrives in the town, he first manages to learn the Enfleurage technique and then starts killing young women with the purpose of extracting their scents in order to make the best perfume in the world. After twelve murders, Grenouille meets Laura Richis (Laura Hurd), an exceptionally stunning woman who enchants him with her infinite beauty, and falls in love with her unique scent. However, her brave father Antoine Richis (Alan Rickman), one of the most famous and powerful counts of France, tries hard to save his daughter from being murdered by Grenouille.
-
-Love, hatred, despair, madness and death are the main features involved in this amazing story, held in ancient imposing castles, and including stunning landscapes, luxurious costumes and unexpected adventures, that make this film one of the most important spellbinding films of the XXI Century.
-
-Set in the illustrious XVIII Century in France, Perfume, Tom Tykwer's drama-thriller production, based on Patrick Sϋskind's heart-stopping masterpiece, portrays an interesting link between alchemy - misinterpreted as witchcraft - and poverty.
-
-Jean Baptiste Grenouille (Ben Whishaw), a newborn French boy is abandoned by his fish seller mother in a market in Orleans, and later taken to a local orphanage where he is severely mistreated for his strong sense of smell. Twenty years later, forced to work as a slave in a Parisian leather shop, he accidentally kills a plum seller and he then meets Giussepe Baldini (Dustin Hoffman), an old fame-thirsty Italian perfumer who uses Grenouille´s gift to, once again, be recognized as the best perfumer in France. Hence, he teaches Grenouille everything he knows about perfumery and alchemy, with the exception of an old mysterious technique, developed in Grasse called Enfleurage.
-
-During his long journey to Grasse, Grenouille becomes obsessed with the idea of not having his own scent, which differentiates him from the rest of the people. When he arrives in the town, he first manages to learn the Enfleurage technique and then starts killing young women with the purpose of extracting their scents in order to make the best perfume in the world. After twelve murders, Grenouille meets Laura Richis (Laura Hurd), an exceptionally stunning woman who enchants him with her infinite beauty, and falls in love with her unique scent. However, her brave father Antoine Richis (Alan Rickman), one of the most famous and powerful counts of France, tries hard to save his daughter from being murdered by Grenouille.
-
-Love, hatred, despair, madness and death are the main features involved in this amazing story, held in ancient imposing castles, and including stunning landscapes, luxurious costumes and unexpected adventures, that make this film one of the most important spellbinding films of the XXI Century.
-                            </textarea>
-                        </div>
-                        <div id="object_2346" class="object" data-type="image">
-                            <img src="../editor/perfume/css/images/image_321.png" id="image_321" alt="name_of_image"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-    </div>
+    <div id="workspace" class="row row4 row_activities"></div>
+    
+    
+    <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />
+    
+    <!--<input id="check_button" type="button" value="Check">-->
+    
+    
     <div class="row row5">
         <div id="links" class="col-xs-12 col-sm-12 col-md-12">
             <div class="link">
