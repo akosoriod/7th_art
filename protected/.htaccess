@@ -1,1 +1,4 @@
 deny from all
+
+#set max post size
+php_value post_max_size 20M

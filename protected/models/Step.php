@@ -6,13 +6,12 @@
  * The followings are the available columns in table 'step':
  * @property integer $id
  * @property string $instruction
+ * @property string $css
  * @property integer $activity_id
- * @property integer $css_id
  *
  * The followings are the available model relations:
- * @property Exercise[] $exercises
+ * @property Entity[] $entities
  * @property Activity $activity
- * @property Css $css
  */
 class Step extends CActiveRecord
 {
@@ -32,12 +31,12 @@ class Step extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('activity_id, css_id', 'required'),
-			array('activity_id, css_id', 'numerical', 'integerOnly'=>true),
-			array('instruction', 'safe'),
+			array('activity_id', 'required'),
+			array('activity_id', 'numerical', 'integerOnly'=>true),
+			array('instruction, css', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, instruction, activity_id, css_id', 'safe', 'on'=>'search'),
+			array('id, instruction, css, activity_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,9 +48,8 @@ class Step extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'exercises' => array(self::HAS_MANY, 'Exercise', 'step_id'),
+			'entities' => array(self::HAS_MANY, 'Entity', 'step_id'),
 			'activity' => array(self::BELONGS_TO, 'Activity', 'activity_id'),
-			'css' => array(self::BELONGS_TO, 'Css', 'css_id'),
 		);
 	}
 
@@ -63,8 +61,8 @@ class Step extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'instruction' => 'Instruction',
+			'css' => 'Css',
 			'activity_id' => 'Activity',
-			'css_id' => 'Css',
 		);
 	}
 
@@ -88,8 +86,8 @@ class Step extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('instruction',$this->instruction,true);
+		$criteria->compare('css',$this->css,true);
 		$criteria->compare('activity_id',$this->activity_id);
-		$criteria->compare('css_id',$this->css_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

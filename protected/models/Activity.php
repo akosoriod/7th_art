@@ -5,7 +5,8 @@
  *
  * The followings are the available columns in table 'activity':
  * @property integer $id
- * @property string $visible
+ * @property string $name
+ * @property integer $visible
  * @property string $instruction
  * @property integer $version_id
  *
@@ -32,11 +33,12 @@ class Activity extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('version_id', 'required'),
-			array('version_id', 'numerical', 'integerOnly'=>true),
-			array('visible, instruction', 'length', 'max'=>45),
+			array('visible, version_id', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>200),
+			array('instruction', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, visible, instruction, version_id', 'safe', 'on'=>'search'),
+			array('id, name, visible, instruction, version_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +62,7 @@ class Activity extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'name' => 'Name',
 			'visible' => 'Visible',
 			'instruction' => 'Instruction',
 			'version_id' => 'Version',
@@ -85,7 +88,8 @@ class Activity extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('visible',$this->visible,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('visible',$this->visible);
 		$criteria->compare('instruction',$this->instruction,true);
 		$criteria->compare('version_id',$this->version_id);
 
@@ -104,4 +108,12 @@ class Activity extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+                        
+        /**
+         * Retorna el primer paso de una Actividad
+         * @return Version Versión conestado 3 => publicado
+         */
+        public function firstStep(){
+            return $this->steps[0];
+        }
 }

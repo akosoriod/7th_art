@@ -13,7 +13,7 @@
     </div>
     <div class="seal">
         <?php 
-            echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/sealColombia.png","Escudo de la República de Colombia",array(
+            echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/sealColombia.png","Escudo de la Rep&uacute;blica de Colombia",array(
                 'width'=>66,
                 'height'=>66
             )); 
@@ -59,7 +59,12 @@
             <?php if(Yii::app()->user->checkAccess('application')){ ?>
                 <div class="btn-group">
                     <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <a href="#" target="_top">Wall</a>
+                        <?php
+                        print CHtml::link('Wall',
+                            '#',
+                            array('onclick'=>'$("#wall").dialog("open"); return false;')
+                        );
+                        ?>
                     </div>
                 </div>
             <?php } ?>

@@ -85,13 +85,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
             <div class="media">
                 <h4>Parallax</h4>
                 <div class='parallax'>
-                    <div class="parallax-layer" style="width:1238px; height:465px;">
+                    <div class="parallax-layer" style="width:1238px; height:543px;">
                         <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_1.'?'.rand(1,1000000),"Paralax 1",array("id"=>"parallax1")); ?>
                     </div>
-                    <div class="parallax-layer" style="width:1338px; height:465px;">
+                    <div class="parallax-layer" style="width:1338px; height:543px;">
                         <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_2.'?'.rand(1,1000000),"Paralax 2",array("id"=>"parallax2")); ?>
                     </div>
-                    <div class="parallax-layer" style="width:1438px; height:465px;">
+                    <div class="parallax-layer" style="width:1438px; height:543px;">
                         <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$model->paralax_3.'?'.rand(1,1000000),"Paralax 3",array("id"=>"parallax3")); ?>
                     </div>
                 </div>

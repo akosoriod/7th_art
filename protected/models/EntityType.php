@@ -1,22 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "exercise_object".
+ * This is the model class for table "entity_type".
  *
- * The followings are the available columns in table 'exercise_object':
- * @property integer $exercise_id
- * @property integer $object_id
- * @property integer $match
- * @property integer $target_id
+ * The followings are the available columns in table 'entity_type':
+ * @property integer $id
+ * @property string $name
+ * @property string $label
+ *
+ * The followings are the available model relations:
+ * @property Entity[] $entities
  */
-class ExerciseObject extends CActiveRecord
+class EntityType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'exercise_object';
+		return 'entity_type';
 	}
 
 	/**
@@ -27,11 +29,10 @@ class ExerciseObject extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('exercise_id, object_id, target_id', 'required'),
-			array('exercise_id, object_id, match, target_id', 'numerical', 'integerOnly'=>true),
+			array('name, label', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('exercise_id, object_id, match, target_id', 'safe', 'on'=>'search'),
+			array('id, name, label', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +44,7 @@ class ExerciseObject extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'entities' => array(self::HAS_MANY, 'Entity', 'entity_type_id'),
 		);
 	}
 
@@ -52,10 +54,9 @@ class ExerciseObject extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'exercise_id' => 'Exercise',
-			'object_id' => 'Object',
-			'match' => 'Match',
-			'target_id' => 'Target',
+			'id' => 'ID',
+			'name' => 'Name',
+			'label' => 'Label',
 		);
 	}
 
@@ -77,10 +78,9 @@ class ExerciseObject extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('exercise_id',$this->exercise_id);
-		$criteria->compare('object_id',$this->object_id);
-		$criteria->compare('match',$this->match);
-		$criteria->compare('target_id',$this->target_id);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('label',$this->label,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,10 +91,23 @@ class ExerciseObject extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ExerciseObject the static model class
+	 * @return EntityType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Returns the Model by name
+         * @param string $name Name of the model
+         * @return EntityType EntityType object
+         */
+        public static function getByName($name){
+            $object=self::model()->find(
+                'name=:name',
+                array(':name'=>$name)
+            );
+            return $object;
+        }
 }

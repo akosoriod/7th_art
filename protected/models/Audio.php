@@ -12,7 +12,6 @@
  * @property integer $length
  *
  * The followings are the available model relations:
- * @property ActivitySet[] $activitySets
  * @property Comment[] $comments
  */
 class Audio extends CActiveRecord
@@ -51,7 +50,6 @@ class Audio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'activitySets' => array(self::HAS_MANY, 'ActivitySet', 'soundtrack_id'),
 			'comments' => array(self::HAS_MANY, 'Comment', 'audio_id'),
 		);
 	}

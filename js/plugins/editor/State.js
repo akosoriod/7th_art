@@ -1,12 +1,16 @@
 /* 
- * Pseudo-Clase para el manejo del Objetos en 7th @rt
+ * Pseudoclase para manejo de estados de objetos. Un estado de objeto puede ser:
+ * - pasivo
+ * - activo
+ * - resuelto
+ * - correcto
+ * - incorrecto
  * Universidad Nacional de Colombia
  * 7th @rt The Power & Magic of Films to Learn English
  * 7thart_bog@unal.edu.co
- * 2014
- * @param {object} params Object with the class parameters
+ * 2015
  */
-var Objeto = function(params){
+var State = function(params){
     /**************************************************************************/
     /******************************* ATTRIBUTES *******************************/
     /**************************************************************************/
@@ -17,13 +21,36 @@ var Objeto = function(params){
     /**************************************************************************/
     //Mix the user parameters with the default parameters
     var def = {
-        
+        type:'passive',
+        pos:{
+            left:0,
+            top:0
+        },
+        size:{
+            height:160,
+            width:100
+        },
+        content:"",
+        hidden:false,
+        css:"",
+        value:false,
+        valueType:'boolean',
+        zindex:0
     };
-    self.params = $.extend(def, params);
+    var options = $.extend(def, params);
+    self.type=options.type;
+    self.pos=options.pos;
+    self.size=options.size;
+    self.content=options.content;
+    self.hidden=options.content;
+    self.css=options.css;
+    self.value=options.value;
+    self.valueType=options.valueType;
+    self.zindex=options.zindex;
     /**
      * Constructor Method 
      */
-    var Objeto = function() {
+    var State = function() {
         
     }();
     
@@ -31,6 +58,9 @@ var Objeto = function(params){
     /********************************** METHODS *******************************/
     /**************************************************************************/
     
+    /**************************************************************************/
+    /******************************* GUI METHODS ******************************/
+    /**************************************************************************/
     
     /**************************************************************************/
     /****************************** OTHER METHODS *****************************/

@@ -56,5 +56,20 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
                 ?>
             </div>
         </div>
+        <!-- Preguntas Frecuentes -->
+        <div id="faq" class="section">
+            <h3 class="section_title">Preguntas Frecuentes</h3>
+            <div class="buttons">
+                <?php echo CHtml::link("Crear Pregunta/Respuesta", array('/faq/create')); ?>
+            </div>
+            <div>&nbsp;</div>
+            <div class="list">
+                <?php
+                    foreach ($faqs as $faq) {
+                        $this->renderPartial('/faq/_view',array('data'=>$faq));
+                    }
+                ?>
+            </div>
+        </div>
     </div>
 </main>
