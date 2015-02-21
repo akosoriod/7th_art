@@ -3,3 +3,54 @@
     position: relative;
     width: 1040px;
 }
+
+
+
+/* CORRECCIONES CSS */
+#menu-movies ul, #menu-movies li {
+    list-style-type: none !important;
+    list-style-image: none;
+}
+#menu-movies a {
+    color: #fff !important;
+}
+#menu-movies .activity_set_menu {
+    background-color: #50992e;
+    color: #fff !important;
+    float: left;
+    
+}
+#menu-movies .activity_set_menu .title{
+    line-height: 0.9em;
+    font-size: 16px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+#menu-movies .activity_set_menu .title li{
+    border: none;
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+}
+#menu-movies .activity_set_menu .title li a{
+    float: none;
+    margin: 0;
+    padding: 1px 8px;
+}
+
+
+#activity_set_home #workspace, #activity_set_home .section_nav{
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#activity_set_home .section_nav{
+    padding: 0 15px;
+    width: 1040px;
+}
+#activity_set_home .section_nav .step_id{
+    margin-left: 3px;
+}
+
+/* Estilos de el userspace */
+#activity_set_home #check_button{
+    /*margin-top: -20px;*/
+}

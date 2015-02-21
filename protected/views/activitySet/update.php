@@ -19,7 +19,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
                 <?php echo CHtml::link("Volver al inicio", array('admin')); ?>
             </div>
             <div class="data">
-                <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+                <?php $this->renderPartial('_form_update', array('model'=>$model)); ?>
             </div>
         </div>
     </div>

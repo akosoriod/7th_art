@@ -12,7 +12,7 @@ class DesignerController extends Controller {
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array(
                         'index',
-                        'saveObjectsByAjax'
+                        'saveEntitiesByAjax','loadEntitiesByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -39,38 +39,138 @@ class DesignerController extends Controller {
                     ));
                 }
             }
+        }else{
+            $this->redirect((array('site/index')));
         }
-        $this->redirect((array('site/index')));
     }
     
     
     /**
-    * Saves a schedule in database by ajax. Returns true if success
-    * @param JSONAjax $schedule JSON with the schedule by ajax
+    * Guarda un conjunto de entidades en un paso
     */
-    public function actionSaveObjectsByAjax(){
+    public function actionSaveEntitiesByAjax(){
         $success=true;
+        $parentTables=array();  //Tabla para almacenar los id antiguos y nuevos de las entidades
         //Get the client data
-        $dataObjects=$_POST['objects'];
+        $dataEntities=json_decode($_POST['entities']);
         $stepId=intval($_POST['stepId']);
         $step=Step::model()->findByPk($stepId);
-        $prevObjects=Object::getObjectsByStep($step);
-        $objectListId=$step->exercises[0]->objectLists[0]->id;
-        foreach ($prevObjects as $prevObject) {
-            $prevObject->delete();
+        foreach ($step->entities as $prevEntity){
+            $this->deleteEntity($prevEntity);
         }
-        foreach ($dataObjects as $dataObject) {
-            $object=new Object();
-            $object->content=$dataObject['text']['content'];
-            $object->css=$dataObject['css'];
-            $object->left=intval($dataObject['left']);
-            $object->top=intval($dataObject['top']);
-            $object->height=intval($dataObject['height']);
-            $object->width=intval($dataObject['width']);
-            $object->object_list_id=$objectListId;
-            $object->save();
+        foreach ($dataEntities as $dataEntity){
+            $entity=new Entity();
+            $entity->step_id=$step->id;
+            $entity->optional=$dataEntity->optional;
+            $entity->countable=$dataEntity->countable;
+            $entity->weight=intval($dataEntity->weight);
+            if(property_exists($dataEntity,'entityType')){
+                $entityTypeName=$dataEntity->entityType;
+            }else{
+                $entityTypeName="basic";
+            }
+            $entity->entity_type_id=EntityType::getByName($entityTypeName)->id;
+            $entity->insert();
+            $parentTables[$dataEntity->id]=$entity->id;
+            foreach ($dataEntity->states as $dataState) {
+                $state=new EntityState();
+                $state->left=intval($dataState->pos->left);
+                $state->top=intval($dataState->pos->top);
+                $state->height=intval($dataState->size->height);
+                $state->width=intval($dataState->size->width);
+                $state->content=$dataState->content;
+                $state->css=$dataState->css;
+                $state->hidden=$dataState->hidden;
+                $state->value=$dataState->value;
+                $state->zindex=intval($dataState->zindex);
+                $state->entity_state_type_id=EntityStateType::getByName($dataState->type)->id;
+                $state->entity_id=$entity->id;
+                if(property_exists($dataState,'valueType')){
+                    $valueType=ValueType::getByName($dataState->valueType)->id;
+                }else{
+                    $valueType=ValueType::getByName('null')->id;
+                }
+                $state->value_type_id=$valueType;
+                $state->insert();
+            }
+        }
+        
+        //Actualiza los valores de parent
+        foreach ($dataEntities as $dataEntityForParents){
+            if($dataEntityForParents->parent){
+                $childId=$parentTables[$dataEntityForParents->id];
+                $parentId=$parentTables[intval($dataEntityForParents->parent)];
+                $child=Entity::model()->findByPk($childId);
+                $child->parent_id=$parentId;
+                $child->update();
+            }
         }
         //Return the result of save schedule
         echo json_encode(array("success"=>$success));
+    }
+    
+    /**
+     * Elimina una entidad, sus estados y sus subentidades de la base de datos
+     * @param Entoty $entity Entidad a borrar
+     */
+    private function deleteEntity($entity){
+        //Elimina las subentidades
+        foreach ($entity->entities as $subentity) {
+            $this->deleteEntity($subentity);
+        }
+        //Elimina los estados
+        foreach ($entity->entityStates as $state) {
+            $state->delete();
+        }
+        //Elimina la entidad
+        $entity->delete();
+    }
+    
+    /**
+    * Retorna la lista de entidades de un paso
+    * @param JSONAjax $schedule JSON with the schedule by ajax
+    */
+    public function actionLoadEntitiesByAjax(){
+        $list=array();
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $step=Step::model()->findByPk($stepId);
+        foreach ($step->entities as $entity) {
+            $states=array();
+            foreach ($entity->entityStates as $state) {
+                $states[$state->entityStateType->name]=array(
+                    'pos'=>array(
+                        'left'=>intval($state->left),
+                        'top'=>intval($state->top)
+                    ),
+                    'size'=>array(
+                        'height'=>intval($state->height),
+                        'width'=>intval($state->width)
+                    ),
+                    'content'=>$state->content,
+                    'css'=>$state->css,
+                    'hidden'=>$state->hidden,
+                    'value'=>$state->value,
+                    'zindex'=>intval($state->zindex),
+                    'type'=>$state->entityStateType->name,
+                    'valueType'=>$state->valueType->name
+                );
+            }
+            $parent=false;
+            if($entity->parent){
+                $parent=intval($entity->parent->id);
+            }
+            $list[]=array(
+                'id'=>intval($entity->id),
+                'parent'=>$parent,
+                'optional'=>$entity->optional,
+                'countable'=>$entity->countable,
+                'weight'=>intval($entity->weight),
+                'entityType'=>$entity->entityType->name,
+                'states'=>$states
+            );
+        }
+        //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("entities"=>$list));
     }
 }

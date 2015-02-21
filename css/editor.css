@@ -1,3 +1,18 @@
+/* Loading styles */
+#loadingMessage{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 34px;
+    z-index: 2000;
+}
+#loadingMessage #loading{
+    margin-left: auto;
+    margin-right: auto;
+    width: 220px;
+    z-index: 2001;
+}
+
 #header_7th_art{
     background: #323E4E;
     color: #fff;
@@ -16,12 +31,40 @@
     width: 1240px;
 }
 #container #navigation{
-    background: #E09A5E;
+    background: #e0e0d1;
     color: #fff;
     float: left;
     height: 100%;
     width: 200px;
 }
+#container #navigation .activityset_name{
+    background: #E09A5E;
+    color:#4E443C;
+    font-family:Georgia,serif;
+    font-size: 24px;
+    font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+    height: 54px;
+    line-height: 26px;
+    overflow: hidden;
+    text-align: center;
+}
+#container #navigation .activityset_sections{
+    height: 580px;
+    margin: 10px;
+    overflow: auto;
+}
+#container #navigation .activityset_sections .label{
+    color: #000;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: normal;
+    padding-left: 2px;
+}
+#container #navigation .activityset_sections .expander {
+    margin-right: 0;
+}
+
+
 #container #navigation > ul > li{
     text-indent: 15px;
 }
@@ -55,24 +98,59 @@
 #container #area #editor #toolbar{
     background: #E0E0D1;
     height: 54px;
+    position: relative;
     width: 100%;
 }
 #container #area #editor #toolbar #editing_path{
+    color:#4E443C;
     float: right;
-    margin: 5px 5px 0 0;
+    font-family:Georgia,serif;
+    font-size: 18px;
+    font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+    position: absolute;
+    right: 0;
 }
-#container #area #editor .button{
+
+#container #area #editor #toolbar #states_bar{
+    bottom: -28px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+    width: 25px;
+    z-index: 10000;
+}
+#container #area #editor #toolbar #states_bar .state_button{
+    background-image: url('../images/editor/state_off.png');
     cursor: pointer;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    opacity: 0.4;
+    text-align: center;
+    width: 24px;
+}
+#container #area #editor #toolbar #states_bar .state_button:hover{
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+}
+#container #area #editor #toolbar #states_bar .state_selected{
+    background-image: url('../images/editor/state_on.png');
+    color: #eee;
+}
+
+
+#container #area #editor .button{
+    cursor: move;
     float: left;
     height: 48px;
     margin: 2px 5px;
     width: 48px;
     z-index: 10;
 }
-#container #area #editor #button-object{
+#container #area #editor #button-entity{
     background-image: url('../images/editor/object.png');
 }
-.object-helper{
+.entity-helper{
     background-image: url('../images/editor/object.png');
     height: 48px;
     width: 48px;
@@ -92,7 +170,7 @@
 #container #area #editor #button-true-false{
     background-image: url('../images/editor/button1.png');
 }
-.object-true-false-helper{
+.entity-true-false-helper{
     background-image: url('../images/editor/button1.png');
     height: 48px;
     width: 48px;
@@ -100,57 +178,64 @@
 #container #area #editor #button-fill{
     background-image: url('../images/editor/button2.png');
 }
-.object-fill-helper{
+#container #area #editor #button-multi-single{
+    background-image: url('../images/editor/button2.png');
+}
+#container #area #editor #button-multi-multi{
+    background-image: url('../images/editor/button2.png');
+}
+#container #area #editor #button-redo{
+    background-image: url('../images/editor/edit-redo.png');
+}
+#container #area #editor #button-undo{
+    background-image: url('../images/editor/edit-undo.png');
+}
+.entity-fill-helper{
     background-image: url('../images/editor/button2.png');
     height: 48px;
     width: 48px;
 }
 #container #area #editor #workspace{
-    background-image: url('../images/editor/background2.jpg');
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYV2NkIBIwEqmOYVQh3pAiNnh8AAq1AFfmdEIyAAAAAElFTkSuQmCC)repeat;
     bottom: 0;
     box-shadow: 1px 1px 4px 0 #444444 inset;
     height: 600px;
     left: 0;
+    overflow: hidden;
     position: relative;
     right: 0;
     top: 0;
     width: 1040px;
 }
-#container #area #editor #workspace .draggable{
-    border: solid 1px #C75C5C;
-    border-radius: 5px 5px 0 0;
-    cursor: move;
-    height: 160px;
+.entity{
     min-height: 10px;
     min-width: 10px;
     position: absolute;
-    width: 100px;
 }
-#container #area #editor #workspace .draggable .content{
+.entity_editing{
+    border: solid 1px #C75C5C;
+    border-radius: 5px 5px 0 0;
+    cursor: move;
+}
+.entity .box{
+    overflow: auto;
     position: absolute;
     height: 100%;
     width: 100%;
 }
-#container #area #editor #workspace .draggable .image{
-    background: #4F5D73;
-    background-image: url('../images/editor/image.png');
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    height: 64px;
-    width: 64px;
-}
-#container #area #editor #workspace .draggable .text{
-    background: #FFF;
+.entity .content{
     bottom: 0;
     margin-left: auto;
     margin-right: auto;
-    overflow-y: auto;
+    overflow: auto;
     position: absolute;
     top: 5px;
     width: 100%;
 }
-#container #area #editor #workspace .draggable .objectButton{
+.grid{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAHklEQVQYV2NkYGCQBGKCgBGq8DkhlaMK8YYQ0cEDACL8CSQmAiAoAAAAAElFTkSuQmCC)repeat rgba(255,255,255,1);
+}
+#container #area #editor #workspace .draggable .entityButton{
     background: #C75C5C;
     background-position:center;
     background-repeat:no-repeat;
@@ -172,3 +257,54 @@
     background-image: url('../images/editor/properties.png');
     right: 22px;
 }
+
+
+#container #area #editor #workspace .entity-hover{
+    border: solid 2px red;
+}
+
+/* ESTILOS DE LOS DIÁLOGOS */
+#edit_entity #design{
+    padding: 0;
+}
+#edit_entity #design .navigator{
+    float: left;
+    height: 100%;
+    width: 165px;
+}
+#edit_entity #design .navigator .state_buttons{
+    margin-top: 20px;
+}
+#edit_entity #design .navigator .state_button{
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    text-indent: 10px;
+}
+#edit_entity #design .navigator .state_button:hover{
+    box-shadow: 1px 1px 3px 0 #555;
+}
+#edit_entity #design .navigator .selected{
+    box-shadow: 1px 1px 3px 0 #555 inset;
+}
+
+#edit_entity #design .navigator .action_buttons{
+    height: 280px;
+}
+#edit_entity #design .navigator .action_buttons .copy_passive{
+    cursor: pointer;
+    margin-top: 221px;
+    text-indent: 10px;
+    text-align: center;
+    white-space: normal !important; 
+}
+#edit_entity #design .state_container{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYV2NkIBIwEqmOYVQh3pAiNnh8AAq1AFfmdEIyAAAAAElFTkSuQmCC)repeat;
+    box-shadow: 1px 1px 4px 0 #444444 inset;
+    float: left;
+    height: 100%;
+    overflow: auto;
+    width: 765px;
+}
+
+

@@ -48,7 +48,9 @@
 	<?php /* echo CHtml::encode($data->getAttributeLabel('operator_id')); ?>:</b>
 	<?php echo CHtml::encode($data->operator->name." ".$data->operator->lastname); */ ?>
         
-	<?php echo CHtml::link("Editar", array('designer/index','activitySet'=>$data->name)); ?>
+	<?php echo CHtml::link("Editar Datos Generales", array('activitySet/update','id'=>$data->id)); ?>
+	<br />
+	<?php echo CHtml::link("Editar Secciones", array('designer/index','activitySet'=>$data->name)); ?>
 	<!-- <?php echo CHtml::link("Editar Set de Actividades", array('edit')); ?> -->
 	<br />
 

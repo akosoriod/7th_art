@@ -37,7 +37,8 @@ class Comment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('comment, date, user_id, category_id', 'required'),
+			array('comment, date, user_id, category_id', 'required',
+					'message'=>'Por favor escribe un {attribute}.'),
 			array('user_id, category_id, parent_id, audio_id', 'numerical', 'integerOnly'=>true),
 			array('comment', 'length', 'max'=>140),
 			// The following rule is used by search().
@@ -69,10 +70,10 @@ class Comment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'comment' => 'Comment',
-			'date' => 'Date',
-			'user_id' => 'User',
-			'category_id' => 'Category',
+			'comment' => 'Comentario',
+			'date' => 'Fecha',
+			'user_id' => 'Usuario',
+			'category_id' => 'Categor&iacute;a',
 			'parent_id' => 'Parent',
 			'audio_id' => 'Audio',
 		);

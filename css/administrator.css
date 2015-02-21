@@ -90,7 +90,7 @@ body,.admin_page{
     text-indent: 10px;
 }
 #admin_view_page #container #multimedia{
-    height: 750px;
+    height: 937px;
 }
 #admin_view_page #container .section .media{
     float: left;
@@ -117,7 +117,7 @@ body,.admin_page{
     width: 200px;
 }
 #admin_view_page #container .section .parallax{
-    height: 465px;
+    height: 543px;
     overflow:hidden;
     position:relative;
     width: 1038px;

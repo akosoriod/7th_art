@@ -112,4 +112,12 @@ class Version extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+                
+        /**
+         * Retorna la primera actividad de una versión
+         * @return Version Versión conestado 3 => publicado
+         */
+        public function firstActivity(){
+            return $this->activities[0];
+        }
 }
