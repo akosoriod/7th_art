@@ -53,7 +53,8 @@ class RbacCommand extends CConsoleCommand {
         $auth->assign('administrator',1);
         $auth->assign('operator',2);
         $auth->assign('operator',3);
-        $auth->assign('user',4);        
+        $auth->assign('operator',4);
+        $auth->assign('operator',5);
 
         //provide a message indicating success
         echo "Authorization hierarchy successfully generated.\n";
