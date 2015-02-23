@@ -181,4 +181,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
             </div>
         </div>
     </div>
+    
+    <!--Div para almacenar temporalmente los contenidos de los estados e identificar los elementos-->
+    <div id="elementsIdentificator"></div>
 </main>

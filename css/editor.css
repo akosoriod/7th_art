@@ -308,3 +308,7 @@
 }
 
 
+
+#elementsIdentificator, #status_solved{
+    display: none;
+}

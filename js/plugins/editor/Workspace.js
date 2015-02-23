@@ -284,6 +284,9 @@ var Workspace = function(params){
      *                        debe tener el id de la entidad objetivo
      */
     self.updateEntityAfterEditing=function(entity){
+        
+        console.debug(entity);
+        
         self.entities[entity.id].updateAfterEditing(entity);
         self.entities[entity.id].draw();
         if(self.logHistory){self.saveHistory();}

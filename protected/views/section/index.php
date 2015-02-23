@@ -132,6 +132,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     
     
     <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />
+    <div id="status_solved"></div>
     
     <!--<input id="check_button" type="button" value="Check">-->
     

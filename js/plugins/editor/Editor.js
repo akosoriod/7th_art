@@ -306,7 +306,8 @@ var Editor = function(params,callback){
                     $(this).dialog("close");
                 },
                 Guardar:function(){
-                    state.content=textEditor.val();
+                    var content=identifyElementsOfContent(self.editingEntity,textEditor.val());
+                    state.content=content;
                     self.editingEntity.draw(stateName);
                     self.dialogEditEntity.find("."+stateName).click();
                     $(this).dialog("close");
@@ -337,6 +338,8 @@ var Editor = function(params,callback){
                     menubar : false,
                     oninit:function(){
                         tinyMCE.activeEditor.setContent(state.content);
+                        //Guarda el estado en el atributo data-val de los elementos en el editor
+                        attachEventsDataValueAttribute();
                     }
                 });
             },
@@ -347,85 +350,7 @@ var Editor = function(params,callback){
             }
         });
     };
-    /**
-     * Eventos para el editor en modo solución: espacio de usuarios
-     */
-    function attachEventsSolutionMode(){
-        
-        
-        
-        self.divSolution.find('#check_button').click(function(){
-//            var stateButton=$(this);
-//            stateButtons.removeClass("state_selected");
-//            stateButton.addClass("state_selected");
-
-            for(var i in self.workspace.entities){
-                var entity=self.workspace.entities[i];
-                
-                var passive=entity.getState('passive');
-                var active=entity.getState('active');
-                var solved=entity.getState('solved');
-                
-                console.debug(entity.div.find('.content'));
-                
-                
-                $(entity.states.active.content).find('*').each(function(){
-                    var entitySubelement=$(this);
-                    console.warn(entitySubelement);
-        //            htmlContent.find("*").each(function(){
-        //                console.debug($(this));
-        //            });
-
-                });
-                
-//                if(active.content===solved.content){
-//                    self.workspace.entities[i].draw('right');
-//                }else{
-//                    self.workspace.entities[i].draw('wrong');
-//                }
-            }
-        });
-        
-    };
-    /**
-     * Agrega los eventos a las entidades en solution mode
-     */
-    function attachEventsSolutionModeEntities(){
-        self.workspace.div.find('.entity').keyup(function() {
-            updateSolvedState($(this));
-        }).click(function(){
-            updateSolvedState($(this));
-        });
-    };
     
-    /**
-     * Actualiza el estado solved con la información del userspace
-     * @param {element} entityElement Elemento del DOM de la entidad
-     */
-    function updateSolvedState(entityElement){
-        var entity=self.workspace.getEntity(parseInt(entityElement.attr('data-id')));
-        
-//        console.warn("Activo de la entidad");
-//        console.debug(escapeHtmlEntities(entity.states.active.content));
-        
-        var htmlContent=entityElement.find('.content').clone();
-//        console.warn($(entity.states.active.content));
-        
-        $(entity.states.active.content).find('*').each(function(){
-            var entitySubelement=$(this);
-            console.warn(entitySubelement);
-//            htmlContent.find("*").each(function(){
-//                console.debug($(this));
-//            });
-            
-        });
-        
-//        console.warn("Contenido del html");
-//        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
-        
-        
-
-    };
     
     /**
      * Dibuja un estado de la entidad en el editor de estados
@@ -445,6 +370,201 @@ var Editor = function(params,callback){
         self.editingEntity.div.dblclick(function(){
             attachEventsEditingEntity(stateName);
         });
+    };
+    
+    
+    /**
+     * Agrega el estado de los elementos del editor tinymce a partir de su estado
+     * en el editor
+     */
+    function attachEventsDataValueAttribute(){
+        var iContent=$('#text_content_ifr').contents().find("#tinymce");
+        
+        //Guarda el estado de los input
+        iContent.find("input:text").keyup(function(){
+            $(this).attr("data-val",$(this).val());
+        });
+
+
+    };
+    
+    /**
+     * Inserta identificadores en los elementos calificables en un html luego de
+     * la edición de un estado
+     * @param {Entity} entity Entidad a la que pertenece el estado
+     * @param {string} stateContent Contenido luego de editar el estado
+     * @returns {string} Texto del contenido con los elementos calificables identificados
+     */
+    function identifyElementsOfContent(entity,stateContent){
+        var text="";
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        var container=$('#elementsIdentificator');
+        container.append('<div id="entityTemporalContent">'+stateContent+'</div>');
+        var contentElements=container.find('#entityTemporalContent');
+        
+        
+        
+        //Se procesan los elementos calificables del contenido
+        contentElements.find('input:text').each(function(){
+            $(this).attr("value",$(this).attr("data-val"));
+            if($.trim($(this).attr("id"))===""){
+                $(this).attr("id","entityElement_"+guid());
+            }
+            $(this).addClass("entityElement inputText");
+        });
+        
+        
+        
+        //TODO: Cargar este valor de la entidad
+        var importanceEntity=10;
+        //Divide la importancia entre todos los elementos
+        contentElements.find('.entityElement').each(function(){
+            $(this).attr("data-entity-id",entity.id);
+            $(this).attr("data-entity-importance",importanceEntity);
+            $(this).attr("data-element-importance",1/contentElements.find('.entityElement').size());
+        });
+        
+        text=contentElements.html();
+        container.empty();
+        return text;
+    };
+    
+    /**
+     * Eventos para el editor en modo solución: espacio de usuarios
+     */
+    function attachEventsSolutionMode(){
+        var solutionDiv=self.divSolution.find("#status_solved");
+        var userResponse=self.workspace.div;
+        
+        self.divSolution.find('#check_button').click(function(){
+//            var stateButton=$(this);
+//            stateButtons.removeClass("state_selected");
+//            stateButton.addClass("state_selected");
+
+            for(var i in self.workspace.entities){
+                var entity=self.workspace.entities[i];
+                
+                var right=entity.getState('right');
+                
+//                console.debug(entity.div.find('.content'));
+
+                //Pone el estado resuelto en el DOM
+                solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution">'+right.content+'</div>');
+                //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo
+                var solution=solutionDiv.find('#entitySolution'+entity.id);
+                
+//                console.debug(solution);
+                
+                solution.find('.entityElement').each(function(){
+                    console.warn("CORRECTO");
+                    console.debug($(this));
+                    
+                    var response=userResponse.find('#'+$(this).attr('id'));
+                    console.warn("RESPONDIDO POR USUARIO");
+                    console.debug(response);
+                    
+                    
+                    
+                    //Revisa los input
+                    if($(this).is('input:text') ) {
+                        if($(this).attr("data-val")===$.trim(response.val())){
+                            alert("Correcto");
+                            self.workspace.showState("right");
+                        }
+                    }
+                    
+                    
+                    
+                });
+                
+                
+//                console.warn($(entity.states.active.content).find("*"));
+                
+                //Procesa los diferentes tipos de elementos
+//                $(entity.states.active.content).find('.entityElement').each(function(){
+//                    var entitySubelement=$(this);
+////                    console.warn(entitySubelement);
+//        //            htmlContent.find("*").each(function(){
+//        //                console.debug($(this));
+//        //            });
+//
+//                });
+//                
+                
+                
+//                $(entity.states.active.content).find('*').each(function(){
+//                    var entitySubelement=$(this);
+//                    console.warn(entitySubelement);
+//        //            htmlContent.find("*").each(function(){
+//        //                console.debug($(this));
+//        //            });
+//
+//                });
+                
+//                if(active.content===solved.content){
+//                    self.workspace.entities[i].draw('right');
+//                }else{
+//                    self.workspace.entities[i].draw('wrong');
+//                }
+
+
+
+                
+            }
+            
+            
+            
+            //TODO: DESCOMENTARIAR LA SIGUIENTE LÍNEA
+            //solutionDiv.empty();
+        });
+        
+    };
+    /**
+     * Agrega los eventos a las entidades en solution mode
+     */
+    function attachEventsSolutionModeEntities(){
+        self.workspace.div.find('.entity').keyup(function() {
+            updateSolvedState($(this));
+        }).click(function(){
+            updateSolvedState($(this));
+        });
+    };
+    
+    /**
+     * Actualiza el estado solved con la información del userspace
+     * @param {element} entityElement Elemento del DOM de la entidad
+     */
+    function updateSolvedState(entityElement){
+//        var entity=self.workspace.getEntity(parseInt(entityElement.attr('data-id')));
+//        
+////        console.warn("Activo de la entidad");
+////        console.debug(escapeHtmlEntities(entity.states.active.content));
+//        
+//        var htmlContent=entityElement.find('.content').clone();
+////        console.warn($(entity.states.active.content));
+//        
+//        $(entity.states.active.content).find('*').each(function(){
+//            var entitySubelement=$(this);
+////            console.warn(entitySubelement);
+////            htmlContent.find("*").each(function(){
+////                console.debug($(this));
+////            });
+//            
+//        });
+//        
+//        console.warn("Contenido del html");
+//        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
+        
+        
+
     };
     
     /**************************************************************************/
@@ -618,5 +738,16 @@ var Editor = function(params,callback){
                 '</div>'+
             '</div>';
         return html;
+    };
+    
+    /**
+     * Retorna un ID aleatorio para los elementos
+     * @returns {String} Id aleatorio
+     */
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+        return s4() + s4() + '_' + s4() + '_' + s4() + '_' +s4() + '_' + s4() + s4() + s4();
     }
 };
