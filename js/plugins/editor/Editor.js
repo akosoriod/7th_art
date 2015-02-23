@@ -372,6 +372,9 @@ var Editor = function(params,callback){
         });
     };
     
+    /**************************************************************************/
+    /*************************** QUALIFICATION METHODS ************************/
+    /**************************************************************************/
     
     /**
      * Agrega el estado de los elementos del editor tinymce a partir de su estado
@@ -484,40 +487,6 @@ var Editor = function(params,callback){
                     
                     
                 });
-                
-                
-//                console.warn($(entity.states.active.content).find("*"));
-                
-                //Procesa los diferentes tipos de elementos
-//                $(entity.states.active.content).find('.entityElement').each(function(){
-//                    var entitySubelement=$(this);
-////                    console.warn(entitySubelement);
-//        //            htmlContent.find("*").each(function(){
-//        //                console.debug($(this));
-//        //            });
-//
-//                });
-//                
-                
-                
-//                $(entity.states.active.content).find('*').each(function(){
-//                    var entitySubelement=$(this);
-//                    console.warn(entitySubelement);
-//        //            htmlContent.find("*").each(function(){
-//        //                console.debug($(this));
-//        //            });
-//
-//                });
-                
-//                if(active.content===solved.content){
-//                    self.workspace.entities[i].draw('right');
-//                }else{
-//                    self.workspace.entities[i].draw('wrong');
-//                }
-
-
-
-                
             }
             
             
@@ -527,22 +496,23 @@ var Editor = function(params,callback){
         });
         
     };
+    
     /**
      * Agrega los eventos a las entidades en solution mode
      */
     function attachEventsSolutionModeEntities(){
-        self.workspace.div.find('.entity').keyup(function() {
-            updateSolvedState($(this));
-        }).click(function(){
-            updateSolvedState($(this));
-        });
+//        self.workspace.div.find('.entity').keyup(function() {
+//            updateSolvedState($(this));
+//        }).click(function(){
+//            updateSolvedState($(this));
+//        });
     };
     
     /**
      * Actualiza el estado solved con la información del userspace
      * @param {element} entityElement Elemento del DOM de la entidad
      */
-    function updateSolvedState(entityElement){
+//    function updateSolvedState(entityElement){
 //        var entity=self.workspace.getEntity(parseInt(entityElement.attr('data-id')));
 //        
 ////        console.warn("Activo de la entidad");
@@ -562,10 +532,7 @@ var Editor = function(params,callback){
 //        
 //        console.warn("Contenido del html");
 //        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
-        
-        
-
-    };
+//    };
     
     /**************************************************************************/
     /***************************** MESSAGING METHODS **************************/
