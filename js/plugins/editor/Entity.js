@@ -173,6 +173,13 @@ var Entity = function(params){
             loadDiv();
             //Muestra el estado definido en stateName
             self.showState(self.getState(stateName));
+            
+            //Si está en modo respuesta, asigna eventos para controlar la calificación
+            if(editor.mode==="solution"){
+//                window.setTimeout(function(){
+                    self.workspace.attachEventsSolutionMode();
+//                }, 500);
+            }
         }
     };
     

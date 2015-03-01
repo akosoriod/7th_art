@@ -306,10 +306,14 @@ var Editor = function(params,callback){
                     $(this).dialog("close");
                 },
                 Guardar:function(){
-                    var content=identifyElementsOfContent(self.editingEntity,textEditor.val());
+                    var content=identifyElementsOfContent(textEditor.val());
                     state.content=content;
                     self.editingEntity.draw(stateName);
                     self.dialogEditEntity.find("."+stateName).click();
+                    //Espera unos segundos para volver a hacer click, no funciona inmediatamente
+                    window.setTimeout(function(){
+                        self.dialogEditEntity.find("."+stateName).click();
+                    }, 500);
                     $(this).dialog("close");
                 }
             },
@@ -339,7 +343,8 @@ var Editor = function(params,callback){
                     oninit:function(){
                         tinyMCE.activeEditor.setContent(state.content);
                         //Guarda el estado en el atributo data-val de los elementos en el editor
-                        attachEventsDataValueAttribute();
+                        var iContent=$('#text_content_ifr').contents().find("#tinymce");
+                        attachEventsDataValueAttribute(iContent);
                     }
                 });
             },
@@ -367,6 +372,8 @@ var Editor = function(params,callback){
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
         entity.div.css("position","relative");
+        //Elimina el z-index para poder editar
+        entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
             attachEventsEditingEntity(stateName);
         });
@@ -379,16 +386,22 @@ var Editor = function(params,callback){
     /**
      * Agrega el estado de los elementos del editor tinymce a partir de su estado
      * en el editor
+     * @param {element} container Contenedor al que se agregan los eventos
      */
-    function attachEventsDataValueAttribute(){
-        var iContent=$('#text_content_ifr').contents().find("#tinymce");
-        
+    function attachEventsDataValueAttribute(container){
         //Guarda el estado de los input
-        iContent.find("input:text").keyup(function(){
+        container.find("input:text").keyup(function(){
             $(this).attr("data-val",$(this).val());
         });
-        
-
+        container.find('input:radio').change(function(){
+            var radios=container.find('input:radio[name="'+$(this).attr('name')+'"]');
+            radios.each(function(){
+                $(this).attr("data-val",false);
+                $(this).removeAttr("checked");
+            });
+            $(this).attr("data-val",true);
+            $(this).attr("checked","checked");
+        });
 
     };
     
@@ -399,11 +412,11 @@ var Editor = function(params,callback){
      * @param {string} stateContent Contenido luego de editar el estado
      * @returns {string} Texto del contenido con los elementos calificables identificados
      */
-    function identifyElementsOfContent(entity,stateContent){
+    function identifyElementsOfContent(stateContent){
         var text="";
         
         
-        
+        console.debug(stateContent);
         
         
         
@@ -416,6 +429,7 @@ var Editor = function(params,callback){
         
         
         
+        
         //Se procesan los elementos calificables del contenido
         contentElements.find('input:text').each(function(){
             $(this).attr("value",$(this).attr("data-val"));
@@ -424,11 +438,18 @@ var Editor = function(params,callback){
             }
             $(this).addClass("entityElement inputText");
         });
+        
+        
+        
+        
         contentElements.find("input:radio").each(function(){
-            if($(this).is(":checked")){
-                $(this).attr("data-val","on");
+            
+            if($(this).attr("data-val")==="true"||$(this).attr("checked")==="checked"){
+                $(this).attr("checked","checked");
+                $(this).attr("data-val","true");
             }else{
-                $(this).attr("data-val","off");
+                $(this).removeAttr("checked");
+                $(this).attr("data-val","false");
             }
             if($.trim($(this).attr("data-element-id"))===""){
                 $(this).attr("data-element-id","entityElement_"+guid());
@@ -448,6 +469,9 @@ var Editor = function(params,callback){
         });
         
         text=contentElements.html();
+        
+        
+        console.debug(text);
         container.empty();
         return text;
     };
@@ -458,13 +482,18 @@ var Editor = function(params,callback){
     function attachEventsSolutionMode(){
         var solutionDiv=self.divSolution.find("#status_solved");
         var userResponse=self.workspace.div;
-        var correct=false;
+        
+        
+        
+        
+        
         self.divSolution.find('#check_button').click(function(){
 //            var stateButton=$(this);
 //            stateButtons.removeClass("state_selected");
 //            stateButton.addClass("state_selected");
 
             for(var i in self.workspace.entities){
+                var correct=false;
                 var entity=self.workspace.entities[i];
                 
                 var right=entity.getState('right');
@@ -480,19 +509,33 @@ var Editor = function(params,callback){
                 
                 solutionEntity.find('.entityElement').each(function(){
                     var solutionElement=$(this);
-                    var answerElement=userResponse.find('[data-element-id="'+$(this).attr('data-element-id')+'"]');
+                    
+                    
+                    
+                    var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
+                    
+//                    console.debug(solutionElement);
                     
 //                    correct=correct&&qualifyElements();
                     correct=qualifyElements(solutionElement,answerElement);
+                    
                 });
+                
+                
+                
+                if(correct){
+                    entity.draw("right");
+                }else{
+                    entity.draw("wrong");
+                }
             }
             
             
-            if(correct){
-                self.workspace.showState("right");
-            }else{
-                self.workspace.showState("wrong");
-            }
+//            if(correct){
+//                self.workspace.showState("right");
+//            }else{
+//                self.workspace.showState("wrong");
+//            }
             
             
             
@@ -513,30 +556,31 @@ var Editor = function(params,callback){
     function qualifyElements(solution,answer){
         var correct=false;
         
-        console.warn("CORRECTO");
-        console.debug(solution);
-        console.warn("RESPONDIDO POR USUARIO");
-        console.debug(answer);
+//        console.warn("OBJETOS");
+//        console.debug(solution);
+//        console.debug(answer);
+        
         
         //Revisa los input:text
-        if(solution.is('input:text') ) {
+        if(solution.is('input:text')){
             if(solution.attr("data-val")===$.trim(answer.val())){
                 correct=true;
             }
         }
         //Revisa los input:radio
-        if(solution.is('input:radio') ) {
+        if(solution.is('input:radio')){
             
-            console.warn("CORRECTO is check");
-            console.debug(solution.attr("data-val"));
-            console.warn("RESPONDIDO POR USUARIO is check");
-            console.debug(answer.val());
             
-            if(solution.attr("data-val")===answer.val()){
+//            console.debug("CORRECTO");
+//            console.debug(solution.attr("data-val"));
+//            console.debug("RESPONDIDO POR USUARIO");
+//            console.debug(answer.attr("data-val"));
+
+            if(solution.attr("data-val")===answer.attr("data-val")){
                 correct=true;
             }
         }
-        
+//        console.debug("******************");
         
         return correct;
     };

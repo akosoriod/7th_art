@@ -199,29 +199,43 @@ var Workspace = function(params){
         }
         //Si está en modo respuesta, asigna eventos para controlar la calificación
         if(editor.mode==="solution"){
-            attachEventsSolutionMode();
+            window.setTimeout(function(){
+                self.attachEventsSolutionMode();
+            }, 500);
         }
     };
     /**
      * Asigna los eventos a los elementos insertados en modo solución para
      * hacer la calificación
      */
-    function attachEventsSolutionMode(){
+    self.attachEventsSolutionMode=function(){
+        
         console.debug("sol");
         
         //Guarda el estado de los input:radio
-        self.div.find("input:radio").each(function(){
-            $(this).change(function(){
-                console.debug($(this));
-                $(this).attr("data-val",$(this).val());
+        self.div.find("input:radio").change(function(){
+            var radios=self.div.find('input:radio[name="'+$(this).attr('name')+'"]');
+            radios.each(function(){
+                $(this).attr("data-val",false);
+                $(this).removeAttr("checked");
             });
-//            $(this).click(function(){
-//                console.debug($(this));
+            $(this).attr("data-val",true);
+            $(this).attr("checked","checked");
+            
+            
+            
+            
+//            $(this).change(function(){
+////                console.debug($(this));
 //                $(this).attr("data-val",$(this).val());
 //            });
-//            $(this).focusout(function(){
-//                $(this).attr("data-val",$(this).val());
-//            });
+////            $(this).click(function(){
+////                console.debug($(this));
+////                $(this).attr("data-val",$(this).val());
+////            });
+////            $(this).focusout(function(){
+////                $(this).attr("data-val",$(this).val());
+////            });
         });
 //        self.div.find("input:radio").blur(function(){
 //            $(this).attr("data-val",$(this).val());
@@ -355,7 +369,7 @@ var Workspace = function(params){
         }
         //Si está en modo respuesta, asigna eventos para controlar la calificación
         if(editor.mode==="solution"){
-            attachEventsSolutionMode();
+            self.attachEventsSolutionMode();
         }
     };
     
