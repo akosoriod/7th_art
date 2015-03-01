@@ -276,10 +276,12 @@
     margin-top: 20px;
 }
 #edit_entity #design .navigator .state_button{
+    background: #fff;
+    border: none;
     cursor: pointer;
     height: 30px;
     line-height: 30px;
-    text-indent: 10px;
+    width: 162px;
 }
 #edit_entity #design .navigator .state_button:hover{
     box-shadow: 1px 1px 3px 0 #555;
