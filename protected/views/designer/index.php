@@ -133,11 +133,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="design">
                     <div class="navigator">
                         <div class="state_buttons">
-                            <div class="state_button passive selected" data-state="passive" title="Estado inicial de la entidad, como se mostrará antes de iniciar el ejercicio">Pasivo (por defecto)</div>
-                            <div class="state_button active" data-state="active" title="Como se verá cuando el estudiante esté modificando la entidad">Activo</div>
-                            <div class="state_button solved" data-state="solved" title="Como se verá después de que el estudiante haya modificado la entidad">Resuelto</div>
-                            <div class="state_button right" data-state="right" title="Como se verá si al verificar la respuesta es correcta">Correcto</div>
-                            <div class="state_button wrong" data-state="wrong" title="Como se verá si al verificar la respuesta es incorrecta">Incorrecto</div>
+                            <button class="state_button passive selected" data-state="passive" title="Estado inicial de la entidad, como se mostrará antes de iniciar el ejercicio">Pasivo (por defecto)</button>
+                            <button class="state_button active" data-state="active" title="Como se verá cuando el estudiante esté modificando la entidad">Activo</button>
+                            <button class="state_button solved" data-state="solved" title="Como se verá después de que el estudiante haya modificado la entidad">Resuelto</button>
+                            <button class="state_button right" data-state="right" title="Como se verá si al verificar la respuesta es correcta">Correcto</button>
+                            <button class="state_button wrong" data-state="wrong" title="Como se verá si al verificar la respuesta es incorrecta">Incorrecto</button>
                         </div>
                         <div class="action_buttons">
                             <div class="action_button copy_passive" title="Copiar el contenido del estado pasivo a los demás estados">Replicar contenido del estado pasivo</div>
