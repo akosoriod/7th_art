@@ -147,7 +147,7 @@
     width: 48px;
     z-index: 10;
 }
-#container #area #editor #button-entity{
+#container #area #editor .button-basic{
     background-image: url('../images/editor/object.png');
 }
 .entity-helper{
@@ -169,6 +169,9 @@
 }
 #container #area #editor #button-true-false{
     background-image: url('../images/editor/button1.png');
+}
+#container #area #editor .button-dragdrop{
+    background-image: url('../images/editor/button3.png');
 }
 .entity-true-false-helper{
     background-image: url('../images/editor/button1.png');
@@ -216,6 +219,9 @@
     border: solid 1px #C75C5C;
     border-radius: 5px 5px 0 0;
     cursor: move;
+}
+.entity_editing.dragdrop{
+    border: solid 1px #377777;
 }
 .entity .box{
     overflow: auto;

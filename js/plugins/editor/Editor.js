@@ -13,7 +13,7 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
-    self.currentStep=false;           //Paso que se está editando actualmente
+    self.currentStep=false;         //Paso que se está editando actualmente
     
     self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
     self.historyMax=30;             //Cantidad de estados del workspace que almacena
@@ -25,7 +25,9 @@ var Editor = function(params,callback){
     self.numberLoadings=0;          //Cuenta el número de loadings para mostrar el gif
     self.saving=false;              //Indica si está guardando, para no repetir el proceso
     self.loading=false;             //Indica si está cargando, para no repetir el proceso
-    self.autosaveFrequency=0;      //Cada cuantos segundos se autoguarda
+    self.autosaveFrequency=0;       //Cada cuantos segundos se autoguarda
+    
+    self.currentState='passive';    //Estado actual, seleccionado por los botones de estado
     
     
     /**************************************************************************/
@@ -145,7 +147,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarEntities(){
-        self.toolbar.find("#button-entity").draggable({
+        self.toolbar.find(".button-basic,.button-dragdrop").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
@@ -157,36 +159,36 @@ var Editor = function(params,callback){
             zIndex: 10000
         });
         //Opción múltiple
-        self.toolbar.find("#button-multi-single").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-        self.toolbar.find("#button-multi-multi").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-        self.toolbar.find("#button-true-false").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
+//        self.toolbar.find("#button-multi-single").draggable({
+//            appendTo: "body",
+//            containment: "#workspace",
+//            cursor: "move",
+//            helper: function(){
+//                return $( "<div class='entity-fill-helper'></div>" );
+//            },
+//            opacity: 0.8,
+//            scroll: false
+//        });
+//        self.toolbar.find("#button-multi-multi").draggable({
+//            appendTo: "body",
+//            containment: "#workspace",
+//            cursor: "move",
+//            helper: function(){
+//                return $( "<div class='entity-fill-helper'></div>" );
+//            },
+//            opacity: 0.8,
+//            scroll: false
+//        });
+//        self.toolbar.find("#button-true-false").draggable({
+//            appendTo: "body",
+//            containment: "#workspace",
+//            cursor: "move",
+//            helper: function(){
+//                return $( "<div class='entity-fill-helper'></div>" );
+//            },
+//            opacity: 0.8,
+//            scroll: false
+//        });
     };
     
     /**
@@ -212,7 +214,8 @@ var Editor = function(params,callback){
             var stateButton=$(this);
             stateButtons.removeClass("state_selected");
             stateButton.addClass("state_selected");
-            self.workspace.showState(stateButton.attr("data-state"));
+            self.currentState=stateButton.attr("data-state");
+            self.workspace.showState(self.currentState);
         });
         
         self.toolbar.find("#save").click(function(){
@@ -418,15 +421,6 @@ var Editor = function(params,callback){
      */
     function identifyElementsOfContent(stateContent){
         var text="";
-        
-        
-        console.debug(stateContent);
-        
-        
-        
-        
-        
-        
         var container=$('#elementsIdentificator');
         container.append('<div id="entityTemporalContent">'+stateContent+'</div>');
         var contentElements=container.find('#entityTemporalContent');
@@ -487,7 +481,6 @@ var Editor = function(params,callback){
         text=contentElements.html();
         
         
-        console.debug(text);
         container.empty();
         return text;
     };
@@ -498,6 +491,7 @@ var Editor = function(params,callback){
     function attachEventsSolutionMode(){
         var solutionDiv=self.divSolution.find("#status_solved");
         var userResponse=self.workspace.div;
+        var deltaPos=10;    //Diferencia máxima en left y pos para calcular distancia
         
         
         
@@ -511,33 +505,26 @@ var Editor = function(params,callback){
             for(var i in self.workspace.entities){
                 var correct=true;
                 var entity=self.workspace.entities[i];
-                
                 var right=entity.getState('right');
-                
-//                console.debug(entity.div.find('.content'));
 
                 //Pone el estado resuelto en el DOM
                 solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution">'+right.content+'</div>');
                 //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo
                 var solutionEntity=solutionDiv.find('#entitySolution'+entity.id);
+                //Califica la posición del objeto, solo debería cambiar si es dragdrop
+                var position=userResponse.find("#entity"+entity.id).position();
+                if(Math.abs(right.pos.left-position.left)<=deltaPos&&Math.abs(right.pos.top-position.top)<=deltaPos){
+                    correct=true;
+                }else{
+                    correct=false;
+                }
                 
-                
-                
+                //Califica los elementos dentro de la entidad
                 solutionEntity.find('.entityElement').each(function(){
                     var solutionElement=$(this);
-                    
-                    
-                    
                     var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
-                    
-//                    console.debug(solutionElement);
-                    
-//                    correct=correct&&qualifyElements();
                     correct=correct&&qualifyElements(solutionElement,answerElement);
-                    
                 });
-                
-                
                 
                 if(correct){
                     entity.draw("right");
@@ -545,22 +532,8 @@ var Editor = function(params,callback){
                     entity.draw("wrong");
                 }
             }
-            
-            
-//            if(correct){
-//                self.workspace.showState("right");
-//            }else{
-//                self.workspace.showState("wrong");
-//            }
-            
-            
-            
-        
             solutionDiv.empty();
         });
-        
-        
-        
     };
     
     /**
@@ -603,6 +576,10 @@ var Editor = function(params,callback){
             }
         }
         console.debug("******************");
+        
+        
+        
+        
         
         return correct;
     };
