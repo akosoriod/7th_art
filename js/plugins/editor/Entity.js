@@ -30,7 +30,7 @@ var Entity = function(params){
         optional:false,
         entities:{},
         type:'basic',
-        weight:0
+        weight:10
     };
     var options = $.extend(def, params);
     self.id=options.id;

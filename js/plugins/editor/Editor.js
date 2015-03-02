@@ -493,8 +493,14 @@ var Editor = function(params,callback){
         var userResponse=self.workspace.div;
         var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
         
-        
         self.divSolution.find('#check_button').click(function(){
+            //Valores para calificar
+            var T=100;                                  //Máximo valor para un ejercicio
+            var n=userResponse.find(".entity").length;  //Cantidad de entidades en el ejercicio
+            var r=10;                                   //Máximo valor de importancia para una entidad
+            var x=T/(n*r);                              //Multiplicador para mapeo
+            var totalExercise=0;                        //Suma de calificación del ejercicio
+            var mappedResult=0;                         //Resultado luego de ser mapeado de 0 a T
 //            var stateButton=$(this);
 //            stateButtons.removeClass("state_selected");
 //            stateButton.addClass("state_selected");
@@ -509,26 +515,47 @@ var Editor = function(params,callback){
                 //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo
                 var solutionEntity=solutionDiv.find('#entitySolution'+entity.id);
                 //Califica la posición del objeto, solo debería cambiar si es dragdrop
-                var position=userResponse.find("#entity"+entity.id).position();
-                if(Math.abs(right.pos.left-position.left)<=deltaPos&&Math.abs(right.pos.top-position.top)<=deltaPos){
-                    correct=true;
-                }else{
-                    correct=false;
+                if(solutionEntity.hasClass("dragdrop")){
+                    var position=userResponse.find("#entity"+entity.id).position();
+                    if(Math.abs(right.pos.left-position.left)<=deltaPos&&Math.abs(right.pos.top-position.top)<=deltaPos){
+                        correct=true;
+                        totalExercise+=entity.weight;
+                    }else{
+                        correct=false;
+                    }
                 }
                 
                 //Califica los elementos dentro de la entidad
+                var elementImportances=0;
                 solutionEntity.find('.entityElement').each(function(){
                     var solutionElement=$(this);
                     var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
-                    correct=correct&&qualifyElements(solutionElement,answerElement);
+                    var elementQualification=qualifyElements(solutionElement,answerElement);
+                    correct=correct&&elementQualification;
+                    //Suma la calilficación
+                    if(elementQualification){
+                        elementImportances+=parseFloat(answerElement.attr("data-element-importance"));
+                    }
                 });
+                totalExercise+=elementImportances*entity.weight;
                 
                 if(correct){
                     entity.draw("right");
                 }else{
                     entity.draw("wrong");
                 }
+                
+                console.warn("entity.weight: "+entity.weight);
+                console.warn("elementImportances: "+elementImportances);
+                console.warn("totalExercise: "+totalExercise);
             }
+            
+            mappedResult=x*totalExercise;
+            
+            
+            console.warn("TOTAL PUNTOS");
+            console.debug(mappedResult);
+            
             solutionDiv.empty();
         });
     };
