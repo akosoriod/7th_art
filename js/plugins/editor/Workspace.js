@@ -209,9 +209,6 @@ var Workspace = function(params){
      * hacer la calificación
      */
     self.attachEventsSolutionMode=function(){
-        
-        console.debug("sol");
-        
         //Guarda el estado de los input:radio
         self.div.find("input:radio").change(function(){
             var radios=self.div.find('input:radio[name="'+$(this).attr('name')+'"]');
@@ -221,25 +218,17 @@ var Workspace = function(params){
             });
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
-            
-            
-            
-            
-//            $(this).change(function(){
-////                console.debug($(this));
-//                $(this).attr("data-val",$(this).val());
-//            });
-////            $(this).click(function(){
-////                console.debug($(this));
-////                $(this).attr("data-val",$(this).val());
-////            });
-////            $(this).focusout(function(){
-////                $(this).attr("data-val",$(this).val());
-////            });
         });
-//        self.div.find("input:radio").blur(function(){
-//            $(this).attr("data-val",$(this).val());
-//        });
+        //Guarda el estado de los input:checkbox
+        self.div.find("input:checkbox").change(function(){
+            if($(this).is(":checked")){
+                $(this).attr("data-val",true);
+                $(this).attr("checked","checked");
+            }else{
+                $(this).attr("data-val",false);
+                $(this).removeAttr("checked");
+            }
+        });
     };
     
     

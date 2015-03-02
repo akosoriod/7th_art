@@ -402,6 +402,10 @@ var Editor = function(params,callback){
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
         });
+        container.find('input:checked').change(function(){
+            $(this).attr("data-val",true);
+            $(this).attr("checked","checked");
+        });
 
     };
     
@@ -430,7 +434,7 @@ var Editor = function(params,callback){
         
         
         
-        //Se procesan los elementos calificables del contenido
+        //Se procesan los elementos input:text
         contentElements.find('input:text').each(function(){
             $(this).attr("value",$(this).attr("data-val"));
             if($.trim($(this).attr("data-element-id"))===""){
@@ -439,11 +443,8 @@ var Editor = function(params,callback){
             $(this).addClass("entityElement inputText");
         });
         
-        
-        
-        
+        //Se procesan los elementos input:radio
         contentElements.find("input:radio").each(function(){
-            
             if($(this).attr("data-val")==="true"||$(this).attr("checked")==="checked"){
                 $(this).attr("checked","checked");
                 $(this).attr("data-val","true");
@@ -455,6 +456,21 @@ var Editor = function(params,callback){
                 $(this).attr("data-element-id","entityElement_"+guid());
             }
             $(this).addClass("entityElement inputRadio");
+        });
+        
+        //Se procesan los elementos input:checkbox
+        contentElements.find("input:checkbox").each(function(){
+            if($(this).attr("data-val")==="true"||$(this).attr("checked")==="checked"){
+                $(this).attr("checked","checked");
+                $(this).attr("data-val","true");
+            }else{
+                $(this).removeAttr("checked");
+                $(this).attr("data-val","false");
+            }
+            if($.trim($(this).attr("data-element-id"))===""){
+                $(this).attr("data-element-id","entityElement_"+guid());
+            }
+            $(this).addClass("entityElement inputCheckbox");
         });
         
         
@@ -493,7 +509,7 @@ var Editor = function(params,callback){
 //            stateButton.addClass("state_selected");
 
             for(var i in self.workspace.entities){
-                var correct=false;
+                var correct=true;
                 var entity=self.workspace.entities[i];
                 
                 var right=entity.getState('right');
@@ -517,7 +533,7 @@ var Editor = function(params,callback){
 //                    console.debug(solutionElement);
                     
 //                    correct=correct&&qualifyElements();
-                    correct=qualifyElements(solutionElement,answerElement);
+                    correct=correct&&qualifyElements(solutionElement,answerElement);
                     
                 });
                 
@@ -556,9 +572,9 @@ var Editor = function(params,callback){
     function qualifyElements(solution,answer){
         var correct=false;
         
-//        console.warn("OBJETOS");
-//        console.debug(solution);
-//        console.debug(answer);
+        console.warn("OBJETOS");
+        console.debug(solution);
+        console.debug(answer);
         
         
         //Revisa los input:text
@@ -569,18 +585,24 @@ var Editor = function(params,callback){
         }
         //Revisa los input:radio
         if(solution.is('input:radio')){
+            if(solution.attr("data-val")===answer.attr("data-val")){
+                correct=true;
+            }
+        }
+        //Revisa los input:checkbox
+        if(solution.is('input:checkbox')){
             
             
-//            console.debug("CORRECTO");
-//            console.debug(solution.attr("data-val"));
-//            console.debug("RESPONDIDO POR USUARIO");
-//            console.debug(answer.attr("data-val"));
+            console.debug("CORRECTO");
+            console.debug(solution.attr("data-val"));
+            console.debug("RESPONDIDO POR USUARIO");
+            console.debug(answer.attr("data-val"));
 
             if(solution.attr("data-val")===answer.attr("data-val")){
                 correct=true;
             }
         }
-//        console.debug("******************");
+        console.debug("******************");
         
         return correct;
     };

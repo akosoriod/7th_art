@@ -93,6 +93,7 @@ var Entity = function(params){
             self.div.draggable({
                 containment: self.container,
                 cursor: "move",
+                grid: [10,10],
                 opacity: 0.4,
                 scroll: false,
                 zIndex: 10000,
@@ -176,9 +177,7 @@ var Entity = function(params){
             
             //Si está en modo respuesta, asigna eventos para controlar la calificación
             if(editor.mode==="solution"){
-//                window.setTimeout(function(){
-                    self.workspace.attachEventsSolutionMode();
-//                }, 500);
+                self.workspace.attachEventsSolutionMode();
             }
         }
     };
