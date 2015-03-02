@@ -501,9 +501,6 @@ var Editor = function(params,callback){
             var x=T/(n*r);                              //Multiplicador para mapeo
             var totalExercise=0;                        //Suma de calificación del ejercicio
             var mappedResult=0;                         //Resultado luego de ser mapeado de 0 a T
-//            var stateButton=$(this);
-//            stateButtons.removeClass("state_selected");
-//            stateButton.addClass("state_selected");
 
             for(var i in self.workspace.entities){
                 var correct=true;
@@ -511,7 +508,7 @@ var Editor = function(params,callback){
                 var right=entity.getState('right');
 
                 //Pone el estado resuelto en el DOM
-                solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution">'+right.content+'</div>');
+                solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution '+entity.type+'">'+right.content+'</div>');
                 //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo
                 var solutionEntity=solutionDiv.find('#entitySolution'+entity.id);
                 //Califica la posición del objeto, solo debería cambiar si es dragdrop
@@ -544,14 +541,8 @@ var Editor = function(params,callback){
                 }else{
                     entity.draw("wrong");
                 }
-                
-                console.warn("entity.weight: "+entity.weight);
-                console.warn("elementImportances: "+elementImportances);
-                console.warn("totalExercise: "+totalExercise);
             }
-            
             mappedResult=x*totalExercise;
-            
             
             console.warn("TOTAL PUNTOS");
             console.debug(mappedResult);
