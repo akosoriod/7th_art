@@ -494,6 +494,7 @@ var Editor = function(params,callback){
         var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
         
         self.divSolution.find('#check_button').click(function(){
+            var correctAll=true;
             //Valores para calificar
             var T=100;                                  //Máximo valor para un ejercicio
             var n=userResponse.find(".entity").length;  //Cantidad de entidades en el ejercicio
@@ -540,12 +541,16 @@ var Editor = function(params,callback){
                     entity.draw("right");
                 }else{
                     entity.draw("wrong");
+                    correctAll=false;
                 }
             }
             mappedResult=x*totalExercise;
             
             console.warn("TOTAL PUNTOS");
             console.debug(mappedResult);
+            if(correctAll){
+                alert("Gained points: "+parseInt(mappedResult));
+            }
             
             solutionDiv.empty();
         });
@@ -559,6 +564,9 @@ var Editor = function(params,callback){
      */
     function qualifyElements(solution,answer){
         var correct=false;
+//        console.warn("OBJETO");
+//        console.warn(solution);
+//        console.warn(answer);
         
         //Revisa los input:text
         if(solution.is('input:text')){
