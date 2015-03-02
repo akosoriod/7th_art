@@ -491,10 +491,7 @@ var Editor = function(params,callback){
     function attachEventsSolutionMode(){
         var solutionDiv=self.divSolution.find("#status_solved");
         var userResponse=self.workspace.div;
-        var deltaPos=10;    //Diferencia máxima en left y pos para calcular distancia
-        
-        
-        
+        var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
         
         
         self.divSolution.find('#check_button').click(function(){
@@ -545,11 +542,6 @@ var Editor = function(params,callback){
     function qualifyElements(solution,answer){
         var correct=false;
         
-        console.warn("OBJETOS");
-        console.debug(solution);
-        console.debug(answer);
-        
-        
         //Revisa los input:text
         if(solution.is('input:text')){
             if(solution.attr("data-val")===$.trim(answer.val())){
@@ -564,22 +556,10 @@ var Editor = function(params,callback){
         }
         //Revisa los input:checkbox
         if(solution.is('input:checkbox')){
-            
-            
-            console.debug("CORRECTO");
-            console.debug(solution.attr("data-val"));
-            console.debug("RESPONDIDO POR USUARIO");
-            console.debug(answer.attr("data-val"));
-
             if(solution.attr("data-val")===answer.attr("data-val")){
                 correct=true;
             }
         }
-        console.debug("******************");
-        
-        
-        
-        
         
         return correct;
     };

@@ -142,6 +142,18 @@ var Entity = function(params){
         self.div.find(".deleteEntity").click(function(){
             self.workspace.removeEntity(self.id);
         });
+        self.div.find(".increaseZ").click(function(e){
+            e.preventDefault();
+            self.updateZindex(self.getZindex()+1);
+            self.draw(editor.currentState);
+        });
+        self.div.find(".decreaseZ").click(function(e){
+            e.preventDefault();
+            if(self.getZindex()>0){
+                self.updateZindex(self.getZindex()-1);
+                self.draw(editor.currentState);
+            }
+        });
         self.div.dblclick(function(){
             editor.editEntity(self);
         });
@@ -411,7 +423,11 @@ var Entity = function(params){
         if(editor.mode==="edition"){
             title="Doble click para editar";
             grid=" grid ";
-            buttons='<div class="entityButton deleteEntity">x</div>';
+            buttons=
+                '<div class="entityButton deleteEntity" title="Eliminar entidad">x</div>'+
+                '<div class="entityButton zindex increaseZ" title="Traer al frente">+</div>'+
+                '<div class="entityButton zindex decreaseZ" title="Enviar atras">-</div>'
+            ;
             editing="entity_editing";
         }
         return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
