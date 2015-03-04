@@ -197,6 +197,53 @@ var Workspace = function(params){
         for(var i in self.entities){
             self.entities[i].draw(stateName);
         }
+        //Si está en modo respuesta, asigna eventos para controlar la calificación
+        if(editor.mode==="solution"){
+            window.setTimeout(function(){
+                self.attachEventsSolutionMode();
+            }, 500);
+        }
+    };
+    /**
+     * Asigna los eventos a los elementos insertados en modo solución para
+     * hacer la calificación
+     */
+    self.attachEventsSolutionMode=function(){
+        //Guarda el estado de los input:radio
+        self.div.find("input:radio").change(function(){
+            var radios=self.div.find('input:radio[name="'+$(this).attr('name')+'"]');
+            radios.each(function(){
+                $(this).attr("data-val",false);
+                $(this).removeAttr("checked");
+            });
+            $(this).attr("data-val",true);
+            $(this).attr("checked","checked");
+        });
+        //Guarda el estado de los input:checkbox
+        self.div.find("input:checkbox").change(function(){
+            if($(this).is(":checked")){
+                $(this).attr("data-val",true);
+                $(this).attr("checked","checked");
+            }else{
+                $(this).attr("data-val",false);
+                $(this).removeAttr("checked");
+            }
+        });
+        
+        //Si encuentra una entidad de tipo drag and drop, la activa
+        self.div.find(".entity").each(function(){
+            var entity=$(this);
+            if(entity.hasClass("dragdrop")){
+                entity.draggable({
+                    containment: self.container,
+                    cursor: "move",
+                    grid: [10,10],
+                    opacity: 0.4,
+                    scroll: false,
+                    zIndex: 10000
+                });
+            }
+        });
     };
     
     
@@ -212,45 +259,20 @@ var Workspace = function(params){
                 accept: ".button",
                 drop: function( event, ui ) {
                     if(editor.currentStep){
-                        if(ui.draggable.hasClass("single")){
-                            var displacement=self.div.offset();
-                            self.addEntity(new Entity({
-                                pos:{
-                                    left:ui.position.left-displacement.left,
-                                    top:ui.position.top-displacement.top
-                                }
-                            }));
-                        }else if(ui.draggable.hasClass("multi-single")){
-                            var displacement=self.div.offset();
-                            var defaultOptions=4;
-                            var left=ui.position.left-displacement.left;
-                            var top=ui.position.top-displacement.top;
-                            var entity=new Entity({
-                                pos:{
-                                    left:left,
-                                    top:top
-                                },
-                                size:{
-                                    height:150,
-                                    width:350
-                                }
-                            });
-                            self.addEntity(entity);
-                            for(var i=0;i<defaultOptions;i++){
-                                var ent=self.addEntity(new Entity({
-                                    pos:{
-                                        left:left+(10),
-                                        top:top+(30*i)
-                                    },
-                                    size:{
-                                        height:30,
-                                        width:300
-                                    }
-                                }));
-                                //Se agregan las como subentidades a la entidad contenedora
-                                entity.addEntity(ent);
-                            }
+                        var displacement=self.div.offset();
+                        var type="";
+                        if(ui.draggable.hasClass("button-basic")){
+                            type="basic";
+                        }else if(ui.draggable.hasClass("button-dragdrop")){
+                            type="dragdrop";
                         }
+                        self.addEntity(new Entity({
+                            type:type,
+                            pos:{
+                                left:ui.position.left-displacement.left,
+                                top:ui.position.top-displacement.top
+                            }
+                        }));
                     }else{
                         editor.message("Seleccione un paso en una sección para iniciar la edición.");
                     }
@@ -323,6 +345,10 @@ var Workspace = function(params){
                     }
                 }
             }
+        }
+        //Si está en modo respuesta, asigna eventos para controlar la calificación
+        if(editor.mode==="solution"){
+            self.attachEventsSolutionMode();
         }
     };
     

@@ -13,7 +13,7 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
-    self.currentStep=false;           //Paso que se está editando actualmente
+    self.currentStep=false;         //Paso que se está editando actualmente
     
     self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
     self.historyMax=30;             //Cantidad de estados del workspace que almacena
@@ -25,7 +25,9 @@ var Editor = function(params,callback){
     self.numberLoadings=0;          //Cuenta el número de loadings para mostrar el gif
     self.saving=false;              //Indica si está guardando, para no repetir el proceso
     self.loading=false;             //Indica si está cargando, para no repetir el proceso
-    self.autosaveFrequency=0;      //Cada cuantos segundos se autoguarda
+    self.autosaveFrequency=0;       //Cada cuantos segundos se autoguarda
+    
+    self.currentState='passive';    //Estado actual, seleccionado por los botones de estado
     
     
     /**************************************************************************/
@@ -145,7 +147,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarEntities(){
-        self.toolbar.find("#button-entity").draggable({
+        self.toolbar.find(".button-basic,.button-dragdrop").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
@@ -157,36 +159,36 @@ var Editor = function(params,callback){
             zIndex: 10000
         });
         //Opción múltiple
-        self.toolbar.find("#button-multi-single").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-        self.toolbar.find("#button-multi-multi").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
-        self.toolbar.find("#button-true-false").draggable({
-            appendTo: "body",
-            containment: "#workspace",
-            cursor: "move",
-            helper: function(){
-                return $( "<div class='entity-fill-helper'></div>" );
-            },
-            opacity: 0.8,
-            scroll: false
-        });
+//        self.toolbar.find("#button-multi-single").draggable({
+//            appendTo: "body",
+//            containment: "#workspace",
+//            cursor: "move",
+//            helper: function(){
+//                return $( "<div class='entity-fill-helper'></div>" );
+//            },
+//            opacity: 0.8,
+//            scroll: false
+//        });
+//        self.toolbar.find("#button-multi-multi").draggable({
+//            appendTo: "body",
+//            containment: "#workspace",
+//            cursor: "move",
+//            helper: function(){
+//                return $( "<div class='entity-fill-helper'></div>" );
+//            },
+//            opacity: 0.8,
+//            scroll: false
+//        });
+//        self.toolbar.find("#button-true-false").draggable({
+//            appendTo: "body",
+//            containment: "#workspace",
+//            cursor: "move",
+//            helper: function(){
+//                return $( "<div class='entity-fill-helper'></div>" );
+//            },
+//            opacity: 0.8,
+//            scroll: false
+//        });
     };
     
     /**
@@ -212,7 +214,8 @@ var Editor = function(params,callback){
             var stateButton=$(this);
             stateButtons.removeClass("state_selected");
             stateButton.addClass("state_selected");
-            self.workspace.showState(stateButton.attr("data-state"));
+            self.currentState=stateButton.attr("data-state");
+            self.workspace.showState(self.currentState);
         });
         
         self.toolbar.find("#save").click(function(){
@@ -306,9 +309,14 @@ var Editor = function(params,callback){
                     $(this).dialog("close");
                 },
                 Guardar:function(){
-                    state.content=textEditor.val();
+                    var content=identifyElementsOfContent(textEditor.val());
+                    state.content=content;
                     self.editingEntity.draw(stateName);
                     self.dialogEditEntity.find("."+stateName).click();
+                    //Espera unos segundos para volver a hacer click, no funciona inmediatamente
+                    window.setTimeout(function(){
+                        self.dialogEditEntity.find("."+stateName).click();
+                    }, 500);
                     $(this).dialog("close");
                 }
             },
@@ -337,6 +345,9 @@ var Editor = function(params,callback){
                     menubar : false,
                     oninit:function(){
                         tinyMCE.activeEditor.setContent(state.content);
+                        //Guarda el estado en el atributo data-val de los elementos en el editor
+                        var iContent=$('#text_content_ifr').contents().find("#tinymce");
+                        attachEventsDataValueAttribute(iContent);
                     }
                 });
             },
@@ -347,85 +358,7 @@ var Editor = function(params,callback){
             }
         });
     };
-    /**
-     * Eventos para el editor en modo solución: espacio de usuarios
-     */
-    function attachEventsSolutionMode(){
-        
-        
-        
-        self.divSolution.find('#check_button').click(function(){
-//            var stateButton=$(this);
-//            stateButtons.removeClass("state_selected");
-//            stateButton.addClass("state_selected");
-
-            for(var i in self.workspace.entities){
-                var entity=self.workspace.entities[i];
-                
-                var passive=entity.getState('passive');
-                var active=entity.getState('active');
-                var solved=entity.getState('solved');
-                
-                console.debug(entity.div.find('.content'));
-                
-                
-                $(entity.states.active.content).find('*').each(function(){
-                    var entitySubelement=$(this);
-                    console.warn(entitySubelement);
-        //            htmlContent.find("*").each(function(){
-        //                console.debug($(this));
-        //            });
-
-                });
-                
-//                if(active.content===solved.content){
-//                    self.workspace.entities[i].draw('right');
-//                }else{
-//                    self.workspace.entities[i].draw('wrong');
-//                }
-            }
-        });
-        
-    };
-    /**
-     * Agrega los eventos a las entidades en solution mode
-     */
-    function attachEventsSolutionModeEntities(){
-        self.workspace.div.find('.entity').keyup(function() {
-            updateSolvedState($(this));
-        }).click(function(){
-            updateSolvedState($(this));
-        });
-    };
     
-    /**
-     * Actualiza el estado solved con la información del userspace
-     * @param {element} entityElement Elemento del DOM de la entidad
-     */
-    function updateSolvedState(entityElement){
-        var entity=self.workspace.getEntity(parseInt(entityElement.attr('data-id')));
-        
-//        console.warn("Activo de la entidad");
-//        console.debug(escapeHtmlEntities(entity.states.active.content));
-        
-        var htmlContent=entityElement.find('.content').clone();
-//        console.warn($(entity.states.active.content));
-        
-        $(entity.states.active.content).find('*').each(function(){
-            var entitySubelement=$(this);
-            console.warn(entitySubelement);
-//            htmlContent.find("*").each(function(){
-//                console.debug($(this));
-//            });
-            
-        });
-        
-//        console.warn("Contenido del html");
-//        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
-        
-        
-
-    };
     
     /**
      * Dibuja un estado de la entidad en el editor de estados
@@ -442,10 +375,257 @@ var Editor = function(params,callback){
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
         entity.div.css("position","relative");
+        //Elimina el z-index para poder editar
+        entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
             attachEventsEditingEntity(stateName);
         });
     };
+    
+    /**************************************************************************/
+    /*************************** QUALIFICATION METHODS ************************/
+    /**************************************************************************/
+    
+    /**
+     * Agrega el estado de los elementos del editor tinymce a partir de su estado
+     * en el editor
+     * @param {element} container Contenedor al que se agregan los eventos
+     */
+    function attachEventsDataValueAttribute(container){
+        //Guarda el estado de los input
+        container.find("input:text").keyup(function(){
+            $(this).attr("data-val",$(this).val());
+        });
+        container.find('input:radio').change(function(){
+            var radios=container.find('input:radio[name="'+$(this).attr('name')+'"]');
+            radios.each(function(){
+                $(this).attr("data-val",false);
+                $(this).removeAttr("checked");
+            });
+            $(this).attr("data-val",true);
+            $(this).attr("checked","checked");
+        });
+        container.find('input:checked').change(function(){
+            $(this).attr("data-val",true);
+            $(this).attr("checked","checked");
+        });
+
+    };
+    
+    /**
+     * Inserta identificadores en los elementos calificables en un html luego de
+     * la edición de un estado
+     * @param {Entity} entity Entidad a la que pertenece el estado
+     * @param {string} stateContent Contenido luego de editar el estado
+     * @returns {string} Texto del contenido con los elementos calificables identificados
+     */
+    function identifyElementsOfContent(stateContent){
+        var text="";
+        var container=$('#elementsIdentificator');
+        container.append('<div id="entityTemporalContent">'+stateContent+'</div>');
+        var contentElements=container.find('#entityTemporalContent');
+        
+        
+        
+        
+        //Se procesan los elementos input:text
+        contentElements.find('input:text').each(function(){
+            $(this).attr("value",$(this).attr("data-val"));
+            if($.trim($(this).attr("data-element-id"))===""){
+                $(this).attr("data-element-id","entityElement_"+guid());
+            }
+            $(this).addClass("entityElement inputText");
+        });
+        
+        //Se procesan los elementos input:radio
+        contentElements.find("input:radio").each(function(){
+            if($(this).attr("data-val")==="true"||$(this).attr("checked")==="checked"){
+                $(this).attr("checked","checked");
+                $(this).attr("data-val","true");
+            }else{
+                $(this).removeAttr("checked");
+                $(this).attr("data-val","false");
+            }
+            if($.trim($(this).attr("data-element-id"))===""){
+                $(this).attr("data-element-id","entityElement_"+guid());
+            }
+            $(this).addClass("entityElement inputRadio");
+        });
+        
+        //Se procesan los elementos input:checkbox
+        contentElements.find("input:checkbox").each(function(){
+            if($(this).attr("data-val")==="true"||$(this).attr("checked")==="checked"){
+                $(this).attr("checked","checked");
+                $(this).attr("data-val","true");
+            }else{
+                $(this).removeAttr("checked");
+                $(this).attr("data-val","false");
+            }
+            if($.trim($(this).attr("data-element-id"))===""){
+                $(this).attr("data-element-id","entityElement_"+guid());
+            }
+            $(this).addClass("entityElement inputCheckbox");
+        });
+        
+        
+        
+        //TODO: Cargar este valor de la entidad
+        var importanceEntity=10;
+        //Divide la importancia entre todos los elementos
+        contentElements.find('.entityElement').each(function(){
+//            $(this).attr("data-entity-id",entity.id);
+            $(this).attr("data-entity-importance",importanceEntity);
+            $(this).attr("data-element-importance",1/contentElements.find('.entityElement').size());
+        });
+        
+        text=contentElements.html();
+        
+        
+        container.empty();
+        return text;
+    };
+    
+    /**
+     * Eventos para el editor en modo solución: espacio de usuarios
+     */
+    function attachEventsSolutionMode(){
+        var solutionDiv=self.divSolution.find("#status_solved");
+        var userResponse=self.workspace.div;
+        var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
+        
+        self.divSolution.find('#check_button').click(function(){
+            var correctAll=true;
+            //Valores para calificar
+            var T=100;                                  //Máximo valor para un ejercicio
+            var n=userResponse.find(".entity").length;  //Cantidad de entidades en el ejercicio
+            var r=10;                                   //Máximo valor de importancia para una entidad
+            var x=T/(n*r);                              //Multiplicador para mapeo
+            var totalExercise=0;                        //Suma de calificación del ejercicio
+            var mappedResult=0;                         //Resultado luego de ser mapeado de 0 a T
+
+            for(var i in self.workspace.entities){
+                var correct=true;
+                var entity=self.workspace.entities[i];
+                var right=entity.getState('right');
+
+                //Pone el estado resuelto en el DOM
+                solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution '+entity.type+'">'+right.content+'</div>');
+                //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo
+                var solutionEntity=solutionDiv.find('#entitySolution'+entity.id);
+                //Califica la posición del objeto, solo debería cambiar si es dragdrop
+                if(solutionEntity.hasClass("dragdrop")){
+                    var position=userResponse.find("#entity"+entity.id).position();
+                    if(Math.abs(right.pos.left-position.left)<=deltaPos&&Math.abs(right.pos.top-position.top)<=deltaPos){
+                        correct=true;
+                        totalExercise+=entity.weight;
+                    }else{
+                        correct=false;
+                    }
+                }
+                
+                //Califica los elementos dentro de la entidad
+                var elementImportances=0;
+                solutionEntity.find('.entityElement').each(function(){
+                    var solutionElement=$(this);
+                    var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
+                    var elementQualification=qualifyElements(solutionElement,answerElement);
+                    correct=correct&&elementQualification;
+                    //Suma la calilficación
+                    if(elementQualification){
+                        elementImportances+=parseFloat(answerElement.attr("data-element-importance"));
+                    }
+                });
+                totalExercise+=elementImportances*entity.weight;
+                
+                if(correct){
+                    entity.draw("right");
+                }else{
+                    entity.draw("wrong");
+                    correctAll=false;
+                }
+            }
+            mappedResult=x*totalExercise;
+            
+            console.warn("TOTAL PUNTOS");
+            console.debug(mappedResult);
+            if(correctAll){
+                alert("Gained points: "+parseInt(mappedResult));
+            }
+            
+            solutionDiv.empty();
+        });
+    };
+    
+    /**
+     * Califica si la respuesta dada a un elemento es correcta
+     * @param {element} solution Elemento con la respuesta correcta
+     * @param {element} answer Elemento con la respuesta dada por el estudiante
+     * @returns {bool} Verdadero si la respuesta es correcta
+     */
+    function qualifyElements(solution,answer){
+        var correct=false;
+//        console.warn("OBJETO");
+//        console.warn(solution);
+//        console.warn(answer);
+        
+        //Revisa los input:text
+        if(solution.is('input:text')){
+            if(solution.attr("data-val")===$.trim(answer.val())){
+                correct=true;
+            }
+        }
+        //Revisa los input:radio
+        if(solution.is('input:radio')){
+            if(solution.attr("data-val")===answer.attr("data-val")){
+                correct=true;
+            }
+        }
+        //Revisa los input:checkbox
+        if(solution.is('input:checkbox')){
+            if(solution.attr("data-val")===answer.attr("data-val")){
+                correct=true;
+            }
+        }
+        
+        return correct;
+    };
+    
+    /**
+     * Agrega los eventos a las entidades en solution mode
+     */
+    function attachEventsSolutionModeEntities(){
+//        self.workspace.div.find('.entity').keyup(function() {
+//            updateSolvedState($(this));
+//        }).click(function(){
+//            updateSolvedState($(this));
+//        });
+    };
+    
+    /**
+     * Actualiza el estado solved con la información del userspace
+     * @param {element} entityElement Elemento del DOM de la entidad
+     */
+//    function updateSolvedState(entityElement){
+//        var entity=self.workspace.getEntity(parseInt(entityElement.attr('data-id')));
+//        
+////        console.warn("Activo de la entidad");
+////        console.debug(escapeHtmlEntities(entity.states.active.content));
+//        
+//        var htmlContent=entityElement.find('.content').clone();
+////        console.warn($(entity.states.active.content));
+//        
+//        $(entity.states.active.content).find('*').each(function(){
+//            var entitySubelement=$(this);
+////            console.warn(entitySubelement);
+////            htmlContent.find("*").each(function(){
+////                console.debug($(this));
+////            });
+//            
+//        });
+//        
+//        console.warn("Contenido del html");
+//        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
+//    };
     
     /**************************************************************************/
     /***************************** MESSAGING METHODS **************************/
@@ -618,5 +798,16 @@ var Editor = function(params,callback){
                 '</div>'+
             '</div>';
         return html;
+    };
+    
+    /**
+     * Retorna un ID aleatorio para los elementos
+     * @returns {String} Id aleatorio
+     */
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+        return s4() + s4() + '_' + s4() + '_' + s4() + '_' +s4() + '_' + s4() + s4() + s4();
     }
 };

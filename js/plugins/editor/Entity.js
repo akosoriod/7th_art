@@ -29,12 +29,14 @@ var Entity = function(params){
         id:false,
         optional:false,
         entities:{},
-        weight:0
+        type:'basic',
+        weight:10
     };
     var options = $.extend(def, params);
     self.id=options.id;
     self.optional=options.optional;     //Si se debe resolver para el éxito del ejercicio
     self.countable=options.countable;   //Si se cuenta dentro del cálculo del total de ejercicios
+    self.type=options.type;             //Tipo de entidad: single, dragdrop, ... ver workspace.attachEvents()
     self.weight=options.weight;         //Peso de la entidad en el total de ejercicios
     self.entities=options.entities;
     /**
@@ -93,13 +95,14 @@ var Entity = function(params){
             self.div.draggable({
                 containment: self.container,
                 cursor: "move",
+                grid: [10,10],
                 opacity: 0.4,
                 scroll: false,
                 zIndex: 10000,
                 stop:function(event,ui){
                     var diffLeft=ui.position.left-ui.originalPosition.left;
                     var diffTop=ui.position.top-ui.originalPosition.top;
-                    self.updatePositionByDiff(diffLeft,diffTop);
+                    self.updatePositionByDiff(diffLeft,diffTop,editor.currentState);
                     self.saveHistory();
                 }
             }).resizable({
@@ -139,6 +142,18 @@ var Entity = function(params){
         self.div.find(".deleteEntity").click(function(){
             self.workspace.removeEntity(self.id);
         });
+        self.div.find(".increaseZ").click(function(e){
+            e.preventDefault();
+            self.updateZindex(self.getZindex()+1);
+            self.draw(editor.currentState);
+        });
+        self.div.find(".decreaseZ").click(function(e){
+            e.preventDefault();
+            if(self.getZindex()>0){
+                self.updateZindex(self.getZindex()-1);
+                self.draw(editor.currentState);
+            }
+        });
         self.div.dblclick(function(){
             editor.editEntity(self);
         });
@@ -173,6 +188,11 @@ var Entity = function(params){
             loadDiv();
             //Muestra el estado definido en stateName
             self.showState(self.getState(stateName));
+            
+            //Si está en modo respuesta, asigna eventos para controlar la calificación
+            if(editor.mode==="solution"){
+                self.workspace.attachEventsSolutionMode();
+            }
         }
     };
     
@@ -285,23 +305,32 @@ var Entity = function(params){
      * estado
      * @param {int} diffLeft Diferencia de posición desde la izquierda
      * @param {int} diffTop Diferencia de posición desde arriba
+     * @param {string} stateName Nombre del estado (opcional)
      */
-    self.updatePositionByDiff=function(diffLeft,diffTop){
-        for(var i in self.states){
-            if(self.statesFixedPos){
-                self.states[i].pos.left=self.states[i].pos.left+diffLeft;
-                self.states[i].pos.top=self.states[i].pos.top+diffTop;
-            }else if(i==='passive'){
-                self.states[i].pos.left=self.states[i].pos.left+diffLeft;
-                self.states[i].pos.top=self.states[i].pos.top+diffTop;
+    self.updatePositionByDiff=function(diffLeft,diffTop,stateName){
+        if(!stateName){
+            stateName='passive';
+        }
+        if(stateName!=='passive'&&self.type==="dragdrop"){
+            self.states[stateName].pos.left=self.states[stateName].pos.left+diffLeft;
+            self.states[stateName].pos.top=self.states[stateName].pos.top+diffTop;
+        }else{
+            for(var i in self.states){
+                if(self.statesFixedPos){
+                    self.states[i].pos.left=self.states[i].pos.left+diffLeft;
+                    self.states[i].pos.top=self.states[i].pos.top+diffTop;
+                }else if(i==='passive'){
+                    self.states[i].pos.left=self.states[i].pos.left+diffLeft;
+                    self.states[i].pos.top=self.states[i].pos.top+diffTop;
+                }
+            }
+            for(var j in self.entities){
+                if(typeof(self.entities)==="object"){
+//                    self.entities[j].updatePositionByDiff(diffLeft,diffTop);
+                }
             }
         }
-        for(var j in self.entities){
-            if(typeof(self.entities)==="object"){
-                self.entities[j].updatePositionByDiff(diffLeft,diffTop);
-            }
-        }
-        self.draw();
+        self.draw(stateName);
     };
     
     /**
@@ -394,10 +423,14 @@ var Entity = function(params){
         if(editor.mode==="edition"){
             title="Doble click para editar";
             grid=" grid ";
-            buttons='<div class="entityButton deleteEntity">x</div>';
+            buttons=
+                '<div class="entityButton deleteEntity" title="Eliminar entidad">x</div>'+
+                '<div class="entityButton zindex increaseZ" title="Traer al frente">+</div>'+
+                '<div class="entityButton zindex decreaseZ" title="Enviar atras">-</div>'
+            ;
             editing="entity_editing";
         }
-        return '<div class="draggable entity '+editing+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
+        return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
                 '<div class="box">'+
                     '<div class="content '+grid+'"></div>'+
                 '</div>'+

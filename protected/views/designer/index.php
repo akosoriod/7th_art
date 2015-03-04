@@ -80,8 +80,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="area">
             <div id="editor">
                 <div id="toolbar">
-                    <div class="button single" id="button-entity" title="Arrastrar una entidad"></div>
-                    <!--<div class="button" id="button-entity-list" title="Arrastrar una lista de entidades"></div>-->
+                    <div class="button button-basic" title="Entidad"></div>
+                    <div class="button button-dragdrop" title="Entidad drag and drop"></div>
                     <!--<div class="button true_false" id="button-true-false" title="True-False"></div>-->
                     <!--<div class="button fill" id="button-fill" title="Llenar"></div>-->
                     <!--<div class="button multi-single" id="button-multi-single" title="Opción Múltiple, única respuesta"></div>-->
@@ -94,29 +94,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     </div>
                     <div id="states_bar">
                         <div class="state_button state_selected" id="state_passive" title="Ver ejercicio en estado pasivo" data-state="passive">P</div>
-                        <div class="state_button" id="state_active" title="Ver ejercicio en estado activo" data-state="active">A</div>
-                        <div class="state_button" id="state_solved" title="Ver ejercicio en estado resuelto" data-state="solved">R</div>
+<!--                        <div class="state_button" id="state_active" title="Ver ejercicio en estado activo" data-state="active">A</div>
+                        <div class="state_button" id="state_solved" title="Ver ejercicio en estado resuelto" data-state="solved">R</div>-->
                         <div class="state_button" id="state_right" title="Ver ejercicio en estado correcto" data-state="right">C</div>
                         <div class="state_button" id="state_wrong" title="Ver ejercicio en estado incorrecto" data-state="wrong">I</div>
                     </div>
                 </div>
                 <div id="workspace" class="droppable"></div>
-
-
-<!--                <div id="properties" title="Propiedades">
-                    <form>
-                        <fieldset>
-                            <label for="id">Identificador</label>
-                            <div name="id" id="id">0</div>
-                            <label for="background">Fondo</label>
-                            <input type="text" name="background" id="background" value="#000" class="text ui-widget-content ui-corner-all">
-                            <br><br>
-                            <label for="borders">Bordes</label>
-                            <input type="text" name="borders" id="borders" value="#000" class="text ui-widget-content ui-corner-all">
-                        </fieldset>
-                    </form>
-                </div>-->
-                
             </div>
         </div>
     </div>
@@ -133,11 +117,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="design">
                     <div class="navigator">
                         <div class="state_buttons">
-                            <div class="state_button passive selected" data-state="passive" title="Estado inicial de la entidad, como se mostrará antes de iniciar el ejercicio">Pasivo (por defecto)</div>
-                            <div class="state_button active" data-state="active" title="Como se verá cuando el estudiante esté modificando la entidad">Activo</div>
-                            <div class="state_button solved" data-state="solved" title="Como se verá después de que el estudiante haya modificado la entidad">Resuelto</div>
-                            <div class="state_button right" data-state="right" title="Como se verá si al verificar la respuesta es correcta">Correcto</div>
-                            <div class="state_button wrong" data-state="wrong" title="Como se verá si al verificar la respuesta es incorrecta">Incorrecto</div>
+                            <button class="state_button passive selected" data-state="passive" title="Estado inicial de la entidad, como se mostrará antes de iniciar el ejercicio">Pasivo (por defecto)</button>
+<!--                            <button class="state_button active" data-state="active" title="Como se verá cuando el estudiante esté modificando la entidad">Activo</button>
+                            <button class="state_button solved" data-state="solved" title="Como se verá después de que el estudiante haya modificado la entidad">Resuelto</button>-->
+                            <button class="state_button right" data-state="right" title="Como se verá si al verificar la respuesta es correcta">Correcto</button>
+                            <button class="state_button wrong" data-state="wrong" title="Como se verá si al verificar la respuesta es incorrecta">Incorrecto</button>
                         </div>
                         <div class="action_buttons">
                             <div class="action_button copy_passive" title="Copiar el contenido del estado pasivo a los demás estados">Replicar contenido del estado pasivo</div>
@@ -181,4 +165,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
             </div>
         </div>
     </div>
+    
+    <!--Div para almacenar temporalmente los contenidos de los estados e identificar los elementos-->
+    <div id="elementsIdentificator"></div>
 </main>

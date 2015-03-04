@@ -64,8 +64,8 @@ class DesignerController extends Controller {
             $entity->optional=$dataEntity->optional;
             $entity->countable=$dataEntity->countable;
             $entity->weight=intval($dataEntity->weight);
-            if(property_exists($dataEntity,'entityType')){
-                $entityTypeName=$dataEntity->entityType;
+            if(property_exists($dataEntity,'type')){
+                $entityTypeName=$dataEntity->type;
             }else{
                 $entityTypeName="basic";
             }
@@ -166,7 +166,7 @@ class DesignerController extends Controller {
                 'optional'=>$entity->optional,
                 'countable'=>$entity->countable,
                 'weight'=>intval($entity->weight),
-                'entityType'=>$entity->entityType->name,
+                'type'=>$entity->entityType->name,
                 'states'=>$states
             );
         }

@@ -147,7 +147,7 @@
     width: 48px;
     z-index: 10;
 }
-#container #area #editor #button-entity{
+#container #area #editor .button-basic{
     background-image: url('../images/editor/object.png');
 }
 .entity-helper{
@@ -169,6 +169,9 @@
 }
 #container #area #editor #button-true-false{
     background-image: url('../images/editor/button1.png');
+}
+#container #area #editor .button-dragdrop{
+    background-image: url('../images/editor/button3.png');
 }
 .entity-true-false-helper{
     background-image: url('../images/editor/button1.png');
@@ -208,7 +211,7 @@
     width: 1040px;
 }
 .entity{
-    min-height: 10px;
+    min-height: 42px;
     min-width: 10px;
     position: absolute;
 }
@@ -216,6 +219,9 @@
     border: solid 1px #C75C5C;
     border-radius: 5px 5px 0 0;
     cursor: move;
+}
+.entity_editing.dragdrop{
+    border: solid 1px #377777;
 }
 .entity .box{
     overflow: auto;
@@ -248,10 +254,22 @@
     height: 15px;
     opacity: 0.6;
     position: absolute;
-    right: -5px;
+    right: -12px;
     text-align: center;
     top: -10px;
     width: 25px;
+}
+#container #area #editor #workspace .draggable .zindex{
+    background: #000;
+    right: -12px;
+    text-align: center;
+    width: 14px;
+}
+#container #area #editor #workspace .draggable .increaseZ{
+    top: 6px;
+}
+#container #area #editor #workspace .draggable .decreaseZ{
+    top: 22px;
 }
 #container #area #editor #workspace .draggable .config{
     background-image: url('../images/editor/properties.png');
@@ -276,10 +294,12 @@
     margin-top: 20px;
 }
 #edit_entity #design .navigator .state_button{
+    background: #fff;
+    border: none;
     cursor: pointer;
     height: 30px;
     line-height: 30px;
-    text-indent: 10px;
+    width: 162px;
 }
 #edit_entity #design .navigator .state_button:hover{
     box-shadow: 1px 1px 3px 0 #555;
@@ -308,3 +328,7 @@
 }
 
 
+
+#elementsIdentificator, #status_solved{
+    display: none;
+}
