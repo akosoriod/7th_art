@@ -70,8 +70,28 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
+
+			if($model->save()) {
+				// Last insert ID
+				$lastUserID = $model->primaryKey;
+
+				// User assignment
+				$auth=Yii::app()->authManager;
+				$auth->assign($_POST['rol'], $lastUserID);
+				
+				//Crea la relación entre el usuario y el rol
+				$userRole=new UserRole();
+				if($_POST['rol'] === 'administrator' ) {
+					$roleID = 1;
+				} else if($_POST['rol'] === 'operator' ) {
+					$roleID = 2;
+				}
+				$userRole->role_id=$roleID;
+				$userRole->user_id=$lastUserID;
+				$userRole->save();
+				
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
@@ -95,6 +115,37 @@ class UserController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			if($model->save())
+			
+				// Current user assignments
+				$auth=Yii::app()->authManager;
+				$currentUserAssignments = $auth->getAuthAssignments($id);
+				// Get the first key of the array $currentUserAssignments
+				reset($currentUserAssignments);
+				$currentUserAssignment = key($currentUserAssignments);
+				// Revoke user assignment
+				$auth->revoke($currentUserAssignment, $id);
+				// New user assignment
+				$auth->assign($_POST['rol'], $id);
+				
+				// Borra la relación entre el usuario y el rol
+				if($currentUserAssignment === 'administrator') {
+					$roleID = 1;
+				} else if($currentUserAssignment === 'operator') {
+					$roleID = 2;
+				}
+				$userRole=new UserRole();
+				$userRole->deleteByPk(array('user_id'=>$id, 'role_id'=>$roleID));
+				
+				//Crea la relación entre el usuario y el rol
+				if($_POST['rol'] === 'administrator') {
+					$roleID = 1;
+				} else if($_POST['rol'] === 'operator') {
+					$roleID = 2;
+				}
+				$userRole->role_id=$roleID;
+				$userRole->user_id=$id;
+				$userRole->save();
+				
 				$this->redirect(array('view','id'=>$model->id));
 		}
 

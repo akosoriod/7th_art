@@ -41,7 +41,7 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password', 'required'),
+			array('name, lastname, username, password', 'required'),
 			array('entries', 'numerical', 'integerOnly'=>true),
 			array('name, lastname, username, password, active, auth_type', 'length', 'max'=>45),
 			array('email', 'length', 'max'=>100),
@@ -66,6 +66,7 @@ class User extends CActiveRecord
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
 			'userParameters' => array(self::HAS_MANY, 'UserParameter', 'user_id'),
 			'roles' => array(self::MANY_MANY, 'Role', 'user_role(user_id, role_id)'),
+			'authAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
 		);
 	}
 
@@ -76,13 +77,13 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'lastname' => 'Lastname',
-			'username' => 'Username',
-			'password' => 'Password',
-			'active' => 'Active',
-			'auth_type' => 'Auth Type',
-			'email' => 'Email',
+			'name' => 'Nombres',
+			'lastname' => 'Apellidos',
+			'username' => 'Login',
+			'password' => 'Contrase&ntilde;a',
+			'active' => 'Estado',
+			'auth_type' => 'Tipo de Autenticación',
+			'email' => 'Correo Electr&oacute;nico',
 			'entries' => 'Entries',
 		);
 	}
@@ -205,4 +206,10 @@ class User extends CActiveRecord
             $authAssignment->data='N;';
             $authAssignment->save();
         }
+		
+		public function beforeSave() {
+			$hash = md5($this->password);
+			$this->password = $hash;
+			return true;
+		}
 }

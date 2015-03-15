@@ -29,5 +29,9 @@ $this->menu=array(
 		'active',
 		'auth_type',
 		'email',
+		array(
+		   'label'=>'Rol',
+		   'value'=>$model->authAssignment->itemname,
+		 ),
 	),
 )); ?>
