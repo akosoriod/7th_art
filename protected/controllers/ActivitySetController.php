@@ -140,7 +140,7 @@ class ActivitySetController extends Controller
                         
                         //Crea un paso
                         $step=new Step();
-                        $step->instruction="Esta es la instrucción del paso para: ".$model->title;
+                        $step->instruction="";
                         $step->activity_id=$activity->id;
                         $step->css="";
                         $step->insert();
