@@ -82,13 +82,17 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="toolbar">
                     <div class="button button-basic" title="Entidad"></div>
                     <div class="button button-dragdrop" title="Entidad drag and drop"></div>
+                    <div class="button button-list" title="Entidad de listas ordenables"></div>
+                    <div class="button button-audio" title="Entidad de audio"></div>
+                    <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
                     <!--<div class="button true_false" id="button-true-false" title="True-False"></div>-->
                     <!--<div class="button fill" id="button-fill" title="Llenar"></div>-->
                     <!--<div class="button multi-single" id="button-multi-single" title="Opción Múltiple, única respuesta"></div>-->
                     <!--<div class="button multi-multi" id="button-multi-multi" title="Opción Múltiple, múltiple respuesta"></div>-->
                     <!--<div class="button redo" id="button-redo" title="Rehacer"></div> TODO: Arreglar el comportamiento de redo-->
-                    <div class="button undo" id="button-undo" title="Deshacer"></div>
-                    <div class="button" id="save" title="Guardar actividad"></div>
+                    <div class="separator"></div>
+                    <div class="button undo pointer" id="button-undo" title="Deshacer"></div>
+                    <div class="button pointer" id="save" title="Guardar actividad"></div>
                     <div id="editing_path">
                         <span id="message"><?php echo $activitySet->title; ?></span>
                     </div>

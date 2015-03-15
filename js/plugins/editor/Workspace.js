@@ -265,6 +265,12 @@ var Workspace = function(params){
                             type="basic";
                         }else if(ui.draggable.hasClass("button-dragdrop")){
                             type="dragdrop";
+                        }else if(ui.draggable.hasClass("button-audio")){
+                            type="audio";
+                        }else if(ui.draggable.hasClass("button-style")){
+                            type="style";
+                        }else if(ui.draggable.hasClass("button-list")){
+                            type="list";
                         }
                         self.addEntity(new Entity({
                             type:type,

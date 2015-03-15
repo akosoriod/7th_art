@@ -1,3 +1,7 @@
+#services{
+    display: none;
+}
+
 /* Loading styles */
 #loadingMessage{
     display: none;
@@ -96,7 +100,7 @@
     width: 100%;
 }
 #container #area #editor #toolbar{
-    background: #E0E0D1;
+    background: #BBB;
     height: 54px;
     position: relative;
     width: 100%;
@@ -147,13 +151,23 @@
     width: 48px;
     z-index: 10;
 }
+#container #area #editor .pointer{
+    cursor: pointer;
+}
 #container #area #editor .button-basic{
     background-image: url('../images/editor/object.png');
 }
 .entity-helper{
-    background-image: url('../images/editor/object.png');
+    background-image: url('../images/editor/helper.png');
     height: 48px;
     width: 48px;
+}
+#container #area #editor .separator{
+    background: #A5A5A5;
+    float: left;
+    height: 48px;
+    margin: 3px 20px 0 20px;
+    width: 3px;
 }
 #container #area #editor #button1{
     background-image: url('../images/editor/button1.png');
@@ -171,7 +185,16 @@
     background-image: url('../images/editor/button1.png');
 }
 #container #area #editor .button-dragdrop{
-    background-image: url('../images/editor/button3.png');
+    background-image: url('../images/editor/dragdrop.png');
+}
+#container #area #editor .button-audio{
+    background-image: url('../images/editor/audio.png');
+}
+#container #area #editor .button-style{
+    background-image: url('../images/editor/style.png');
+}
+#container #area #editor .button-list{
+    background-image: url('../images/editor/list.png');
 }
 .entity-true-false-helper{
     background-image: url('../images/editor/button1.png');
@@ -221,7 +244,16 @@
     cursor: move;
 }
 .entity_editing.dragdrop{
-    border: solid 1px #377777;
+    border: solid 1px #606051;
+}
+.entity_editing.audio{
+    border: solid 1px #76C2AF;
+}
+.entity_editing.style{
+    border: solid 1px #4F5D73;
+}
+.entity_editing.list{
+    border: solid 1px #E0995E;
 }
 .entity .box{
     overflow: auto;
