@@ -33,7 +33,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
 </script>
 <main id="activity_set_home" class="detalle">
     <div class="breadcrumb-class">
-        Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->title; ?></b>
+        Est&aacute; en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->title; ?></b>
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
@@ -43,15 +43,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
                 Your browser does not support the audio element.
             </audio>
         </div>
-        <div id="credits-movies" class="col-xs-12 col-sm-12 col-md-4">
-            <img src="" alt="" />
-            <span><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15"> Credits</a></span>
-        </div>
-    </div>
-    <div class="row row2">
-        <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
+        <!-- Acknowledgments -->
+        <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">
             <?php
-                foreach ($model->sections as $section){
+            foreach ($model->sections as $section){
+                if($section->sectionType->name === 'acknowledgments') {
                     $publishedVersion=$section->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){
@@ -62,6 +58,35 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
                                     echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
                                 }
                             echo '</ul></li></ul>';
+                        }
+                    }
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <div class="row row2">
+        <!-- Sections -->
+        <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
+            <!-- Credits -->
+            <div id="credits-movies">
+                <img src="" alt="" />
+                <span><a class="mnu_button" href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15"> Credits</a></span>
+            </div>
+            <?php
+                foreach ($model->sections as $section){
+                    if($section->sectionType->name !== 'acknowledgments') {
+                        $publishedVersion=$section->publishedVersion();
+                        if($publishedVersion){
+                            if(count($publishedVersion->activities)===1){
+                                echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+                            }elseif(count($publishedVersion->activities)>1){
+                                echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
+                                    foreach ($publishedVersion->activities as $activity) {
+                                        echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
+                                    }
+                                echo '</ul></li></ul>';
+                            }
                         }
                     }
                 }

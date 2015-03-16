@@ -43,12 +43,6 @@ if(isset($model->authAssignment->itemname)) {
 	</div>
 
 	<div class="field">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
-
-	<div class="field">
 		<?php echo $form->labelEx($model,'active'); ?>
 		<?php echo $form->dropDownList($model,'active',
 			array('1'=>'Activo', '0'=>'Inactivo')

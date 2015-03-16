@@ -261,17 +261,36 @@ var Workspace = function(params){
                     if(editor.currentStep){
                         var displacement=self.div.offset();
                         var type="";
+                        var size={
+                            height:160,
+                            width:100
+                        };
                         if(ui.draggable.hasClass("button-basic")){
                             type="basic";
                         }else if(ui.draggable.hasClass("button-dragdrop")){
                             type="dragdrop";
+                        }else if(ui.draggable.hasClass("button-audio")){
+                            type="audio";
+                            size={
+                                height:50,
+                                width:300
+                            };
+                        }else if(ui.draggable.hasClass("button-style")){
+                            type="style";
+                            size={
+                                height:50,
+                                width:300
+                            };
+                        }else if(ui.draggable.hasClass("button-list")){
+                            type="list";
                         }
                         self.addEntity(new Entity({
                             type:type,
                             pos:{
                                 left:ui.position.left-displacement.left,
                                 top:ui.position.top-displacement.top
-                            }
+                            },
+                            size:size
                         }));
                     }else{
                         editor.message("Seleccione un paso en una sección para iniciar la edición.");

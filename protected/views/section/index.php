@@ -41,22 +41,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         
         var stepId=parseInt($("#activity_set_home").attr("data-step-id"));
         editor.load(stepId);
-        
-        //Revisa los objectos de la secciñón y los redimensiona
-//        $(".object").each(function(){
-//            console.debug($(this));
-//            $(this).css({
-//                left:$(this).attr('data-left')+'px',
-//                top:$(this).attr('data-top')+'px',
-//                height:$(this).attr('data-height'),
-//                width:$(this).attr('data-width'),
-//                overflow:'auto',
-//                position:'absolute'
-//            });
-//            
-            //Agrega los eventos a los objetos
-//            $(this).find(".editor-radio-object").buttonset();
-//        });
     });
 </script>
 
@@ -68,15 +52,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
             <h2><?php echo $section->activitySet->title; ?></h2>
         </div>
-        <div id="credits-movies" class="col-xs-12 col-sm-12 col-md-4">
-            <img src="" alt="" />
-            <span><a href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15"> Credits</a></span>
-        </div>
-    </div>
-    <div class="row row2">
-        <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
+        <!-- Acknowledgments -->
+        <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">
             <?php
-                foreach ($activitySet->sections as $sectionIter){
+            foreach ($activitySet->sections as $sectionIter){
+                if($sectionIter->sectionType->name === 'acknowledgments') {
                     $publishedVersion=$sectionIter->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){
@@ -87,6 +67,35 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                     echo '<li><a id="mnu_'.$sectionIter->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'/activity/'.$activityMenu->id.'">'.$activityMenu->name.'</a></li>';
                                 }
                             echo '</ul></li></ul>';
+                        }
+                    }
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <div class="row row2">
+        <!-- Sections -->
+        <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
+            <!-- Credits -->
+            <div id="credits-movies">
+                <img src="" alt="" />
+                <span><a class="mnu_button" href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15"> Credits</a></span>
+            </div>
+            <?php
+                foreach ($activitySet->sections as $sectionIter){
+                    if($sectionIter->sectionType->name !== 'acknowledgments') {
+                        $publishedVersion=$sectionIter->publishedVersion();
+                        if($publishedVersion){
+                            if(count($publishedVersion->activities)===1){
+                                echo '<a id="mnu_'.$sectionIter->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'">'.$sectionIter->sectionType->label.'</a>';
+                            }elseif(count($publishedVersion->activities)>1){
+                                echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$sectionIter->sectionType->label.'<span class="caret"></span></a><ul>';
+                                    foreach ($publishedVersion->activities as $activityMenu) {
+                                        echo '<li><a id="mnu_'.$sectionIter->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'/activity/'.$activityMenu->id.'">'.$activityMenu->name.'</a></li>';
+                                    }
+                                echo '</ul></li></ul>';
+                            }
                         }
                     }
                 }
@@ -128,7 +137,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         </div>
         <div class="step_instruction"><?php echo $step->instruction; ?></div>
     </div>
-    <div id="workspace" class="row row4 row_activities"></div>
+    <div id="workspace" class="row row4 row_activities yui3-cssreset"></div>
     
     
     <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />

@@ -40,8 +40,8 @@ main.detalle .breadcrumb-class {
 }
 #links {
   height: 20px;
-  margin: 70px auto 0;
-  width: 500px;
+  margin: 10px auto 0;
+  width: 550px;
 }
 #links .link {
   float: left;
@@ -148,7 +148,7 @@ main.detalle .breadcrumb-class {
   float: left;
   font-size: 16px;
   margin-left: 2px;
-  padding: 10px 6px;
+  padding: 10px 11px;
 }
 #menu-movies a.active {
   background: green;
@@ -157,7 +157,7 @@ main.detalle .breadcrumb-class {
 }
 #controls-movies {
   height: 17px;
-  margin: 10px 0 20px;
+  margin: 5px 0 5px;
 }
 #controls-movies #progress,
 #controls-movies #volume {
@@ -165,6 +165,14 @@ main.detalle .breadcrumb-class {
   margin-left: 10px;
 }
 #credits-movies {
+  font-size: 16px;
+  margin-top: 0px;
+  text-align: right;
+}
+#credits-movies a.mnu_button {
+  margin-right: 30px;
+}
+#menu-movies-acknowledgments {
   font-size: 16px;
   margin-top: 30px;
   text-align: right;

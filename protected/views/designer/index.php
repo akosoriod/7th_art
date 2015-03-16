@@ -11,10 +11,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/colorpicker/spectrum.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/uploader/uploader.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/colorpicker/spectrum.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinymce/jquery.tinymce.min.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tabelizer/jquery.tabelizer.min.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/uploader/uploader.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/State.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Entity.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Workspace.js');
@@ -30,7 +32,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         editor.init();
     });
 </script>
-<main id="editor_page">
+<main id="editor_page" data-last-step-id="<?php echo User::getCurrentUser()->last_step_id; ?>">
     <?php
     $this->breadcrumbs=array(
 	'Activity Sets',
@@ -46,13 +48,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <?php
                         $letter="a";
                         foreach ($activitySet->sections as $section) {
-                            echo '<tr data-level="1" id="level_1_'.$letter.'"><td>'.$section->sectionType->label.'</td></tr>';
+                            echo '<tr class="section" data-level="1" id="level_1_'.$letter.'" data-section-id="'.$section->id.'"><td>'.$section->sectionType->label.'</td></tr>';
                             foreach ($section->versions as $version) {
-                                echo '<tr data-level="2" id="level_2_'.$letter.'"><td>'.$version->name.'</td></tr>';
+                                echo '<tr class="version" data-level="2" id="level_2_'.$letter.'" data-version-id="'.$version->id.'"><td>'.$version->name.'</td></tr>';
                                 $count=0;
                                 foreach ($version->activities as $activity) {
                                     $count++;
-                                    echo '<tr data-level="3" id="level_3_'.$letter.'"><td>Actividad '.$count.'</td></tr>';
+                                    echo '<tr class="activity" data-activity-id="'.$activity->id.'" data-level="3" id="level_3_'.$letter.'"><td><div class="name">Actividad '.$count.'</div><div class="navbutton add_step" title="Agregar un paso">+</div></td></tr>';
                                     $countSteps=0;
                                     foreach ($activity->steps as $step) {
                                         $countSteps++;
@@ -67,7 +69,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                             . 'data-section-name="'.$section->sectionType->label.'" '
                                             . 'data-activity-set-id="'.$activitySet->id.'" '
                                             . 'data-activity-set-title="'.$activitySet->title.'" '
-                                        .'><td>Paso '.$countSteps.'</td></tr>';
+                                            . 'data-instruction="'.$step->instruction.'" '
+                                        .'><td><div class="name">Paso '.$countSteps.'</div><div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div><div class="navbutton delete" title="Eliminar este paso">x</div></td></tr>';
                                     }
                                 }
                             }
@@ -82,13 +85,17 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                 <div id="toolbar">
                     <div class="button button-basic" title="Entidad"></div>
                     <div class="button button-dragdrop" title="Entidad drag and drop"></div>
+                    <div class="button button-list" title="Entidad de listas ordenables"></div>
+                    <div class="button button-audio" title="Entidad de audio"></div>
+                    <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
                     <!--<div class="button true_false" id="button-true-false" title="True-False"></div>-->
                     <!--<div class="button fill" id="button-fill" title="Llenar"></div>-->
                     <!--<div class="button multi-single" id="button-multi-single" title="Opción Múltiple, única respuesta"></div>-->
                     <!--<div class="button multi-multi" id="button-multi-multi" title="Opción Múltiple, múltiple respuesta"></div>-->
                     <!--<div class="button redo" id="button-redo" title="Rehacer"></div> TODO: Arreglar el comportamiento de redo-->
-                    <div class="button undo" id="button-undo" title="Deshacer"></div>
-                    <div class="button" id="save" title="Guardar actividad"></div>
+                    <div class="separator"></div>
+                    <div class="button undo pointer" id="button-undo" title="Deshacer"></div>
+                    <div class="button pointer" id="save" title="Guardar actividad"></div>
                     <div id="editing_path">
                         <span id="message"><?php echo $activitySet->title; ?></span>
                     </div>
@@ -100,7 +107,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                         <div class="state_button" id="state_wrong" title="Ver ejercicio en estado incorrecto" data-state="wrong">I</div>
                     </div>
                 </div>
-                <div id="workspace" class="droppable"></div>
+                <div id="workspace" class="droppable yui3-cssreset"></div>
             </div>
         </div>
     </div>

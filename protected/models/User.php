@@ -13,6 +13,7 @@
  * @property string $auth_type
  * @property string $email
  * @property integer $entries
+ * @property integer $last_step_id
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
@@ -41,13 +42,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password', 'required'),
-			array('entries', 'numerical', 'integerOnly'=>true),
+			array('name, lastname, username, password', 'required'),
+			array('entries, last_step_id', 'numerical', 'integerOnly'=>true),
 			array('name, lastname, username, password, active, auth_type', 'length', 'max'=>45),
 			array('email', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, lastname, username, password, active, auth_type, email, entries', 'safe', 'on'=>'search'),
+			array('id, name, lastname, username, password, active, auth_type, email, entries, last_step_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +67,7 @@ class User extends CActiveRecord
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
 			'userParameters' => array(self::HAS_MANY, 'UserParameter', 'user_id'),
 			'roles' => array(self::MANY_MANY, 'Role', 'user_role(user_id, role_id)'),
+			'authAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
 		);
 	}
 
@@ -76,13 +78,13 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'lastname' => 'Lastname',
-			'username' => 'Username',
-			'password' => 'Password',
-			'active' => 'Active',
-			'auth_type' => 'Auth Type',
-			'email' => 'Email',
+			'name' => 'Nombres',
+			'lastname' => 'Apellidos',
+			'username' => 'Login',
+			'password' => 'Contrase&ntilde;a',
+			'active' => 'Estado',
+			'auth_type' => 'Tipo de Autenticación',
+			'email' => 'Correo Electr&oacute;nico',
 			'entries' => 'Entries',
 		);
 	}
@@ -114,6 +116,7 @@ class User extends CActiveRecord
 		$criteria->compare('auth_type',$this->auth_type,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('entries',$this->entries);
+                $criteria->compare('last_step_id',$this->last_step_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -205,4 +208,10 @@ class User extends CActiveRecord
             $authAssignment->data='N;';
             $authAssignment->save();
         }
+		
+		public function beforeSave() {
+			$hash = md5($this->password);
+			$this->password = $hash;
+			return true;
+		}
 }

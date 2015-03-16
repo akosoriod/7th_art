@@ -46,6 +46,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
         </div>
         <div id="users" class="section">
             <h3 class="section_title">Administradores y Operadores</h3>
+            <div class="buttons">
+                <?php echo CHtml::link("Crear Administrador/Operador", array('/user/create')); ?>
+            </div>
+            <div>&nbsp;</div>
             <div class="list">
                 <?php
                     foreach ($users as $user) {

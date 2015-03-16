@@ -137,22 +137,15 @@ class Entity extends CActiveRecord
         }
         
         /**
-         * Retorna una lista de objetos a partir de una Sección
-         * @param Section $section Objeto de tipo Section
-         * @return Object[] Lista de Objetos de la Sección
+         * Elimina definitivamente el contenido de la entidad
          */
-//        public static function getObjectsBySection($section){
-//            $objectList=array();
-//            foreach ($section->versions as $version) {
-//                foreach ($version->activities as $activity) {
-//                    foreach ($activity->steps as $step) {
-//                        $stepObjects=self::getObjectsByStep($step);
-//                        if(is_array($stepObjects)){
-//                            $objectList=array_merge(self::getObjectsByStep($step),$objectList);
-//}
-//                    }
-//                }
-//            }
-//            return $objectList;
-//        }
+        public function remove(){
+            foreach ($this->entities as $subentity) {
+                $subentity->remove();
+                $subentity->delete();
+            }
+            foreach ($this->entityStates as $state){
+                $state->delete();
+            }
+        }
 }
