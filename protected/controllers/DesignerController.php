@@ -12,7 +12,8 @@ class DesignerController extends Controller {
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions'=>array(
                         'index',
-                        'saveEntitiesByAjax','loadEntitiesByAjax'
+                        'saveEntitiesByAjax','loadEntitiesByAjax',
+                        'createStepByAjax','deleteStepByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -43,8 +44,7 @@ class DesignerController extends Controller {
             $this->redirect((array('site/index')));
         }
     }
-    
-    
+        
     /**
     * Guarda un conjunto de entidades en un paso
     */
@@ -172,5 +172,62 @@ class DesignerController extends Controller {
         }
         //Retorna los objetos que se hayan encontrado
         echo json_encode(array("entities"=>$list));
+    }
+    
+    /**
+    * Retorna la lista de entidades de un paso
+    * @param JSONAjax $schedule JSON with the schedule by ajax
+    */
+    public function actionCreateStepByAjax(){
+        $success=false;
+        //Get the client data
+        $activityId=intval($_POST['activityId']);
+        $activity=Activity::model()->findByPk($activityId);
+        if($activity){
+            //Crea un paso
+            $step=new Step();
+            $step->instruction="";
+            $step->activity_id=$activity->id;
+            $step->css="";
+            $step->insert();
+            $success=true;
+            $stepData=array(
+                'stepId'=>intval($step->id),
+                'stepName'=>"Paso ".(count($step->activity->steps)+1),
+                'activityId'=>intval($step->activity->id),
+                'activityName'=>"Actividad ".count($step->activity->version->activities),
+                'versionId'=>intval($step->activity->version_id),
+                'versionName'=>$step->activity->version->name,
+                'sectionId'=>intval($step->activity->version->section_id),
+                'sectionName'=>$step->activity->version->section->sectionType->label,
+                'activitySetId'=>intval($step->activity->version->section->activity_set_id),
+                'activitySetTitle'=>$step->activity->version->section->activitySet->title,
+                'countSteps'=>count($step->activity->steps)+1,
+                'countActiviySets'=>count($step->activity->version->section->activitySet->sections)
+            );
+        }
+        //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("success"=>$success,"stepData"=>$stepData));
+    }
+    
+    /**
+    * Retorna la lista de entidades de un paso
+    * @param JSONAjax $schedule JSON with the schedule by ajax
+    */
+    public function actionDeleteStepByAjax(){
+        $success=false;
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $step=Step::model()->findByPk($stepId);
+        if($step){
+            foreach ($step->entities as $entity) {
+                $entity->remove();
+                $entity->delete();
+            }
+            $step->delete();
+            $success=true;
+        }
+        //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("success"=>$success));
     }
 }

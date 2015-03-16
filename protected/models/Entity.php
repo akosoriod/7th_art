@@ -137,6 +137,16 @@ class Entity extends CActiveRecord
         }
         
         /**
+         * Elimina definitivamente el contenido de la entidad
+         */
+        public function remove(){
+            foreach ($this->entityStates as $state){
+                $state->delete();
+            }
+        }
+
+
+        /**
          * Retorna una lista de objetos a partir de una Sección
          * @param Section $section Objeto de tipo Section
          * @return Object[] Lista de Objetos de la Sección
