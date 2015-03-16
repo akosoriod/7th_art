@@ -41,22 +41,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         
         var stepId=parseInt($("#activity_set_home").attr("data-step-id"));
         editor.load(stepId);
-        
-        //Revisa los objectos de la secciñón y los redimensiona
-//        $(".object").each(function(){
-//            console.debug($(this));
-//            $(this).css({
-//                left:$(this).attr('data-left')+'px',
-//                top:$(this).attr('data-top')+'px',
-//                height:$(this).attr('data-height'),
-//                width:$(this).attr('data-width'),
-//                overflow:'auto',
-//                position:'absolute'
-//            });
-//            
-            //Agrega los eventos a los objetos
-//            $(this).find(".editor-radio-object").buttonset();
-//        });
     });
 </script>
 
@@ -153,7 +137,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         </div>
         <div class="step_instruction"><?php echo $step->instruction; ?></div>
     </div>
-    <div id="workspace" class="row row4 row_activities"></div>
+    <div id="workspace" class="row row4 row_activities yui3-cssreset"></div>
     
     
     <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />

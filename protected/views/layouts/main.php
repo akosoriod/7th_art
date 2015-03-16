@@ -30,6 +30,7 @@
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinyscrollbar/jquery.tinyscrollbar.min.js');
             //Estilos de 7th @rt
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
+            Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/reset-context-min.css','all');
         ?>
     </head>
     <body>

@@ -105,7 +105,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                         <div class="state_button" id="state_wrong" title="Ver ejercicio en estado incorrecto" data-state="wrong">I</div>
                     </div>
                 </div>
-                <div id="workspace" class="droppable"></div>
+                <div id="workspace" class="droppable yui3-cssreset"></div>
             </div>
         </div>
     </div>
