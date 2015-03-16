@@ -11,10 +11,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/colorpicker/spectrum.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/uploader/uploader.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/colorpicker/spectrum.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinymce/jquery.tinymce.min.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tabelizer/jquery.tabelizer.min.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/uploader/uploader.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/State.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Entity.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Workspace.js');

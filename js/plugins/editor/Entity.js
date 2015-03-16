@@ -46,27 +46,35 @@ var Entity = function(params){
         if(!options.pos){
             options.pos={left:0,top:0};
         }
+        if(!options.size){
+            options.size={height:160,width:100};
+        }
         self.states={
             /* Define los defaults para el estado pasivo (estado de la entidad en el editor) */
             'passive':new State({
                 type:'passive',
-                pos:{left:options.pos.left,top:options.pos.top}
+                pos:{left:options.pos.left,top:options.pos.top},
+                size:{height:options.size.height,width:options.size.width}
             }),
             'active':new State({
                 type:'active',
-                pos:{left:options.pos.left,top:options.pos.top}
+                pos:{left:options.pos.left,top:options.pos.top},
+                size:{height:options.size.height,width:options.size.width}
             }),
             'solved':new State({
                 type:'solved',
-                pos:{left:options.pos.left,top:options.pos.top}
+                pos:{left:options.pos.left,top:options.pos.top},
+                size:{height:options.size.height,width:options.size.width}
             }),
             'right':new State({
                 type:'right',
-                pos:{left:options.pos.left,top:options.pos.top}
+                pos:{left:options.pos.left,top:options.pos.top},
+                size:{height:options.size.height,width:options.size.width}
             }),
             'wrong':new State({
                 type:'wrong',
-                pos:{left:options.pos.left,top:options.pos.top}
+                pos:{left:options.pos.left,top:options.pos.top},
+                size:{height:options.size.height,width:options.size.width}
             })
         };
         if(editor.mode==='solution'){
