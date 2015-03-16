@@ -1026,10 +1026,11 @@ var Editor = function(params,callback){
             'data-activity-id="'+stepData.activityId+'" '+
             'data-activity-name="'+stepData.activityName+'" '+
             'data-version-id="'+stepData.versionId+'" '+
-            'data-version-name="'+stepData.versionName+
+            'data-version-name="'+stepData.versionName+'" '+
             'data-section-name="'+stepData.sectionName+'" '+
             'data-activity-set-id="'+stepData.activitySetId+'" '+
             'data-activity-set-title="'+stepData.activitySetTitle+'" '+
+            'data-instruction="'+stepData.instruction+'" '+
         '>'+
             '<td>'+
                 '<div class="control">'+

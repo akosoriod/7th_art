@@ -203,7 +203,8 @@ class DesignerController extends Controller {
                 'activitySetId'=>intval($step->activity->version->section->activity_set_id),
                 'activitySetTitle'=>$step->activity->version->section->activitySet->title,
                 'countSteps'=>count($step->activity->steps)+1,
-                'countActiviySets'=>count($step->activity->version->section->activitySet->sections)
+                'countActiviySets'=>count($step->activity->version->section->activitySet->sections),
+                'instruction'=>""
             );
         }
         //Retorna los objetos que se hayan encontrado
