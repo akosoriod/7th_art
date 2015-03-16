@@ -13,7 +13,7 @@ class DesignerController extends Controller {
                     'actions'=>array(
                         'index',
                         'saveEntitiesByAjax','loadEntitiesByAjax',
-                        'createStepByAjax','deleteStepByAjax'
+                        'createStepByAjax','deleteStepByAjax','updateStepInstructionByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -225,6 +225,25 @@ class DesignerController extends Controller {
                 $entity->delete();
             }
             $step->delete();
+            $success=true;
+        }
+        //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("success"=>$success));
+    }
+    
+    /**
+    * Retorna la lista de entidades de un paso
+    * @param JSONAjax $schedule JSON with the schedule by ajax
+    */
+    public function actionUpdateStepInstructionByAjax(){
+        $success=false;
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $instruction=$_POST['instruction'];
+        $step=Step::model()->findByPk($stepId);
+        if($step){
+            $step->instruction=$instruction;
+            $step->update();
             $success=true;
         }
         //Retorna los objetos que se hayan encontrado

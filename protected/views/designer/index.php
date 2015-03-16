@@ -67,6 +67,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                             . 'data-section-name="'.$section->sectionType->label.'" '
                                             . 'data-activity-set-id="'.$activitySet->id.'" '
                                             . 'data-activity-set-title="'.$activitySet->title.'" '
+                                            . 'data-instruction="'.$step->instruction.'" '
                                         .'><td><div class="name">Paso '.$countSteps.'</div><div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div><div class="navbutton delete" title="Eliminar este paso">x</div></td></tr>';
                                     }
                                 }

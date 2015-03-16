@@ -26,6 +26,7 @@ var Editor = function(params,callback){
     self.saving=false;              //Indica si está guardando, para no repetir el proceso
     self.creatingStep=false;        //Indica si está creando un paso, para no repetir el proceso
     self.deletingStep=false;        //Indica si está borrando un paso, para no repetir el proceso
+    self.instructionStep=false;     //Indica si está actualizando la instrucción un paso, para no repetir el proceso
     self.loading=false;             //Indica si está cargando, para no repetir el proceso
     self.autosaveFrequency=0;       //Cada cuantos segundos se autoguarda
     
@@ -836,6 +837,40 @@ var Editor = function(params,callback){
     };
     
     /**
+     * Actualiza la instrucción de un paso
+     * @param {id} stepId Id del paso
+     * @param {string} instruction Instrucción del paso
+     * @param {function} callback Function to return the response
+     */
+    function updateInstructionStep(stepId,instruction,callback){
+        if(!self.instructionStep){
+            self.instructionStep=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'updateStepInstructionByAjax',
+                type: "POST",
+                data:{
+                    stepId:stepId,
+                    instruction:instruction
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.instructionStep=false;
+            });
+        }
+    };
+    
+    /**
      * Reordena los id de los pasos
      * @param {element} activity Elemento de actividad
      */
@@ -886,6 +921,35 @@ var Editor = function(params,callback){
                 });
             }
         });
+        
+        //Cambiar instrucción del paso
+        var instructionButton=stepElement.find('.instruction');
+        instructionButton.click(function(e){
+            e.stopPropagation();
+            var stepId=parseInt(stepElement.attr("data-step-id"));
+            $('<div title="Instrucción del paso"><p><textarea id="intructionInput" type="text" placeholder="Escriba la instrucción para el paso">'+stepElement.attr("data-instruction")+'</textarea></p></div>').dialog({
+                modal:true,
+                width:300,
+                buttons:{
+                    "Cancelar":function(){
+                        $(this).dialog("close");
+                    },
+                    "Aceptar":function(){
+                        $(this).dialog("close");
+                        var instruction=$(this).find("#intructionInput").val();
+                        updateInstructionStep(stepId,instruction,function(err){
+                            if(err){
+                                self.message("No se puede actualizar la instrucción, por favor recargue la página e intente de nuevo.");
+                            }else{
+                                stepElement.attr("data-instruction",instruction);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        
+        //Click en el elemento
         stepElement.click(function(){
             self.currentStep={
                 'stepId':parseInt($(this).attr('data-step-id')),
