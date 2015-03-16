@@ -13,6 +13,7 @@
  * @property string $auth_type
  * @property string $email
  * @property integer $entries
+ * @property integer $last_step_id
  *
  * The followings are the available model relations:
  * @property ActivitySet[] $activitySets
@@ -42,12 +43,12 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, lastname, username, password', 'required'),
-			array('entries', 'numerical', 'integerOnly'=>true),
+			array('entries, last_step_id', 'numerical', 'integerOnly'=>true),
 			array('name, lastname, username, password, active, auth_type', 'length', 'max'=>45),
 			array('email', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, lastname, username, password, active, auth_type, email, entries', 'safe', 'on'=>'search'),
+			array('id, name, lastname, username, password, active, auth_type, email, entries, last_step_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -115,6 +116,7 @@ class User extends CActiveRecord
 		$criteria->compare('auth_type',$this->auth_type,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('entries',$this->entries);
+                $criteria->compare('last_step_id',$this->last_step_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
