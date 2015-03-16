@@ -59,6 +59,9 @@ var Editor = function(params,callback){
      * Initialize the editor
      */
     self.init=function(){
+        //Busca el último paso visto
+        self.lastStepId=parseInt(self.div.attr("data-last-step-id"));
+        
         //Set the loading html
         $('#toolbar').prepend(htmlLoading());
         //Se crea el espacio de trabajo y se configura
@@ -152,6 +155,18 @@ var Editor = function(params,callback){
         steps.each(function(){
             attachStepEvents($(this));
         });
+        
+        //Busca el último paso visto y lo muestra
+        var lastStep=self.div.find('#sections_tree').find('.step[data-step-id="'+self.lastStepId+'"]');
+        if(lastStep.length>0){
+            var section=self.div.find('#sections_tree').find('.section[data-section-id="'+lastStep.attr("data-section-id")+'"]');
+            var version=self.div.find('#sections_tree').find('.version[data-version-id="'+lastStep.attr("data-version-id")+'"]');
+            var activity=self.div.find('#sections_tree').find('.activity[data-activity-id="'+lastStep.attr("data-activity-id")+'"]');
+            section.click();
+            version.click();
+            activity.click();
+            lastStep.click();
+        }
     };
     
     /**

@@ -135,6 +135,9 @@ class DesignerController extends Controller {
         //Get the client data
         $stepId=intval($_POST['stepId']);
         $step=Step::model()->findByPk($stepId);
+        $user=User::getCurrentUser();
+        $user->last_step_id=$stepId;
+        $user->update();
         foreach ($step->entities as $entity) {
             $states=array();
             foreach ($entity->entityStates as $state) {

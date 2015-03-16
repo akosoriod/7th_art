@@ -30,7 +30,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         editor.init();
     });
 </script>
-<main id="editor_page">
+<main id="editor_page" data-last-step-id="<?php echo User::getCurrentUser()->last_step_id; ?>">
     <?php
     $this->breadcrumbs=array(
 	'Activity Sets',
@@ -46,9 +46,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <?php
                         $letter="a";
                         foreach ($activitySet->sections as $section) {
-                            echo '<tr data-level="1" id="level_1_'.$letter.'"><td>'.$section->sectionType->label.'</td></tr>';
+                            echo '<tr class="section" data-level="1" id="level_1_'.$letter.'" data-section-id="'.$section->id.'"><td>'.$section->sectionType->label.'</td></tr>';
                             foreach ($section->versions as $version) {
-                                echo '<tr class="version" data-level="2" id="level_2_'.$letter.'"><td>'.$version->name.'</td></tr>';
+                                echo '<tr class="version" data-level="2" id="level_2_'.$letter.'" data-version-id="'.$version->id.'"><td>'.$version->name.'</td></tr>';
                                 $count=0;
                                 foreach ($version->activities as $activity) {
                                     $count++;
