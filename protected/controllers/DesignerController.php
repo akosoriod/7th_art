@@ -193,7 +193,7 @@ class DesignerController extends Controller {
             $success=true;
             $stepData=array(
                 'stepId'=>intval($step->id),
-                'stepName'=>"Paso ".(count($step->activity->steps)+1),
+                'stepName'=>"Paso ".(count($step->activity->steps)),
                 'activityId'=>intval($step->activity->id),
                 'activityName'=>"Actividad ".count($step->activity->version->activities),
                 'versionId'=>intval($step->activity->version_id),

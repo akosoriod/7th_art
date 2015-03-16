@@ -24,6 +24,8 @@ var Editor = function(params,callback){
     
     self.numberLoadings=0;          //Cuenta el número de loadings para mostrar el gif
     self.saving=false;              //Indica si está guardando, para no repetir el proceso
+    self.creatingStep=false;        //Indica si está creando un paso, para no repetir el proceso
+    self.deletingStep=false;        //Indica si está borrando un paso, para no repetir el proceso
     self.loading=false;             //Indica si está cargando, para no repetir el proceso
     self.autosaveFrequency=0;       //Cada cuantos segundos se autoguarda
     
@@ -118,28 +120,36 @@ var Editor = function(params,callback){
         self.div.find('#sections_tree').tabelize({
             fullRowClickable : true
 	});
+        
+        //Crear un paso
+        var addStep=self.div.find('#sections_tree').find('.activity').find('.add_step');
+        addStep.click(function(e){
+            e.stopPropagation();
+            var activity=$(this).closest('.activity');
+            var activityId=parseInt(activity.attr("data-activity-id"));
+            createStep(activityId,function(err,data){
+                if(err||!data.success){
+                    self.message("No se puede crear el paso, por favor recargue la página e intente de nuevo.");
+                }else{
+                    self.message("El paso se ha creado con éxito.");
+                    if(activity.hasClass("contracted")){
+                        activity.click();
+                    }
+                    var html=htmlStep(data.stepData);
+                    var last=activity.nextAll(".l3-last").first();
+                    last.removeClass("l3-last l2-last l1-last");
+                    last.after(html);
+                    //Reordena los pasos de la actividad
+                    reorderSteps(activity);
+                    attachStepEvents(self.div.find('#sections_tree').find(".step[data-step-id="+data.stepData.stepId+"]"));
+                }
+            });
+        });
+        
+        
         var steps=self.div.find('#sections_tree').find('.step');
-        steps.click(function(){
-            self.currentStep={
-                'stepId':parseInt($(this).attr('data-step-id')),
-                'stepName':$(this).attr('data-step-name'),
-                'activityId':parseInt($(this).attr('data-activity-id')),
-                'activityName':$(this).attr('data-activity-name'),
-                'versionId':parseInt($(this).attr('data-version-id')),
-                'versionName':$(this).attr('data-version-name'),
-                'sectionId':parseInt($(this).attr('data-section-id')),
-                'sectionName':$(this).attr('data-section-name'),
-                'activitySetId':$(this).attr('data-activity-set-id'),
-                'activitySetTitle':$(this).attr('data-activity-set-title')
-            };
-            self.editingPathDiv.find("#message").text(
-                self.currentStep.sectionName+' > '+
-                self.currentStep.versionName+' > '+
-                self.currentStep.activityName+' > '+
-                self.currentStep.stepName
-            );
-            self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
-            self.load();
+        steps.each(function(){
+            attachStepEvents($(this));
         });
     };
     
@@ -760,6 +770,145 @@ var Editor = function(params,callback){
             });
         }
     };
+    
+    /**
+     * Crea un paso en una actividad usando Ajax
+     * @param {id} activityId Id de la actividad
+     * @param {function} callback Function to return the response
+     */
+    function createStep(activityId,callback){
+        if(!self.creatingStep){
+            self.creatingStep=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'createStepByAjax',
+                type: "POST",
+                data:{
+                    activityId:activityId
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.creatingStep=false;
+            });
+        }
+    };
+    
+    /**
+     * Borra un paso de una actividad usando Ajax
+     * @param {id} stepId Id del paso
+     * @param {function} callback Function to return the response
+     */
+    function deleteStep(stepId,callback){
+        if(!self.deletingStep){
+            self.deletingStep=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'deleteStepByAjax',
+                type: "POST",
+                data:{
+                    stepId:stepId
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.deletingStep=false;
+            });
+        }
+    };
+    
+    /**
+     * Reordena los id de los pasos
+     * @param {element} activity Elemento de actividad
+     */
+    function reorderSteps(activity){
+        var counter=1;
+        var next=activity.nextUntil(".l1");
+        next.each(function(){
+            $(this).find(".name").text("Paso "+counter);
+            counter++;
+        });
+    };
+    
+    /**
+     * Asocia los eventos a un botón de paso de la barra de bavegación
+     * @param {element} stepElement Elemento de paso en la barra de navegación
+     */
+    function attachStepEvents(stepElement){
+        //Eliminar un paso
+        var removeStep=stepElement.find('.delete');
+        removeStep.click(function(e){
+            e.stopPropagation();
+            var stepId=parseInt(stepElement.attr("data-step-id"));
+            var activity=stepElement.prevUntil('.version');
+            var next=activity.nextUntil(".l1");
+            if(next.length<=1){
+                self.message("Cada actividad debe tener al menos un paso.");
+            }else{
+                $('<div title="Borrar paso"><p>¿Borrar el paso seleccionado?</p></div>').dialog({
+                    modal:true,
+                    buttons:{
+                        "Cancelar":function(){
+                            $(this).dialog("close");
+                        },
+                        "Aceptar":function(){
+                            $(this).dialog("close");
+                            deleteStep(stepId,function(err){
+                                if(err){
+                                    self.message("No se puede eliminar el paso, por favor recargue la página e intente de nuevo.");
+                                }else{
+                                    stepElement.prev(".step").addClass("l3-last l2-last l1-last");
+                                    stepElement.remove();
+                                    //Reordena los pasos de la actividad
+                                    reorderSteps(activity);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        stepElement.click(function(){
+            self.currentStep={
+                'stepId':parseInt($(this).attr('data-step-id')),
+                'stepName':$(this).attr('data-step-name'),
+                'activityId':parseInt($(this).attr('data-activity-id')),
+                'activityName':$(this).attr('data-activity-name'),
+                'versionId':parseInt($(this).attr('data-version-id')),
+                'versionName':$(this).attr('data-version-name'),
+                'sectionId':parseInt($(this).attr('data-section-id')),
+                'sectionName':$(this).attr('data-section-name'),
+                'activitySetId':$(this).attr('data-activity-set-id'),
+                'activitySetTitle':$(this).attr('data-activity-set-title')
+            };
+            self.editingPathDiv.find("#message").text(
+                self.currentStep.sectionName+' > '+
+                self.currentStep.versionName+' > '+
+                self.currentStep.activityName+' > '+
+                self.currentStep.stepName
+            );
+            self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
+            self.load();
+        });
+    };
 
     /**
      * Add a show loading message to the pile
@@ -798,6 +947,53 @@ var Editor = function(params,callback){
                 '</div>'+
             '</div>';
         return html;
+    };
+    
+    /**
+     * Retorna el html de un paso
+     * @param {object} stepData Datos del paso para construir el HTML
+     * @returns {String} html del paso para los datos pasados
+     */
+    function htmlStep(stepData){
+        var letter = String.fromCharCode(96+stepData.countActiviySets);
+        return '<tr class="step l4 contracted  l3-last l2-last l1-last" data-level="4" id="level_4_'+letter+'" '+
+            'data-step-id="'+stepData.stepId+'" '+
+            'data-step-name="'+stepData.stepName+'" '+
+            'data-activity-id="'+stepData.activityId+'" '+
+            'data-activity-name="'+stepData.activityName+'" '+
+            'data-version-id="'+stepData.versionId+'" '+
+            'data-version-name="'+stepData.versionName+
+            'data-section-name="'+stepData.sectionName+'" '+
+            'data-activity-set-id="'+stepData.activitySetId+'" '+
+            'data-activity-set-title="'+stepData.activitySetTitle+'" '+
+        '>'+
+            '<td>'+
+                '<div class="control">'+
+                    '<div class="line level1">'+
+                        '<div class="vert"></div>'+
+                        '<div class="horz"></div>'+
+                    '</div>'+
+                    '<div class="line level2">'+
+                        '<div class="vert"></div>'+
+                        '<div class="horz"></div>'+
+                    '</div>'+
+                    '<div class="line level3">'+
+                        '<div class="vert"></div>'+
+                        '<div class="horz"></div>'+
+                    '</div>'+
+                    '<div class="line level4">'+
+                        '<div class="vert"></div>'+
+                        '<div class="horz"></div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="expander"></div>'+
+                '<div class="label">'+
+                    '<div class="name">'+stepData.stepName+'</div>'+
+                    '<div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div>'+
+                    '<div class="navbutton delete" title="Eliminar este paso">x</div>'+
+                '</div>'+
+            '</td>'+
+        '</tr>';
     };
     
     /**
