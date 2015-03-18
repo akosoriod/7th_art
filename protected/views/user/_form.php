@@ -2,6 +2,11 @@
 /* @var $this UserController */
 /* @var $model User */
 /* @var $form CActiveForm */
+if(isset($model->authAssignment->itemname)) {
+	$selectedItem = $model->authAssignment->itemname;
+} else {
+	$selectedItem = 'operator';
+}
 ?>
 
 <div class="form">
@@ -15,54 +20,53 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note">Los campos con <span class="required">*</span> son obligatorios.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
+	<div class="field">
 		<?php echo $form->labelEx($model,'name'); ?>
 		<?php echo $form->textField($model,'name',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'name'); ?>
 	</div>
 
-	<div class="row">
+	<div class="field">
 		<?php echo $form->labelEx($model,'lastname'); ?>
 		<?php echo $form->textField($model,'lastname',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'lastname'); ?>
 	</div>
 
-	<div class="row">
+	<div class="field">
 		<?php echo $form->labelEx($model,'username'); ?>
 		<?php echo $form->textField($model,'username',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'username'); ?>
 	</div>
 
-	<div class="row">
+	<div class="field">
 		<?php echo $form->labelEx($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
 
-	<div class="row">
+	<div class="field">
 		<?php echo $form->labelEx($model,'active'); ?>
-		<?php echo $form->textField($model,'active',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->dropDownList($model,'active',
+			array('1'=>'Activo', '0'=>'Inactivo')
+		); ?>
 		<?php echo $form->error($model,'active'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'auth_type'); ?>
-		<?php echo $form->textField($model,'auth_type',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'auth_type'); ?>
+	<div class="field">
+		<?php echo $form->labelEx($model,'Rol'); ?>
+		<?php echo CHtml::dropDownList('rol', 'rol', 
+		   array('administrator'=>'Administrador', 'operator'=>'Operador'),
+		   array('options' => array($selectedItem=>array('selected'=>true)))
+		); ?>
+		<?php echo $form->error($model,'Rol'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'email'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<div class="field">
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

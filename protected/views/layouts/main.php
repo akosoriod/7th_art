@@ -24,10 +24,13 @@
             Yii::app()->clientScript->registerCoreScript('jquery');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/form.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap-select.min.css','all');
+            Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tinyscrollbar/tinyscrollbar.css','all');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/7th_art.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinyscrollbar/jquery.tinyscrollbar.min.js');
             //Estilos de 7th @rt
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
+            Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/reset-context-min.css','all');
         ?>
     </head>
     <body>

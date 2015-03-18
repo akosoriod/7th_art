@@ -51,8 +51,8 @@ class Faq extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'question' => 'Question',
-			'answer' => 'Answer',
+			'question' => 'Pregunta',
+			'answer' => 'Respuesta',
 		);
 	}
 

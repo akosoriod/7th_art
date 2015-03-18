@@ -25,9 +25,13 @@ $this->menu=array(
 		'name',
 		'lastname',
 		'username',
-		'password',
+		//'password',
 		'active',
 		'auth_type',
 		'email',
+		array(
+		   'label'=>'Rol',
+		   'value'=>$model->authAssignment->itemname,
+		 ),
 	),
 )); ?>
