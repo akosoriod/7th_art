@@ -36,16 +36,383 @@ NO EDITAR DIRECTAMENTE EL CSS
 
 
 /* LAYOUT GENERAL */
+/* ==================== TYPOGRAFIA Y CLASES GENERAL PARA TODO EL CONTENIDO CENTRAL ==================== */
 
     main.detalle {
-        margin: 0 auto 10px;
+        font-family: 'Roboto', sans-serif !important;
+        margin: 0 10% 10px;
         max-width: 1010px;
 
             .breadcrumb-class {
                 margin: 10px 0;
             }
 
+
+                    *, input, button, select, textarea {
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                    }
+                    blockquote, q {
+                      background:url("../css/images/blockquote.png") no-repeat scroll 18px 14px rgba(253,253,253,0.7);
+                      border:1px solid #ebebeb;
+                      border-radius:5px;
+                      font-size:1.1em;
+                      margin-bottom:20px;
+                      padding:15px 15px 0 50px;
+                      quotes:none;
+                    }
+                    blockquote:before, q:before, blockquote:after, q:after {
+                      content:none;
+                    }
+                    blockquote p, q p {
+                      font-size:1.1em;
+                    }
+                    h1 {
+                      font-size:30px;
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                      margin:0 0 15px 0;
+                    }
+                    h2 {
+                      font-size:25px;
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                      margin:0 0 15px 0;
+                    }
+                    h3 {
+                      font-size:20px;
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                      margin:0 0 15px 0;
+                      border:none;
+                    }
+                    h4 {
+                      font-size:18px;
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                      margin:0 0 15px 0;
+                    }
+                    h5 {
+                      font-size:16px;
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                      margin:0 0 15px 0;
+                    }
+                    h6 {
+                      font-size:15px;
+                      font-family:"Ancizar sans", Tahoma, Geneva, sans-serif !important;
+                      margin:0 0 15px 0;
+                    }
+                    p {
+                      margin:0 0 20px 0;
+                    }
+                    .fa {
+                      font-family:FontAwesome !important;
+                    }
+                    table {
+                      border-collapse:collapse;
+                      border-color:#e5e5e5;
+                      border-spacing:0;
+                      border-style:solid;
+                      border-width:1px;
+                      margin-bottom:20px;
+                      width:100%;
+                      tr th {
+                        background-color:rgba(253,253,253,0.7);
+                        border-bottom-style:solid;
+                        border-bottom-width:1px;
+                        border-right:1px solid;
+                        color:#666666;
+                        font-weight:bold;
+                        padding:9px 20px;
+                        text-align:left;
+                      }
+                      tr td {
+                        background-color:rgba(253,253,253,0.7);
+                        border-color:#e5e5e5;
+                        border-color:#e5e5e5;
+                        border-right:1px solid;
+                        padding:9px 20px;
+                      }
+                      tr, tr td, tr th {
+                        border-color:#e5e5e5;
+                      }
+                    }
+                    .dropcap {
+                      float:left;
+                      font-size:29px;
+                      height:32px;
+                      line-height:30px;
+                      margin:2px 7px 0 2px;
+                      text-align:center;
+                      width:32px;
+                    }
+                    .dropcap.circle {
+                      background-color:#444444;
+                      border-radius:16px;
+                      color:white;
+                      font-size:18px;
+                      margin-right:10px;
+                    }
+                    ol {
+                      line-height:20px;
+                      margin-bottom:15px;
+                      padding:0 0 0 25px;
+                      li {
+                        border:none;
+                        font-size:1em;
+                      }
+                    }
+                    ul {
+                      line-height:20px;
+                      margin-bottom:15px;
+                      padding:0 0 0 25px;
+                      list-style:outside none none;
+                      padding-left:0;
+                      li {
+                        background-position:0 0.8em;
+                        background-repeat:no-repeat;
+                        border:none;
+                        border:none;
+                        list-style-position:inside;
+                        list-style-type:none;
+                        font-size:1em;
+                      }
+                      li.style1 {
+                        background-image:url("../css/images/li-style1.png");
+                        list-style-image:none;
+                        padding-left:25px;
+                      }
+                      li.style2 {
+                        background-image:url("../css/images/li-style2.png");
+                        list-style-image:none;
+                        padding-left:25px;
+                      }
+                      li.style3 {
+                        background-image:url("../css/images/li-style3.png");
+                        list-style-image:none;
+                        padding-left:25px;
+                      }
+                      li.style4 {
+                        background-image:url("../css/images/li-style4.png");
+                        list-style-image:none;
+                        padding-left:25px;
+                      }
+                      li.style5 {
+                        background-image:url("../css/images/li-style5.png");
+                        list-style-image:none;
+                        padding-left:25px;
+                      }
+                      li.style6 {
+                        background-image:url("../css/images/li-style6.png");
+                        list-style-image:none;
+                        padding-left:25px;
+                      }
+                    }
+                    .highlight {
+                      background:none repeat scroll 0 0 #50992e;
+                      color:white;
+                    }
+                    a:link {
+                      color:#50992e;
+                    }
+                    .notification {
+                      font-size:1.2em;
+                      margin:5px 0;
+                      padding:13px 40px 13px 18px;
+                      p {
+                        margin:0;
+                      }
+                    }
+                    .notification.error,
+                    .notification.error strong {
+                      background-color:#ffe9e9;
+                      color:#de5959;
+                    }
+                    .notification.success,
+                    .notification.success strong {
+                      background-color:#ebf6e0;
+                      color:#5f9025;
+                    }
+                    .notification.warning,
+                    .notification.warning strong {
+                      background-color:#fbfadd;
+                      color:#8f872e;
+                    }
+                    .notification.notice,
+                    .notification.notice strong {
+                      background-color:#e9f7fe;
+                      color:#5091b2;
+                    }
+                    .boxes {
+                      clear:both;
+                      color:white !important;
+                      content:"";
+                      display:table;
+                      text-align:center;
+                      .box-color-green {
+                        background-color:#38c782;
+                      }
+                      .box-color-blue {
+                        background-color:#0e83cd;
+                      }
+                      .box-color-violet {
+                        background-color:#a558a6;
+                      }
+                      .box-color-yellow {
+                        background-color:#ffba35;
+                      }
+                      a {
+                        color:white !important;
+                        text-decoration:underline;
+                      }
+                      * {
+                        color:white !important;
+                      }
+                    }
+                    .user-photo img {
+                      border-radius:50%;
+                      display:block;
+                      height:80px;
+                      margin:0 auto 11px;
+                      width:80px;
+                    }
+                    .buttons {
+                      clear:both;
+                      content:"";
+                      display:table;
+                      a {
+                        color:white;
+                        float:right;
+                        font-size:14px;
+                        margin:5px 0 0;
+                        padding:8px 15px;
+                      }
+                      a:hover {
+                        background-color:silver !important;
+                      }
+                      a:visited {
+                        color:white;
+                      }
+                      a.button-color-green {
+                        background-color:#38c782;
+                      }
+                      a.button-color-blue {
+                        background-color:#0e83cd;
+                      }
+                      a.button-color-violet {
+                        background-color:#a558a6;
+                      }
+                      a.button-color-yellow {
+                        background-color:#ffba35;
+                      }
+                    }
+                    .tabsdiv .tabs-nav {
+                      list-style:none;
+                      margin:0;
+                      overflow:hidden;
+                      padding:0;
+                      width:100%;
+                      li {
+                        background-color:#f6f6f6;
+                        border:none;
+                        color:white;
+                        float:left;
+                        line-height:38px;
+                        list-style-image:none;
+                        margin:0 1px 1px 0;
+                        overflow:hidden;
+                        padding:2px 20px;
+                        position:relative;
+                        vertical-align:baseline;
+                        a {
+                          transition:all 0.2s ease-in-out 0s;
+                        }
+                      }
+                      li.active {
+                        background-color:#38c782;
+                        a {
+                          color:white;
+                        }
+                      }
+                    }
+                    .tabsdiv .tabs-container {
+                      background-color:rgba(253,253,253,0.7);
+                      border:0 none;
+                      margin:0;
+                      padding:0;
+                      vertical-align:baseline;
+                      overflow:hidden;
+                      width:100%;
+                    }
+                    .tabsdiv .tab-content {
+                      margin:0;
+                      padding:15px;
+                      vertical-align:baseline;
+                    }
+                    .accordionsdiv .accordions-nav {
+                      list-style:none;
+                      margin:0;
+                      overflow:hidden;
+                      padding:0;
+                      width:100%;
+                      li {
+                        background-color:#f6f6f6;
+                        color:white;
+                        cursor:pointer;
+                        display:block;
+                        font-size:14px;
+                        font-weight:600;
+                        line-height:26px;
+                        margin-bottom:1px;
+                        outline:medium none;
+                        padding:10px 16px;
+                        position:relative;
+                        transition:background-color 200ms ease-in-out 0s;
+                        a {
+                          transition:all 0.2s ease-in-out 0s;
+                        }
+                      }
+                      li.active {
+                        background-color:#38c782;
+                        a {
+                          color:white;
+                        }
+                      }
+                      li:before {
+                        color:#38c782;
+                        content:"";
+                        display:block;
+                        float:right;
+                        font-family:"FontAwesome";
+                        font-size:14px;
+                        font-weight:500;
+                        line-height:25px;
+                        margin:2px 4px 0 0;
+                      }
+                      li.active:before {
+                        color:white;
+                        content:"";
+                      }
+                    }
+                    .accordionsdiv .accordions-container {
+                      background-color:rgba(253,253,253,0.7);
+                      border:0 none;
+                      margin:0;
+                      padding:0;
+                      vertical-align:baseline;
+                      overflow:hidden;
+                      width:100%;
+                    }
+                    .accordionsdiv .accordion-content {
+                      margin:0;
+                      padding:15px;
+                      vertical-align:baseline;
+                    }
+                    li.jjactive:before {
+                      color:white;
+                      content:"";
+                    }
     }
+
+    /* ==================== /TYPOGRAFIA Y CLASES GENERAL PARA TODO EL CONTENIDO CENTRAL ==================== */
+
+
+
 
     #investment_project {
         margin-top: 90px;
@@ -82,6 +449,16 @@ NO EDITAR DIRECTAMENTE EL CSS
 
     .front {
 
+        #welcome {
+            text-align: justify;
+
+                img {
+                    display: block;
+                    padding: 0 0 20px 0;
+                }
+
+        }
+
         form#loginform {
             margin: 70px auto 0;
             width: 300px;
@@ -96,7 +473,9 @@ NO EDITAR DIRECTAMENTE EL CSS
         }
 
         #intro_video {
+            float: right;
             height: 225px;
+            margin-top: 20px;
             width: 400px;
         }
     }
@@ -362,6 +741,32 @@ NO EDITAR DIRECTAMENTE EL CSS
         background: url(../images/perfume.4.filmmenu_muro.png) repeat center top transparent;
 
     }
+
+
+/* PAGE LEGAL */
+/* PAGE ABOUT US */
+/* PAGE TERMS */
+
+    body.page-legal,
+    body.page-aboutus,
+    body.page-terms {
+
+            h2,
+            img {
+              text-align: center;
+            }
+
+            h3 {
+              color: red;
+            }
+
+            .WordSection1 {
+                margin: 0 auto;
+                max-width: 550px;
+            }
+
+    }
+
 
 
 
