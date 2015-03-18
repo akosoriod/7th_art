@@ -86,10 +86,6 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_set
                 ?>
             </div>
             <div class="link">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c6.png" height="22" width="22" alt="" />
-                <a href="#">Flash Version</a>
-            </div>
-            <div class="link">
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'terms_of_use',
