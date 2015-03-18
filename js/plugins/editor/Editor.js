@@ -362,7 +362,7 @@ var Editor = function(params,callback){
                     plugins: [
                         "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
                         "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-                        "save table contextmenu directionality template paste textcolor textcolor jbimages"
+                        "save table contextmenu directionality template paste textcolor colorpicker jbimages"
                     ],
                     toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
                             " searchreplace wordcount fullscreen |"+
