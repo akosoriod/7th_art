@@ -43,14 +43,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_set
                     'id'=>'aboutus',
                     'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
-                        'title'=>'ABOUT US (English version)',
+                        'title'=>'ABOUT US',
                         'width'=>760,
                         'height'=>580,
                         'autoOpen'=>false,
                         'resizable' => false,
                     ),
                 ));
-                require_once(Yii::app()->basePath . '/views/site/terms_of_use.php');
+                require_once(Yii::app()->basePath . '/views/site/terms_of_use_tabs.php');
                 $this->endWidget('zii.widgets.jui.CJuiDialog');
                 ?>
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c2.png" height="22" width="22" alt="" />
@@ -74,7 +74,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_set
                         'resizable' => false,
                     ),
                 ));
-                require_once(Yii::app()->basePath . '/views/site/copyright.php');
+                require_once(Yii::app()->basePath . '/views/site/copyright_tabs.php');
                 $this->endWidget('zii.widgets.jui.CJuiDialog');
                 ?>
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c4.png" height="22" width="22" alt="" />
@@ -98,7 +98,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_set
                         'resizable' => false,
                     ),
                 ));
-                require_once(Yii::app()->basePath . '/views/site/about_us.php');
+                require_once(Yii::app()->basePath . '/views/site/about_us_tabs.php');
                 $this->endWidget('zii.widgets.jui.CJuiDialog');
                 ?>
                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c8.png" height="22" width="22" alt="" />

@@ -3,10 +3,10 @@
                 Est&aacute; en:&nbsp;<a href="http://unal.edu.co" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Secci&oacute;n</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>P&aacute;gina</b>
             </div>
             <div class="row row1">
-                <div id="div_img_camera_esp" class="col-xs-12 col-sm-12 col-md-5">
-                    <img id="img_camera_esp" src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/claqueta.png" height="329" width="367" alt="claqueta"/>
+                <div id="div_img_claqueta_esp" class="col-xs-12 col-sm-12 col-md-5">
+                    <img id="img_claqueta_esp" src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/claqueta.png" height="329" width="367" alt="claqueta"/>
                 </div>
-                <div id="terms" class="col-xs-12 col-sm-12 col-md-7">
+                <div id="terms_esp" class="col-xs-12 col-sm-12 col-md-7">
                     <h2>T&Eacute;RMINOS DE USO</h2>
                     <p>
                     7<sup>th</sup> @rt: The Power of Films to Learn English es una herramienta de la Universidad Nacional de Colombia creada para apoyar el aprendizaje autónomo del ingl&eacute;s como lengua extranjera, disponible para sus estudiantes de pregrado y posgrado y personal docente.
@@ -101,33 +101,6 @@
                     </p>
                     <br/>
                     <br/>
-
-                    <?php
-                    $form=$this->beginWidget('CActiveForm', array(
-                        'id'=>'aboutus-form',
-                    ));
-                    ?>
-                        <div id="buttons" class="col-xs-12 col-sm-12 col-md-12">
-                            <div id="btn_agree" class="button">
-                                <?php
-                                print CHtml::submitButton('I READ IT AND I AGREE', array('name'=>'AGREE'));
-                                ?>
-                            </div>
-                            <div id="btn_decline" class="button">
-                                    <?php
-                                    print CHtml::submitButton('I DECLINE', array('name'=>'DECLINE'));
-                                    ?>
-                            </div>
-                        </div>
-                    <?php $this->endWidget(); ?>
-
-                    <div id="steps" class="col-xs-12 col-sm-12 col-md-12">
-                        <div id="btn_step_1" class="step step_active">1</div>
-                        <div id="btn_step_2" class="step step_active">2</div>
-                        <div id="btn_step_3" class="step">3</div>
-                        <div id="btn_step_4" class="step">4</div>
-                    </div>
-
                 </div>
 
 
