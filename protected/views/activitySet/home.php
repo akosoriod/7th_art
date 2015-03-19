@@ -70,8 +70,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
             <!-- Credits -->
             <div id="credits-movies">
-                <img src="" alt="" />
-                <span><a class="mnu_button" href="#"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15"> Credits</a></span>
+                <!--<img src="" alt="" />-->
+                <span>
+                    <a class="mnu_button" href="#">
+                        <!--<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15">--> 
+                        Credits
+                    </a>
+                </span>
             </div>
             <?php
                 foreach ($model->sections as $section){
