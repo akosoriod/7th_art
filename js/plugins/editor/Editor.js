@@ -370,23 +370,34 @@ var Editor = function(params,callback){
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
         
-        
-        
         entity.div.css("position","relative");
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
-            if(self.editingEntity.type==="style"){
-                console.debug(self.editingEntity);
-            }else{
+            if(self.editingEntity.type!=="style"){
                 attachEventsEditingEntity(stateName);
             }
         });
-        
-        self.editingEntity.div.uploadFile({
-            url:self.appUrl+"protected/views/designer/upload.php"
-	});
-        
+        //Si es una página de estilos se muestra el cargador de archivos
+        if(self.editingEntity.type==="style"){
+            self.editingEntity.div.uploadFile({
+                url:self.appUrl+"protected/views/designer/upload.php",
+                fileName:"file",
+                dynamicFormData: function() {
+                    var data ={
+                        type: "style",
+                        entity:entity.id,
+                        extension:"css"
+                    };
+                    return data;
+                },
+                onSuccess:function(files,data,xhr){
+                    var response=JSON.parse(data);
+                    self.editingEntity.states['passive'].content='<p class="style_entity" data-file="'+response.file+'">Archivo cargado correctamente</p>';
+                    self.editingEntity.div.attr('data-file',response.file);
+                }
+            });
+        }
     };
     
     /**************************************************************************/
