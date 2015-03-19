@@ -1,6 +1,6 @@
         <main class="detalle">
             <div class="row row1">
-                <div id="divAboutUs" class="col-xs-12 col-sm-12 col-md-7">
+                <div id="divCopyrightEng" class="col-xs-12 col-sm-12 col-md-7">
                     <h2>7<sup>th</sup> @rt: The Power &amp; Magic of Films to Learn English</h2>
                     <p>
                     <b>UNIVERSIDAD NACIONAL DE COLOMBIA</b>
@@ -158,8 +158,8 @@
                     &copy; Todos los derechos reservados. Queda  estrictamente prohibida cualquier forma total o parcial de reproducción, almacenamiento en un sistema de recuperación de datos, transmisión de cualquier forma electrónica o mecánica o grabación, sin el permiso previo y por escrito de la Universidad Nacional de Colombia. Esta herramienta y cualquier otro material con derechos reservados presentado en ella, es de uso estrictamente académico en
                     </p>
                     <p>
-                        <div id="div_img_logo_unal" class="col-xs-12 col-sm-12 col-md-5">
-                            <img id="img_logo_unal" src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/logo_unal.png" height="100%" width="100%" alt="Escudo UNal"/>
+                        <div id="div_img_logo_unal_eng" class="col-xs-12 col-sm-12 col-md-5">
+                            <img id="img_logo_unal_eng" src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/logo_unal.png" height="100%" width="100%" alt="Escudo UNal"/>
                         </div>
                     </p>
                     <p>

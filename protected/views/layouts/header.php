@@ -68,6 +68,11 @@
                     </div>
                 </div>
             <?php } ?>
+            <div class="btn-group">
+                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <a href="#">7<sup>th</sup> @rt Research Version</a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="buscador">

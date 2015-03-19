@@ -1,7 +1,7 @@
         <main class="detalle">
             <div class="row row1">
-                <div id="divAboutUs" class="col-xs-12 col-sm-12 col-md-7">
-                    <h2>ABOUT US (English version)</h2>
+                <div id="divAboutUsEsp" class="col-xs-12 col-sm-12 col-md-7">
+                    <h2>ABOUT US (Versi&oacute;n en Espa&ntilde;ol)</h2>
                     <p>
                     7th@rt is a virtual tool researched, created and produced by the Foreign Languages Department to support the autonomous learning of English as a foreign language of under and postgraduates at Universidad Nacional de Colombia by making use of Cinema, the Internet and Virtual Learning environments, through learning activities aiming at  encouraging and developing anticipation, comprehension and extension macro abilities based on the characters, the settings, the topics and the plots of the films.
                     <br/>
@@ -16,8 +16,8 @@
                     <br/>
                     </p>
                     <p>
-                    <div id="div_img_camera" class="col-xs-12 col-sm-12 col-md-5">
-                        <img id="img_camera" src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/7thart_process.png" height="402" width="659" alt="claqueta"/>
+                    <div id="div_img_process_esp" class="col-xs-12 col-sm-12 col-md-5">
+                        <img id="img_process_esp" src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/7thart_process.png" height="402" width="659" alt="process"/>
                     </div>
                     </p>
                     <p><div>&nbsp;</div></p>
