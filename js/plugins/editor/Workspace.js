@@ -158,6 +158,8 @@ var Workspace = function(params){
         self.entities[entityId].deleteHtml();
         delete self.entities[entityId];
         if(self.logHistory){self.saveHistory();}
+        //Elimina la hoja de estilos de la entidad (si existe)
+        $('#entity_style_sheet_'+entityId).remove();
     };
     
     /**
