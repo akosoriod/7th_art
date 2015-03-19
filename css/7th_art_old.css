@@ -38,36 +38,6 @@ main.detalle .breadcrumb-class {
 #sys_footer {
   bottom: 0;
 }
-
-
-main.detalle *,
-main.detalle input,
-main.detalle button,
-main.detalle select,
-main.detalle textarea {
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
-}
-main.detalle blockquote,
-main.detalle q {
-  background: url("../css/images/blockquote.png") no-repeat scroll 18px 14px rgba(253, 253, 253, 0.7);
-  border: 1px solid #ebebeb;
-  border-radius: 5px;
-  font-size: 1.1em;
-  margin-bottom: 20px;
-  padding: 15px 15px 0 50px;
-  quotes: none;
-}
-main.detalle blockquote:before,
-main.detalle q:before,
-main.detalle blockquote:after,
-main.detalle q:after {
-  content: none;
-}
-main.detalle blockquote p,
-main.detalle q p {
-  font-size: 1.1em;
-}
-
 #links {
   height: 20px;
   margin: 10px auto 0;

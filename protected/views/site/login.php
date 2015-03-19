@@ -9,7 +9,8 @@
     <div class="row row1">
         <div id="welcome" class="col-xs-12 col-sm-12 col-md-6">
             <h2>Welcome to</h2>
-            <h1>The Power & Magic of Films to Learn English</h1>
+            <!--<h1>The Power & Magic of Films to Learn English</h1>-->
+            <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/Logotipo_7th_art_301x73.jpg" height="73" width="301">
             <p>7th @rt is directly concerned with the educational purpose of providing opportunities for independent learners to strengthen  and, to help foster positive attitudes for improvement and consolidation of knowledge of the English language, language skills and learning strategies.</p>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
