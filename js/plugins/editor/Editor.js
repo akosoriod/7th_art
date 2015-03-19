@@ -184,37 +184,6 @@ var Editor = function(params,callback){
             scroll: false,
             zIndex: 10000
         });
-        //Opción múltiple
-//        self.toolbar.find("#button-multi-single").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='entity-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
-//        self.toolbar.find("#button-multi-multi").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='entity-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
-//        self.toolbar.find("#button-true-false").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='entity-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
     };
     
     /**
@@ -362,7 +331,7 @@ var Editor = function(params,callback){
                     plugins: [
                         "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
                         "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-                        "save table contextmenu directionality template paste textcolor textcolor jbimages"
+                        "save table contextmenu directionality template paste textcolor colorpicker jbimages"
                     ],
                     toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
                             " searchreplace wordcount fullscreen |"+
@@ -400,12 +369,35 @@ var Editor = function(params,callback){
         entity.draw(stateName);
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
+        
         entity.div.css("position","relative");
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
-            attachEventsEditingEntity(stateName);
+            if(self.editingEntity.type!=="style"){
+                attachEventsEditingEntity(stateName);
+            }
         });
+        //Si es una página de estilos se muestra el cargador de archivos
+        if(self.editingEntity.type==="style"){
+            self.editingEntity.div.uploadFile({
+                url:self.appUrl+"protected/views/designer/upload.php",
+                fileName:"file",
+                dynamicFormData: function() {
+                    var data ={
+                        type: "style",
+                        entity:entity.id,
+                        extension:"css"
+                    };
+                    return data;
+                },
+                onSuccess:function(files,data,xhr){
+                    var response=JSON.parse(data);
+                    self.editingEntity.states['passive'].content='<p class="style_entity" data-file="'+response.file+'">Archivo cargado correctamente</p>';
+                    self.editingEntity.div.attr('data-file',response.file);
+                }
+            });
+        }
     };
     
     /**************************************************************************/

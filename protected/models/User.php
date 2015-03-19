@@ -209,9 +209,17 @@ class User extends CActiveRecord
             $authAssignment->save();
         }
 		
+		/**
+		 * This method is invoked before saving a record (after validation, if any).
+		 * You may override this method to do any preparation work for record saving.
+		 * Use isNewRecord to determine whether the saving is for inserting or updating record.
+		 * Make sure you call the parent implementation so that the event is raised properly.
+		 */
 		public function beforeSave() {
-			$hash = md5($this->password);
-			$this->password = $hash;
-			return true;
+			if($this->isNewRecord){
+				$hash = md5($this->password);
+				$this->password = $hash;
+			}
+			return parent::beforeSave();
 		}
 }

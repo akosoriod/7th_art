@@ -37,6 +37,13 @@
     margin: 0;
     padding: 1px 8px;
 }
+#credits-movies a.mnu_button {
+    margin-right: 0px;
+    padding: 10px 7px;
+}
+#menu-movies a.mnu_button {
+    padding: 10px 7px;
+}
 
 
 #activity_set_home #workspace, #activity_set_home .section_nav{
@@ -46,8 +53,34 @@
     padding: 0 15px;
     width: 1040px;
 }
+#activity_set_home .section_nav .text{
+    margin-right: 10px;
+}
 #activity_set_home .section_nav .step_id{
-    margin-left: 3px;
+    background-color: rgba(200, 200, 200, 0.5);
+    border-radius: 5px 5px 0 0;
+    display:inline-block;
+    font-size: 1.1em;
+    height: 19px;
+    line-height: 20px;
+    margin-bottom: 0px;
+    margin-left: 1px;
+    text-align: center;
+    width: 40px;
+}
+#activity_set_home .section_nav .active{
+    background-color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    height: 20px;
+    margin-bottom: 0px;
+}
+#activity_set_home .section_nav .step_id:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 20px;
+}
+#activity_set_home .section_nav .step_instruction{
+    font-size: 1.3em;
+    margin: 5px 0;
 }
 
 /* Estilos de el userspace */
