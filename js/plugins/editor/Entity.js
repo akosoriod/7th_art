@@ -203,7 +203,7 @@ var Entity = function(params){
             }
             
             //Si es una entidad de estilo, carga el estilo en la página
-            $('head').append('<link id="entity_style_sheet_'+self.id+'" rel="stylesheet" type="text/css" href="'+editor.appUrl+'protected/data/entity_'+self.id+'_style.css">');
+//            $('head').append('<link id="entity_style_sheet_'+self.id+'" rel="stylesheet" type="text/css" href="'+editor.appUrl+'protected/data/entity_'+self.id+'_style.css">');
         }
     };
     
