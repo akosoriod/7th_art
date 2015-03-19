@@ -1,0 +1,723 @@
+/*
+Universidad Nacional de Colombia
+7th @rt The Power of Films to Learn English
+7thart_bog@unal.edu.co
+2014
+*/
+
+/*
+ARCHIVO CREADO USANDO LESS
+NO EDITAR DIRECTAMENTE EL CSS
+*/
+
+/* HTML GENERAL */
+
+body {
+  background: white;
+}
+.ui-selectmenu-button {
+  min-width: 120px;
+  vertical-align: text-bottom;
+}
+.ui-selectmenu-button span.ui-selectmenu-text {
+  line-height: 1;
+  padding: 0 2.1em 0 4px;
+}
+textarea {
+  background-color: transparent;
+}
+/* LAYOUT GENERAL */
+
+/* ==================== TYPOGRAFIA Y CLASES GENERAL PARA TODO EL CONTENIDO CENTRAL ==================== */
+
+main.detalle {
+  font-family: 'Roboto', sans-serif !important;
+  margin: 0 10% 10px;
+  max-width: 1010px;
+}
+main.detalle .breadcrumb-class {
+  margin: 10px 0;
+}
+main.detalle *,
+main.detalle input,
+main.detalle button,
+main.detalle select,
+main.detalle textarea {
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+}
+main.detalle blockquote,
+main.detalle q {
+  background: url("../css/images/blockquote.png") no-repeat scroll 18px 14px rgba(253, 253, 253, 0.7);
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  padding: 15px 15px 0 50px;
+  quotes: none;
+}
+main.detalle blockquote:before,
+main.detalle q:before,
+main.detalle blockquote:after,
+main.detalle q:after {
+  content: none;
+}
+main.detalle blockquote p,
+main.detalle q p {
+  font-size: 1.1em;
+}
+main.detalle h1 {
+  font-size: 30px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h2 {
+  font-size: 25px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h3 {
+  font-size: 20px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+  border: none;
+}
+main.detalle h4 {
+  font-size: 18px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h5 {
+  font-size: 16px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle h6 {
+  font-size: 15px;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  margin: 0 0 15px 0;
+}
+main.detalle p {
+  margin: 0 0 20px 0;
+}
+main.detalle .fa {
+  font-family: FontAwesome !important;
+}
+main.detalle table {
+  border-collapse: collapse;
+  border-color: #e5e5e5;
+  border-spacing: 0;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+main.detalle table tr th {
+  background-color: rgba(253, 253, 253, 0.7);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-right: 1px solid;
+  color: #666666;
+  font-weight: bold;
+  padding: 9px 20px;
+  text-align: left;
+}
+main.detalle table tr td {
+  background-color: rgba(253, 253, 253, 0.7);
+  border-color: #e5e5e5;
+  border-right: 1px solid;
+  padding: 9px 20px;
+}
+main.detalle table tr,
+main.detalle table tr td,
+main.detalle table tr th {
+  border-color: #e5e5e5;
+}
+main.detalle .dropcap {
+  float: left;
+  font-size: 29px;
+  height: 32px;
+  line-height: 30px;
+  margin: 2px 7px 0 2px;
+  text-align: center;
+  width: 32px;
+}
+main.detalle .dropcap.circle {
+  background-color: #444444;
+  border-radius: 16px;
+  color: white;
+  font-size: 18px;
+  margin-right: 10px;
+}
+main.detalle ol {
+  line-height: 20px;
+  margin-bottom: 15px;
+  padding: 0 0 0 25px;
+}
+main.detalle ol li {
+  border: none;
+  font-size: 1em;
+}
+main.detalle ul {
+  line-height: 20px;
+  margin-bottom: 15px;
+  padding: 0 0 0 25px;
+  list-style: outside none none;
+  padding-left: 0;
+}
+main.detalle ul li {
+  background-position: 0 0.8em;
+  background-repeat: no-repeat;
+  border: none;
+  list-style-position: inside;
+  list-style-type: none;
+  font-size: 1em;
+}
+main.detalle ul li.style1 {
+  background-image: url("../css/images/li-style1.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style2 {
+  background-image: url("../css/images/li-style2.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style3 {
+  background-image: url("../css/images/li-style3.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style4 {
+  background-image: url("../css/images/li-style4.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style5 {
+  background-image: url("../css/images/li-style5.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle ul li.style6 {
+  background-image: url("../css/images/li-style6.png");
+  list-style-image: none;
+  padding-left: 25px;
+}
+main.detalle .highlight {
+  background: none repeat scroll 0 0 #50992e;
+  color: white;
+}
+main.detalle a:link {
+  color: #50992e;
+}
+main.detalle .notification {
+  font-size: 1.2em;
+  margin: 5px 0;
+  padding: 13px 40px 13px 18px;
+}
+main.detalle .notification p {
+  margin: 0;
+}
+main.detalle .notification.error,
+main.detalle .notification.error strong {
+  background-color: #ffe9e9;
+  color: #de5959;
+}
+main.detalle .notification.success,
+main.detalle .notification.success strong {
+  background-color: #ebf6e0;
+  color: #5f9025;
+}
+main.detalle .notification.warning,
+main.detalle .notification.warning strong {
+  background-color: #fbfadd;
+  color: #8f872e;
+}
+main.detalle .notification.notice,
+main.detalle .notification.notice strong {
+  background-color: #e9f7fe;
+  color: #5091b2;
+}
+main.detalle .boxes {
+  clear: both;
+  color: white !important;
+  content: "";
+  display: table;
+  text-align: center;
+}
+main.detalle .boxes .box-color-green {
+  background-color: #38c782;
+}
+main.detalle .boxes .box-color-blue {
+  background-color: #0e83cd;
+}
+main.detalle .boxes .box-color-violet {
+  background-color: #a558a6;
+}
+main.detalle .boxes .box-color-yellow {
+  background-color: #ffba35;
+}
+main.detalle .boxes a {
+  color: white !important;
+  text-decoration: underline;
+}
+main.detalle .boxes * {
+  color: white !important;
+}
+main.detalle .user-photo img {
+  border-radius: 50%;
+  display: block;
+  height: 80px;
+  margin: 0 auto 11px;
+  width: 80px;
+}
+main.detalle .buttons {
+  clear: both;
+  content: "";
+  display: table;
+}
+main.detalle .buttons a {
+  color: white;
+  float: right;
+  font-size: 14px;
+  margin: 5px 0 0;
+  padding: 8px 15px;
+}
+main.detalle .buttons a:hover {
+  background-color: silver !important;
+}
+main.detalle .buttons a:visited {
+  color: white;
+}
+main.detalle .buttons a.button-color-green {
+  background-color: #38c782;
+}
+main.detalle .buttons a.button-color-blue {
+  background-color: #0e83cd;
+}
+main.detalle .buttons a.button-color-violet {
+  background-color: #a558a6;
+}
+main.detalle .buttons a.button-color-yellow {
+  background-color: #ffba35;
+}
+main.detalle .tabsdiv .tabs-nav {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+main.detalle .tabsdiv .tabs-nav li {
+  background-color: #f6f6f6;
+  border: none;
+  color: white;
+  float: left;
+  line-height: 38px;
+  list-style-image: none;
+  margin: 0 1px 1px 0;
+  overflow: hidden;
+  padding: 2px 20px;
+  position: relative;
+  vertical-align: baseline;
+}
+main.detalle .tabsdiv .tabs-nav li a {
+  transition: all 0.2s ease-in-out 0s;
+}
+main.detalle .tabsdiv .tabs-nav li.active {
+  background-color: #38c782;
+}
+main.detalle .tabsdiv .tabs-nav li.active a {
+  color: white;
+}
+main.detalle .tabsdiv .tabs-container {
+  background-color: rgba(253, 253, 253, 0.7);
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  overflow: hidden;
+  width: 100%;
+}
+main.detalle .tabsdiv .tab-content {
+  margin: 0;
+  padding: 15px;
+  vertical-align: baseline;
+}
+main.detalle .accordionsdiv .accordions-nav {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+main.detalle .accordionsdiv .accordions-nav li {
+  background-color: #f6f6f6;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 26px;
+  margin-bottom: 1px;
+  outline: medium none;
+  padding: 10px 16px;
+  position: relative;
+  transition: background-color 200ms ease-in-out 0s;
+}
+main.detalle .accordionsdiv .accordions-nav li a {
+  transition: all 0.2s ease-in-out 0s;
+}
+main.detalle .accordionsdiv .accordions-nav li.active {
+  background-color: #38c782;
+}
+main.detalle .accordionsdiv .accordions-nav li.active a {
+  color: white;
+}
+main.detalle .accordionsdiv .accordions-nav li:before {
+  color: #38c782;
+  content: "";
+  display: block;
+  float: right;
+  font-family: "FontAwesome";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  margin: 2px 4px 0 0;
+}
+main.detalle .accordionsdiv .accordions-nav li.active:before {
+  color: white;
+  content: "";
+}
+main.detalle .accordionsdiv .accordions-container {
+  background-color: rgba(253, 253, 253, 0.7);
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  overflow: hidden;
+  width: 100%;
+}
+main.detalle .accordionsdiv .accordion-content {
+  margin: 0;
+  padding: 15px;
+  vertical-align: baseline;
+}
+main.detalle li.jjactive:before {
+  color: white;
+  content: "";
+}
+/* ==================== /TYPOGRAFIA Y CLASES GENERAL PARA TODO EL CONTENIDO CENTRAL ==================== */
+
+#investment_project {
+  margin-top: 90px;
+  text-align: center;
+}
+#sys_footer {
+  bottom: 0;
+}
+#links {
+  height: 20px;
+  margin: 70px auto 0;
+  width: 500px;
+}
+#links .link {
+  float: left;
+  margin-left: 5px;
+}
+#links .link img {
+  height: 22px;
+  width: 22px;
+}
+#links .link a {
+  font-weight: bold;
+}
+/* PAGE FRONT, INTRO */
+
+.front #welcome {
+  text-align: justify;
+}
+.front #welcome img {
+  display: block;
+  padding: 0 0 20px 0;
+}
+.front form#loginform {
+  margin: 70px auto 0;
+  width: 300px;
+}
+.front form#loginform label {
+  width: 70px;
+}
+.front .detalle > .row {
+  margin-top: 50px;
+}
+.front #intro_video {
+  float: right;
+  height: 225px;
+  margin-top: 20px;
+  width: 400px;
+}
+/* PAGE ABOUT_US */
+
+.page-about_us #div_img_camera {
+  margin-top: 20px;
+}
+.page-about_us #buttons {
+  margin-top: 40px;
+}
+.page-about_us #buttons #btn_agree {
+  float: left;
+  margin-left: 25%;
+  width: 127px;
+}
+.page-about_us #buttons #btn_decline {
+  float: left;
+  margin-left: 10%;
+  width: 56px;
+}
+.page-about_us #steps {
+  clear: both;
+  margin: 70px auto 30px;
+  width: 120px;
+}
+.page-about_us #steps .step {
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 15px;
+  margin-left: 3px;
+  text-align: center;
+  width: 15px;
+}
+/* PAGE HOME */
+
+.page-home #tools .tool {
+  float: left;
+}
+.page-home #sets .set {
+  background: orange;
+  float: left;
+  height: 130px;
+  margin: 12px;
+  width: 130px;
+}
+.page-home #sets .set .percent {
+  background: url(../images/percentage.png) no-repeat left top transparent;
+  display: block;
+  height: 47px;
+  margin: -23px 0 0 -23px;
+  padding: 16px 0 0 14px;
+  position: absolute;
+  width: 47px;
+}
+.page-home #sets .set .info {
+  color: white;
+  margin-top: -18px;
+}
+.page-home #sets .set .info .attribute.title {
+  background: transparent;
+  text-align: center;
+}
+.page-home #sets .set .info .hidden {
+  display: none;
+}
+.page-home .row1 {
+  margin: 0 0 40px 0;
+}
+.page-home .row1 #tools {
+  float: right;
+  margin-top: 25px;
+  width: 250px;
+}
+/* HOME PAGE -FOR ALL- MOVIES */
+
+#menu-movies {
+  height: 20px;
+}
+#menu-movies a.mnu_button {
+  background-color: #50992e;
+  color: white;
+  float: left;
+  font-size: 16px;
+  margin-left: 2px;
+  padding: 10px 6px;
+}
+#menu-movies a.active {
+  background: green;
+  float: left;
+  margin-left: 2px;
+}
+#controls-movies {
+  height: 17px;
+  margin: 10px 0 20px;
+}
+#controls-movies #progress,
+#controls-movies #volume {
+  float: right;
+  margin-left: 10px;
+}
+#credits-movies {
+  font-size: 16px;
+  margin-top: 30px;
+  text-align: right;
+}
+.page-set #parallax {
+  background-color: transparent;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  /* relative, absolute, fixed */
+  width: 100%;
+}
+.page-set .parallax-layer {
+  position: absolute;
+}
+/* SET ACTIVITIES PAGE -FOR ALL- MOVIES */
+
+.row_activities {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding-bottom: 20px;
+}
+#activities .instruction {
+  font-size: 17px;
+  margin: 20px 0 40px;
+}
+#activities .texttitle {
+  font-size: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+#activities .textsubtitle {
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 40px;
+  text-align: center;
+}
+#activities .title h4 {
+  font-size: 25px;
+  padding: 20px 0 10px;
+}
+#activities .synopsis textarea {
+  border: none;
+  padding: 10px;
+}
+#activities h3 {
+  border: none;
+  display: inline-block;
+}
+#activities #pager {
+  display: inline-block;
+  float: right;
+  margin: 20px 0;
+}
+#activities #pager .pagenumber a {
+  background-color: yellow;
+  display: inline-block;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 20px;
+}
+#activities #pager .active a {
+  border-bottom: 3px solid red;
+}
+#activities .cajatextoder {
+  clear: both;
+  float: right;
+  line-height: 1.5em;
+  width: 70%;
+}
+#activities .imagenizq {
+  float: left;
+  width: 30%;
+}
+#activities .checkanswer img {
+  clear: both;
+  float: right;
+  margin-top: 10px;
+}
+#activities ol li,
+#activities ul li {
+  border: none;
+}
+/* PAGE MOVIE PERFUME */
+
+.movie-perfume {
+  background: url(../images/perfume.4.filmmenu_muro.png) repeat center top transparent;
+}
+/* PAGE LEGAL */
+
+/* PAGE ABOUT US */
+
+/* PAGE TERMS */
+
+body.page-legal h2,
+body.page-aboutus h2,
+body.page-terms h2,
+body.page-legal img,
+body.page-aboutus img,
+body.page-terms img {
+  text-align: center;
+}
+body.page-legal h3,
+body.page-aboutus h3,
+body.page-terms h3 {
+  color: red;
+}
+body.page-legal .WordSection1,
+body.page-aboutus .WordSection1,
+body.page-terms .WordSection1 {
+  margin: 0 auto;
+  max-width: 550px;
+}
+/******************** TEMPORALES *************************/
+
+/* QUITAR MENUS QUE NO SE VEN EN CADA PAGINA
+        YA QUE CARGAN DINÁMICAMENTE */
+
+.front .navbar-,
+.page-about_us .navbar-,
+.page-home .navbar- {
+  display: none;
+}
+/* ACTIVIDAD DE PERFUME WHO IS WHO
+        estos estilos supongo se crean desde el editor
+        se trabajan aquí sólamente para presentación en la web */
+
+.whoswhoin .divTable {
+  background-color: #ffead7;
+  display: table;
+}
+.whoswhoin .headRow,
+.whoswhoin .divRow {
+  clear: both;
+}
+.whoswhoin .headRow .divCell,
+.whoswhoin .divRow .divCell {
+  float: left;
+  padding: 1.3% 1%;
+  text-align: center;
+  width: 16.66666666666667%;
+}
+.whoswhoin .headRow .divCell:first-child,
+.whoswhoin .divRow .divCell:first-child {
+  font-weight: bold;
+  text-align: left;
+}
+.whoswhoin .headRow .divCell {
+  background-color: #bb80a8;
+  color: white;
+}
+.whoswhoin .headRow .divCell:first-child {
+  background-color: transparent;
+}
+/* OTROS CREADOS POR MIGUEL */
+
+/* estilos de los pasos en la introducción a la herramienta */
+
+#steps .step {
+  float: left;
+  margin-left: 2px;
+}
+#steps .step_active {
+  background: orange;
+}
