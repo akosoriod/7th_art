@@ -184,37 +184,6 @@ var Editor = function(params,callback){
             scroll: false,
             zIndex: 10000
         });
-        //Opción múltiple
-//        self.toolbar.find("#button-multi-single").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='entity-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
-//        self.toolbar.find("#button-multi-multi").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='entity-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
-//        self.toolbar.find("#button-true-false").draggable({
-//            appendTo: "body",
-//            containment: "#workspace",
-//            cursor: "move",
-//            helper: function(){
-//                return $( "<div class='entity-fill-helper'></div>" );
-//            },
-//            opacity: 0.8,
-//            scroll: false
-//        });
     };
     
     /**
@@ -400,12 +369,24 @@ var Editor = function(params,callback){
         entity.draw(stateName);
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
+        
+        
+        
         entity.div.css("position","relative");
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
-            attachEventsEditingEntity(stateName);
+            if(self.editingEntity.type==="style"){
+                console.debug(self.editingEntity);
+            }else{
+                attachEventsEditingEntity(stateName);
+            }
         });
+        
+        self.editingEntity.div.uploadFile({
+            url:self.appUrl+"protected/views/designer/upload.php"
+	});
+        
     };
     
     /**************************************************************************/
