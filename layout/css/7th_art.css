@@ -570,6 +570,10 @@ main.detalle li.jjactive:before {
 .page-set .parallax-layer {
   position: absolute;
 }
+.page-set main.detalle .breadcrumb-class,
+.page-set main.detalle .breadcrumb-class a {
+  color: white;
+}
 /* SET ACTIVITIES PAGE -FOR ALL- MOVIES */
 
 .row_activities {
