@@ -114,6 +114,7 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
+                        $model->password=md5($model->password);
 			if($model->save()) {
 			
 				// Current user assignments
