@@ -42,6 +42,7 @@
     width: 220px;
 }
 #container #navigation .activityset_name{
+    min-height: 54px;
     overflow: hidden;
     padding: 13px 0;
     text-align: center;
