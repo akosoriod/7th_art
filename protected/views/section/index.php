@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         $('body').css({
             'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$section->activitySet->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
         });
-        $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
+        $('body').addClass('not-front page-set not-logged fullpage row-offcanvas row-offcanvas-right');
         
         
         
@@ -44,13 +44,13 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     });
 </script>
 
-<main id="activity_set_home" class="detalle" data-step-id="<?php echo $step->id; ?>">
+<main id="activity_set_home" class="detalle editor_main_space" data-step-id="<?php echo $step->id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
     <div class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
-            <h2><?php echo $section->activitySet->title; ?></h2>
+            <h2 id="activity_set_title"><?php echo $section->activitySet->title; ?></h2>
         </div>
         <!-- Acknowledgments -->
         <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">

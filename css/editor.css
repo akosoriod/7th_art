@@ -42,14 +42,8 @@
     width: 220px;
 }
 #container #navigation .activityset_name{
-    background: #E09A5E;
-    color:#4E443C;
-    font-family:Georgia,serif;
-    font-size: 24px;
-    font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
-    height: 54px;
-    line-height: 26px;
     overflow: hidden;
+    padding: 13px 0;
     text-align: center;
 }
 #container #navigation .activityset_sections{
