@@ -41,6 +41,12 @@ if(isset($model->authAssignment->itemname)) {
 		<?php echo $form->textField($model,'username',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'username'); ?>
 	</div>
+        
+        <div class="field">
+		<?php echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'password'); ?>
+	</div>
 
 	<div class="field">
 		<?php echo $form->labelEx($model,'active'); ?>
