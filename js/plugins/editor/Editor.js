@@ -290,6 +290,13 @@ var Editor = function(params,callback){
                 self.dialogEditEntity.find(".state_container").empty();
             },
             open: function(e,ui){
+                //Si se edita una entidad de estilo, solo se muestra el estado pasivo
+                if(self.editingEntity.type==="style"){
+                    self.dialogEditEntity.find(".state_buttons").find(".passive").hide();
+                    self.dialogEditEntity.find(".state_buttons").find(".wrong").hide();
+                    self.dialogEditEntity.find(".state_buttons").find(".right").hide();
+                    self.dialogEditEntity.find(".copy_passive").hide();
+                }
                 self.dialogEditEntity.find(".copy_passive").button();
                 self.dialogEditEntity.find("#tabs").tabs({
                     heightStyle: "fill",
@@ -432,10 +439,10 @@ var Editor = function(params,callback){
                 var previousContent=$(self.editingEntity.getState('passive').content);
                 previous=previousContent.attr('data-file');
             }
+//            self.editingEntity.div.text("Subir archivos");
             self.editingEntity.div.uploadFile({
                 url:self.appUrl+"protected/views/designer/upload.php",
                 fileName:"file",
-                showStatusAfterSuccess:false,
                 dynamicFormData: function() {
                     var data ={
                         activitySetName:self.activitySet.name,
