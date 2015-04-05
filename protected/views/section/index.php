@@ -23,11 +23,12 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
         $('body').css({
-            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$section->activitySet->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$section->activitySet->background.'?'.rand(1,1000000); ?>") center no-repeat transparent',
+            'background-size': 'cover',
+            'background-repeat': 'no-repeat',
+            'background-position': '50% 50%'
         });
         $('body').addClass('not-front page-set not-logged fullpage row-offcanvas row-offcanvas-right');
-        
-        
         
         var activitySet=new ActivitySet();
         activitySet.init();
