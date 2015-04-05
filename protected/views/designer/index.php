@@ -83,8 +83,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="area">
             <div id="editor">
                 <div id="toolbar">
-                    <div class="button button-config pointer" title="Configurar set de actividades"></div>
-                    <div class="separator"></div>
+<!--                    <div class="button button-config pointer" title="Configurar set de actividades"></div>
+                    <div class="separator"></div>-->
                     <div class="button button-basic" title="Entidad"></div>
                     <div class="button button-dragdrop" title="Entidad drag and drop"></div>
                     <!--<div class="button button-list" title="Entidad de listas ordenables"></div>-->
