@@ -296,6 +296,11 @@ var Editor = function(params,callback){
                     self.dialogEditEntity.find(".state_buttons").find(".wrong").hide();
                     self.dialogEditEntity.find(".state_buttons").find(".right").hide();
                     self.dialogEditEntity.find(".copy_passive").hide();
+                }else{
+                    self.dialogEditEntity.find(".state_buttons").find(".passive").show();
+                    self.dialogEditEntity.find(".state_buttons").find(".wrong").show();
+                    self.dialogEditEntity.find(".state_buttons").find(".right").show();
+                    self.dialogEditEntity.find(".copy_passive").show();
                 }
                 self.dialogEditEntity.find(".copy_passive").button();
                 self.dialogEditEntity.find("#tabs").tabs({
@@ -507,9 +512,6 @@ var Editor = function(params,callback){
         var container=$('#elementsIdentificator');
         container.append('<div id="entityTemporalContent">'+stateContent+'</div>');
         var contentElements=container.find('#entityTemporalContent');
-        
-        
-        
         
         //Se procesan los elementos input:text
         contentElements.find('input:text').each(function(){
