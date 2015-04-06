@@ -42,14 +42,9 @@
     width: 220px;
 }
 #container #navigation .activityset_name{
-    background: #E09A5E;
-    color:#4E443C;
-    font-family:Georgia,serif;
-    font-size: 24px;
-    font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
-    height: 54px;
-    line-height: 26px;
+    min-height: 54px;
     overflow: hidden;
+    padding: 13px 0;
     text-align: center;
 }
 #container #navigation .activityset_sections{
@@ -153,6 +148,7 @@ table.controller .label{
 #container #area #editor #toolbar{
     background: #BBB;
     height: 54px;
+    padding-left: 13px;
     position: relative;
     width: 100%;
 }
@@ -198,12 +194,15 @@ table.controller .label{
     cursor: move;
     float: left;
     height: 48px;
-    margin: 2px 5px;
+    margin: 2px 3px;
     width: 48px;
     z-index: 10;
 }
 #container #area #editor .pointer{
     cursor: pointer;
+}
+#container #area #editor .button-config{
+    background-image: url('../images/editor/gear.png');
 }
 #container #area #editor .button-basic{
     background-image: url('../images/editor/object.png');
@@ -217,7 +216,7 @@ table.controller .label{
     background: #A5A5A5;
     float: left;
     height: 48px;
-    margin: 3px 20px 0 20px;
+    margin: 3px 15px 0 15px;
     width: 3px;
 }
 #container #area #editor #button1{

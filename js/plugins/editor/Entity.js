@@ -201,9 +201,18 @@ var Entity = function(params){
             if(editor.mode==="solution"){
                 self.workspace.attachEventsSolutionMode();
             }
-            
             //Si es una entidad de estilo, carga el estilo en la página
-//            $('head').append('<link id="entity_style_sheet_'+self.id+'" rel="stylesheet" type="text/css" href="'+editor.appUrl+'protected/data/entity_'+self.id+'_style.css">');
+            if(self.type==="style"&&self.getState('passive').content!==""){
+                var content=$(self.getState('passive').content);
+                var file=content.attr('data-file');
+                if(self.workspace){
+                    $('body').append('<link id="'+file.replace(".","_")+'" rel="stylesheet" type="text/css" href="'+editor.activitySet.url+'css/'+file+'">');
+                    //Si es una entidad de estilos y está en modo solución, se oculta
+                    if(editor.mode==="solution"){
+                        self.div.hide();
+                    }
+                }
+            }
         }
     };
     

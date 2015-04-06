@@ -32,7 +32,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         editor.init();
     });
 </script>
-<main id="editor_page" data-last-step-id="<?php echo User::getCurrentUser()->last_step_id; ?>">
+<main id="editor_page" class="editor_main_space" data-last-step-id="<?php echo User::getCurrentUser()->last_step_id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
     <?php
     $this->breadcrumbs=array(
 	'Activity Sets',
@@ -40,7 +40,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     ?>
     <div id="container">
         <nav id="navigation">
-            <div class="activityset_name">
+            <div id="ql_activity_set_title" class="activityset_name activity_set_title">
                 <?php echo $activitySet->title; ?>
             </div>
             <div class="activityset_sections">
@@ -83,6 +83,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="area">
             <div id="editor">
                 <div id="toolbar">
+<!--                    <div class="button button-config pointer" title="Configurar set de actividades"></div>
+                    <div class="separator"></div>-->
                     <div class="button button-basic" title="Entidad"></div>
                     <div class="button button-dragdrop" title="Entidad drag and drop"></div>
                     <!--<div class="button button-list" title="Entidad de listas ordenables"></div>-->

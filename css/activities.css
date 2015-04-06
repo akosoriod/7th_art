@@ -46,7 +46,7 @@
 }
 
 
-#activity_set_home #workspace, #activity_set_home .section_nav{
+.editor_main_space .ql_workspace, .editor_main_space .section_nav{
     background-color: rgba(255, 255, 255, 0.5);
 }
 #activity_set_home .section_nav{

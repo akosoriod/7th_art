@@ -43,7 +43,7 @@ main.detalle input,
 main.detalle button,
 main.detalle select,
 main.detalle textarea {
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
 }
 main.detalle blockquote,
 main.detalle q {
@@ -67,33 +67,33 @@ main.detalle q p {
 }
 main.detalle h1 {
   font-size: 30px;
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
   margin: 0 0 15px 0;
 }
 main.detalle h2 {
   font-size: 25px;
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
   margin: 0 0 15px 0;
 }
 main.detalle h3 {
   font-size: 20px;
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
   margin: 0 0 15px 0;
   border: none;
 }
 main.detalle h4 {
   font-size: 18px;
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
   margin: 0 0 15px 0;
 }
 main.detalle h5 {
   font-size: 16px;
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
   margin: 0 0 15px 0;
 }
 main.detalle h6 {
   font-size: 15px;
-  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif !important;
+  font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
   margin: 0 0 15px 0;
 }
 main.detalle p {
@@ -714,7 +714,7 @@ body.page-terms .WordSection1 {
 .whoswhoin .headRow .divCell:first-child {
   background-color: transparent;
 }
-/* OTROS CREADOS POR MIGUEL */
+/* OTROS CREADOS POR EL EQUIPO DE SISTEMAS */
 
 /* estilos de los pasos en la introducción a la herramienta */
 

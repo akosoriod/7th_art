@@ -75,7 +75,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
         
     </div>
 
-	<div id="completedActivitySets" class="section">
+	<div id="activitySets" class="section">
             <h3 class="section_title">Sets de actividades aprobados</h3>
             
             <div class="list">

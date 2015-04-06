@@ -121,35 +121,39 @@ class SectionController extends Controller
 	 * Lists all models.
 	 */
 	public function actionIndex(){
-            $activitySet=false;
-            $section=false;
-            if(isset($_GET['movie'])&&isset($_GET['section'])){
-                $activitySet=ActivitySet::getByName($_GET['movie']);
-                $section=Section::getByName($activitySet,$_GET['section']);
-                $version=$section->publishedVersion();
-                if(isset($_GET['activity'])){
-                    $activity=Activity::model()->findByPk(intval($_GET['activity']));
-                }else{
-                    $activity=$version->firstActivity();
-                }
-                if(isset($_GET['step'])){
-                    $step=Step::model()->findByPk(intval($_GET['step']));
-                }else{
-                    $step=$activity->firstStep();
-                }
-            }
-            if($section&&$version&&$activity&&$step){
-		$dataProvider=new CActiveDataProvider('Section');
-		$this->render('index',array(
-                    'activitySet'=>$activitySet,
-                    'section'=>$section,
-                    'version'=>$version,
-                    'activity'=>$activity,
-                    'step'=>$step,
-                    'dataProvider'=>$dataProvider,
-		));
+            if(Yii::app()->user->isGuest){
+                $this->redirect(array('site/login'));
             }else{
-                $this->redirect(array('activitySet/home/movie/'.$activitySet->name));
+                $activitySet=false;
+                $section=false;
+                if(isset($_GET['movie'])&&isset($_GET['section'])){
+                    $activitySet=ActivitySet::getByName($_GET['movie']);
+                    $section=Section::getByName($activitySet,$_GET['section']);
+                    $version=$section->publishedVersion();
+                    if(isset($_GET['activity'])){
+                        $activity=Activity::model()->findByPk(intval($_GET['activity']));
+                    }else{
+                        $activity=$version->firstActivity();
+                    }
+                    if(isset($_GET['step'])){
+                        $step=Step::model()->findByPk(intval($_GET['step']));
+                    }else{
+                        $step=$activity->firstStep();
+                    }
+                }
+                if($section&&$version&&$activity&&$step){
+                    $dataProvider=new CActiveDataProvider('Section');
+                    $this->render('index',array(
+                        'activitySet'=>$activitySet,
+                        'section'=>$section,
+                        'version'=>$version,
+                        'activity'=>$activity,
+                        'step'=>$step,
+                        'dataProvider'=>$dataProvider,
+                    ));
+                }else{
+                    $this->redirect(array('activitySet/home/movie/'.$activitySet->name));
+                }
             }
 	}
 
