@@ -21,11 +21,16 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
             xorigin: 'center'
         });
         
+//        $('body').css({
+//            'background': 'url("<?php // echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
+//        });
         $('body').css({
-            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") center no-repeat transparent',
+            'background-size': 'cover',
+            'background-repeat': 'no-repeat',
+            'background-position': '50% 50%'
         });
-        
-        $('body').addClass('not-front page-set movie-perfume not-logged fullpage row-offcanvas row-offcanvas-right');
+        $('body').addClass('not-front page-set fullpage row-offcanvas row-offcanvas-right');
         
         var activitySet=new ActivitySet();
         activitySet.init();

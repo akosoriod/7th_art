@@ -45,6 +45,10 @@ var Editor = function(params,callback){
     self.appUrl=self.params.appUrl;
     self.mode=self.params.mode;
     self.ajaxUrl=self.appUrl+"index.php/designer/";
+    self.activitySet={ //Actual activitySet
+        name:"",
+        url:""
+    };
     /**
      * Constructor Method 
      */
@@ -61,6 +65,9 @@ var Editor = function(params,callback){
     self.init=function(){
         //Busca el último paso visto
         self.lastStepId=parseInt(self.div.attr("data-last-step-id"));
+        //Carga los datos del activity set
+        self.activitySet.name=$(".editor_main_space").attr("data-activity-set-name");
+        self.activitySet.url=self.appUrl+"protected/data/sets/"+self.activitySet.name+"/";
         
         //Set the loading html
         $('#toolbar').prepend(htmlLoading());
@@ -167,6 +174,45 @@ var Editor = function(params,callback){
             activity.click();
             lastStep.click();
         }
+        
+        //Configurar el set de actividades
+        //Pendiente, por ahora se sube con una entidad de estilos interna
+//        self.div.find('.button-config').click(function(){
+//            $(htmlConfigActivitySet()).dialog({
+//                height:270,
+//                modal:true,
+//                width:420,
+//                open:function(){
+//                    
+//                    $(this).find(".upload_set_css").css({
+//                        height:150,
+//                        width: 200
+//                    });
+//                    $(this).find(".upload_set_css").uploadFile({
+//                        url:self.appUrl+"protected/views/designer/upload.php",
+//                        fileName:"file",
+//                        showStatusAfterSuccess:false,
+//                        dragdropWidth:350,
+//                        dynamicFormData: function() {
+//                            var data ={
+//                                activitySetName:self.activitySet.name,
+//                                type: "style_set",
+//                                extension:"css"
+//                            };
+//                            return data;
+//                        },
+//                        onSuccess:function(files,data,xhr){
+//                            var response=JSON.parse(data);
+//                            self.editingEntity.states['passive'].content='<p class="style_entity" data-file="'+response.file+'">Archivo cargado correctamente</p>';
+//                            self.editingEntity.div.attr('data-file',response.file);
+//                            if(previous){
+//                                $('#'+previous.replace(".","_")).remove();
+//                            }
+//                        }
+//                    });
+//                }
+//            });
+//	});
     };
     
     /**
@@ -244,6 +290,18 @@ var Editor = function(params,callback){
                 self.dialogEditEntity.find(".state_container").empty();
             },
             open: function(e,ui){
+                //Si se edita una entidad de estilo, solo se muestra el estado pasivo
+                if(self.editingEntity.type==="style"){
+                    self.dialogEditEntity.find(".state_buttons").find(".passive").hide();
+                    self.dialogEditEntity.find(".state_buttons").find(".wrong").hide();
+                    self.dialogEditEntity.find(".state_buttons").find(".right").hide();
+                    self.dialogEditEntity.find(".copy_passive").hide();
+                }else{
+                    self.dialogEditEntity.find(".state_buttons").find(".passive").show();
+                    self.dialogEditEntity.find(".state_buttons").find(".wrong").show();
+                    self.dialogEditEntity.find(".state_buttons").find(".right").show();
+                    self.dialogEditEntity.find(".copy_passive").show();
+                }
                 self.dialogEditEntity.find(".copy_passive").button();
                 self.dialogEditEntity.find("#tabs").tabs({
                     heightStyle: "fill",
@@ -369,7 +427,6 @@ var Editor = function(params,callback){
         entity.draw(stateName);
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
-        
         entity.div.css("position","relative");
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
@@ -379,15 +436,25 @@ var Editor = function(params,callback){
             }
         });
         //Si es una página de estilos se muestra el cargador de archivos
+        //Carga los estilos en entity.draw()
         if(self.editingEntity.type==="style"){
+            //Si tenía cargada algúna hoja de estilos, se reemplaza
+            var previous=false;
+            if(self.editingEntity.getState('passive').content!==""){
+                var previousContent=$(self.editingEntity.getState('passive').content);
+                previous=previousContent.attr('data-file');
+            }
+//            self.editingEntity.div.text("Subir archivos");
             self.editingEntity.div.uploadFile({
                 url:self.appUrl+"protected/views/designer/upload.php",
                 fileName:"file",
                 dynamicFormData: function() {
                     var data ={
+                        activitySetName:self.activitySet.name,
                         type: "style",
                         entity:entity.id,
-                        extension:"css"
+                        extension:"css",
+                        previousCss:previous
                     };
                     return data;
                 },
@@ -395,6 +462,9 @@ var Editor = function(params,callback){
                     var response=JSON.parse(data);
                     self.editingEntity.states['passive'].content='<p class="style_entity" data-file="'+response.file+'">Archivo cargado correctamente</p>';
                     self.editingEntity.div.attr('data-file',response.file);
+                    if(previous){
+                        $('#'+previous.replace(".","_")).remove();
+                    }
                 }
             });
         }
@@ -442,9 +512,6 @@ var Editor = function(params,callback){
         var container=$('#elementsIdentificator');
         container.append('<div id="entityTemporalContent">'+stateContent+'</div>');
         var contentElements=container.find('#entityTemporalContent');
-        
-        
-        
         
         //Se procesan los elementos input:text
         contentElements.find('input:text').each(function(){
@@ -677,7 +744,7 @@ var Editor = function(params,callback){
     /**
      * Guarda los cambios del editor para el paso actual
      */
-    self.save=function(){
+    self.save=function(callback){
         var entities=self.workspace.objectify();
         if(entities.length>0){
             saveEntities(self.currentStep.stepId,entities,function(err){
@@ -685,6 +752,8 @@ var Editor = function(params,callback){
                     self.message("No se pueden guardar los cambios, por favor intente más tarde.");
                     editor.hideLoading();
                     self.saving=false;
+                }else{
+                    if(callback){callback();};
                 }
             });
         }
@@ -980,6 +1049,40 @@ var Editor = function(params,callback){
             self.load();
         });
     };
+    
+    
+    /**
+     * Elimina archivos, se usa para eliminar los que están asociados a las 
+     * entidades. Las rutas deben ser relativas al directorio del set de 
+     * actividades dentro del directorio /protected/data/
+     * @param {string} filename Nombre y ruta del archivo a eliminar
+     * @param {function} callback Función a la que se retorna el resultado
+     * @returns {bool} True si elimina el archivo, False en otro caso
+     */
+    self.deleteFile=function(filename,callback){
+        editor.showLoading();
+        $.ajax({
+            url:self.appUrl+"protected/views/designer/deleteFile.php",
+            type: "POST",
+            data:{
+                activitySetName:self.activitySet.name,
+                filename:filename
+            }
+        }).done(function(response) {
+            var data = JSON.parse(response);
+            if(callback){callback(false,data);}
+        }).fail(function(error) {
+            if(error.status===403){
+                alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                window.location=self.ajaxUrl;
+            }else{
+                if(callback){callback(error);}
+            }
+        }).always(function(){
+            editor.hideLoading();
+            self.loading=false;
+        });
+    };
 
     /**
      * Add a show loading message to the pile
@@ -1066,6 +1169,16 @@ var Editor = function(params,callback){
                 '</div>'+
             '</td>'+
         '</tr>';
+    };
+    
+    /**
+     * 
+     * @returns {String}
+     */
+    function htmlConfigActivitySet(){
+        return '<div title="Configurando set de actividades">'+
+                '<div class="upload_set_css">Subir hoja de estilos</div>'+
+            '</div>';
     };
     
     /**

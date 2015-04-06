@@ -35,9 +35,9 @@ class UserController extends Controller
 				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			array('allow', // allow authenticated user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -114,7 +114,8 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
+                        $model->password=md5($model->password);
+			if($model->save()) {
 			
 				// Current user assignments
 				$auth=Yii::app()->authManager;
@@ -147,6 +148,7 @@ class UserController extends Controller
 				$userRole->save();
 				
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(
@@ -161,11 +163,29 @@ class UserController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+		// Current user assignments
+		$auth=Yii::app()->authManager;
+		$currentUserAssignments = $auth->getAuthAssignments($id);
+		// Get the first key of the array $currentUserAssignments
+		reset($currentUserAssignments);
+		$currentUserAssignment = key($currentUserAssignments);
+		// Revoke user assignment
+		$auth->revoke($currentUserAssignment, $id);
+		
+		// Borra la relación entre el usuario y el rol
+		if($currentUserAssignment === 'administrator') {
+			$roleID = 1;
+		} else if($currentUserAssignment === 'operator') {
+			$roleID = 2;
+		}
+		$userRole=new UserRole();
+		$userRole->deleteByPk(array('user_id'=>$id, 'role_id'=>$roleID));
+		
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('activitySet/admin'));
 	}
 
 	/**

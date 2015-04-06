@@ -1,5 +1,5 @@
 <?php    
-$output_dir = getcwd()."/../../data/";
+$output_dir = getcwd()."/../../data/sets/";
 $file=$_FILES["file"];
 if(isset($file)){
     $ret = array();
@@ -7,15 +7,17 @@ if(isset($file)){
     //You need to handle  both cases
     //If Any browser does not support serializing of multiple files using FormData() 
     if(!is_array($file["name"])){ //single file
-        $fileName='entity_'.$_POST["entity"].'_'.$_POST["type"].'.'.$_POST["extension"];
-        move_uploaded_file($file["tmp_name"],$output_dir.$fileName);
-        $ret["file"]= $fileName;
-    }else{  //Multiple files, file[]
-        $fileCount = count($file["name"]);
-        for($i=0; $i < $fileCount; $i++){
-            $fileName = $file["name"][$i];
-            move_uploaded_file($file["tmp_name"][$i],$output_dir.$fileName);
-            $ret[]= $fileName;
+        //Si es un archivo de estilos
+        if($_POST["type"]==="style"){
+            $output_dir.=$_POST["activitySetName"].'/css/';
+            //Borra el anterior estilo si existe
+            if($_POST["previousCss"]){
+                unlink($output_dir.$_POST["previousCss"]);
+            }
+            //Copia la nueva hoja de estilos y retorna el nombre del archivo
+            $fileName='style_'.md5(uniqid(rand(),true)).'.'.$_POST["extension"];
+            move_uploaded_file($file["tmp_name"],$output_dir.$fileName);
+            $ret["file"]=$fileName;
         }
     }
     echo json_encode($ret);

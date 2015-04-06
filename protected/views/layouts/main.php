@@ -6,7 +6,7 @@
 <!--[if gt IE 8]> <!-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8">            
         <link rel="shortcut icon" href="<?php echo Yii::app()->baseUrl; ?>/protected/views/layouts/unal/images/favicon.ico" type="image/x-icon; charset=binary">
         <link rel="icon" href="images/favicon.ico" type="image/x-icon; charset=binary">
         <title>Universidad Nacional de Colombia: 7th @rt The Power of Films to Learn English</title>
@@ -27,9 +27,11 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tinyscrollbar/tinyscrollbar.css','all');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/7th_art.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/Util.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinyscrollbar/jquery.tinyscrollbar.min.js');
             //Estilos de 7th @rt
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
+            Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art_sistemas.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/reset-context-min.css','all');
         ?>
     </head>

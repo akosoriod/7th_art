@@ -159,7 +159,16 @@ var Workspace = function(params){
         delete self.entities[entityId];
         if(self.logHistory){self.saveHistory();}
         //Elimina la hoja de estilos de la entidad (si existe)
-        $('#entity_style_sheet_'+entityId).remove();
+        if(entity.type==="style"){
+            var file="";
+            //Se elimina el archivo del servidor
+            if(entity.getState('passive').content!==""){
+                var content=$(entity.getState('passive').content);
+                file=content.attr('data-file');
+                editor.deleteFile('css/'+file);
+            }
+            $('#'+file.replace(".","_")).remove();
+        }
     };
     
     /**
@@ -286,14 +295,23 @@ var Workspace = function(params){
                         }else if(ui.draggable.hasClass("button-list")){
                             type="list";
                         }
-                        self.addEntity(new Entity({
+                        
+                        var entity=new Entity({
                             type:type,
                             pos:{
                                 left:ui.position.left-displacement.left,
                                 top:ui.position.top-displacement.top
                             },
                             size:size
-                        }));
+                        });
+                        self.addEntity(entity);
+                        //Si es una entidad de estilo, se guarda todo y se recarga 
+                        //para almacenar los estilos con nombre.
+                        if(entity.type==="style"){
+                            editor.save(function(){
+                                editor.load();
+                            });
+                        }
                     }else{
                         editor.message("Seleccione un paso en una sección para iniciar la edición.");
                     }
