@@ -207,6 +207,10 @@ var Entity = function(params){
                 var file=content.attr('data-file');
                 if(self.workspace){
                     $('body').append('<link id="'+file.replace(".","_")+'" rel="stylesheet" type="text/css" href="'+editor.activitySet.url+'css/'+file+'">');
+                    //Si es una entidad de estilos y está en modo solución, se oculta
+                    if(editor.mode==="solution"){
+                        self.div.hide();
+                    }
                 }
             }
         }
