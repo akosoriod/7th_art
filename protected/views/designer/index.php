@@ -40,7 +40,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     ?>
     <div id="container">
         <nav id="navigation">
-            <div id="activity_set_title" class="activityset_name activity_set_title">
+            <div id="ql_activity_set_title" class="activityset_name activity_set_title">
                 <?php echo $activitySet->title; ?>
             </div>
             <div class="activityset_sections">
