@@ -389,13 +389,15 @@ var Editor = function(params,callback){
                     plugins: [
                         "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
                         "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-                        "save table contextmenu directionality template paste textcolor colorpicker jbimages"
+                        "save table contextmenu directionality template paste textcolor colorpicker jbimages",
+			"image"
                     ],
                     toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
                             " searchreplace wordcount fullscreen |"+
                             " autolink link image media lists preview spellchecker table | jbimages code |" +
                             " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
                     menubar : false,
+		    image_advtab: true,
                     oninit:function(){
                         tinyMCE.activeEditor.setContent(state.content);
                         //Guarda el estado en el atributo data-val de los elementos en el editor
