@@ -525,7 +525,7 @@ var Editor = function(params,callback){
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
         });
-        container.find('input:checked').change(function(){
+        container.find('input:checkbox').change(function(){
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
         });
