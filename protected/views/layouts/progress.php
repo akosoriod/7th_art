@@ -37,52 +37,6 @@
                     } 
                 } 
             ?>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-<!--            <div class='progress'>
-                <div>Horton</div>
-                <div>27%</div>
-                <div>
-                <?php
-//                print CHtml::link('details',
-//                            array('controller/action','param1'=>'value1'),
-//                            array('onclick'=>'$("#progressDetails").dialog("open"); return false;')
-//                        );
-//                ?>
-                </div>
-            </div>-->
-<!--            <div class='progress'>
-                <div>Shine</div>
-                <div>60%</div>
-                <div>
-                <?php
-//                print CHtml::link('details',
-//                            array('controller/action','param1'=>'value1'),
-//                            array('onclick'=>'$("#progressDetails").dialog("open"); return false;')
-//                        );
-//                ?>
-                </div>
-            </div>-->
-<!--            <div class='progress'>
-                <div>Dune</div>
-                <div>25%</div>
-                <div>
-                <?php
-//                print CHtml::link('details',
-//                            array('controller/action','param1'=>'value1'),
-//                            array('onclick'=>'$("#progressDetails").dialog("open"); return false;')
-//                        );
-                ?>
-                </div>
-            </div>-->
-            
             <div>[
             <?php
             print CHtml::link('Top Ranking',

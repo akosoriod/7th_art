@@ -244,4 +244,31 @@ class User extends CActiveRecord
             }
             return $percent;
         }
+        
+        /**
+         * Retorna los primeros 6 usuarios para el ranking
+         */
+        public static function getTopRanking(){
+            $ranking=array(
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0)
+            );
+            $users=User::model()->findAllByAttributes(array('auth_type'=>"LDAP"));
+            foreach ($users as $user){
+                $percent=$user->totalPercent();
+                foreach ($ranking as $key => $row) {
+                    if(!$row["id"]||$percent>$row["percent"]){
+                        $ranking[$key]["id"]=$user->id;
+                        $ranking[$key]["fullname"]=$user->name." ".$user->lastname;
+                        $ranking[$key]["percent"]=$percent;
+                        break;
+                    }
+                }
+            }
+            return $ranking;
+        }
 }
