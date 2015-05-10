@@ -272,6 +272,7 @@ var Workspace = function(params){
                     if(editor.currentStep){
                         var displacement=self.div.offset();
                         var type="";
+                        var content="";
                         var size={
                             height:160,
                             width:100
@@ -292,11 +293,18 @@ var Workspace = function(params){
                                 height:50,
                                 width:300
                             };
+                        }else if(ui.draggable.hasClass("button-check")){
+                            type="check";
+                            size={
+                                height:50,
+                                width:50
+                            };
                         }else if(ui.draggable.hasClass("button-list")){
                             type="list";
                         }
                         
                         var entity=new Entity({
+                            content:content,
                             type:type,
                             pos:{
                                 left:ui.position.left-displacement.left,

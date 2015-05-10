@@ -49,32 +49,40 @@ var Entity = function(params){
         if(!options.size){
             options.size={height:160,width:100};
         }
+        if(!options.content){
+            options.content="";
+        }
         self.states={
             /* Define los defaults para el estado pasivo (estado de la entidad en el editor) */
             'passive':new State({
                 type:'passive',
                 pos:{left:options.pos.left,top:options.pos.top},
-                size:{height:options.size.height,width:options.size.width}
+                size:{height:options.size.height,width:options.size.width},
+                content:options.content
             }),
             'active':new State({
                 type:'active',
                 pos:{left:options.pos.left,top:options.pos.top},
-                size:{height:options.size.height,width:options.size.width}
+                size:{height:options.size.height,width:options.size.width},
+                content:options.content
             }),
             'solved':new State({
                 type:'solved',
                 pos:{left:options.pos.left,top:options.pos.top},
-                size:{height:options.size.height,width:options.size.width}
+                size:{height:options.size.height,width:options.size.width},
+                content:options.content
             }),
             'right':new State({
                 type:'right',
                 pos:{left:options.pos.left,top:options.pos.top},
-                size:{height:options.size.height,width:options.size.width}
+                size:{height:options.size.height,width:options.size.width},
+                content:options.content
             }),
             'wrong':new State({
                 type:'wrong',
                 pos:{left:options.pos.left,top:options.pos.top},
-                size:{height:options.size.height,width:options.size.width}
+                size:{height:options.size.height,width:options.size.width},
+                content:options.content
             })
         };
         if(editor.mode==='solution'){
@@ -163,7 +171,10 @@ var Entity = function(params){
             }
         });
         self.div.dblclick(function(){
-            editor.editEntity(self);
+            //Si es una entidad de check, no se puede editar
+            if(editor.mode!=="solution"&&self.editingEntity.type!=="check"){
+                editor.editEntity(self);
+            }
         });
     };
     
@@ -449,6 +460,9 @@ var Entity = function(params){
                 '<div class="entityButton zindex decreaseZ" title="Enviar atras">-</div>'
             ;
             editing="entity_editing";
+        }
+        if(self.type==="check"){
+            title="Check the answers";
         }
         return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
                 '<div class="box">'+
