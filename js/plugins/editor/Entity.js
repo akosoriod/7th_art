@@ -172,7 +172,7 @@ var Entity = function(params){
         });
         self.div.dblclick(function(){
             //Si es una entidad de check, no se puede editar
-            if(editor.mode!=="solution"&&self.editingEntity.type!=="check"){
+            if(editor.mode!=="solution"&&self.type!=="check"){
                 editor.editEntity(self);
             }
         });
