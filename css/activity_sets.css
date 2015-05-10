@@ -2,3 +2,10 @@
     height: 130px;
     width: 130px;
 }
+
+
+#userpoints{
+    color: 888;
+    float: right;
+    font-size: 16px;
+}
