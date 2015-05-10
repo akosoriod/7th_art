@@ -613,12 +613,12 @@ var Editor = function(params,callback){
             var correctAll=true;
             //Valores para calificar
             var T=100;                                  //Máximo valor para un ejercicio
-            var n=userResponse.find(".entity").length;  //Cantidad de entidades en el ejercicio
+            var n=0;                                    //Cantidad de entidades con objetos calificables en el ejercicio
             var r=10;                                   //Máximo valor de importancia para una entidad
-            var x=T/(n*r);                              //Multiplicador para mapeo
+            var x=0;                                    //Multiplicador para mapeo
             var totalExercise=0;                        //Suma de calificación del ejercicio
             var mappedResult=0;                         //Resultado luego de ser mapeado de 0 a T
-
+            
             for(var i in self.workspace.entities){
                 var correct=true;
                 var entity=self.workspace.entities[i];
@@ -637,12 +637,17 @@ var Editor = function(params,callback){
                     }else{
                         correct=false;
                     }
+                    //Si es una entidad calificable suma n
+                    n++;
                 }
-                
+                //Verifica si tiene elementos calificables
+                if(solutionEntity.find(":text").length>0||solutionEntity.find(":radio").length>0||solutionEntity.find(":checkbox").length>0){
+                    n++;
+                }
                 //Califica los elementos dentro de la entidad
                 var elementImportances=0;
                 solutionEntity.find('.entityElement').each(function(){
-                    var solutionElement=$(this);
+                    var solutionElement=$(this);                    
                     var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
                     var elementQualification=qualifyElements(solutionElement,answerElement);
                     correct=correct&&elementQualification;
@@ -652,7 +657,6 @@ var Editor = function(params,callback){
                     }
                 });
                 totalExercise+=elementImportances*entity.weight;
-                
                 if(correct){
                     entity.draw("right");
                 }else{
@@ -660,14 +664,13 @@ var Editor = function(params,callback){
                     correctAll=false;
                 }
             }
+            //Calcula la variable para mapeo
+            x=T/(n*r);
+            //Calcula el resultado mapeado
             mappedResult=x*totalExercise;
-            
-            console.warn("TOTAL PUNTOS");
-            console.debug(mappedResult);
             if(correctAll){
                 alert("Gained points: "+parseInt(mappedResult));
             }
-            
             solutionDiv.empty();
         });
     };
