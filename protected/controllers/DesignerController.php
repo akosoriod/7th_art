@@ -67,6 +67,13 @@ class DesignerController extends Controller {
             $entity->weight=intval($dataEntity->weight);
             if(property_exists($dataEntity,'type')){
                 $entityTypeName=$dataEntity->type;
+                //Si hay al menos una entidad que sea check, el paso se marca como calificable
+                if($entityTypeName==="check"){
+                    $step->qualifiable=true;
+                }else{
+                    $step->qualifiable=false;
+                }
+                $step->update();
             }else{
                 $entityTypeName="basic";
             }
