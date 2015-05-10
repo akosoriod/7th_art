@@ -395,7 +395,8 @@ var Editor = function(params,callback){
                     toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
                             " searchreplace wordcount fullscreen |"+
                             " autolink link image media lists preview spellchecker table | jbimages code |" +
-                            " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
+                            " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |"+
+                            " insert_input",
                     menubar : false,
 		    image_advtab: true,
                     oninit:function(){
@@ -403,6 +404,18 @@ var Editor = function(params,callback){
                         //Guarda el estado en el atributo data-val de los elementos en el editor
                         var iContent=$('#text_content_ifr').contents().find("#tinymce");
                         attachEventsDataValueAttribute(iContent);
+                    },
+                    setup:function(ed){
+                        console.debug(ed);
+                        ed.addButton('insert_input', {
+                            title : 'Insertar caja de texto',
+                            image : self.imagesUrl+'editor/form_input_text.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<input type="text" />');
+                            }
+                        });
                     }
                 });
             },
