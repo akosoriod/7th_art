@@ -23,6 +23,7 @@
  * @property Session[] $sessions
  * @property UserParameter[] $userParameters
  * @property Role[] $roles
+ * @property Step[] $steps
  */
 class User extends CActiveRecord
 {
@@ -68,6 +69,7 @@ class User extends CActiveRecord
 			'userParameters' => array(self::HAS_MANY, 'UserParameter', 'user_id'),
 			'roles' => array(self::MANY_MANY, 'Role', 'user_role(user_id, role_id)'),
 			'authAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
+			'steps' => array(self::MANY_MANY, 'Step', 'user_step(user_id, step_id)'),
 		);
 	}
 

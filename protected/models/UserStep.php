@@ -1,27 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "step".
+ * This is the model class for table "user_step".
  *
- * The followings are the available columns in table 'step':
- * @property integer $id
- * @property string $instruction
- * @property string $css
- * @property integer $activity_id
- *
- * The followings are the available model relations:
- * @property Entity[] $entities
- * @property Activity $activity
- * @property User[] $users
+ * The followings are the available columns in table 'user_step':
+ * @property integer $user_id
+ * @property integer $step_id
+ * @property string $score
  */
-class Step extends CActiveRecord
+class UserStep extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'step';
+		return 'user_step';
 	}
 
 	/**
@@ -32,12 +26,12 @@ class Step extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('activity_id', 'required'),
-			array('activity_id', 'numerical', 'integerOnly'=>true),
-			array('instruction, css', 'safe'),
+			array('user_id, step_id', 'required'),
+			array('user_id, step_id', 'numerical', 'integerOnly'=>true),
+			array('score', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, instruction, css, activity_id', 'safe', 'on'=>'search'),
+			array('user_id, step_id, score', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,9 +43,6 @@ class Step extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'entities' => array(self::HAS_MANY, 'Entity', 'step_id'),
-			'activity' => array(self::BELONGS_TO, 'Activity', 'activity_id'),
-			'users' => array(self::MANY_MANY, 'User', 'user_step(step_id, user_id)'),
 		);
 	}
 
@@ -61,10 +52,9 @@ class Step extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'instruction' => 'Instruction',
-			'css' => 'Css',
-			'activity_id' => 'Activity',
+			'user_id' => 'User',
+			'step_id' => 'Step',
+			'score' => 'Score',
 		);
 	}
 
@@ -86,10 +76,9 @@ class Step extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('instruction',$this->instruction,true);
-		$criteria->compare('css',$this->css,true);
-		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('step_id',$this->step_id);
+		$criteria->compare('score',$this->score,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -100,7 +89,7 @@ class Step extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Step the static model class
+	 * @return UserStep the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
