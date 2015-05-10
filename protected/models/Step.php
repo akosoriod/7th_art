@@ -8,6 +8,7 @@
  * @property string $instruction
  * @property string $css
  * @property integer $activity_id
+ * @property integer $qualifiable
  *
  * The followings are the available model relations:
  * @property Entity[] $entities
@@ -33,11 +34,11 @@ class Step extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('activity_id', 'required'),
-			array('activity_id', 'numerical', 'integerOnly'=>true),
+			array('activity_id, qualifiable', 'numerical', 'integerOnly'=>true),
 			array('instruction, css', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, instruction, css, activity_id', 'safe', 'on'=>'search'),
+			array('id, instruction, css, activity_id, qualifiable', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +66,7 @@ class Step extends CActiveRecord
 			'instruction' => 'Instruction',
 			'css' => 'Css',
 			'activity_id' => 'Activity',
+			'qualifiable' => 'Qualifiable',
 		);
 	}
 
@@ -90,6 +92,7 @@ class Step extends CActiveRecord
 		$criteria->compare('instruction',$this->instruction,true);
 		$criteria->compare('css',$this->css,true);
 		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('qualifiable',$this->qualifiable);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
