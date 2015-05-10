@@ -396,7 +396,7 @@ var Editor = function(params,callback){
                             " searchreplace wordcount fullscreen |"+
                             " autolink link image media lists preview spellchecker table | jbimages code |" +
                             " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |"+
-                            " insert_input",
+                            " insert_input insert_checkbox insert_radio",
                     menubar : false,
 		    image_advtab: true,
                     oninit:function(){
@@ -406,7 +406,6 @@ var Editor = function(params,callback){
                         attachEventsDataValueAttribute(iContent);
                     },
                     setup:function(ed){
-                        console.debug(ed);
                         ed.addButton('insert_input', {
                             title : 'Insertar caja de texto',
                             image : self.imagesUrl+'editor/form_input_text.png',
@@ -414,6 +413,24 @@ var Editor = function(params,callback){
                                 // Add you own code to execute something on click
                                 ed.focus();
                                 ed.selection.setContent('<input type="text" />');
+                            }
+                        });
+                        ed.addButton('insert_checkbox', {
+                            title : 'Insertar cuadro de chequeo',
+                            image : self.imagesUrl+'editor/form_checkbox.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<input type="checkbox" />');
+                            }
+                        });
+                        ed.addButton('insert_radio', {
+                            title : 'Insertar radio button',
+                            image : self.imagesUrl+'editor/form_radio.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<input type="radio" name="radio'+self.editingEntity.id+'"/>');
                             }
                         });
                     }
