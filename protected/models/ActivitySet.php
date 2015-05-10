@@ -197,4 +197,31 @@ class ActivitySet extends CActiveRecord
             );
             return $list;
         }
+		
+		/**
+         * Retorna los activitySets ordenados de acuerdo a $sortBy
+         * @return ActivitySet[] Array de ActivitySets
+         */
+        public static function getPublishedSortedBy($sortBy){
+            $list=self::model()->findAll(
+                array('order'=>$sortBy)
+            );
+            return $list;
+        }
+		
+		/**
+         * Retorna los activitySets que coinciden con $search.
+		 * La búsqueda se realiza por los campos title, director y year.
+         * @return ActivitySet[] Array de ActivitySets
+         */
+        public static function getPublishedSearch($search){
+			// Ref: http://www.yiiframework.com/wiki/199/creating-a-parameterized-like-query/
+			$match = addcslashes($search, '%_'); // escape LIKE's special characters
+			$q = new CDbCriteria( array(
+				'condition' => "title LIKE :search OR director LIKE :search OR year LIKE :search",    // no quotes around :match
+				'params'    => array(':search' => "%$search%")  // Aha! Wildcards go here
+			) );
+			$list = self::model()->findAll( $q );     // works!
+            return $list;
+        }
 }
