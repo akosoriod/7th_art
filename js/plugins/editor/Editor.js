@@ -43,6 +43,7 @@ var Editor = function(params,callback){
     };
     self.params = $.extend(def, params);
     self.appUrl=self.params.appUrl;
+    self.imagesUrl=self.appUrl+"images/";
     self.mode=self.params.mode;
     self.ajaxUrl=self.appUrl+"index.php/designer/";
     self.activitySet={ //Actual activitySet
@@ -77,7 +78,6 @@ var Editor = function(params,callback){
         });
         self.saveHistory();
         attachEvents();
-        attachEventsSolutionMode();
         
         //Se inicia el proceso de autoguardado
         if(self.autosaveFrequency>0){
@@ -219,7 +219,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarEntities(){
-        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-style").draggable({
+        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-style,.button-check").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
@@ -309,7 +309,7 @@ var Editor = function(params,callback){
                         attachEventsDialogEntityStates($(this));
                     },
                     activate:function(e,ui){
-                        
+
                     }
                 });
                 self.dialogEditEntity.find(".passive").click();
@@ -579,8 +579,7 @@ var Editor = function(params,callback){
         var solutionDiv=self.divSolution.find("#status_solved");
         var userResponse=self.workspace.div;
         var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
-        
-        self.divSolution.find('#check_button').click(function(){
+        self.divSolution.find('.check').click(function(){
             var correctAll=true;
             //Valores para calificar
             var T=100;                                  //Máximo valor para un ejercicio
@@ -777,6 +776,8 @@ var Editor = function(params,callback){
             }else{
                 self.workspace.deobjectify(response.entities);
                 if(self.mode==='solution'){
+                    //Carga los eventos generales
+                    attachEventsSolutionMode();
                     //Se crean los eventos adicionales para las entidades
                     attachEventsSolutionModeEntities();
                 }

@@ -144,14 +144,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="ql_step_instruction" class="step_instruction"><?php echo $step->instruction; ?></div>
     </div>
     <div id="workspace" class="row row4 row_activities yui3-cssreset ql_workspace"></div>
-    
-    
-    <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />
     <div id="status_solved"></div>
-    
-    <!--<input id="check_button" type="button" value="Check">-->
-    
-    
     <div class="row row5">
         <div id="links" class="col-xs-12 col-sm-12 col-md-12">
             <div class="link">
