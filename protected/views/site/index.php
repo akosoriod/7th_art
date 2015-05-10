@@ -49,7 +49,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_set
                 print CHtml::textField('searchField', '',
                     array('id'=>'idSearch', 
                         'maxlength'=>100,
-                        'placeholder'=>'Director, Actors, Film'
+                        'placeholder'=>'Title, Director, Year'
                 ));
                 ?>
             </div>
