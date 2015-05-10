@@ -4,7 +4,9 @@
     width: 1040px;
 }
 
-
+#parallax{
+    height: 543px !important;
+}
 
 /* CORRECCIONES CSS */
 #menu-movies ul, #menu-movies li {
