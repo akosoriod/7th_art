@@ -224,4 +224,50 @@ class ActivitySet extends CActiveRecord
 			$list = self::model()->findAll( $q );     // works!
             return $list;
         }
+        
+        /**
+         * Retorna el porcentaje completo de pasos dentro del set de actividades
+         * @param User $user Usuario para obtener los puntos
+         * @return float Porcentaje de avance en el set de actividades
+         */
+        public function percent($user){
+            $percent=0;
+            $qualifiables=count($this->qualifiableSteps());
+            if($qualifiables>0){
+                $percent=$this->points($user)/$qualifiables;
+            }
+            return $percent;
+        }
+        
+        /**
+         * Retorna los puntos del set de actividades
+         * @param User $user Usuario para obtener los puntos
+         * @return int Puntos obtenidos en todos los pasos
+         */
+        public function points($user){
+            $totalPoints=0;
+            foreach ($this->qualifiableSteps() as $step){
+                $totalPoints+=$step->getPoints($user);
+            }
+            return $totalPoints;
+        }        
+        
+        /**
+         * Retorna los pasos calificables del set de actividades
+         * @return Step[] Array de pasos calificables
+         */
+        public function qualifiableSteps(){
+            $qualifiables=array();
+            foreach ($this->sections as $section){
+                $version=$section->publishedVersion();
+                foreach ($version->activities as $activity){
+                    foreach ($activity->steps as $step){
+                        if($step->qualifiable){
+                            array_push($qualifiables,$step);
+                        }                      
+                    }
+                }
+            }
+            return $qualifiables;
+        }
 }

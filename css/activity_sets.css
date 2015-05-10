@@ -9,3 +9,16 @@
     float: right;
     font-size: 16px;
 }
+
+.total_percent {
+    height: 35px;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    width: 35px;
+}
+.total_percent__number{
+    margin-top: 10px;
+    position: absolute;
+    text-align: center;
+    width: 35px;
+}

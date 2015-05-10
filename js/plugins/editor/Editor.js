@@ -674,6 +674,13 @@ var Editor = function(params,callback){
             x=T/(n*r);
             //Calcula el resultado mapeado
             mappedResult=x*totalExercise;
+            if(isNaN(mappedResult)){
+                mappedResult=0;
+            }
+            //Si no hay entidades calificables, se retorna el máximo puntaje
+            if(n<=0){
+                mappedResult=T;
+            }
             var points=parseInt(mappedResult);
             if(correctAll){
                 alert("Gained points: "+points);

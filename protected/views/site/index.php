@@ -2,7 +2,29 @@
 /* @var $this SiteController */
 
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_sets.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/circle/progress.css');
+
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/circle/jquery-asPieProgress.min.js');
 ?>
+<script>
+    $( document ).ready(function(){
+        $('.total_percent').asPieProgress({
+            classes: {
+                element: 'total_percent',
+                number: 'total_percent__number',
+                content: 'pie_progress__content'
+            },
+            barsize: '20',
+            fillcolor: 'white',
+            'namespace': 'total_percent',
+            speed: 30,
+            trackcolor: '#ccc'
+        });
+        setTimeout(function(){
+            $('.total_percent').asPieProgress('start');
+        },600);
+    });
+</script>
 <main class="detalle not-front page-home not-logged fullpage">
     <div class="breadcrumb-class">
         Est&aacute; en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Secci&oacute;n</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>P&aacute;gina</b>
