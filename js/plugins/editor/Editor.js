@@ -13,7 +13,8 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
-    self.currentStep=false;         //Paso que se está editando actualmente
+    self.currentStep=false;         //OBJETO: Paso que se está editando actualmente, en modo edición
+                                    //INTEGER: Id del paso actual cuando está en modo de usuario
     
     self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
     self.historyMax=30;             //Cantidad de estados del workspace que almacena
@@ -82,6 +83,11 @@ var Editor = function(params,callback){
         //Se inicia el proceso de autoguardado
         if(self.autosaveFrequency>0){
             setInterval(self.save,self.autosaveFrequency*1000);
+        }
+        
+        //Si está en modo de usuario, carga el id del paso actual
+        if(self.mode==="solution"){
+            self.currentStep=parseInt(self.divSolution.attr('data-step-id'));
         }
     };
     
@@ -668,9 +674,13 @@ var Editor = function(params,callback){
             x=T/(n*r);
             //Calcula el resultado mapeado
             mappedResult=x*totalExercise;
+            var points=parseInt(mappedResult);
             if(correctAll){
-                alert("Gained points: "+parseInt(mappedResult));
+                alert("Gained points: "+points);
             }
+            //Almacena el resultado actual
+            savePoints(self.currentStep,points);
+            self.divSolution.find('#totalPoints').text(points);
             solutionDiv.empty();
         });
     };
@@ -682,11 +692,7 @@ var Editor = function(params,callback){
      * @returns {bool} Verdadero si la respuesta es correcta
      */
     function qualifyElements(solution,answer){
-        var correct=false;
-//        console.warn("OBJETO");
-//        console.warn(solution);
-//        console.warn(answer);
-        
+        var correct=false;        
         //Revisa los input:text
         if(solution.is('input:text')){
             if(solution.attr("data-val")===$.trim(answer.val())){
@@ -745,6 +751,40 @@ var Editor = function(params,callback){
 //        console.warn("Contenido del html");
 //        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
 //    };
+
+    /**
+     * Guarda el puntaje del usuario para el paso
+     * @param {id} stepId Id del paso actual
+     * @param {int} points Puntos obtenidos en el paso
+     * @param {function} callback Function to return the response
+     */
+    function savePoints(stepId,points,callback){
+        if(!self.savingPoints){
+            self.savingPoints=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'savePointsByAjax',
+                type: "POST",
+                data:{
+                    stepId:stepId,
+                    points:points
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.savingPoints=false;
+            });
+        }
+    };
     
     /**************************************************************************/
     /***************************** MESSAGING METHODS **************************/

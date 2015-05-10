@@ -13,7 +13,8 @@ class DesignerController extends Controller {
                     'actions'=>array(
                         'index',
                         'saveEntitiesByAjax','loadEntitiesByAjax',
-                        'createStepByAjax','deleteStepByAjax','updateStepInstructionByAjax'
+                        'createStepByAjax','deleteStepByAjax','updateStepInstructionByAjax',
+                        'savePointsByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -251,6 +252,24 @@ class DesignerController extends Controller {
             $success=true;
         }
         //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("success"=>$success));
+    }
+    
+    /**
+    * Guarda el puntaje para un paso del usuario actual
+    */
+    public function actionSavePointsByAjax(){
+        $success=true;
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $points=intval($_POST['points']);
+        $step=Step::model()->findByPk($stepId);
+        if($step){
+            $step->setPoints(User::getCurrentUser(),$points);
+        }else{
+            $success=false;
+        }
+        //Return the result of save schedule
         echo json_encode(array("success"=>$success));
     }
 }

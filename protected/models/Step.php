@@ -106,4 +106,43 @@ class Step extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Retorna los puntos de un usuario en el paso actual
+         * @param User $user Usuario del que se quieren obtener los puntos
+         * @return int Puntos del usuario en el paso actual
+         */
+        public function getPoints($user){
+            $points=0;
+            $userStep=UserStep::model()->findByAttributes(array(
+                'user_id'=>intval($user->id),
+                'step_id'=>intval($this->id)
+            ));
+            if($userStep){
+                $points=$userStep->score;
+            }
+            return $points;
+        }
+        
+        /**
+         * Actualiza los puntos de un usuario en el paso actual
+         * @param User $user Usuario para actualizar los puntos
+         * @param int $points Puntos del usuario en el paso actual
+         */
+        public function setPoints($user,$points){
+            $userStep=UserStep::model()->findByAttributes(array(
+                'user_id'=>intval($user->id),
+                'step_id'=>intval($this->id)
+            ));
+            if($userStep){
+                $userStep->score=intval($points);
+                $userStep->update();
+            }else{
+                $newUserStep=new UserStep();
+                $newUserStep->user_id=intval($user->id);
+                $newUserStep->step_id=intval($this->id);
+                $newUserStep->score=intval($points);
+                $newUserStep->save();
+            }
+        }
 }
