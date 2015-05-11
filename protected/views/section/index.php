@@ -136,7 +136,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                         }
                         echo '<a class="step_id '.$activeClass.'" '.
                             'href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$stepIter->activity->id.'/step/'.$stepIter->id.'"'.
-                            '>'.$stepCounter.'</a>';
+                            '>'.$stepIter->name.'</a>';
                         $stepCounter++;
                     }
                 }

@@ -60,7 +60,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                         $countSteps++;
                                         echo '<tr class="step" data-level="4" id="level_4_'.$letter.'" '
                                             . 'data-step-id="'.$step->id.'" '
-                                            . 'data-step-name="Paso '.$countSteps.'" '
+                                            . 'data-step-name="'.$step->name.'" '
                                             . 'data-activity-id="'.$activity->id.'" '
                                             . 'data-activity-name="Actividad '.$count.'" '
                                             . 'data-version-id="'.$version->id.'" '
@@ -70,7 +70,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                             . 'data-activity-set-id="'.$activitySet->id.'" '
                                             . 'data-activity-set-title="'.$activitySet->title.'" '
                                             . 'data-instruction="'.$step->instruction.'" '
-                                        .'><td><div class="name">Paso '.$countSteps.'</div><div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div><div class="navbutton delete" title="Eliminar este paso">x</div></td></tr>';
+                                        .'><td><div class="name">'.$step->name.'</div><div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div><div class="navbutton delete" title="Eliminar este paso">x</div></td></tr>';
                                     }
                                 }
                             }

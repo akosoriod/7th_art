@@ -67,8 +67,8 @@
     line-height: 20px;
     margin-bottom: 0px;
     margin-left: 1px;
+    padding: 0 6px;
     text-align: center;
-    width: 40px;
 }
 #activity_set_home .section_nav .active{
     background-color: rgba(255, 255, 255, 0.7);

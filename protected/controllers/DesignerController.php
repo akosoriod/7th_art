@@ -13,7 +13,7 @@ class DesignerController extends Controller {
                     'actions'=>array(
                         'index',
                         'saveEntitiesByAjax','loadEntitiesByAjax',
-                        'createStepByAjax','deleteStepByAjax','updateStepInstructionByAjax',
+                        'createStepByAjax','deleteStepByAjax','updateStepDataByAjax',
                         'savePointsByAjax'
                     ),
                     'users'=>array('@'),
@@ -247,13 +247,15 @@ class DesignerController extends Controller {
     * Retorna la lista de entidades de un paso
     * @param JSONAjax $schedule JSON with the schedule by ajax
     */
-    public function actionUpdateStepInstructionByAjax(){
+    public function actionUpdateStepDataByAjax(){
         $success=false;
         //Get the client data
         $stepId=intval($_POST['stepId']);
+        $name=$_POST['name'];
         $instruction=$_POST['instruction'];
         $step=Step::model()->findByPk($stepId);
         if($step){
+            $step->name=$name;
             $step->instruction=$instruction;
             $step->update();
             $success=true;
