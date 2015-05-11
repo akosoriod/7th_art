@@ -165,3 +165,9 @@ div.preferences div {float: left; width: 33%;}
 main.detalle p {
   margin: 0 0 0 0;
 }
+main.detalle table tr th {
+  padding: 0;
+}
+main.detalle table tr td {
+  padding: 0;
+}
