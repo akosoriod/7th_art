@@ -161,3 +161,7 @@ div.preferences div {float: left; width: 33%;}
     display: table-caption;
     border: 1px solid #000;
 }
+
+main.detalle p {
+  margin: 0 0 0 0;
+}
