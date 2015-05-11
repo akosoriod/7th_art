@@ -13,7 +13,8 @@ var Editor = function(params,callback){
     /**************************************************************************/
     var self = this;
     
-    self.currentStep=false;         //Paso que se está editando actualmente
+    self.currentStep=false;         //OBJETO: Paso que se está editando actualmente, en modo edición
+                                    //INTEGER: Id del paso actual cuando está en modo de usuario
     
     self.historyStack=[];           //Almacena versiones del workspace para volver a estados anteriores
     self.historyMax=30;             //Cantidad de estados del workspace que almacena
@@ -43,6 +44,7 @@ var Editor = function(params,callback){
     };
     self.params = $.extend(def, params);
     self.appUrl=self.params.appUrl;
+    self.imagesUrl=self.appUrl+"images/";
     self.mode=self.params.mode;
     self.ajaxUrl=self.appUrl+"index.php/designer/";
     self.activitySet={ //Actual activitySet
@@ -77,11 +79,15 @@ var Editor = function(params,callback){
         });
         self.saveHistory();
         attachEvents();
-        attachEventsSolutionMode();
         
         //Se inicia el proceso de autoguardado
         if(self.autosaveFrequency>0){
             setInterval(self.save,self.autosaveFrequency*1000);
+        }
+        
+        //Si está en modo de usuario, carga el id del paso actual
+        if(self.mode==="solution"){
+            self.currentStep=parseInt(self.divSolution.attr('data-step-id'));
         }
     };
     
@@ -219,7 +225,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarEntities(){
-        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-style").draggable({
+        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-style,.button-check").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
@@ -309,7 +315,7 @@ var Editor = function(params,callback){
                         attachEventsDialogEntityStates($(this));
                     },
                     activate:function(e,ui){
-                        
+
                     }
                 });
                 self.dialogEditEntity.find(".passive").click();
@@ -389,18 +395,50 @@ var Editor = function(params,callback){
                     plugins: [
                         "advlist autolink link image media lists charmap print preview hr pagebreak spellchecker",
                         "searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-                        "save table contextmenu directionality template paste textcolor colorpicker jbimages"
+                        "save table contextmenu directionality template paste textcolor colorpicker jbimages",
+			"image"
                     ],
                     toolbar: "sizeselect bold italic textcolor forecolor backcolor fontselect fontsizeselect |"+
                             " searchreplace wordcount fullscreen |"+
                             " autolink link image media lists preview spellchecker table | jbimages code |" +
-                            " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |",
+                            " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |"+
+                            " insert_input insert_checkbox insert_radio",
                     menubar : false,
+		    image_advtab: true,
                     oninit:function(){
                         tinyMCE.activeEditor.setContent(state.content);
                         //Guarda el estado en el atributo data-val de los elementos en el editor
                         var iContent=$('#text_content_ifr').contents().find("#tinymce");
                         attachEventsDataValueAttribute(iContent);
+                    },
+                    setup:function(ed){
+                        ed.addButton('insert_input', {
+                            title : 'Insertar caja de texto',
+                            image : self.imagesUrl+'editor/form_input_text.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<input type="text" />');
+                            }
+                        });
+                        ed.addButton('insert_checkbox', {
+                            title : 'Insertar cuadro de chequeo',
+                            image : self.imagesUrl+'editor/form_checkbox.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<input type="checkbox" />');
+                            }
+                        });
+                        ed.addButton('insert_radio', {
+                            title : 'Insertar radio button',
+                            image : self.imagesUrl+'editor/form_radio.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<input type="radio" name="radio'+self.editingEntity.id+'"/>');
+                            }
+                        });
                     }
                 });
             },
@@ -427,7 +465,7 @@ var Editor = function(params,callback){
         entity.draw(stateName);
         entity.div.draggable("destroy");
         entity.div.attr("title","Doble click para editar el contenido");
-        entity.div.css("position","relative");
+        entity.div.css("position","relative");        
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
@@ -493,7 +531,7 @@ var Editor = function(params,callback){
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
         });
-        container.find('input:checked').change(function(){
+        container.find('input:checkbox').change(function(){
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
         });
@@ -577,17 +615,16 @@ var Editor = function(params,callback){
         var solutionDiv=self.divSolution.find("#status_solved");
         var userResponse=self.workspace.div;
         var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
-        
-        self.divSolution.find('#check_button').click(function(){
+        self.divSolution.find('.check').click(function(){
             var correctAll=true;
             //Valores para calificar
             var T=100;                                  //Máximo valor para un ejercicio
-            var n=userResponse.find(".entity").length;  //Cantidad de entidades en el ejercicio
+            var n=0;                                    //Cantidad de entidades con objetos calificables en el ejercicio
             var r=10;                                   //Máximo valor de importancia para una entidad
-            var x=T/(n*r);                              //Multiplicador para mapeo
+            var x=0;                                    //Multiplicador para mapeo
             var totalExercise=0;                        //Suma de calificación del ejercicio
             var mappedResult=0;                         //Resultado luego de ser mapeado de 0 a T
-
+            
             for(var i in self.workspace.entities){
                 var correct=true;
                 var entity=self.workspace.entities[i];
@@ -606,12 +643,17 @@ var Editor = function(params,callback){
                     }else{
                         correct=false;
                     }
+                    //Si es una entidad calificable suma n
+                    n++;
                 }
-                
+                //Verifica si tiene elementos calificables
+                if(solutionEntity.find(":text").length>0||solutionEntity.find(":radio").length>0||solutionEntity.find(":checkbox").length>0){
+                    n++;
+                }
                 //Califica los elementos dentro de la entidad
                 var elementImportances=0;
                 solutionEntity.find('.entityElement').each(function(){
-                    var solutionElement=$(this);
+                    var solutionElement=$(this);                    
                     var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
                     var elementQualification=qualifyElements(solutionElement,answerElement);
                     correct=correct&&elementQualification;
@@ -621,7 +663,6 @@ var Editor = function(params,callback){
                     }
                 });
                 totalExercise+=elementImportances*entity.weight;
-                
                 if(correct){
                     entity.draw("right");
                 }else{
@@ -629,14 +670,24 @@ var Editor = function(params,callback){
                     correctAll=false;
                 }
             }
+            //Calcula la variable para mapeo
+            x=T/(n*r);
+            //Calcula el resultado mapeado
             mappedResult=x*totalExercise;
-            
-            console.warn("TOTAL PUNTOS");
-            console.debug(mappedResult);
-            if(correctAll){
-                alert("Gained points: "+parseInt(mappedResult));
+            if(isNaN(mappedResult)){
+                mappedResult=0;
             }
-            
+            //Si no hay entidades calificables, se retorna el máximo puntaje
+            if(n<=0){
+                mappedResult=T;
+            }
+            var points=parseInt(mappedResult);
+            if(correctAll){
+                alert("Gained points: "+points);
+            }
+            //Almacena el resultado actual
+            savePoints(self.currentStep,points);
+            self.divSolution.find('#totalPoints').text(points);
             solutionDiv.empty();
         });
     };
@@ -648,11 +699,7 @@ var Editor = function(params,callback){
      * @returns {bool} Verdadero si la respuesta es correcta
      */
     function qualifyElements(solution,answer){
-        var correct=false;
-//        console.warn("OBJETO");
-//        console.warn(solution);
-//        console.warn(answer);
-        
+        var correct=false;        
         //Revisa los input:text
         if(solution.is('input:text')){
             if(solution.attr("data-val")===$.trim(answer.val())){
@@ -711,6 +758,40 @@ var Editor = function(params,callback){
 //        console.warn("Contenido del html");
 //        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
 //    };
+
+    /**
+     * Guarda el puntaje del usuario para el paso
+     * @param {id} stepId Id del paso actual
+     * @param {int} points Puntos obtenidos en el paso
+     * @param {function} callback Function to return the response
+     */
+    function savePoints(stepId,points,callback){
+        if(!self.savingPoints){
+            self.savingPoints=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'savePointsByAjax',
+                type: "POST",
+                data:{
+                    stepId:stepId,
+                    points:points
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.savingPoints=false;
+            });
+        }
+    };
     
     /**************************************************************************/
     /***************************** MESSAGING METHODS **************************/
@@ -775,6 +856,8 @@ var Editor = function(params,callback){
             }else{
                 self.workspace.deobjectify(response.entities);
                 if(self.mode==='solution'){
+                    //Carga los eventos generales
+                    attachEventsSolutionMode();
                     //Se crean los eventos adicionales para las entidades
                     attachEventsSolutionModeEntities();
                 }

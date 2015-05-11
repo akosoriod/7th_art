@@ -6,7 +6,9 @@
 
 <div id="set_<?php echo $data->id; ?>" class="set">
     <!--El círculo del porcentaje se dibujará con JS-->
-    <div class="percent">0%</div>
+    <div class="total_percent" role="progressbar" data-goal="<?php echo round($data->percent(User::getCurrentUser())); ?>" >
+        <div class="total_percent__number">0%</div>
+    </div>
     <a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$data->name; ?>">
         <div class="poster">
             <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$data->poster,$data->title); ?>

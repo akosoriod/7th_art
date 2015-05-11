@@ -243,6 +243,9 @@ table.controller .label{
 #container #area #editor .button-style{
     background-image: url('../images/editor/style.png');
 }
+#container #area #editor .button-check{
+    background-image: url('../images/editor/check.png');
+}
 #container #area #editor .button-list{
     background-image: url('../images/editor/list.png');
 }
@@ -288,6 +291,15 @@ table.controller .label{
     min-width: 10px;
     position: absolute;
 }
+    .check .content{
+        background-image: url('../images/editor/check-img.png');
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+    .check .content:hover{
+        background-image: url('../images/editor/check-img-hover.png');
+        background-repeat: no-repeat;
+    }
 .entity_editing{
     border: solid 1px #C75C5C;
     border-radius: 5px 5px 0 0;
@@ -301,6 +313,9 @@ table.controller .label{
 }
 .entity_editing.style{
     border: solid 1px #4F5D73;
+}
+.entity_editing.check{
+    border: solid 1px #58aa89;
 }
 .entity_editing.list{
     border: solid 1px #E0995E;

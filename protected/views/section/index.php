@@ -6,6 +6,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_sets.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
@@ -122,7 +123,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         </div>
     </div>
     <div id="ql_step_header" class="section_nav row row4">
-        <h3 id="ql_section_name" class="section_nav_name"><?php echo $section->sectionType->label; ?></h3>
+        <h3 id="ql_section_name" class="section_nav_name"><?php echo $section->sectionType->label; ?> <div id="userpoints">Points: <span id="totalPoints"><?php echo $step->getPoints($user); ?></span></div></h3>
         <div class="section_nav_steps">
             <?php
                 if(count($activity->steps)>1){
@@ -144,14 +145,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="ql_step_instruction" class="step_instruction"><?php echo $step->instruction; ?></div>
     </div>
     <div id="workspace" class="row row4 row_activities yui3-cssreset ql_workspace"></div>
-    
-    
-    <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />
     <div id="status_solved"></div>
-    
-    <!--<input id="check_button" type="button" value="Check">-->
-    
-    
     <div class="row row5">
         <div id="links" class="col-xs-12 col-sm-12 col-md-12">
             <div class="link">

@@ -2,7 +2,29 @@
 /* @var $this SiteController */
 
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_sets.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/circle/progress.css');
+
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/circle/jquery-asPieProgress.min.js');
 ?>
+<script>
+    $( document ).ready(function(){
+        $('.total_percent').asPieProgress({
+            classes: {
+                element: 'total_percent',
+                number: 'total_percent__number',
+                content: 'pie_progress__content'
+            },
+            barsize: '20',
+            fillcolor: 'white',
+            'namespace': 'total_percent',
+            speed: 30,
+            trackcolor: '#ccc'
+        });
+        setTimeout(function(){
+            $('.total_percent').asPieProgress('start');
+        },600);
+    });
+</script>
 <main class="detalle not-front page-home not-logged fullpage">
     <div class="breadcrumb-class">
         Est&aacute; en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Secci&oacute;n</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>P&aacute;gina</b>
@@ -11,20 +33,64 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_set
         <div id="lbl_showtime" class="col-xs-12 col-sm-12 col-md-5">
             <h2>Movie Showtimes</h2>
         </div>
+        <!-- form -->
         <div id="tools" class="col-xs-12 col-sm-12 col-md-7">
+            <?php
+            $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'searchform',
+                'enableClientValidation' => true,
+                'clientOptions' => array(
+                    'validateOnSubmit' => true,
+                ),
+                'htmlOptions'=>array(
+                   'onsubmit'=>"return false;",/* Disable normal form submit */
+                   'onkeypress'=>" if(event.keyCode == 13){ searchActivitySet(); } " /* Do ajax call when user presses enter key */
+                ),
+            ));
+            ?>
             <div id="search" class="tool">
-                <input type="text" placeholder="Director, Actors, Film" />
+                <?php
+                Yii::app()->clientScript->registerScript('searchActivitySet',
+                 'function searchActivitySet(){
+                    var data=$("#searchform").serialize();
+                     $.ajax({
+                         url: "'.CController::createUrl("//site/search").'",
+                         type:"POST",
+                         data: data,
+                         success: function(data){
+                            $("#sets").html(data);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }
+                     })
+                 }', CClientScript::POS_END);
+                ?>
+                <?php
+                print CHtml::textField('searchField', '',
+                    array('id'=>'idSearch', 
+                        'maxlength'=>100,
+                        'placeholder'=>'Title, Director, Year'
+                ));
+                ?>
             </div>
             <div id="sort" class="tool">
-                <select>
-                    <option>Sort by</option>
-                    <option>Title</option>
-                    <option>Director</option>
-                    <option>Year</option>
-                    <!--Otras opciones-->
-                </select>
+                <?php
+                print CHtml::dropDownList('sortBy','', array(''=>'Sort by','title'=>'Title','director'=>'Director','year'=>'Year'),
+                    array(
+                    'ajax' => array(
+                    'type'=>'POST', //request type
+                    //Style: CController::createUrl('currentController/methodToCall')
+                    'url'=>CController::createUrl('//site/sort'), //url to call.
+                    //leave out the data key to pass all form values through
+                    //'data'=>'js:javascript statement'
+                    'success' => 'function(data, textStatus, jqXHR) { $("#sets").html(data); }',
+                )));
+                ?>
             </div>
-        </div>
+            <?php $this->endWidget(); ?>
+        </div> <!-- form -->
     </div>
     <div class="row row2">
         <div id="sets" class="col-xs-12 col-sm-12 col-md-12">

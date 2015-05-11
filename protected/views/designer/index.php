@@ -90,6 +90,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <!--<div class="button button-list" title="Entidad de listas ordenables"></div>-->
                     <div class="button button-audio" title="Entidad de audio"></div>
                     <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
+                    <div class="button button-check" title="Entidad Calificar"></div>
                     <div class="separator"></div>
                     <div class="button undo pointer" id="button-undo" title="Deshacer"></div>
                     <div class="button pointer" id="save" title="Guardar actividad"></div>
@@ -108,8 +109,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
             </div>
         </div>
     </div>
-    
-    
     
     <div id="dialogs">
         <div id="edit_entity" title="Editando entidad">

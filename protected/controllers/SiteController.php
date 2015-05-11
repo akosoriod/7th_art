@@ -183,5 +183,34 @@ class SiteController extends Controller {
            $this->render('about_us');
         }
     }
-
+    
+    /**
+     * Return a list of activity sets sorted by the value of $_POST['sortBy'].
+     */
+    public function actionSort() {
+        $sortBy = $_POST['sortBy'];
+        if($sortBy !== '') {
+            $activitySets = ActivitySet::getPublishedSortedBy($sortBy);
+        } else {
+            $activitySets = ActivitySet::getPublished();
+        }
+        foreach ($activitySets as $activitySet) {
+            $this->renderPartial('/activitySet/_user_view',array('data'=>$activitySet));
+        }
+    }
+    
+    /**
+     * Return a list of activity sets sorted by the value of $_POST['sortBy'].
+     */
+    public function actionSearch() {
+        $search = $_POST['searchField'];
+        if($search !== '') {
+            $activitySets = ActivitySet::getPublishedSearch($search);
+        } else {
+            $activitySets = ActivitySet::getPublished();
+        }
+        foreach ($activitySets as $activitySet) {
+            $this->renderPartial('/activitySet/_user_view',array('data'=>$activitySet));
+        }
+    }
 }

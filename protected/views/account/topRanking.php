@@ -1,10 +1,28 @@
 <?php
+$categories=array();
+$rankingUsers=User::getTopRanking();
+foreach ($rankingUsers as $user) {
+    $categories[]=$user["fullname"];
+}
+//Muestra la lista de sets de actividades
+$series=array();
+foreach (ActivitySet::getPublished() as $activitySet) {
+    $data=array();
+    foreach ($rankingUsers as $user) {
+        $data[]=$activitySet->percent(User::model()->findByPk($user['id']));
+    }
+    $series[]=array(
+        'name'=>$activitySet->title,
+        'data'=>$data
+    );
+}
+
 $this->Widget('application.extensions.yii-highcharts-4_0_4.highcharts.HighchartsWidget', array(
    'options'=>array(
 	  'chart' => array('type' => 'bar'),
       'title' => array('text' => 'Progress Details - Top Ranking'),
       'xAxis' => array(
-         'categories' => array(Yii::app()->user->_cn, 'Student 1', 'Student 2', 'Student 3', 'Student 4', 'Student 5')
+         'categories' => $categories
       ),
       'yAxis' => array(
 		 'min' => 0,
@@ -18,12 +36,6 @@ $this->Widget('application.extensions.yii-highcharts-4_0_4.highcharts.Highcharts
 			  'stacking' => 'normal',
 		  ),
 	  ),
-      'series' => array(
-         array('name' => 'Perfume', 'data' => array(3, 3, 2, 2, 1, 1)),
-         array('name' => 'Horton', 'data' => array(4, 3, 5, 4, 2, 2)),
-         array('name' => 'Shine', 'data' => array(4, 4, 2, 3, 4, 3)),
-         array('name' => 'Dune', 'data' => array(4, 4, 3, 2, 3, 3)),
-      )
+      'series' => $series
    )
 ));
-?>

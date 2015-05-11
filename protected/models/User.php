@@ -23,6 +23,7 @@
  * @property Session[] $sessions
  * @property UserParameter[] $userParameters
  * @property Role[] $roles
+ * @property Step[] $steps
  */
 class User extends CActiveRecord
 {
@@ -68,6 +69,7 @@ class User extends CActiveRecord
 			'userParameters' => array(self::HAS_MANY, 'UserParameter', 'user_id'),
 			'roles' => array(self::MANY_MANY, 'Role', 'user_role(user_id, role_id)'),
 			'authAssignment' => array(self::HAS_ONE, 'AuthAssignment', 'userid'),
+			'steps' => array(self::MANY_MANY, 'Step', 'user_step(user_id, step_id)'),
 		);
 	}
 
@@ -209,17 +211,64 @@ class User extends CActiveRecord
             $authAssignment->save();
         }
 		
-		/**
-		 * This method is invoked before saving a record (after validation, if any).
-		 * You may override this method to do any preparation work for record saving.
-		 * Use isNewRecord to determine whether the saving is for inserting or updating record.
-		 * Make sure you call the parent implementation so that the event is raised properly.
-		 */
-		public function beforeSave() {
-			if($this->isNewRecord){
-				$hash = md5($this->password);
-				$this->password = $hash;
-			}
-			return parent::beforeSave();
-		}
+        /**
+         * This method is invoked before saving a record (after validation, if any).
+         * You may override this method to do any preparation work for record saving.
+         * Use isNewRecord to determine whether the saving is for inserting or updating record.
+         * Make sure you call the parent implementation so that the event is raised properly.
+         */
+        public function beforeSave() {
+                if($this->isNewRecord){
+                        $hash = md5($this->password);
+                        $this->password = $hash;
+                }
+                return parent::beforeSave();
+        }
+        
+        /**
+         * Retorna el avance total de una persona en todos los sets de actividades
+         * @return float Porcentaje total
+         */
+        public function totalPercent(){
+            $percent=0;
+            $total=0;
+            $countActivitySets=0;
+            foreach (ActivitySet::model()->findAll() as $activitySet){
+                if(intval($activitySet->status_id)===3){
+                    $total+=$activitySet->percent($this);
+                    $countActivitySets++;
+                }
+            }
+            if($countActivitySets>0){
+                $percent=$total/$countActivitySets;
+            }
+            return $percent;
+        }
+        
+        /**
+         * Retorna los primeros 6 usuarios para el ranking
+         */
+        public static function getTopRanking(){
+            $ranking=array(
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0),
+                array("id"=>false,"fullname"=>false,"percent"=>0)
+            );
+            $users=User::model()->findAllByAttributes(array('auth_type'=>"LDAP"));
+            foreach ($users as $user){
+                $percent=$user->totalPercent();
+                foreach ($ranking as $key => $row) {
+                    if(!$row["id"]||$percent>$row["percent"]){
+                        $ranking[$key]["id"]=$user->id;
+                        $ranking[$key]["fullname"]=$user->name." ".$user->lastname;
+                        $ranking[$key]["percent"]=$percent;
+                        break;
+                    }
+                }
+            }
+            return $ranking;
+        }
 }

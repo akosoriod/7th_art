@@ -4,7 +4,9 @@
     width: 1040px;
 }
 
-
+#parallax{
+    height: 465px !important;
+}
 
 /* CORRECCIONES CSS */
 #menu-movies ul, #menu-movies li {
@@ -79,8 +81,8 @@
     height: 20px;
 }
 #activity_set_home .section_nav .step_instruction{
-    font-size: 1.3em;
-    margin: 5px 0;
+    font-size: 1em;
+    margin: 20px 20px 0px 20px;
 }
 
 /* Estilos de el userspace */

@@ -144,6 +144,7 @@ class SectionController extends Controller
                 if($section&&$version&&$activity&&$step){
                     $dataProvider=new CActiveDataProvider('Section');
                     $this->render('index',array(
+                        'user'=>User::getCurrentUser(),
                         'activitySet'=>$activitySet,
                         'section'=>$section,
                         'version'=>$version,
