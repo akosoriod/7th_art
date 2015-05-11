@@ -998,18 +998,20 @@ var Editor = function(params,callback){
     /**
      * Actualiza la instrucción de un paso
      * @param {id} stepId Id del paso
+     * @param {string} name Nombre del paso
      * @param {string} instruction Instrucción del paso
      * @param {function} callback Function to return the response
      */
-    function updateInstructionStep(stepId,instruction,callback){
+    function updateStepData(stepId,name,instruction,callback){
         if(!self.instructionStep){
             self.instructionStep=true;
             editor.showLoading();
             $.ajax({
-                url: self.ajaxUrl+'updateStepInstructionByAjax',
+                url: self.ajaxUrl+'updateStepDataByAjax',
                 type: "POST",
                 data:{
                     stepId:stepId,
+                    name:name,
                     instruction:instruction
                 }
             }).done(function(response) {
@@ -1081,12 +1083,18 @@ var Editor = function(params,callback){
             }
         });
         
-        //Cambiar instrucción del paso
-        var instructionButton=stepElement.find('.instruction');
-        instructionButton.click(function(e){
+        //Cambiar los datos del paso
+        var stepDataButton=stepElement.find('.instruction');
+        stepDataButton.click(function(e){
             e.stopPropagation();
             var stepId=parseInt(stepElement.attr("data-step-id"));
-            $('<div title="Instrucción del paso"><p><textarea id="intructionInput" type="text" placeholder="Escriba la instrucción para el paso">'+stepElement.attr("data-instruction")+'</textarea></p></div>').dialog({
+            $('<div title="Datos del paso"><p>'+
+                    '<label for="nameInput">Nombre del paso</label>'+
+                    '<input id="nameInput" type="text" placeholder="Nombre para el paso" value="'+stepElement.attr("data-step-name")+'" />'+
+                    '<label for="intructionInput">Instrucción del paso</label>'+
+                    '<textarea id="intructionInput" type="text" placeholder="Escriba la instrucción para el paso">'+stepElement.attr("data-instruction")+'</textarea>'+
+                '</p>'+
+            '</div>').dialog({
                 modal:true,
                 width:300,
                 buttons:{
@@ -1095,11 +1103,14 @@ var Editor = function(params,callback){
                     },
                     "Aceptar":function(){
                         $(this).dialog("close");
+                        var name=$(this).find("#nameInput").val();
                         var instruction=$(this).find("#intructionInput").val();
-                        updateInstructionStep(stepId,instruction,function(err){
+                        updateStepData(stepId,name,instruction,function(err){
                             if(err){
                                 self.message("No se puede actualizar la instrucción, por favor recargue la página e intente de nuevo.");
                             }else{
+                                stepElement.attr("data-name",name);
+                                stepElement.find(".name").text(name);
                                 stepElement.attr("data-instruction",instruction);
                             }
                         });
@@ -1247,7 +1258,7 @@ var Editor = function(params,callback){
                 '<div class="expander"></div>'+
                 '<div class="label">'+
                     '<div class="name">'+stepData.stepName+'</div>'+
-                    '<div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div>'+
+                    '<div class="navbutton instruction" title="Cambiar los datos de este paso">i</div>'+
                     '<div class="navbutton delete" title="Eliminar este paso">x</div>'+
                 '</div>'+
             '</td>'+

@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'step':
  * @property integer $id
+ * @property string $name
  * @property string $instruction
  * @property string $css
  * @property integer $activity_id
@@ -35,10 +36,11 @@ class Step extends CActiveRecord
 		return array(
 			array('activity_id', 'required'),
 			array('activity_id, qualifiable', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>45),
 			array('instruction, css', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, instruction, css, activity_id, qualifiable', 'safe', 'on'=>'search'),
+			array('id, name, instruction, css, activity_id, qualifiable', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +65,7 @@ class Step extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'name' => 'Name',
 			'instruction' => 'Instruction',
 			'css' => 'Css',
 			'activity_id' => 'Activity',
@@ -89,6 +92,7 @@ class Step extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('instruction',$this->instruction,true);
 		$criteria->compare('css',$this->css,true);
 		$criteria->compare('activity_id',$this->activity_id);
