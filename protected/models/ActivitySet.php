@@ -260,6 +260,32 @@ class ActivitySet extends CActiveRecord
             $qualifiables=array();
             foreach ($this->sections as $section){
                 $version=$section->publishedVersion();
+                //Si no existe una versión para la sección, crea los datos
+                if(!$version){
+                    //Crea una versión para cada sección
+                    $version=new Version();
+                    $version->name='Versión 1';
+                    $version->visible=true;
+                    $version->selected=true;
+                    $version->section_id=$section->id;
+                    $version->status_id=3;
+                    $version->insert();
+
+                    $activity=new Activity();
+                    $activity->name="First Activity";
+                    $activity->visible=true;
+                    $activity->instruction="Intruction here";
+                    $activity->version_id=$version->id;
+                    $activity->insert();
+
+                    //Crea un paso
+                    $step=new Step();
+                    $step->instruction="";
+                    $step->activity_id=$activity->id;
+                    $step->css="";
+                    $step->insert();
+                }
+                $version=$section->publishedVersion();
                 foreach ($version->activities as $activity){
                     foreach ($activity->steps as $step){
                         if($step->qualifiable){

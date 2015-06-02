@@ -5,7 +5,8 @@
 
 
 #userpoints{
-    color: 888;
+    color: #888;
+    display: none;
     float: right;
     font-size: 16px;
 }

@@ -227,6 +227,9 @@ var Entity = function(params){
                 if(self.type==="record"){
                     attachRecordEvents(self.div);
                 }
+                if(self.type==="check"){
+                    $("#userpoints").show();
+                }
             }
             //Si es una entidad de estilo, carga el estilo en la página
             if(self.type==="style"&&self.getState('passive').content!==""){
