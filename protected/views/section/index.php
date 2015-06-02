@@ -22,12 +22,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/recorderjs/jquery.voice.js');
 ?>
 <script>
-    
-    
-    
-
-    
-    
     $(document).ready(function($) {
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
