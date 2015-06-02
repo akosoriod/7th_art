@@ -18,6 +18,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Entity.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Workspace.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/recorderjs/recorder.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/recorderjs/jquery.voice.js');
 ?>
 <script>
     $(document).ready(function($) {
@@ -45,7 +47,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         editor.load(stepId);
     });
 </script>
-
 <main id="activity_set_home" class="detalle editor_main_space" data-step-id="<?php echo $step->id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
     <div id="ql_breadcrumb" class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
@@ -79,16 +80,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     <div class="row row2">
         <!-- Sections -->
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
-            <!-- Credits -->
-            <div id="credits-movies">
-                <!--<img src="" alt="" />-->
-                <span>
-                    <a class="mnu_button" href="#">
-                        <!--<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15">--> 
-                        Credits
-                    </a>
-                </span>
-            </div>
             <?php
                 foreach ($activitySet->sections as $sectionIter){
                     if($sectionIter->sectionType->name !== 'acknowledgments') {

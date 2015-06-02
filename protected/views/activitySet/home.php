@@ -73,16 +73,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     <div class="row row2">
         <!-- Sections -->
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
-            <!-- Credits -->
-            <div id="credits-movies">
-                <!--<img src="" alt="" />-->
-                <span>
-                    <a class="mnu_button" href="#">
-                        <!--<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15">--> 
-                        Credits
-                    </a>
-                </span>
-            </div>
             <?php
                 foreach ($model->sections as $section){
                     if($section->sectionType->name !== 'acknowledgments') {
@@ -106,7 +96,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     <div class="row row3">
         <div id="controls-movies" class="col-xs-12 col-sm-12 col-md-12">
             <div id="progress">
-                <span id="percent">58</span>% Activities
+                <!--<span id="percent">58</span>% Activities-->
             </div>
         </div>
     </div>
