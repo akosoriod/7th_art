@@ -172,7 +172,7 @@ var Entity = function(params){
         });
         self.div.dblclick(function(){
             //Si es una entidad de check, no se puede editar
-            if(editor.mode!=="solution"&&self.type!=="check"){
+            if(editor.mode!=="solution"&&(self.type!=="check"&&self.type!=="record")){
                 editor.editEntity(self);
             }
         });
@@ -205,12 +205,28 @@ var Entity = function(params){
             }
             //Carga la entidad del workspace si existe
             loadDiv();
+            
+            if(editor.mode==="solution"){
+                //Si es una entidad de grabación, inserta el contenido
+                if(self.type==="record"){
+                    var content=htmlRecordEntity();
+                    self.states.passive.content=content;
+                    self.states.active.content=content;
+                    self.states.solved.content=content;
+                    self.states.right.content=content;
+                    self.states.wrong.content=content;
+                }
+            }
+            
             //Muestra el estado definido en stateName
             self.showState(self.getState(stateName));
             
             //Si está en modo respuesta, asigna eventos para controlar la calificación
             if(editor.mode==="solution"){
                 self.workspace.attachEventsSolutionMode();
+                if(self.type==="record"){
+                    attachRecordEvents(self.div);
+                }
             }
             //Si es una entidad de estilo, carga el estilo en la página
             if(self.type==="style"&&self.getState('passive').content!==""){
@@ -452,7 +468,11 @@ var Entity = function(params){
         var buttons="";
         var editing="";
         if(editor.mode==="edition"){
-            title="Doble click para editar";
+            if(self.type==="check"||self.type==="record"){
+                title="Entidad no editable";
+            }else{
+                title="Doble click para editar";
+            }
             grid=" grid ";
             buttons=
                 '<div class="entityButton deleteEntity" title="Eliminar entidad">x</div>'+
@@ -487,6 +507,28 @@ var Entity = function(params){
      */
     function getIdFromElement(element){
         return parseInt(element.attr('data-id'));
+    };
+    
+    /**
+     * Retorna el html para las entidades de grabación
+     * @param {type} entity
+     * @returns {undefined}
+     */
+    function htmlRecordEntity(){
+        var html=
+            '<div class="record_controlls">'+
+                '<div class="record_buttons">'+
+                    '<a class="record_button" id="record" title="Record"></a>'+
+                    '<a class="record_button disabled one" id="stop" title="Stop"></a>'+
+                    '<a class="record_button disabled one" id="play" title="Play"></a>'+
+//                    '<a class="record_button disabled one" id="download" title="download"></a>'+
+//                    '<a class="record_button disabled one" id="base64">Base64 URL</a>'+
+                '</div>'+
+                '<div class="record_player">'+      
+                    '<audio controls src="" id="audio"></audio>'+
+                '</div>'+
+            '</div>';
+        return html;
     };
     
     /**************************************************************************/
@@ -578,5 +620,46 @@ var Entity = function(params){
      */
     function attachModeSolutionEvents(){
         
+    };
+    
+    /**
+     * Asigna los eventos a la entidad de grabación
+     */
+    function attachRecordEvents(entityDiv){
+        //Función para reiniciar la grabación
+        function restore(){$("#record, #live").removeClass("disabled");$(".one").addClass("disabled");$.voice.stop();}
+        
+        entityDiv.on("click", "#record:not(.disabled)", function(){
+            elem = $(this);
+            $.voice.record($("#live").is(":checked"), function(){
+                elem.addClass("disabled");
+                $("#live").addClass("disabled");
+                $(".one").removeClass("disabled");
+            });
+	});
+	entityDiv.on("click", "#stop:not(.disabled)", function(){
+            restore();
+	});
+	entityDiv.on("click", "#play:not(.disabled)", function(){
+            $.voice.export(function(url){
+                $("#audio").attr("src", url);
+                $("#audio")[0].play();
+            }, "URL");
+            restore();
+	});
+	entityDiv.on("click", "#download:not(.disabled)", function(){
+            $.voice.export(function(url){
+                $("<a href='"+url+"' download='MyRecording.wav'></a>")[0].click();
+            }, "URL");
+            restore();
+	});
+        entityDiv.on("click", "#base64:not(.disabled)", function(){
+            $.voice.export(function(url){
+                console.log("Here is the base64 URL : " + url);
+                alert("Check the web console for the URL");
+                $("<a href='"+ url +"' target='_blank'></a>")[0].click();
+            }, "base64");
+            restore();
+	});
     };
 };

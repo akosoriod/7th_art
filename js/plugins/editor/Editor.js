@@ -225,7 +225,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarEntities(){
-        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-style,.button-check").draggable({
+        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-record,.button-style,.button-check").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",

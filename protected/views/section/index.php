@@ -24,7 +24,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
 <script>
     
     
-    function restore(){$("#record, #live").removeClass("disabled");$(".one").addClass("disabled");$.voice.stop();}
+    
 
     
     
@@ -51,121 +51,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
         
         var stepId=parseInt($("#activity_set_home").attr("data-step-id"));
         editor.load(stepId);
-        
-        
-        
-        
-        
-        
-        $(document).on("click", "#record:not(.disabled)", function(){
-		elem = $(this);
-		$.voice.record($("#live").is(":checked"), function(){
-			elem.addClass("disabled");
-			$("#live").addClass("disabled");
-			$(".one").removeClass("disabled");
-		});
-	});
-  
-	$(document).on("click", "#stop:not(.disabled)", function(){
-		restore();
-	});
-  
-	$(document).on("click", "#play:not(.disabled)", function(){
-		$.voice.export(function(url){
-			$("#audio").attr("src", url);
-			$("#audio")[0].play();
-		}, "URL");
-		restore();
-	});
-  
-	$(document).on("click", "#download:not(.disabled)", function(){
-		$.voice.export(function(url){
-			$("<a href='"+url+"' download='MyRecording.wav'></a>")[0].click();
-		}, "URL");
-		restore();
-	});
-  
-        $(document).on("click", "#base64:not(.disabled)", function(){
-		$.voice.export(function(url){
-			console.log("Here is the base64 URL : " + url);
-      			alert("Check the web console for the URL");
-      			$("<a href='"+ url +"' target='_blank'></a>")[0].click();
-		}, "base64");
-		restore();
-	});
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<audio controls src="" id="audio"></audio>
-		<div style="margin:10px;">
-			<a class="button" id="record">Record</a>
-			<a class="button disabled one" id="stop">Reset</a>
-			<a class="button disabled one" id="play">Play</a>
-			<a class="button disabled one" id="download">Download</a>
-                        <a class="button disabled one" id="base64">Base64 URL</a>
-		</div>
-		<input class="button" type="checkbox" id="live"/>
-		<label for="live">Live Output</label>
-		<style>
-		.button{
-			display: inline-block;
-			vertical-align: middle;
-			margin: 0px 5px;
-			padding: 5px 12px;
-			cursor: pointer;
-			outline: none;
-			font-size: 13px;
-			text-decoration: none !important;
-			text-align: center;
-			color:#fff;
-			background-color: #4D90FE;
-			background-image: linear-gradient(top,#4D90FE, #4787ED);
-			background-image: -ms-linear-gradient(top,#4D90FE, #4787ED);
-			background-image: -o-linear-gradient(top,#4D90FE, #4787ED);
-			background-image: linear-gradient(top,#4D90FE, #4787ED);
-			border: 1px solid #4787ED;
-			box-shadow: 0 1px 3px #BFBFBF;
-		}
-		a.button{
-			color: #fff;
-		}
-		.button:hover{
-			box-shadow: inset 0px 1px 1px #8C8C8C;
-		}
-		.button.disabled{
-			box-shadow:none;
-			opacity:0.7;
-		}
-		</style>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-
 <main id="activity_set_home" class="detalle editor_main_space" data-step-id="<?php echo $step->id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
     <div id="ql_breadcrumb" class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>

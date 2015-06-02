@@ -241,9 +241,10 @@ var Workspace = function(params){
             }
         });
         
-        //Si encuentra una entidad de tipo drag and drop, la activa
+        
         self.div.find(".entity").each(function(){
             var entity=$(this);
+            //Si encuentra una entidad de tipo drag and drop, la activa
             if(entity.hasClass("dragdrop")){
                 entity.draggable({
                     containment: self.container,
@@ -254,7 +255,18 @@ var Workspace = function(params){
                     zIndex: 10000
                 });
             }
-        });
+            //Si encuentra una entidad de tipo grabación, la activa
+            if(entity.hasClass("record")){
+//                entity.draggable({
+//                    containment: self.container,
+//                    cursor: "move",
+//                    grid: [10,10],
+//                    opacity: 0.4,
+//                    scroll: false,
+//                    zIndex: 10000
+//                });
+            }
+        });        
     };
     
     
@@ -283,6 +295,13 @@ var Workspace = function(params){
                             type="dragdrop";
                         }else if(ui.draggable.hasClass("button-audio")){
                             type="audio";
+                            size={
+                                height:50,
+                                width:300
+                            };
+                        }else if(ui.draggable.hasClass("button-record")){
+                            content="Entidad de grabación. No editable.";
+                            type="record";
                             size={
                                 height:50,
                                 width:300

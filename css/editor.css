@@ -240,6 +240,9 @@ table.controller .label{
 #container #area #editor .button-audio{
     background-image: url('../images/editor/audio.png');
 }
+#container #area #editor .button-record{
+    background-image: url('../images/editor/record.png');
+}
 #container #area #editor .button-style{
     background-image: url('../images/editor/style.png');
 }
@@ -310,6 +313,9 @@ table.controller .label{
 }
 .entity_editing.audio{
     border: solid 1px #76C2AF;
+}
+.entity_editing.record{
+    border: solid 1px #77b3d4;
 }
 .entity_editing.style{
     border: solid 1px #4F5D73;
