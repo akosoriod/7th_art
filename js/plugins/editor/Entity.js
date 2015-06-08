@@ -522,7 +522,7 @@ var Entity = function(params){
             '<div class="record_controlls">'+
                 '<div class="record_buttons">'+
                     '<a class="record_button" id="record" title="Record"></a>'+
-                    '<a class="record_button disabled one" id="stop" title="Stop"></a>'+
+//                    '<a class="record_button disabled one" id="stop" title="Stop"></a>'+
                     '<a class="record_button disabled one" id="play" title="Play"></a>'+
 //                    '<a class="record_button disabled one" id="download" title="download"></a>'+
 //                    '<a class="record_button disabled one" id="base64">Base64 URL</a>'+
