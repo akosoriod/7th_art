@@ -60,7 +60,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                         $countSteps++;
                                         echo '<tr class="step" data-level="4" id="level_4_'.$letter.'" '
                                             . 'data-step-id="'.$step->id.'" '
-                                            . 'data-step-name="Paso '.$countSteps.'" '
+                                            . 'data-step-name="'.$step->name.'" '
                                             . 'data-activity-id="'.$activity->id.'" '
                                             . 'data-activity-name="Actividad '.$count.'" '
                                             . 'data-version-id="'.$version->id.'" '
@@ -70,7 +70,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                                             . 'data-activity-set-id="'.$activitySet->id.'" '
                                             . 'data-activity-set-title="'.$activitySet->title.'" '
                                             . 'data-instruction="'.$step->instruction.'" '
-                                        .'><td><div class="name">Paso '.$countSteps.'</div><div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div><div class="navbutton delete" title="Eliminar este paso">x</div></td></tr>';
+                                        .'><td><div class="name">'.$step->name.'</div><div class="navbutton instruction" title="Cambiar la instrucción de este paso">i</div><div class="navbutton delete" title="Eliminar este paso">x</div></td></tr>';
                                     }
                                 }
                             }
@@ -89,7 +89,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="button button-dragdrop" title="Entidad drag and drop"></div>
                     <!--<div class="button button-list" title="Entidad de listas ordenables"></div>-->
                     <div class="button button-audio" title="Entidad de audio"></div>
+                    <div class="button button-record" title="Entidad de grabación"></div>
                     <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
+                    <div class="button button-check" title="Entidad Calificar"></div>
                     <div class="separator"></div>
                     <div class="button undo pointer" id="button-undo" title="Deshacer"></div>
                     <div class="button pointer" id="save" title="Guardar actividad"></div>
@@ -108,8 +110,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
             </div>
         </div>
     </div>
-    
-    
     
     <div id="dialogs">
         <div id="edit_entity" title="Editando entidad">

@@ -241,9 +241,10 @@ var Workspace = function(params){
             }
         });
         
-        //Si encuentra una entidad de tipo drag and drop, la activa
+        
         self.div.find(".entity").each(function(){
             var entity=$(this);
+            //Si encuentra una entidad de tipo drag and drop, la activa
             if(entity.hasClass("dragdrop")){
                 entity.draggable({
                     containment: self.container,
@@ -254,7 +255,18 @@ var Workspace = function(params){
                     zIndex: 10000
                 });
             }
-        });
+            //Si encuentra una entidad de tipo grabación, la activa
+            if(entity.hasClass("record")){
+//                entity.draggable({
+//                    containment: self.container,
+//                    cursor: "move",
+//                    grid: [10,10],
+//                    opacity: 0.4,
+//                    scroll: false,
+//                    zIndex: 10000
+//                });
+            }
+        });        
     };
     
     
@@ -272,6 +284,7 @@ var Workspace = function(params){
                     if(editor.currentStep){
                         var displacement=self.div.offset();
                         var type="";
+                        var content="";
                         var size={
                             height:160,
                             width:100
@@ -286,17 +299,31 @@ var Workspace = function(params){
                                 height:50,
                                 width:300
                             };
+                        }else if(ui.draggable.hasClass("button-record")){
+                            content="Entidad de grabación. No editable.";
+                            type="record";
+                            size={
+                                height:50,
+                                width:300
+                            };
                         }else if(ui.draggable.hasClass("button-style")){
                             type="style";
                             size={
                                 height:50,
                                 width:300
                             };
+                        }else if(ui.draggable.hasClass("button-check")){
+                            type="check";
+                            size={
+                                height:50,
+                                width:50
+                            };
                         }else if(ui.draggable.hasClass("button-list")){
                             type="list";
                         }
                         
                         var entity=new Entity({
+                            content:content,
                             type:type,
                             pos:{
                                 left:ui.position.left-displacement.left,

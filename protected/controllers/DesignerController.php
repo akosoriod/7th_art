@@ -13,7 +13,8 @@ class DesignerController extends Controller {
                     'actions'=>array(
                         'index',
                         'saveEntitiesByAjax','loadEntitiesByAjax',
-                        'createStepByAjax','deleteStepByAjax','updateStepInstructionByAjax'
+                        'createStepByAjax','deleteStepByAjax','updateStepDataByAjax',
+                        'savePointsByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -66,6 +67,13 @@ class DesignerController extends Controller {
             $entity->weight=intval($dataEntity->weight);
             if(property_exists($dataEntity,'type')){
                 $entityTypeName=$dataEntity->type;
+                //Si hay al menos una entidad que sea check, el paso se marca como calificable
+                if($entityTypeName==="check"){
+                    $step->qualifiable=true;
+                }else{
+                    $step->qualifiable=false;
+                }
+                $step->update();
             }else{
                 $entityTypeName="basic";
             }
@@ -239,18 +247,38 @@ class DesignerController extends Controller {
     * Retorna la lista de entidades de un paso
     * @param JSONAjax $schedule JSON with the schedule by ajax
     */
-    public function actionUpdateStepInstructionByAjax(){
+    public function actionUpdateStepDataByAjax(){
         $success=false;
         //Get the client data
         $stepId=intval($_POST['stepId']);
+        $name=$_POST['name'];
         $instruction=$_POST['instruction'];
         $step=Step::model()->findByPk($stepId);
         if($step){
+            $step->name=$name;
             $step->instruction=$instruction;
             $step->update();
             $success=true;
         }
         //Retorna los objetos que se hayan encontrado
+        echo json_encode(array("success"=>$success));
+    }
+    
+    /**
+    * Guarda el puntaje para un paso del usuario actual
+    */
+    public function actionSavePointsByAjax(){
+        $success=true;
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $points=intval($_POST['points']);
+        $step=Step::model()->findByPk($stepId);
+        if($step){
+            $step->setPoints(User::getCurrentUser(),$points);
+        }else{
+            $success=false;
+        }
+        //Return the result of save schedule
         echo json_encode(array("success"=>$success));
     }
 }

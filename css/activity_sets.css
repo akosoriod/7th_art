@@ -2,3 +2,63 @@
     height: 130px;
     width: 130px;
 }
+
+
+#userpoints{
+    color: #888;
+    display: none;
+    float: right;
+    font-size: 16px;
+}
+
+.total_percent {
+    height: 35px;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    width: 35px;
+}
+.total_percent__number{
+    margin-top: 12px;
+    position: absolute;
+    text-align: center;
+    width: 35px;
+}
+
+/**
+    Estilos de las entidades de grabación
+*/
+.record_controlls{
+    height: 28px;
+}
+.record_controlls .record_player{
+    float: left;
+    width: 170px;
+}
+.record_controlls .record_player audio{
+    width: 200px;
+}
+.record_controlls .record_buttons{
+    background: rgba(100,100,100,0.5);
+    color: #999;
+    float: left;
+    height: 28px;
+}
+.record_controlls .record_buttons .record_button{
+    float: left;
+    height: 24px;
+    margin: 2px 0px 0px 2px;
+    width: 24px;
+}
+
+.record_controlls .record_buttons #play{
+    background-image: url('record/ic_play_arrow_black_24dp_1x.png');
+}
+.record_controlls .record_buttons #stop{
+    background-image: url('record/ic_stop_black_24dp_1x.png');
+}
+.record_controlls .record_buttons #record{
+    background-image: url('record/ic_mic_black_24dp_1x.png');
+}
+.record_controlls .record_buttons #download{
+    background-image: url('record/ic_file_download_black_24dp_1x.png');
+}

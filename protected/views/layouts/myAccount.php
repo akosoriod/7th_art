@@ -17,7 +17,7 @@
                 echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/icnServSia.png","",array(
                     'width'=>32,
                     'height'=>32
-                )); 
+                ));
             ?>
             <a href="#">Progress</a>
             <?php require_once(Yii::app()->basePath . '/views/layouts/progress.php'); ?>

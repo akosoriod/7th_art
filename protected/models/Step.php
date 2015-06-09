@@ -5,13 +5,16 @@
  *
  * The followings are the available columns in table 'step':
  * @property integer $id
+ * @property string $name
  * @property string $instruction
  * @property string $css
  * @property integer $activity_id
+ * @property integer $qualifiable
  *
  * The followings are the available model relations:
  * @property Entity[] $entities
  * @property Activity $activity
+ * @property User[] $users
  */
 class Step extends CActiveRecord
 {
@@ -32,11 +35,12 @@ class Step extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('activity_id', 'required'),
-			array('activity_id', 'numerical', 'integerOnly'=>true),
+			array('activity_id, qualifiable', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>45),
 			array('instruction, css', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, instruction, css, activity_id', 'safe', 'on'=>'search'),
+			array('id, name, instruction, css, activity_id, qualifiable', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,6 +54,7 @@ class Step extends CActiveRecord
 		return array(
 			'entities' => array(self::HAS_MANY, 'Entity', 'step_id'),
 			'activity' => array(self::BELONGS_TO, 'Activity', 'activity_id'),
+			'users' => array(self::MANY_MANY, 'User', 'user_step(step_id, user_id)'),
 		);
 	}
 
@@ -60,9 +65,11 @@ class Step extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'name' => 'Name',
 			'instruction' => 'Instruction',
 			'css' => 'Css',
 			'activity_id' => 'Activity',
+			'qualifiable' => 'Qualifiable',
 		);
 	}
 
@@ -85,9 +92,11 @@ class Step extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('instruction',$this->instruction,true);
 		$criteria->compare('css',$this->css,true);
 		$criteria->compare('activity_id',$this->activity_id);
+		$criteria->compare('qualifiable',$this->qualifiable);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -104,4 +113,43 @@ class Step extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * Retorna los puntos de un usuario en el paso actual
+         * @param User $user Usuario del que se quieren obtener los puntos
+         * @return int Puntos del usuario en el paso actual
+         */
+        public function getPoints($user){
+            $points=0;
+            $userStep=UserStep::model()->findByAttributes(array(
+                'user_id'=>intval($user->id),
+                'step_id'=>intval($this->id)
+            ));
+            if($userStep){
+                $points=$userStep->score;
+            }
+            return $points;
+        }
+        
+        /**
+         * Actualiza los puntos de un usuario en el paso actual
+         * @param User $user Usuario para actualizar los puntos
+         * @param int $points Puntos del usuario en el paso actual
+         */
+        public function setPoints($user,$points){
+            $userStep=UserStep::model()->findByAttributes(array(
+                'user_id'=>intval($user->id),
+                'step_id'=>intval($this->id)
+            ));
+            if($userStep){
+                $userStep->score=intval($points);
+                $userStep->update();
+            }else{
+                $newUserStep=new UserStep();
+                $newUserStep->user_id=intval($user->id);
+                $newUserStep->step_id=intval($this->id);
+                $newUserStep->score=intval($points);
+                $newUserStep->save();
+            }
+        }
 }

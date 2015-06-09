@@ -6,6 +6,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/editor.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activities.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/activity_sets.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/dropit/dropit.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tabelizer/tabelizer.min.css');
 Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
@@ -17,6 +18,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Entity.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Workspace.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/editor/Editor.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/recorderjs/recorder.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/recorderjs/jquery.voice.js');
 ?>
 <script>
     $(document).ready(function($) {
@@ -44,7 +47,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         editor.load(stepId);
     });
 </script>
-
 <main id="activity_set_home" class="detalle editor_main_space" data-step-id="<?php echo $step->id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
     <div id="ql_breadcrumb" class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
@@ -78,16 +80,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
     <div class="row row2">
         <!-- Sections -->
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
-            <!-- Credits -->
-            <div id="credits-movies">
-                <!--<img src="" alt="" />-->
-                <span>
-                    <a class="mnu_button" href="#">
-                        <!--<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/copyright.png" height="15" width="15">--> 
-                        Credits
-                    </a>
-                </span>
-            </div>
             <?php
                 foreach ($activitySet->sections as $sectionIter){
                     if($sectionIter->sectionType->name !== 'acknowledgments') {
@@ -122,7 +114,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         </div>
     </div>
     <div id="ql_step_header" class="section_nav row row4">
-        <h3 id="ql_section_name" class="section_nav_name"><?php echo $section->sectionType->label; ?></h3>
+        <h3 id="ql_section_name" class="section_nav_name"><?php echo $section->sectionType->label; ?> <div id="userpoints">Points: <span id="totalPoints"><?php echo $step->getPoints($user); ?></span></div></h3>
         <div class="section_nav_steps">
             <?php
                 if(count($activity->steps)>1){
@@ -135,7 +127,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                         }
                         echo '<a class="step_id '.$activeClass.'" '.
                             'href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$section->sectionType->name.'/activity/'.$stepIter->activity->id.'/step/'.$stepIter->id.'"'.
-                            '>'.$stepCounter.'</a>';
+                            '>'.$stepIter->name.'</a>';
                         $stepCounter++;
                     }
                 }
@@ -144,14 +136,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
         <div id="ql_step_instruction" class="step_instruction"><?php echo $step->instruction; ?></div>
     </div>
     <div id="workspace" class="row row4 row_activities yui3-cssreset ql_workspace"></div>
-    
-    
-    <img id="check_button" src="<?php echo Yii::app()->request->baseUrl; ?>/images/userspace/check-img.png" height="32" width="33" alt="" />
     <div id="status_solved"></div>
-    
-    <!--<input id="check_button" type="button" value="Check">-->
-    
-    
     <div class="row row5">
         <div id="links" class="col-xs-12 col-sm-12 col-md-12">
             <div class="link">
