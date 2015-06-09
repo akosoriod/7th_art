@@ -293,11 +293,6 @@ class DesignerController extends Controller {
         $step=Step::model()->findByPk($stepId);
         if($step){
             $step->setRecord(User::getCurrentUser(),$record);
-            
-            $url=str_replace('blob:','',$record);
-            
-            file_put_contents('test.wav', fopen($url,'r'));
-            
         }else{
             $success=false;
         }

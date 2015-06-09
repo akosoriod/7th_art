@@ -642,6 +642,8 @@ var Entity = function(params){
                 elem.addClass("disabled");
                 $("#live").addClass("disabled");
                 $(".one").removeClass("disabled");
+                self.div.find("#record").hide();
+                self.div.find("#base64").show();
             });
 	});
 	entityDiv.on("click", "#stop:not(.disabled)", function(){
@@ -682,6 +684,8 @@ var Entity = function(params){
                     }else{
                         self.div.find("#audio").attr('src',record);
                         self.div.find("#audio")[0].play();
+                        self.div.find("#record").show();
+                        self.div.find("#base64").hide();
                     }
                 });
             },"base64");
