@@ -51,22 +51,22 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
         <!-- Acknowledgments -->
         <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">
             <?php
-            foreach ($model->sections as $section){
-                if($section->sectionType->name === 'acknowledgments') {
-                    $publishedVersion=$section->publishedVersion();
-                    if($publishedVersion){
-                        if(count($publishedVersion->activities)===1){
-                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
-                        }elseif(count($publishedVersion->activities)>1){
-                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
-                                foreach ($publishedVersion->activities as $activity) {
-                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
-                                }
-                            echo '</ul></li></ul>';
-                        }
-                    }
-                }
-            }
+//            foreach ($model->sections as $section){
+//                if($section->sectionType->name === 'acknowledgments') {
+//                    $publishedVersion=$section->publishedVersion();
+//                    if($publishedVersion){
+//                        if(count($publishedVersion->activities)===1){
+//                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+//                        }elseif(count($publishedVersion->activities)>1){
+//                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
+//                                foreach ($publishedVersion->activities as $activity) {
+//                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
+//                                }
+//                            echo '</ul></li></ul>';
+//                        }
+//                    }
+//                }
+//            }
             ?>
         </div>
     </div>
@@ -75,20 +75,25 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
             <?php
                 foreach ($model->sections as $section){
-                    if($section->sectionType->name !== 'acknowledgments') {
+                    $class='';
+                    if($section->sectionType->name == 'acknowledgments'||$section->sectionType->name == 'credits') {
+                        $class=' black_text ';
+                    }
+                    
+//                    if($section->sectionType->name !== 'acknowledgments') {
                         $publishedVersion=$section->publishedVersion();
                         if($publishedVersion){
                             if(count($publishedVersion->activities)===1){
-                                echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+                                echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
                             }elseif(count($publishedVersion->activities)>1){
                                 echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
                                     foreach ($publishedVersion->activities as $activity) {
-                                        echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
+                                        echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
                                     }
                                 echo '</ul></li></ul>';
                             }
                         }
-                    }
+//                    }
                 }
             ?>
         </div>

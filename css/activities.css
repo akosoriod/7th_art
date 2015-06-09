@@ -3,7 +3,6 @@
     position: relative;
     width: 1040px;
 }
-
 #parallax{
     height: 543px !important;
 }
@@ -14,13 +13,16 @@
     list-style-image: none;
 }
 #menu-movies a {
-    color: #fff !important;
+    color: #fff;
 }
 #menu-movies .activity_set_menu {
     background-color: #50992e;
-    color: #fff !important;
+    color: #fff ;
     float: left;
     
+}
+.black_text,#mnu_credits,#mnu_acknowledgments{
+    color: #444 !important;
 }
 #menu-movies .activity_set_menu .title{
     line-height: 0.9em;
@@ -44,7 +46,7 @@
     padding: 10px 7px;
 }
 #menu-movies a.mnu_button {
-    padding: 10px 7px;
+    padding: 10px 5px;
 }
 
 
