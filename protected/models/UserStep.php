@@ -7,6 +7,7 @@
  * @property integer $user_id
  * @property integer $step_id
  * @property string $score
+ * @property string $record
  */
 class UserStep extends CActiveRecord
 {
@@ -29,9 +30,10 @@ class UserStep extends CActiveRecord
 			array('user_id, step_id', 'required'),
 			array('user_id, step_id', 'numerical', 'integerOnly'=>true),
 			array('score', 'length', 'max'=>20),
+			array('record', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('user_id, step_id, score', 'safe', 'on'=>'search'),
+			array('user_id, step_id, score, record', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +57,7 @@ class UserStep extends CActiveRecord
 			'user_id' => 'User',
 			'step_id' => 'Step',
 			'score' => 'Score',
+			'record' => 'Record',
 		);
 	}
 
@@ -79,6 +82,7 @@ class UserStep extends CActiveRecord
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('step_id',$this->step_id);
 		$criteria->compare('score',$this->score,true);
+		$criteria->compare('record',$this->record,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

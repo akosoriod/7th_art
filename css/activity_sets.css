@@ -43,6 +43,9 @@
     float: left;
     height: 28px;
 }
+.record_controlls #base64{
+    display: none;
+}
 .record_controlls .record_buttons .record_button{
     float: left;
     height: 24px;

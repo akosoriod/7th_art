@@ -33,6 +33,8 @@ var Editor = function(params,callback){
     
     self.currentState='passive';    //Estado actual, seleccionado por los botones de estado
     
+    self.record='';                 //Se carga el audio grabado para el paso actual, si existe
+    
     
     /**************************************************************************/
     /********************* CONFIGURATION AND CONSTRUCTOR **********************/
@@ -88,6 +90,8 @@ var Editor = function(params,callback){
         //Si está en modo de usuario, carga el id del paso actual
         if(self.mode==="solution"){
             self.currentStep=parseInt(self.divSolution.attr('data-step-id'));
+            //Si hay una grabación realizada, la carga
+            self.record=self.divSolution.find("#audio_recorded").attr('data-record');
         }
     };
     
@@ -1142,6 +1146,40 @@ var Editor = function(params,callback){
             self.editingPathDiv.attr('data-step-id',self.currentStep.stepId);
             self.load();
         });
+    };
+    
+    /**
+     * Guarda una grabación de un paso para un usuario
+     * @param {id} stepId Id del paso actual
+     * @param {string} audio Audio capturado or el usuario
+     * @param {function} callback Function to return the response
+     */
+    self.saveRecord=function(audio,callback){
+        if(!self.saving){
+            self.saving=true;
+            editor.showLoading();
+            $.ajax({
+                url: self.ajaxUrl+'saveRecordByAjax',
+                type: "POST",
+                data:{
+                    stepId:self.currentStep,
+                    audio:audio
+                }
+            }).done(function(response) {
+                var data = JSON.parse(response);
+                if(callback){callback(false,data);}
+            }).fail(function(error) {
+                if(error.status===403){
+                    alert("Su sesión ha terminado, por favor ingrese de nuevo.");
+                    window.location=self.ajaxUrl;
+                }else{
+                    if(callback){callback(error);}
+                }
+            }).always(function(){
+                editor.hideLoading();
+                self.saving=false;
+            });
+        }
     };
     
     
