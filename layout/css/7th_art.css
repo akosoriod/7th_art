@@ -32,7 +32,7 @@ textarea {
 
 main.detalle {
   font-family: 'Roboto', sans-serif !important;
-  margin: 0 10% 10px;
+  margin: 0 auto 10px;
   max-width: 1010px;
 }
 main.detalle .breadcrumb-class {
