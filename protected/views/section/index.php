@@ -51,7 +51,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
     <div id="ql_breadcrumb" class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
     </div>
-    <!--<div id="audio_recorded" data-record="<?php // echo $step->getRecord($user); ?>"></div>-->
+    <div id="audio_recorded" data-record="<?php echo $step->getRecord($user); ?>"></div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
             <h2 id="ql_activity_set_title"><?php echo $section->activitySet->title; ?></h2>
