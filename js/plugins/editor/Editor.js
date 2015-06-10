@@ -301,7 +301,7 @@ var Editor = function(params,callback){
             },
             open: function(e,ui){
                 //Si se edita una entidad de estilo, solo se muestra el estado pasivo
-                if(self.editingEntity.type==="style"){
+                if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"){
                     self.dialogEditEntity.find(".state_buttons").find(".passive").hide();
                     self.dialogEditEntity.find(".state_buttons").find(".wrong").hide();
                     self.dialogEditEntity.find(".state_buttons").find(".right").hide();
@@ -477,14 +477,26 @@ var Editor = function(params,callback){
                 attachEventsEditingEntity(stateName);
             }
         });
-        //Si es una página de estilos se muestra el cargador de archivos
+        //Si es una página de estilos o de audio se muestra el cargador de archivos
         //Carga los estilos en entity.draw()
-        if(self.editingEntity.type==="style"){
+        if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"){
             //Si tenía cargada algúna hoja de estilos, se reemplaza
             var previous=false;
             if(self.editingEntity.getState('passive').content!==""){
                 var previousContent=$(self.editingEntity.getState('passive').content);
                 previous=previousContent.attr('data-file');
+            }
+            var type='';
+            var extension='';
+            var className='';
+            if(self.editingEntity.type==="style"){
+                type='style';
+                extension='css';
+                className='style_entity';
+            }else if(self.editingEntity.type==="audio"){
+                type='audio';
+                extension='wav';
+                className='audio_entity';
             }
 //            self.editingEntity.div.text("Subir archivos");
             self.editingEntity.div.uploadFile({
@@ -493,16 +505,16 @@ var Editor = function(params,callback){
                 dynamicFormData: function() {
                     var data ={
                         activitySetName:self.activitySet.name,
-                        type: "style",
+                        type: type,
                         entity:entity.id,
-                        extension:"css",
-                        previousCss:previous
+                        extension:extension,
+                        previous:previous
                     };
                     return data;
                 },
                 onSuccess:function(files,data,xhr){
                     var response=JSON.parse(data);
-                    self.editingEntity.states['passive'].content='<p class="style_entity" data-file="'+response.file+'">Archivo cargado correctamente</p>';
+                    self.editingEntity.states['passive'].content='<p class="'+className+'" data-file="'+response.file+'">Archivo cargado correctamente</p>';
                     self.editingEntity.div.attr('data-file',response.file);
                     if(previous){
                         $('#'+previous.replace(".","_")).remove();

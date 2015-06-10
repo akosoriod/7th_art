@@ -68,3 +68,7 @@
 .record_controlls .record_buttons #download{
     background-image: url('record/ic_file_download_black_24dp_1x.png');
 }
+
+.audio_entity{
+    width: 200px;
+}

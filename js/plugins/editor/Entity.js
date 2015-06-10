@@ -243,6 +243,19 @@ var Entity = function(params){
                     }
                 }
             }
+            //Si es una entidad de audio, carga el audio en la página
+            if(self.type==="audio"&&self.getState('passive').content!==""){
+                var content=$(self.getState('passive').content);
+                var file=content.attr('data-file');
+                if(self.workspace){
+                    self.div.find('.content').empty().append('<audio controls class="audio_entity" src="'+editor.activitySet.url+'audio/'+file+'" id="'+file+'"></audio>');
+//                    $('body').append('<link id="'+file.replace(".","_")+'" rel="stylesheet" type="text/css" href="'+editor.activitySet.url+'css/'+file+'">');
+                    //Si es una entidad de estilos y está en modo solución, se oculta
+//                    if(editor.mode==="solution"){
+//                        self.div.hide();
+//                    }
+                }
+            }
         }
     };
     
