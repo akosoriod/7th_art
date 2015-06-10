@@ -8,6 +8,18 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/drop
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/ActivitySet.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/dropit/dropit.js');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/parallax/jquery.parallax.min.js');
+
+//Carga los estilos disponibles para el set de actividades
+if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
+    while (false !== ($entry = readdir($handle))) {
+        if ($entry != "." && $entry != "..") {
+            try{
+                Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/data/sets/'.$model->name.'/css/'.$entry);
+            }catch(Exception $ex){}
+        }
+    }
+    closedir($handle);
+}
 ?>
 <script>
     $(document).ready(function($) {
@@ -20,10 +32,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
             yparallax:false,
             xorigin: 'center'
         });
-        
-//        $('body').css({
-//            'background': 'url("<?php // echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") repeat scroll center top transparent'
-//        });
         $('body').css({
             'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") center no-repeat transparent',
             'background-size': 'cover',
@@ -42,7 +50,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
     </div>
     <div class="row row1">
         <div id="lbl_set" class="col-xs-12 col-sm-12 col-md-8">
-            <h2><?php echo $model->title; ?></h2>
+            <h2 id="ql_activity_set_title"><?php echo $model->title; ?></h2>
             <audio autoplay loop>
                 <source src="<?php echo Yii::app()->baseUrl.'/'.$model->soundtrack.'?'.rand(1,1000000); ?>" type="audio/ogg">
                 Your browser does not support the audio element.
@@ -50,24 +58,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
         </div>
         <!-- Acknowledgments -->
         <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">
-            <?php
-            foreach ($model->sections as $section){
-                if($section->sectionType->name === 'acknowledgments') {
-                    $publishedVersion=$section->publishedVersion();
-                    if($publishedVersion){
-                        if(count($publishedVersion->activities)===1){
-                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
-                        }elseif(count($publishedVersion->activities)>1){
-                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
-                                foreach ($publishedVersion->activities as $activity) {
-                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
-                                }
-                            echo '</ul></li></ul>';
-                        }
-                    }
-                }
-            }
-            ?>
         </div>
     </div>
     <div class="row row2">
@@ -75,18 +65,20 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/pa
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
             <?php
                 foreach ($model->sections as $section){
-                    if($section->sectionType->name !== 'acknowledgments') {
-                        $publishedVersion=$section->publishedVersion();
-                        if($publishedVersion){
-                            if(count($publishedVersion->activities)===1){
-                                echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
-                            }elseif(count($publishedVersion->activities)>1){
-                                echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
-                                    foreach ($publishedVersion->activities as $activity) {
-                                        echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
-                                    }
-                                echo '</ul></li></ul>';
-                            }
+                    $class='';
+                    if($section->sectionType->name == 'acknowledgments'||$section->sectionType->name == 'credits') {
+                        $class=' black_text ';
+                    }
+                    $publishedVersion=$section->publishedVersion();
+                    if($publishedVersion){
+                        if(count($publishedVersion->activities)===1){
+                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+                        }elseif(count($publishedVersion->activities)>1){
+                            echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
+                                foreach ($publishedVersion->activities as $activity) {
+                                    echo '<li><a id="mnu_'.$section->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'/activity/'.$activity->id.'">'.$activity->name.'</a></li>';
+                                }
+                            echo '</ul></li></ul>';
                         }
                     }
                 }

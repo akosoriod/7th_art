@@ -152,4 +152,43 @@ class Step extends CActiveRecord
                 $newUserStep->save();
             }
         }
+        
+        /**
+         * Actualiza el audio de un usuario en el paso actual
+         * @param User $user Usuario para actualizar el audio
+         * @param int $record Audio del usuario en el paso actual
+         */
+        public function setRecord($user,$record){
+            $userStep=UserStep::model()->findByAttributes(array(
+                'user_id'=>intval($user->id),
+                'step_id'=>intval($this->id)
+            ));
+            if($userStep){
+                $userStep->record=$record;
+                $userStep->update();
+            }else{
+                $newUserStep=new UserStep();
+                $newUserStep->user_id=intval($user->id);
+                $newUserStep->step_id=intval($this->id);
+                $newUserStep->score=intval($record);
+                $newUserStep->save();
+            }
+        }        
+        
+        /**
+         * Retorna la grabación de un usuario en el paso actual
+         * @param User $user Usuario del que se quiere obtener la grabación
+         * @return string Grabación en el paso actual
+         */
+        public function getRecord($user){
+            $record='';
+            $userStep=UserStep::model()->findByAttributes(array(
+                'user_id'=>intval($user->id),
+                'step_id'=>intval($this->id)
+            ));
+            if($userStep){
+                $record=$userStep->record;
+            }
+            return $record;
+        }
 }

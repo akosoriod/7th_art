@@ -43,6 +43,9 @@
     float: left;
     height: 28px;
 }
+.record_controlls #base64{
+    display: none;
+}
 .record_controlls .record_buttons .record_button{
     float: left;
     height: 24px;
@@ -59,6 +62,13 @@
 .record_controlls .record_buttons #record{
     background-image: url('record/ic_mic_black_24dp_1x.png');
 }
+.record_controlls .record_buttons #base64{
+    background-image: url('record/ic_stop_black_24dp_1x.png');
+}
 .record_controlls .record_buttons #download{
     background-image: url('record/ic_file_download_black_24dp_1x.png');
+}
+
+.audio_entity{
+    width: 200px;
 }

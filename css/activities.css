@@ -1,9 +1,9 @@
 #workspace{
     height: 600px;
+    overflow:auto;
     position: relative;
     width: 1040px;
 }
-
 #parallax{
     height: 543px !important;
 }
@@ -14,13 +14,16 @@
     list-style-image: none;
 }
 #menu-movies a {
-    color: #fff !important;
+    color: #fff;
 }
 #menu-movies .activity_set_menu {
     background-color: #50992e;
-    color: #fff !important;
+    color: #fff ;
     float: left;
     
+}
+.black_text,#mnu_credits,#mnu_acknowledgments{
+    color: #444 !important;
 }
 #menu-movies .activity_set_menu .title{
     line-height: 0.9em;
@@ -44,7 +47,7 @@
     padding: 10px 7px;
 }
 #menu-movies a.mnu_button {
-    padding: 10px 7px;
+    padding: 10px 5px;
 }
 
 
@@ -57,6 +60,8 @@
 }
 #activity_set_home .section_nav .text{
     margin-right: 10px;
+    margin-left: 20px;
+    color: black;
 }
 #activity_set_home .section_nav .step_id{
     background-color: rgba(200, 200, 200, 0.5);
@@ -67,7 +72,7 @@
     line-height: 20px;
     margin-bottom: 0px;
     margin-left: 1px;
-    padding: 0 6px;
+    padding: 0 14px;
     text-align: center;
 }
 #activity_set_home .section_nav .active{
@@ -81,8 +86,13 @@
     height: 20px;
 }
 #activity_set_home .section_nav .step_instruction{
-    font-size: 1em;
-    margin: 20px 20px 0px 20px;
+    font-size: 12pt;
+    margin: 10px 20px 0px 20px;
+    background: rgba(255, 255, 255, 0.3) none repeat scroll 0 0;
+    border-radius: 5px;
+    color: black;
+    margin: 10px 20px 0;
+    padding: 15px;
 }
 
 /* Estilos de el userspace */

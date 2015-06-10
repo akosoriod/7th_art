@@ -14,7 +14,7 @@ class DesignerController extends Controller {
                         'index',
                         'saveEntitiesByAjax','loadEntitiesByAjax',
                         'createStepByAjax','deleteStepByAjax','updateStepDataByAjax',
-                        'savePointsByAjax'
+                        'savePointsByAjax','saveRecordByAjax'
                     ),
                     'users'=>array('@'),
             ),
@@ -275,6 +275,24 @@ class DesignerController extends Controller {
         $step=Step::model()->findByPk($stepId);
         if($step){
             $step->setPoints(User::getCurrentUser(),$points);
+        }else{
+            $success=false;
+        }
+        //Return the result of save schedule
+        echo json_encode(array("success"=>$success));
+    }
+    
+    /**
+    * Guarda el puntaje para un paso del usuario actual
+    */
+    public function actionSaveRecordByAjax(){
+        $success=true;
+        //Get the client data
+        $stepId=intval($_POST['stepId']);
+        $record=$_POST['audio'];
+        $step=Step::model()->findByPk($stepId);
+        if($step){
+            $step->setRecord(User::getCurrentUser(),$record);
         }else{
             $success=false;
         }

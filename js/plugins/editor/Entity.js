@@ -209,7 +209,7 @@ var Entity = function(params){
             if(editor.mode==="solution"){
                 //Si es una entidad de grabación, inserta el contenido
                 if(self.type==="record"){
-                    var content=htmlRecordEntity();
+                    var content=htmlRecordEntity(editor.record);
                     self.states.passive.content=content;
                     self.states.active.content=content;
                     self.states.solved.content=content;
@@ -241,6 +241,19 @@ var Entity = function(params){
                     if(editor.mode==="solution"){
                         self.div.hide();
                     }
+                }
+            }
+            //Si es una entidad de audio, carga el audio en la página
+            if(self.type==="audio"&&self.getState('passive').content!==""){
+                var content=$(self.getState('passive').content);
+                var file=content.attr('data-file');
+                if(self.workspace){
+                    self.div.find('.content').empty().append('<audio controls class="audio_entity" src="'+editor.activitySet.url+'audio/'+file+'" id="'+file+'"></audio>');
+//                    $('body').append('<link id="'+file.replace(".","_")+'" rel="stylesheet" type="text/css" href="'+editor.activitySet.url+'css/'+file+'">');
+                    //Si es una entidad de estilos y está en modo solución, se oculta
+//                    if(editor.mode==="solution"){
+//                        self.div.hide();
+//                    }
                 }
             }
         }
@@ -517,18 +530,22 @@ var Entity = function(params){
      * @param {type} entity
      * @returns {undefined}
      */
-    function htmlRecordEntity(){
+    function htmlRecordEntity(record){
+        var src='data:audio/wav;base64,UklGRiTAAgBXQVZFZm10IBAAAAABAAIARKwAABCxAgAEABAAZGF0YQDAAgCJ/Yn9gf2B';
+        if(record){
+            src=record;
+        }
         var html=
             '<div class="record_controlls">'+
                 '<div class="record_buttons">'+
                     '<a class="record_button" id="record" title="Record"></a>'+
-                    '<a class="record_button disabled one" id="stop" title="Stop"></a>'+
-                    '<a class="record_button disabled one" id="play" title="Play"></a>'+
+//                    '<a class="record_button disabled one" id="stop" title="Stop"></a>'+
+//                    '<a class="record_button disabled one" id="play" title="Play"></a>'+
 //                    '<a class="record_button disabled one" id="download" title="download"></a>'+
-//                    '<a class="record_button disabled one" id="base64">Base64 URL</a>'+
+                    '<a class="record_button one" id="base64" title="Stop"></a>'+
                 '</div>'+
                 '<div class="record_player">'+      
-                    '<audio controls src="" id="audio"></audio>'+
+                    '<audio controls src="'+src+'" id="audio"></audio>'+
                 '</div>'+
             '</div>';
         return html;
@@ -638,6 +655,8 @@ var Entity = function(params){
                 elem.addClass("disabled");
                 $("#live").addClass("disabled");
                 $(".one").removeClass("disabled");
+                self.div.find("#record").hide();
+                self.div.find("#base64").show();
             });
 	});
 	entityDiv.on("click", "#stop:not(.disabled)", function(){
@@ -645,8 +664,21 @@ var Entity = function(params){
 	});
 	entityDiv.on("click", "#play:not(.disabled)", function(){
             $.voice.export(function(url){
-                $("#audio").attr("src", url);
-                $("#audio")[0].play();
+//                $("#audio").attr("src", url);
+//                $("#audio")[0].play();
+//                $('body').prepend("<a id='download_audio' href='"+url+"' download='MyRecording.wav'>AAA</a>")[0].click();
+//                $(document).on("click", "#download_audio", function(){
+//                    $(this).text("It works!");
+//                });
+//                setTimeout(function(){
+//                    $('#download_audio').click();
+//                },3000);
+//                editor.saveRecord(url,function(err){
+//                    if(err) {
+//                        console.debug("Error almacenando audio");
+//                    }
+//                });
+                $("#base64").click();
             }, "URL");
             restore();
 	});
@@ -656,12 +688,20 @@ var Entity = function(params){
             }, "URL");
             restore();
 	});
-        entityDiv.on("click", "#base64:not(.disabled)", function(){
-            $.voice.export(function(url){
-                console.log("Here is the base64 URL : " + url);
-                alert("Check the web console for the URL");
-                $("<a href='"+ url +"' target='_blank'></a>")[0].click();
-            }, "base64");
+        entityDiv.on("click", "#base64", function(){
+            $.voice.export(function(record){
+                $("<a href='"+record+"' target='_blank'></a>")[0].click();
+                editor.saveRecord(record,function(err){
+                    if(err) {
+                        console.debug("Error almacenando audio");
+                    }else{
+                        self.div.find("#audio").attr('src',record);
+                        self.div.find("#audio")[0].play();
+                        self.div.find("#record").show();
+                        self.div.find("#base64").hide();
+                    }
+                });
+            },"base64");
             restore();
 	});
     };
