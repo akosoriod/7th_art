@@ -37,7 +37,8 @@
         <div class="site-url">
             <div class="icon">
             </div>
-            7<sup>th</sup> @rt : The Power & Magic of Films to Learn English
+            <!--7<sup>th</sup> @rt : The Power & Magic of Films to Learn English-->
+            unal.edu.co
         </div>
         <div class="navbar-">
             <div class="btn-group">
