@@ -81,9 +81,9 @@
 </header>
 <div class="home-image">
     <?php 
-        echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/img_demo.jpg","",array(
-            'width'=>2000,
-            'height'=>80
-        )); 
+//        echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/img_demo.jpg","",array(
+//            'width'=>2000,
+//            'height'=>80
+//        )); 
     ?>
 </div>
