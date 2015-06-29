@@ -71,7 +71,7 @@
         <div class="col-md-4 footer-info col-lg-4 col-sm-4 col-xs-12">
             <div class="csc-frame csc-frame-indent">
                 <p class="bodytext">
-                    <b>Contacto página web:<br/></b>Dirección<br/>Edif. XXXXXXXX -&nbsp;Of. XXX<br/>Bogotá D.C.,&nbsp; Colombia<br/>(+57 X) &nbsp;316 5000
+                    <b>Contacto página web:<br/></b>Dirección<br/>Edif. 229 -&nbsp;Piso 3<br/>Bogotá D.C.,&nbsp; Colombia<br/>(+57 1) &nbsp;316 5000
                 </p>
             </div>
             <div class="csc-frame csc-frame-indent">
@@ -81,7 +81,7 @@
                 </p>
                 <div class="csc-default">
                     <p>
-                        Actualización: DD/MM/AAAA
+                        Actualización: 30/06/2015
                     </p>
                 </div>
             </div>
