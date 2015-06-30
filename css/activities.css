@@ -87,12 +87,7 @@
 }
 #activity_set_home .section_nav .step_instruction{
     font-size: 12pt;
-    margin: 10px 20px 0px 20px;
-    background: rgba(255, 255, 255, 0.3) none repeat scroll 0 0;
-    border-radius: 5px;
-    color: black;
-    margin: 10px 20px 0;
-    padding: 15px;
+    margin: 20px 20px 0px 20px;
 }
 
 /* Estilos de el userspace */

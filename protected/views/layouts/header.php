@@ -37,7 +37,8 @@
         <div class="site-url">
             <div class="icon">
             </div>
-            7<sup>th</sup> @rt : The Power & Magic of Films to Learn English
+            <!--7<sup>th</sup> @rt : The Power & Magic of Films to Learn English-->
+            unal.edu.co
         </div>
         <div class="navbar-">
             <div class="btn-group">
@@ -81,9 +82,9 @@
 </header>
 <div class="home-image">
     <?php 
-        echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/img_demo.jpg","",array(
-            'width'=>2000,
-            'height'=>80
-        )); 
+//        echo CHtml::image(Yii::app()->request->baseUrl."/images/unal/img_demo.jpg","",array(
+//            'width'=>2000,
+//            'height'=>80
+//        )); 
     ?>
 </div>
