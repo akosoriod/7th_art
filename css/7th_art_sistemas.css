@@ -171,3 +171,19 @@ main.detalle table tr th {
 main.detalle table tr td {
   padding: 0;
 }
+
+.credits_table,.credits_table th,.credits_table tr,.credits_table td,.credits_table tbody{
+    border: none !important;
+}
+.title_field{
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: right;
+}
+.name_field{
+    font-size: 0.9em;
+    text-indent: 5px;
+}
+.escudo_creditos{
+    margin-left: 113px;
+}
