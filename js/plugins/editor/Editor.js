@@ -706,7 +706,7 @@ var Editor = function(params,callback){
             }
             var points=parseInt(mappedResult);
             if(correctAll){
-                alert("Gained points: "+points);
+//                alert("Gained points: "+points);
             }
             //Almacena el resultado actual
             savePoints(self.currentStep,points);
