@@ -498,7 +498,7 @@ var Entity = function(params){
             editing="entity_editing";
         }
         if(self.type==="check"){
-            title="Check the answers";
+            title="Check";
         }
         return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
                 '<div class="box">'+
