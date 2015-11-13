@@ -706,6 +706,9 @@ var Editor = function(params,callback){
             self.divSolution.find('#totalPoints').text(points);
             solutionDiv.empty();
         });
+        self.divSolution.find('.answers').click(function(){
+            console.debug('mostrar solución');
+        });
     };
     
     /**
