@@ -714,7 +714,10 @@ var Editor = function(params,callback){
             solutionDiv.empty();
         });
         self.divSolution.find('.answers').click(function(){
-            console.debug('mostrar solución');
+            for(var i in self.workspace.entities){
+                var entity=self.workspace.entities[i];
+                entity.draw("right");
+            }
         });
     };
     
