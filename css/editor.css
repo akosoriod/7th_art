@@ -170,6 +170,12 @@ table.controller .label{
     width: 25px;
     z-index: 10000;
 }
+
+#container #area #editor #toolbar #label_toggle_snap span{
+    line-height: 14px;
+    padding: 2px;
+    width: 50px;
+}
 #container #area #editor #toolbar #states_bar .state_button{
     background-image: url('../images/editor/state_off.png');
     cursor: pointer;

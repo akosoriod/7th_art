@@ -94,6 +94,10 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="button button-check" title="Entidad Calificar"></div>
                     <div class="button button-answers" title="Entidad Ver respuestas"></div>
                     <div class="separator"></div>
+                    <div class="button" title="Cambiar el ajuste a la grilla">
+                        <input id="toggle_snap" type="checkbox" checked><label for="toggle_snap" id="label_toggle_snap">Ajuste a la grilla</label>
+                    </div>
+                    <div class="separator"></div>
                     <div class="button undo pointer" id="button-undo" title="Deshacer"></div>
                     <div class="button pointer" id="save" title="Guardar actividad"></div>
                     <div id="editing_path">

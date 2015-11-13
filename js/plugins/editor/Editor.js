@@ -141,7 +141,14 @@ var Editor = function(params,callback){
         self.div.find('#sections_tree').tabelize({
             fullRowClickable : true
 	});
-        
+        //Ajuste a la grilla
+        self.div.find('#toggle_snap').button().change(function() {
+            if($(this).is(":checked")) {
+                self.div.find(".entity").draggable( "option","grid",[10,10]);
+            }else{
+                self.div.find(".entity").draggable( "option","grid",[1,1]);
+            }
+        });
         //Crear un paso
         var addStep=self.div.find('#sections_tree').find('.activity').find('.add_step');
         addStep.click(function(e){
