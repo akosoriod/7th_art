@@ -44,7 +44,7 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
         activitySet.init();
     });
 </script>
-<main id="activity_set_home" class="detalle">
+<main id="activity_set_home" class="detalle front movie-<?php echo $model->name; ?> logged-in no-sidebars">
     <div class="breadcrumb-class">
         Est&aacute; en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $model->title; ?></b>
     </div>

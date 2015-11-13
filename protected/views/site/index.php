@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
         },600);
     });
 </script>
-<main class="detalle not-front page-home not-logged fullpage">
+<main class="detalle not-front page-home logged-in fullpage">
     <div class="breadcrumb-class">
         Est&aacute; en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="#" target="_self" title="La Universidad">Secci&oacute;n</a>&nbsp;&nbsp;/&nbsp;&nbsp;<b>P&aacute;gina</b>
     </div>

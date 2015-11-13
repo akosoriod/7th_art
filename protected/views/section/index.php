@@ -47,7 +47,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
         editor.load(stepId);
     });
 </script>
-<main id="activity_set_home" class="detalle editor_main_space" data-step-id="<?php echo $step->id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
+<main id="activity_set_home" class="detalle editor_main_space not-front movie-<?php echo $activitySet->name; ?> page-<?php echo $section->sectionType->name; ?> logged-in no-sidebars" data-step-id="<?php echo $step->id; ?>" data-activity-set-name="<?php echo $activitySet->name; ?>">
     <div id="ql_breadcrumb" class="breadcrumb-class">
         Está en:&nbsp;<a href="<?php echo Yii::app()->request->baseUrl; ?>" target="_self" title="Inicio">Inicio</a>&nbsp;&nbsp;/<a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$section->activitySet->name; ?>" target="_self" title="<?php echo $section->activitySet->title; ?>"><?php echo $section->activitySet->title; ?></a>&nbsp;&nbsp;/&nbsp;&nbsp;<b><?php echo $section->sectionType->label; ?></b>
     </div>
