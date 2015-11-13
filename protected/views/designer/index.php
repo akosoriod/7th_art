@@ -92,6 +92,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="button button-record" title="Entidad de grabación"></div>
                     <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
                     <div class="button button-check" title="Entidad Calificar"></div>
+                    <div class="button button-answers" title="Entidad Ver respuestas"></div>
                     <div class="separator"></div>
                     <div class="button undo pointer" id="button-undo" title="Deshacer"></div>
                     <div class="button pointer" id="save" title="Guardar actividad"></div>

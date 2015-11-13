@@ -318,6 +318,12 @@ var Workspace = function(params){
                                 height:50,
                                 width:50
                             };
+                        }else if(ui.draggable.hasClass("button-answers")){
+                            type="answers";
+                            size={
+                                height:50,
+                                width:50
+                            };
                         }else if(ui.draggable.hasClass("button-list")){
                             type="list";
                         }

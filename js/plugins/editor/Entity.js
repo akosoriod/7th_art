@@ -172,7 +172,7 @@ var Entity = function(params){
         });
         self.div.dblclick(function(){
             //Si es una entidad de check, no se puede editar
-            if(editor.mode!=="solution"&&(self.type!=="check"&&self.type!=="record")){
+            if(editor.mode!=="solution"&&(self.type!=="check"&&self.type!=="answers"&&self.type!=="record")){
                 editor.editEntity(self);
             }
         });
@@ -484,7 +484,7 @@ var Entity = function(params){
         var buttons="";
         var editing="";
         if(editor.mode==="edition"){
-            if(self.type==="check"||self.type==="record"){
+            if(self.type==="check"||self.type==="answers"||self.type==="record"){
                 title="Entidad no editable";
             }else{
                 title="Doble click para editar";
@@ -499,6 +499,9 @@ var Entity = function(params){
         }
         if(self.type==="check"){
             title="Check";
+        }
+        if(self.type==="answers"){
+            title="Answers";
         }
         return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
                 '<div class="box">'+

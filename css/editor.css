@@ -249,6 +249,9 @@ table.controller .label{
 #container #area #editor .button-check{
     background-image: url('../images/editor/check.png');
 }
+#container #area #editor .button-answers{
+    background-image: url('../images/editor/answers.png');
+}
 #container #area #editor .button-list{
     background-image: url('../images/editor/list.png');
 }
@@ -301,6 +304,15 @@ table.controller .label{
     }
     .check .content:hover{
         background-image: url('../images/editor/check-img-hover.png');
+        background-repeat: no-repeat;
+    }
+    .answers .content{
+        background-image: url('../images/editor/answers-img.png');
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+    .answers .content:hover{
+        background-image: url('../images/editor/answers-img-hover.png');
         background-repeat: no-repeat;
     }
 .entity_editing{
