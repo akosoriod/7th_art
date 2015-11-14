@@ -65,6 +65,9 @@ class DesignerController extends Controller {
             $entity->optional=$dataEntity->optional;
             $entity->countable=$dataEntity->countable;
             $entity->weight=intval($dataEntity->weight);
+            if(property_exists($dataEntity,'parameters')){
+                $entity->parameters=json_encode($dataEntity->parameters);
+            }
             if(property_exists($dataEntity,'type')){
                 $entityTypeName=$dataEntity->type;
                 //Si hay al menos una entidad que sea check, el paso se marca como calificable
@@ -178,6 +181,7 @@ class DesignerController extends Controller {
                 'countable'=>$entity->countable,
                 'weight'=>intval($entity->weight),
                 'type'=>$entity->entityType->name,
+                'parameters'=>$entity->parameters,
                 'states'=>$states
             );
         }
