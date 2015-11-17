@@ -52,7 +52,7 @@ class Step extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'entities' => array(self::HAS_MANY, 'Entity', 'step_id'),
+			'entities' => array(self::HAS_MANY, 'Entity', 'step_id','order'=>'parent_id ASC'),
 			'activity' => array(self::BELONGS_TO, 'Activity', 'activity_id'),
 			'users' => array(self::MANY_MANY, 'User', 'user_step(step_id, user_id)'),
 		);

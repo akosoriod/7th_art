@@ -578,7 +578,7 @@ var Editor = function(params,callback){
         contentElements.find('input:text').each(function(){
             $(this).attr("value",$(this).attr("data-val"));
             if($.trim($(this).attr("data-element-id"))===""){
-                $(this).attr("data-element-id","entityElement_"+guid());
+                $(this).attr("data-element-id","entityElement_"+self.guid());
             }
             $(this).addClass("entityElement inputText");
         });
@@ -593,7 +593,7 @@ var Editor = function(params,callback){
                 $(this).attr("data-val","false");
             }
             if($.trim($(this).attr("data-element-id"))===""){
-                $(this).attr("data-element-id","entityElement_"+guid());
+                $(this).attr("data-element-id","entityElement_"+self.guid());
             }
             $(this).addClass("entityElement inputRadio");
         });
@@ -608,7 +608,7 @@ var Editor = function(params,callback){
                 $(this).attr("data-val","false");
             }
             if($.trim($(this).attr("data-element-id"))===""){
-                $(this).attr("data-element-id","entityElement_"+guid());
+                $(this).attr("data-element-id","entityElement_"+self.guid());
             }
             $(this).addClass("entityElement inputCheckbox");
         });
@@ -1342,7 +1342,7 @@ var Editor = function(params,callback){
      * Retorna un ID aleatorio para los elementos
      * @returns {String} Id aleatorio
      */
-    function guid() {
+    self.guid=function() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
         }

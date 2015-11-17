@@ -181,7 +181,7 @@ class DesignerController extends Controller {
                 'countable'=>$entity->countable,
                 'weight'=>intval($entity->weight),
                 'type'=>$entity->entityType->name,
-                'parameters'=>$entity->parameters,
+                'parameters'=>json_decode($entity->parameters),
                 'states'=>$states
             );
         }

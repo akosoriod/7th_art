@@ -30,7 +30,9 @@ var Entity = function(params){
         optional:false,
         entities:{},
         type:'basic',
-        weight:10
+        weight:10,
+        parameters:{},
+        parent:false
     };
     var options = $.extend(def, params);
     self.id=options.id;
@@ -39,6 +41,8 @@ var Entity = function(params){
     self.type=options.type;             //Tipo de entidad: single, dragdrop, ... ver workspace.attachEvents()
     self.weight=options.weight;         //Peso de la entidad en el total de ejercicios
     self.entities=options.entities;
+    self.parameters=options.parameters;
+    self.parent=options.parent;
     /**
      * Constructor Method 
      */
@@ -51,6 +55,10 @@ var Entity = function(params){
         }
         if(!options.content){
             options.content="";
+        }
+        //Si el contenido es vacío y es una lista, crea un contenido inicial
+        if(options.content===""&&self.type==="list"){
+            options.content=getHtmlList(options.parameters.elements);
         }
         self.states={
             /* Define los defaults para el estado pasivo (estado de la entidad en el editor) */
@@ -108,52 +116,62 @@ var Entity = function(params){
      */
     function attachEvents(){
         if(editor.mode==="edition"){
-            self.div.draggable({
-                containment: self.container,
-                cursor: "move",
-                grid: [10,10],
-                opacity: 0.4,
-                scroll: false,
-                zIndex: 10000,
-                stop:function(event,ui){
-                    var diffLeft=ui.position.left-ui.originalPosition.left;
-                    var diffTop=ui.position.top-ui.originalPosition.top;
-                    self.updatePositionByDiff(diffLeft,diffTop,editor.currentState);
-                    self.saveHistory();
-                }
-            }).resizable({
-                containment: self.container,
-                stop:function(event,ui){
-                    var diffHeight=ui.size.height-ui.originalSize.height;
-                    var diffWidth=ui.size.width-ui.originalSize.width;
-                    self.updateSizeByDiff(diffHeight,diffWidth);
-                    self.saveHistory();
-                }
-            }).droppable({
-                accept: ".entity",
-                hoverClass: "entity-hover",
-                greedy: true,
-                tolerance: "fit",
-                drop: function(e,ui){
-                    var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
-                    if(self.id===self.workspace.maxDroppableStack().id){
-                        self.addEntity(entity);
-                        self.workspace.droppableStack={};
-                    }else{
-                        self.removeEntity(entity);
+            if(self.type!=='list_element'){
+                self.div.draggable({
+                    containment: self.container,
+                    cursor: "move",
+                    grid: [10,10],
+                    opacity: 0.4,
+                    scroll: false,
+                    zIndex: 10000,
+                    stop:function(event,ui){
+                        var diffLeft=ui.position.left-ui.originalPosition.left;
+                        var diffTop=ui.position.top-ui.originalPosition.top;
+                        self.updatePositionByDiff(diffLeft,diffTop,editor.currentState);
+                        self.saveHistory();
                     }
-                    return false;
-                },
-                out: function(e,ui){
-                    var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
-                    self.removeEntity(entity);
-                    delete self.workspace.droppableStack[self.id];
-                },
-                over: function(e,ui){
-                    self.workspace.droppableStack[self.id]=self;
+                }).resizable({
+                    containment: self.container,
+                    stop:function(event,ui){
+                        var diffHeight=ui.size.height-ui.originalSize.height;
+                        var diffWidth=ui.size.width-ui.originalSize.width;
+                        self.updateSizeByDiff(diffHeight,diffWidth);
+                        self.saveHistory();
+                        //Si es una entidad de estilo recalcula el tamaño de los elementos
+                        var content=self.div.find('.content');
+                        var elements=content.find('.listElement');
+                        var totalHeight=content.height();
+                        elements.each(function(){
+                            var numberElements=parseInt($(this).attr('data-elements'));
+                            $(this).height((totalHeight-numberElements)/numberElements);
+                        });
+                    }
+                }).droppable({
+                    accept: ".entity",
+                    hoverClass: "entity-hover",
+                    greedy: true,
+                    tolerance: "fit",
+                    drop: function(e,ui){
+                        var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
+                        if(self.id===self.workspace.maxDroppableStack().id){
+                            self.addEntity(entity);
+                            self.workspace.droppableStack={};
+                        }else{
+                            self.removeEntity(entity);
+                        }
+                        return false;
+                    },
+                    out: function(e,ui){
+                        var entity=self.workspace.getEntity(getIdFromElement(ui.draggable));
+                        self.removeEntity(entity);
+                        delete self.workspace.droppableStack[self.id];
+                    },
+                    over: function(e,ui){
+                        self.workspace.droppableStack[self.id]=self;
 
-                }
-            });
+                    }
+                });
+            }
         }
         self.div.find(".deleteEntity").click(function(){
             self.workspace.removeEntity(self.id);
@@ -171,8 +189,8 @@ var Entity = function(params){
             }
         });
         self.div.dblclick(function(){
-            //Si es una entidad de check, no se puede editar
-            if(editor.mode!=="solution"&&(self.type!=="check"&&self.type!=="answers"&&self.type!=="record")){
+            //Lista de las entidades que no se pueden editar
+            if(editor.mode!=="solution"&&(self.type!=="check"&&self.type!=="answers"&&self.type!=="record"&&self.type!=="list")){
                 editor.editEntity(self);
             }
         });
@@ -256,6 +274,25 @@ var Entity = function(params){
 //                    }
                 }
             }
+            //Si es una entidad de lista recalcula el tamaño de cada elemento
+            if(self.type==="list"){
+                var content=self.div.find('.content');
+                var elements=content.find('.listElement');
+                var sortable=content.children('ul');
+                var totalHeight=content.height();
+                elements.each(function(){
+                    var numberElements=parseInt($(this).attr('data-elements'));
+                    $(this).height((totalHeight-numberElements)/numberElements);
+                    if(editor.mode==="edition"){
+                        $(this).addClass('edition_mode');
+                    }else{
+                        //Elimina los elementos solo visibles en modo edición
+                        $(this).find('.only_in_edition_mode').remove();
+                    }
+                });
+                sortable.sortable();
+                sortable.disableSelection();
+            }
         }
     };
     
@@ -265,13 +302,23 @@ var Entity = function(params){
      */
     self.showState=function(state){
         self.div.attr("data-state",state.type);
-        self.div.css({
-            'height':state.size.height,
-            'left':state.pos.left,
-            'top':state.pos.top,
-            'width':state.size.width,
-            'z-index':state.zindex
-        });
+        if(self.type==='list_element'){
+            self.div.css({
+                'height':'100%',
+                'left':state.pos.left,
+                'top':state.pos.top,
+                'width':'100%',
+                'z-index':state.zindex
+            });
+        }else{
+            self.div.css({
+                'height':state.size.height,
+                'left':state.pos.left,
+                'top':state.pos.top,
+                'width':state.size.width,
+                'z-index':state.zindex
+            });
+        }
         self.div.find(".content").empty().append(state.content);
     };
     
@@ -282,7 +329,22 @@ var Entity = function(params){
     function loadDiv(){
         //Si no existe el div, se inserta
         if(!self.div.length){
-            self.container.append(getHtml());
+            //Si es de la clase lista, se inserta en el objeto correspondiente
+            if(self.type==="list_element"){
+                if(self.parameters){
+                    var listEntity=self.container.find('.list[data-match_id="'+self.parameters.match_id+'"]');
+                    var elements=listEntity.find('.listElement');
+                    var element=false;
+                    elements.each(function(){
+                        if(self.parameters.parent_element_id===parseInt($(this).attr('data-position'))){
+                            element=$(this);
+                            element.append(getHtml());
+                        }                        
+                    });
+                }
+            }else{
+                self.container.append(getHtml());
+            }
             self.div=self.container.find('#entity'+self.id);
             //Se asocian los eventos de la entidad
             attachEvents();
@@ -490,11 +552,13 @@ var Entity = function(params){
                 title="Doble click para editar";
             }
             grid=" grid ";
-            buttons=
-                '<div class="entityButton deleteEntity" title="Eliminar entidad">x</div>'+
-                '<div class="entityButton zindex increaseZ" title="Traer al frente">+</div>'+
-                '<div class="entityButton zindex decreaseZ" title="Enviar atras">-</div>'
-            ;
+            if(self.type!=='list_element'){
+                buttons=
+                    '<div class="entityButton deleteEntity" title="Eliminar entidad">x</div>'+
+                    '<div class="entityButton zindex increaseZ" title="Traer al frente">+</div>'+
+                    '<div class="entityButton zindex decreaseZ" title="Enviar atras">-</div>'
+                ;
+            }
             editing="entity_editing";
         }
         if(self.type==="check"){
@@ -503,13 +567,33 @@ var Entity = function(params){
         if(self.type==="answers"){
             title="Answers";
         }
-        return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'">'+
+        //Inserta todos los parámetros como data-parameter en el html
+        var parameters='';
+        if(self.parameters){
+            for(var i in self.parameters){
+                parameters+=' data-'+i+'="'+self.parameters[i]+'"';
+            }
+        }
+        return '<div class="draggable entity '+editing+' '+self.type+'" id="entity'+self.id+'" data-id="'+self.id+'" title="'+title+'" '+parameters+'>'+
                 '<div class="box">'+
                     '<div class="content '+grid+'"></div>'+
                 '</div>'+
                 buttons+
             '</div>'
         ;
+    };
+    
+    /**
+     * Retorna el html para la entidad de listas
+     * @param {int} elements Cantidad de elementos a crear en el list
+     * @return {string} Html con los elementos
+     */
+    function getHtmlList(elements){
+        var htmlElements='';
+        for(var i=0;i<elements;i++){
+            htmlElements+='<li class="listElement" data-elements="'+elements+'" data-position="'+(i+1)+'"><div class="only_in_edition_mode">Elemento '+(i+1)+'</div></li>';
+        }
+        return '<ul class="sortable_list">'+htmlElements+'</ul>';
     };
     
     /**

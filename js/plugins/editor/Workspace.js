@@ -282,6 +282,7 @@ var Workspace = function(params){
                 accept: ".button",
                 drop: function( event, ui ) {
                     if(editor.currentStep){
+                        var create=true;
                         var displacement=self.div.offset();
                         var type="";
                         var content="";
@@ -289,6 +290,7 @@ var Workspace = function(params){
                             height:160,
                             width:100
                         };
+                        var parameters={};
                         if(ui.draggable.hasClass("button-basic")){
                             type="basic";
                         }else if(ui.draggable.hasClass("button-dragdrop")){
@@ -325,7 +327,43 @@ var Workspace = function(params){
                                 width:50
                             };
                         }else if(ui.draggable.hasClass("button-list")){
-                            type="list";
+                            var elements=4;
+                            create=false;
+                            $('#list_elements').dialog({
+                                modal:true,
+                                buttons:{
+                                    "Cancelar":function(){$(this).dialog("close");},
+                                    "Aceptar":function(){
+                                        elements=parseInt($(this).find('.selection').val());
+                                        var randomId=editor.guid();
+                                        var entity=new Entity({
+                                            content:content,type:"list",
+                                            pos:{left:ui.position.left-displacement.left,top:ui.position.top-displacement.top},
+                                            size:{height:350,width:250},
+                                            parameters:{
+                                                elements:elements,
+                                                match_id:randomId
+                                            }
+                                        });
+                                        //Se crea la entidad lista
+                                        var entityList=self.addEntity(entity);
+                                        //Para cada elemento se crea una entidad y se agrega
+                                        for(var i=0;i<elements;i++){
+                                            var subentity=new Entity({
+                                                content:content,type:"list_element",
+                                                pos:{left:0,top:0},
+                                                size:{height:100,width:100},
+                                                parameters:{
+                                                    parent_element_id:(i+1),
+                                                    match_id:randomId
+                                                }
+                                            });
+                                            entityList.addEntity(self.addEntity(subentity));
+                                        }
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
                         }
                         
                         var entity=new Entity({
@@ -337,7 +375,9 @@ var Workspace = function(params){
                             },
                             size:size
                         });
-                        self.addEntity(entity);
+                        if(create){
+                            self.addEntity(entity);
+                        }
                         //Si es una entidad de estilo, se guarda todo y se recarga 
                         //para almacenar los estilos con nombre.
                         if(entity.type==="style"){

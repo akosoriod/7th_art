@@ -87,7 +87,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="separator"></div>-->
                     <div class="button button-basic" title="Entidad"></div>
                     <div class="button button-dragdrop" title="Entidad drag and drop"></div>
-                    <!--<div class="button button-list" title="Entidad de listas ordenables"></div>-->
+                    <div class="button button-list" title="Entidad de listas ordenables"></div>
                     <div class="button button-audio" title="Entidad de audio"></div>
                     <div class="button button-record" title="Entidad de grabación"></div>
                     <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
@@ -172,6 +172,21 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div id="list_elements" title="Cantidad de elementos en la lista">
+            <p>Seleccione la cantidad de elementos en la lista ordenable</p>
+            <select class="selection">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
         </div>
     </div>
     
