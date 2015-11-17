@@ -137,13 +137,26 @@ var Entity = function(params){
                         var diffWidth=ui.size.width-ui.originalSize.width;
                         self.updateSizeByDiff(diffHeight,diffWidth);
                         self.saveHistory();
-                        //Si es una entidad de estilo recalcula el tamaño de los elementos
+                        //Si es una entidad de lista recalcula el tamaño de los elementos
                         var content=self.div.find('.content');
                         var elements=content.find('.listElement');
                         var totalHeight=content.height();
+                        var totalWidth=content.width();
                         elements.each(function(){
                             var numberElements=parseInt($(this).attr('data-elements'));
                             $(this).height((totalHeight-numberElements)/numberElements);
+                            var entityId=getIdFromElement($(this).find('.entity'));
+                            var entity=self.workspace.getEntity(entityId);
+                            var passive=entity.getState('passive');
+                            var right=entity.getState('right');
+                            var wrong=entity.getState('wrong');
+                            var size={
+                                height:(totalHeight-numberElements)/numberElements,
+                                width:totalWidth
+                            };
+                            passive.size=size;
+                            right.size=size;
+                            wrong.size=size;
                         });
                     }
                 }).droppable({
@@ -330,7 +343,7 @@ var Entity = function(params){
         //Si no existe el div, se inserta
         if(!self.div.length){
             //Si es de la clase lista, se inserta en el objeto correspondiente
-            if(self.type==="list_element"){
+            if(self.type==="list_element"&&self.container.attr('id')==='workspace'){
                 if(self.parameters){
                     var listEntity=self.container.find('.list[data-match_id="'+self.parameters.match_id+'"]');
                     var elements=listEntity.find('.listElement');
@@ -339,6 +352,18 @@ var Entity = function(params){
                         if(self.parameters.parent_element_id===parseInt($(this).attr('data-position'))){
                             element=$(this);
                             element.append(getHtml());
+                            var entityId=getIdFromElement($(this).find('.entity'));
+                            var entity=self.workspace.getEntity(entityId);
+                            var passive=entity.getState('passive');
+                            var right=entity.getState('right');
+                            var wrong=entity.getState('wrong');
+                            var size={
+                                height:element.height(),
+                                width:element.width()
+                            };
+                            passive.size=size;
+                            right.size=size;
+                            wrong.size=size;
                         }                        
                     });
                 }
