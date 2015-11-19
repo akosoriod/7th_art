@@ -654,7 +654,6 @@ var Editor = function(params,callback){
                 var correct=true;
                 var entity=self.workspace.entities[i];
                 var right=entity.getState('right');
-
                 //Pone el estado resuelto en el DOM
                 solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution '+entity.type+'">'+right.content+'</div>');
                 //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo

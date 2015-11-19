@@ -111,9 +111,13 @@ var Entity = function(params){
         return self.states[stateName];
     };    
     
+    
     /**
      * Asocia los eventos básicos a la entidad
      */
+    self.attachEvents=function(){
+        attachEvents();
+    };
     function attachEvents(){
         if(editor.mode==="edition"){
             if(self.type!=='list_element'){
@@ -328,6 +332,11 @@ var Entity = function(params){
                 });
                 sortable.disableSelection();
             }
+            
+            if(self.type==="list_element"&&self.container.attr('id')==='workspace'){
+//                console.debug(self); //
+//                attachEvents();
+            }
         }
     };
     
@@ -367,6 +376,7 @@ var Entity = function(params){
             //Si es de la clase lista, se inserta en el objeto correspondiente
             if(self.type==="list_element"&&self.container.attr('id')==='workspace'){
                 if(self.parameters){
+                    self.div=self.container.find('#entity'+self.id);
                     var listEntity=self.container.find('.list[data-match_id="'+self.parameters.match_id+'"]');
                     var elements=listEntity.find('.listElement');
                     var element=false;
@@ -389,13 +399,22 @@ var Entity = function(params){
                             wrong.size=size;
                         }
                     });
+                    self.div=self.container.find('#entity'+self.id);
+                    elements.each(function(){
+                        element=$(this);
+                        var entityId=getIdFromElement($(this).find('.entity'));
+                        var entity=self.workspace.getEntity(entityId);
+                        try{
+                            entity.attachEvents();
+                        }catch(e){};
+                    });
                 }
             }else{
                 self.container.append(getHtml());
+                self.div=self.container.find('#entity'+self.id);
+                //Se asocian los eventos de la entidad
+                attachEvents();
             }
-            self.div=self.container.find('#entity'+self.id);
-            //Se asocian los eventos de la entidad
-            attachEvents();
         }else{
             if(self.type==="list_element"&&self.container.attr('id')==='workspace'){
                 if(self.parameters){
@@ -422,8 +441,14 @@ var Entity = function(params){
                         }
                     });
                     self.div=self.container.find('#entity'+self.id);
-                    //Se asocian los eventos de la entidad
-                    attachEvents();
+                    elements.each(function(){
+                        element=$(this);
+                        var entityId=getIdFromElement($(this).find('.entity'));
+                        var entity=self.workspace.getEntity(entityId);
+                        try{
+                            entity.attachEvents();
+                        }catch(e){};
+                    });
                 }
             }
             self.div=self.container.find('#entity'+self.id);
