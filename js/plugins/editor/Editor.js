@@ -474,9 +474,11 @@ var Editor = function(params,callback){
         entity.entities={};
         entity.updatePosition(0,0);
         entity.draw(stateName);
-        entity.div.draggable("destroy");
+        try{
+            entity.div.draggable("destroy");
+        }catch(e){};
         entity.div.attr("title","Doble click para editar el contenido");
-        entity.div.css("position","relative");        
+        entity.div.css("position","relative");
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){

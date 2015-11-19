@@ -336,13 +336,20 @@ var Workspace = function(params){
                                     "Aceptar":function(){
                                         elements=parseInt($(this).find('.selection').val());
                                         var randomId=editor.guid();
+                                        var order=[];
+                                        for(var k=0;k<elements;k++){
+                                            order[k]=k+1;
+                                        }
                                         var entity=new Entity({
                                             content:content,type:"list",
                                             pos:{left:ui.position.left-displacement.left,top:ui.position.top-displacement.top},
                                             size:{height:350,width:250},
                                             parameters:{
                                                 elements:elements,
-                                                match_id:randomId
+                                                match_id:randomId,
+                                                order_passive:order,
+                                                order_right:order,
+                                                order_wrong:order
                                             }
                                         });
                                         //Se crea la entidad lista

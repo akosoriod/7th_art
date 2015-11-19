@@ -128,6 +128,18 @@ var Entity = function(params){
                         var diffLeft=ui.position.left-ui.originalPosition.left;
                         var diffTop=ui.position.top-ui.originalPosition.top;
                         self.updatePositionByDiff(diffLeft,diffTop,editor.currentState);
+                        //Si es una lista, se recorren los subelementos y se redibujan
+                        if(self.type==='list'){
+                            for(var i in self.workspace.entities){
+                                var entity=self.workspace.entities[i];
+                                if(entity.type==='list_element'){
+                                    if(self.parameters.match_id===entity.parameters.match_id){
+                                        entity.draw();
+                                    }
+                                }
+                                
+                            }
+                        }
                         self.saveHistory();
                     }
                 }).resizable({
@@ -233,7 +245,7 @@ var Entity = function(params){
         if(self.container){
             if(stateName===undefined||!stateName){
                 stateName='passive';
-            }
+            }        
             //Carga la entidad del workspace si existe
             loadDiv();
             
@@ -288,7 +300,7 @@ var Entity = function(params){
                 }
             }
             //Si es una entidad de lista recalcula el tamaño de cada elemento
-            if(self.type==="list"){
+            if(self.type==="list"&&self.container.attr('id')==='workspace'){
                 var content=self.div.find('.content');
                 var elements=content.find('.listElement');
                 var sortable=content.children('ul');
@@ -302,8 +314,18 @@ var Entity = function(params){
                         //Elimina los elementos solo visibles en modo edición
                         $(this).find('.only_in_edition_mode').remove();
                     }
+                });                
+                sortable.sortable({
+                    stop: function( event, ui ) {
+                        var newElements=self.div.find('.content').find('.listElement');
+                        var order=[];
+                        newElements.each(function(){
+                            order.push(parseInt($(this).attr('data-position')));
+                        });
+                        self.parameters['order_'+editor.currentState]=order;
+                        self.div.attr('data-order_'+editor.currentState,order);
+                    }
                 });
-                sortable.sortable();
                 sortable.disableSelection();
             }
         }
@@ -315,7 +337,7 @@ var Entity = function(params){
      */
     self.showState=function(state){
         self.div.attr("data-state",state.type);
-        if(self.type==='list_element'){
+        if(self.type==='list_element'&&self.container.attr('id')==='workspace'){
             self.div.css({
                 'height':'100%',
                 'left':state.pos.left,
@@ -348,6 +370,7 @@ var Entity = function(params){
                     var listEntity=self.container.find('.list[data-match_id="'+self.parameters.match_id+'"]');
                     var elements=listEntity.find('.listElement');
                     var element=false;
+                    orderListBeforeInsert(listEntity);
                     elements.each(function(){
                         if(self.parameters.parent_element_id===parseInt($(this).attr('data-position'))){
                             element=$(this);
@@ -364,7 +387,7 @@ var Entity = function(params){
                             passive.size=size;
                             right.size=size;
                             wrong.size=size;
-                        }                        
+                        }
                     });
                 }
             }else{
@@ -374,11 +397,67 @@ var Entity = function(params){
             //Se asocian los eventos de la entidad
             attachEvents();
         }else{
+            if(self.type==="list_element"&&self.container.attr('id')==='workspace'){
+                if(self.parameters){
+                    var listEntity=self.container.find('.list[data-match_id="'+self.parameters.match_id+'"]');
+                    var elements=listEntity.find('.listElement');
+                    var element=false;
+                    orderListBeforeInsert(listEntity);
+                    elements.each(function(){
+                        if(self.parameters.parent_element_id===parseInt($(this).attr('data-position'))){
+                            element=$(this);
+                            element.empty().append(getHtml());
+                            var entityId=getIdFromElement($(this).find('.entity'));
+                            var entity=self.workspace.getEntity(entityId);
+                            var passive=entity.getState('passive');
+                            var right=entity.getState('right');
+                            var wrong=entity.getState('wrong');
+                            var size={
+                                height:element.height(),
+                                width:element.width()
+                            };
+                            passive.size=size;
+                            right.size=size;
+                            wrong.size=size;
+                        }
+                    });
+                    self.div=self.container.find('#entity'+self.id);
+                    //Se asocian los eventos de la entidad
+                    attachEvents();
+                }
+            }
             self.div=self.container.find('#entity'+self.id);
         }
     };
     
-    
+    /**
+     * Ordena una lista de LI en un objeto de lista ordenable antes de insertar las entidades internas
+     * basado en el estado actual del editor
+     * @param {element} listElements Elemento de lista ordenada
+     */
+    function orderListBeforeInsert(listElements){
+        if(listElements.length){
+            var newOrder=listElements.attr('data-order_'+editor.currentState).split(",");
+            var elements=listElements.find('.listElement');
+            for(var k=0; k<newOrder.length; k++) {
+                newOrder[k]=parseInt(newOrder[k]);
+            }
+            for(var i=0; i<newOrder.length; i++) {
+                elements.each(function(){
+                    if(parseInt($(this).attr('data-position'))===newOrder[i]){
+                        $(this).attr('data-new_order',i+1);
+                    }
+                });
+            }
+            elements.sort(function (a, b) {
+                var contentA =parseInt($(a).attr('data-new_order'));
+                var contentB =parseInt($(b).attr('data-new_order'));
+                return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+            });
+            listElements.find('.sortable_list').empty();
+            listElements.find('.sortable_list').append(elements);
+        }
+    };
     
     /**
      * Actualiza el container de la entidad
