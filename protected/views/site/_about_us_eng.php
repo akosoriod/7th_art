@@ -207,9 +207,11 @@ mso-bidi-font-family:Arial;color:windowtext'><o:p></o:p></span></p>
  mso-position-vertical-relative:text'>
  <v:imagedata src="Identidad_archivos/image008.jpg" o:title="Cinta"/>
  <w:wrap type="tight"/>
-</v:shape><![endif]--><![if !vml]><img width=390 height=344
+</v:shape><![endif]--><![if !vml]>
+<!--    <img width=390 height=344
 src="Identidad_archivos/image009.gif" align=left hspace=12
-alt="" v:shapes="Imagen_x0020_2"><![endif]><span
+alt="" v:shapes="Imagen_x0020_2">-->
+    <![endif]><span
 style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;font-family:
 "Times New Roman","serif";mso-bidi-font-family:Arial;color:windowtext'>La
 herramienta <i style='mso-bidi-font-style:normal'>7th @rt</i> tiene acceso a su
