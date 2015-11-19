@@ -107,7 +107,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'aboutus',
-                    'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
                         'title'=>'ABOUT US',
                         'width'=>760,
@@ -131,7 +130,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'copyright',
-                    'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
                         'title'=>'Copyright',
                         'width'=>740,
@@ -155,7 +153,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'terms_of_use',
-                    'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
                         'title'=>'T&eacute;rminos de Uso',
                         'width'=>960,

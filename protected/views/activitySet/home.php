@@ -111,7 +111,6 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'aboutus',
-                    'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
                         'title'=>'ABOUT US',
                         'width'=>760,
@@ -135,7 +134,6 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'copyright',
-                    'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
                         'title'=>'Copyright',
                         'width'=>740,
@@ -159,7 +157,6 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
                 <?php
                 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                     'id'=>'terms_of_use',
-                    'cssFile'=>Yii::app()->baseUrl.'/css/activity_sets.css',
                     'options'=>array(
                         'title'=>'T&eacute;rminos de Uso',
                         'width'=>960,
