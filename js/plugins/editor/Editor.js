@@ -654,10 +654,16 @@ var Editor = function(params,callback){
                 var correct=true;
                 var entity=self.workspace.entities[i];
                 var right=entity.getState('right');
+                
+                
+                
                 //Pone el estado resuelto en el DOM
                 solutionDiv.append('<div id="entitySolution'+entity.id+'" class="entitySolution '+entity.type+'">'+right.content+'</div>');
                 //Retorna el elemento de solución de la entidad y compara uno a uno los elementos con el estado activo
                 var solutionEntity=solutionDiv.find('#entitySolution'+entity.id);
+                
+
+                
                 //Califica la posición del objeto, solo debería cambiar si es dragdrop
                 if(solutionEntity.hasClass("dragdrop")){
                     var position=userResponse.find("#entity"+entity.id).position();
@@ -670,6 +676,27 @@ var Editor = function(params,callback){
                     //Si es una entidad calificable suma n
                     n++;
                 }
+                
+                //Califica el orden si es una entidad de lista
+                if(solutionEntity.hasClass("list")){
+                    var listElement=userResponse.find("#entity"+entity.id);
+                    var orderRight=listElement.attr('data-order_right').split(',');
+                    var orderUser=listElement.attr('data-order_passive').split(',');
+                    correct=true;
+                    for(var i in orderRight){
+                        orderRight[i]=parseInt(orderRight[i]);
+                        orderUser[i]=parseInt(orderUser[i]);
+                        if(orderRight[i]!==orderUser[i]){
+                            correct=false;
+                        }
+                    }
+                    if(correct){
+                        totalExercise+=entity.weight;
+                    }
+                    //Si es una entidad calificable suma n
+                    n++;
+                }
+                
                 //Verifica si tiene elementos calificables
                 if(solutionEntity.find(":text").length>0||solutionEntity.find(":radio").length>0||solutionEntity.find(":checkbox").length>0){
                     n++;
@@ -707,7 +734,7 @@ var Editor = function(params,callback){
             }
             var points=parseInt(mappedResult);
             if(correctAll){
-//                alert("Gained points: "+points);
+                console.debug("Gained points: "+points);
             }
             //Almacena el resultado actual
             savePoints(self.currentStep,points);

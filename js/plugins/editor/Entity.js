@@ -330,12 +330,7 @@ var Entity = function(params){
                         self.div.attr('data-order_'+editor.currentState,order);
                     }
                 });
-                sortable.disableSelection();
-            }
-            
-            if(self.type==="list_element"&&self.container.attr('id')==='workspace'){
-//                console.debug(self); //
-//                attachEvents();
+//                sortable.disableSelection();
             }
         }
     };
