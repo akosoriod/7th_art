@@ -290,6 +290,18 @@ var Entity = function(params){
                     }
                 }
             }
+            //Si es una entidad de estilo, carga el estilo en la página
+            if(self.type==="script"&&self.getState('passive').content!==""){
+                var content=$(self.getState('passive').content);
+                var file=content.attr('data-file');
+                if(self.workspace){
+                    $('body').append('<script type="text/javascript" id="'+file.replace(".","_")+'" src="'+editor.activitySet.url+'js/'+file+'"></script>');
+                    //Si es una entidad de estilos y está en modo solución, se oculta
+                    if(editor.mode==="solution"){
+                        self.div.hide();
+                    }
+                }
+            }
             //Si es una entidad de audio, carga el audio en la página
             if(self.type==="audio"&&self.getState('passive').content!==""){
                 var content=$(self.getState('passive').content);

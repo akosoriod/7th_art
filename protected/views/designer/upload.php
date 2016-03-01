@@ -31,6 +31,19 @@ if(isset($file)){
             $fileName='audio_'.md5(uniqid(rand(),true)).'.'.$_POST["extension"];
             move_uploaded_file($file["tmp_name"],$output_dir.$fileName);
             $ret["file"]=$fileName;
+        }elseif ($_POST["type"]=="script") {
+            $output_dir.=$_POST["activitySetName"].'/js/';
+            if (!file_exists($output_dir)) {
+                mkdir($output_dir, 0777, true);
+            }
+                //Borra el anterior estilo si existe
+                if ($_POST["previous"]) {
+                    unlink($output_dir . $_POST["previous"]);
+                }
+                //Copia el nuevo archivo de script y retorna el nombre del archivo
+                $fileName = 'script_' . md5(uniqid(rand(), true)) . '.' . $_POST["extension"];
+                move_uploaded_file($file["tmp_name"], $output_dir . $fileName);
+                $ret["file"] = $fileName;
         }
     }
     echo json_encode($ret);

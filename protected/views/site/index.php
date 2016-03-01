@@ -23,6 +23,11 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
         setTimeout(function(){
             $('.total_percent').asPieProgress('start');
         },600);
+        $(".title").each(function() {              
+                //if($(this).text().length >= 18){
+                //};
+                 $(this).css( "text-shadow", "1px 1px black" );
+        });
     });
 </script>
 <main class="detalle not-front page-home logged-in fullpage">

@@ -22,7 +22,7 @@
     float: left;
     
 }
-.black_text,#mnu_credits,#mnu_acknowledgments{
+.black_text{
     color: #444 !important;
 }
 #menu-movies .activity_set_menu .title{

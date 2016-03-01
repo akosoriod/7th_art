@@ -66,9 +66,9 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
             <?php
                 foreach ($model->sections as $section){
                     $class='';
-                    if($section->sectionType->name == 'acknowledgments'||$section->sectionType->name == 'credits') {
-                        $class=' black_text ';
-                    }
+//                    if($section->sectionType->name == 'acknowledgments'||$section->sectionType->name == 'credits') {
+//                        $class=' black_text ';
+//                    }
                     $publishedVersion=$section->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){

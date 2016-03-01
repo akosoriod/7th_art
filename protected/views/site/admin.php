@@ -28,6 +28,7 @@
                     'clientOptions' => array(
                         'validateOnSubmit' => true,
                     ),
+                    'focus'=>array($model,'username'),
                 ));
                 ?>
                 <div class="row">

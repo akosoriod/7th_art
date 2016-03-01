@@ -236,7 +236,7 @@ var Editor = function(params,callback){
      * Eventos de la barra de entidades
      */
     function attachEventsBarEntities(){
-        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-record,.button-style,.button-check,.button-answers").draggable({
+        self.toolbar.find(".button-basic,.button-dragdrop,.button-list,.button-audio,.button-record,.button-style,.button-check,.button-answers,.button-script").draggable({
             appendTo: "body",
             containment: "#workspace",
             cursor: "move",
@@ -307,8 +307,9 @@ var Editor = function(params,callback){
                 self.dialogEditEntity.find(".state_container").empty();
             },
             open: function(e,ui){
+            // JC change
                 //Si se edita una entidad de estilo, solo se muestra el estado pasivo
-                if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"){
+                if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"||self.editingEntity.type==="script"){
                     self.dialogEditEntity.find(".state_buttons").find(".passive").hide();
                     self.dialogEditEntity.find(".state_buttons").find(".wrong").hide();
                     self.dialogEditEntity.find(".state_buttons").find(".right").hide();
@@ -482,13 +483,15 @@ var Editor = function(params,callback){
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
-            if(self.editingEntity.type!=="style"){
+            // JC change
+            if(self.editingEntity.type!=="style"&&self.editingEntity.type!=="script"){
                 attachEventsEditingEntity(stateName);
             }
         });
         //Si es una página de estilos o de audio se muestra el cargador de archivos
         //Carga los estilos en entity.draw()
-        if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"){
+            // JC change
+        if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"||self.editingEntity.type==="script"){
             //Si tenía cargada algúna hoja de estilos, se reemplaza
             var previous=false;
             if(self.editingEntity.getState('passive').content!==""){
@@ -506,6 +509,12 @@ var Editor = function(params,callback){
                 type='audio';
                 extension='wav';
                 className='audio_entity';
+            }
+            // JC change
+            else if(self.editingEntity.type==="script"){
+                type='script';
+                extension='js';
+                className='script_entity';
             }
 //            self.editingEntity.div.text("Subir archivos");
             self.editingEntity.div.uploadFile({

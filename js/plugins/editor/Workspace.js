@@ -169,6 +169,17 @@ var Workspace = function(params){
             }
             $('#'+file.replace(".","_")).remove();
         }
+        //Elimina el archivo de scripts de la entidad (si existe)
+        if(entity.type==="script"){
+            var file="";
+            //Se elimina el archivo del servidor
+            if(entity.getState('passive').content!==""){
+                var content=$(entity.getState('passive').content);
+                file=content.attr('data-file');
+                editor.deleteFile('js/'+file);
+            }
+            $('#'+file.replace(".","_")).remove();
+        }
     };
     
     /**
@@ -314,6 +325,12 @@ var Workspace = function(params){
                                 height:50,
                                 width:300
                             };
+                        }else if(ui.draggable.hasClass("button-script")){
+                            type="script";
+                            size={
+                                height:50,
+                                width:300
+                            };
                         }else if(ui.draggable.hasClass("button-check")){
                             type="check";
                             size={
@@ -385,9 +402,9 @@ var Workspace = function(params){
                         if(create){
                             self.addEntity(entity);
                         }
-                        //Si es una entidad de estilo, se guarda todo y se recarga 
+                        //Si es una entidad de estilo o script, se guarda todo y se recarga 
                         //para almacenar los estilos con nombre.
-                        if(entity.type==="style"){
+                        if(entity.type==="style"||entity.type==="script"){
                             editor.save(function(){
                                 editor.load();
                             });

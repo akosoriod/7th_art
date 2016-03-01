@@ -261,6 +261,9 @@ table.controller .label{
 #container #area #editor .button-list{
     background-image: url('../images/editor/list.png');
 }
+#container #area #editor .button-script{
+    background-image: url('../images/editor/script.png');
+}
 .entity-true-false-helper{
     background-image: url('../images/editor/button1.png');
     height: 48px;

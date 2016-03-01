@@ -91,6 +91,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ed
                     <div class="button button-audio" title="Entidad de audio"></div>
                     <div class="button button-record" title="Entidad de grabación"></div>
                     <div class="button button-style" title="Entidad de hoja de estilos (CSS)"></div>
+                    <!-- JC Change-->
+                    <div class="button button-script" title="Entidad de scripts (JS)"></div>
                     <div class="button button-check" title="Entidad Calificar"></div>
                     <div class="button button-answers" title="Entidad Ver respuestas"></div>
                     <div class="separator"></div>
