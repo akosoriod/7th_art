@@ -307,7 +307,9 @@ var Editor = function(params,callback){
                 self.dialogEditEntity.find(".state_container").empty();
             },
             open: function(e,ui){
-            // JC change
+                self.dialogEditEntity.find("#select-optional").change(function(){
+                   self.editingEntity.optional = $(this).val() === "false";
+                });
                 //Si se edita una entidad de estilo, solo se muestra el estado pasivo
                 if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"||self.editingEntity.type==="script"){
                     self.dialogEditEntity.find(".state_buttons").find(".passive").hide();
@@ -414,7 +416,7 @@ var Editor = function(params,callback){
                             " searchreplace wordcount fullscreen |"+
                             " autolink link image media lists preview spellchecker table | jbimages code |" +
                             " undo redo | styleselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |"+
-                            " insert_input insert_checkbox insert_radio",
+                            " insert_input insert_checkbox insert_radio insert_select_box",
                     menubar : false,
 		    image_advtab: true,
                     oninit:function(){
@@ -451,6 +453,15 @@ var Editor = function(params,callback){
                                 ed.selection.setContent('<input type="radio" name="radio'+self.editingEntity.id+'"/>');
                             }
                         });
+                        ed.addButton('insert_select_box', {
+                            title : 'Insertar caja de opciones',
+                            image : self.imagesUrl+'editor/form_select_box.png',
+                            onclick : function() {
+                                // Add you own code to execute something on click
+                                ed.focus();
+                                ed.selection.setContent('<select><option selected="selected" value="1">Option 1</option>\n<option value="2">Option 2</option> </select><br>');
+                            }
+                        });
                     }
                 });
             },
@@ -483,14 +494,12 @@ var Editor = function(params,callback){
         //Elimina el z-index para poder editar
         entity.div.css('z-index',0);
         self.editingEntity.div.dblclick(function(){
-            // JC change
             if(self.editingEntity.type!=="style"&&self.editingEntity.type!=="script"){
                 attachEventsEditingEntity(stateName);
             }
         });
         //Si es una página de estilos o de audio se muestra el cargador de archivos
         //Carga los estilos en entity.draw()
-            // JC change
         if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"||self.editingEntity.type==="script"){
             //Si tenía cargada algúna hoja de estilos, se reemplaza
             var previous=false;
@@ -510,7 +519,6 @@ var Editor = function(params,callback){
                 extension='wav';
                 className='audio_entity';
             }
-            // JC change
             else if(self.editingEntity.type==="script"){
                 type='script';
                 extension='js';
@@ -623,16 +631,22 @@ var Editor = function(params,callback){
             }
             $(this).addClass("entityElement inputCheckbox");
         });
-        
-        
+        //Se procesan los elementos select
+        contentElements.find("select").each(function(){
+            $(this).attr("data-val",$(this).val());
+            
+            if($.trim($(this).attr("data-element-id"))===""){
+                $(this).attr("data-element-id","entityElement_"+self.guid());
+            }
+            $(this).addClass("entityElement inputSelect");
+        });
         
         //TODO: Cargar este valor de la entidad
         var importanceEntity=10;
-        //Divide la importancia entre todos los elementos
+        //Da la misma importancia a todos los elementos
         contentElements.find('.entityElement').each(function(){
-//            $(this).attr("data-entity-id",entity.id);
             $(this).attr("data-entity-importance",importanceEntity);
-            $(this).attr("data-element-importance",1/contentElements.find('.entityElement').size());
+            $(this).attr("data-element-importance",1);
         });
         
         text=contentElements.html();
@@ -650,6 +664,13 @@ var Editor = function(params,callback){
         var userResponse=self.workspace.div;
         var deltaPos=15;    //Diferencia máxima en left y pos para calcular distancia
         self.divSolution.find('.check').click(function(){
+            
+            // Ejecuta esta función que está dentro de los JS agregados antes de calificar
+            try{
+                executeExternalJS();
+            }
+            catch (err){};
+            
             var correctAll=true;
             //Valores para calificar
             var T=100;                                  //Máximo valor para un ejercicio
@@ -664,6 +685,9 @@ var Editor = function(params,callback){
                 var entity=self.workspace.entities[i];
                 var right=entity.getState('right');
                 
+                if(entity.optional === "1"){
+                     continue;
+                }
                 
                 
                 //Pone el estado resuelto en el DOM
@@ -706,27 +730,59 @@ var Editor = function(params,callback){
                     n++;
                 }
                 
-                //Verifica si tiene elementos calificables
-                if(solutionEntity.find(":text").length>0||solutionEntity.find(":radio").length>0||solutionEntity.find(":checkbox").length>0){
-                    n++;
+                //Verifica el # de elementos calificables
+                n += solutionEntity.find(":text").length;
+                n += solutionEntity.find(":checkbox").length;
+                n += solutionEntity.find("select").length;
+                
+                var names = [];
+                var namesLength = [];
+                if(solutionEntity.find(":radio").length>0){
+                    solutionEntity.find(":radio").each(function(){
+                       var name = $(this).attr("name");
+                       var index = names.indexOf(name);
+                        if(index >= 0){
+                            namesLength[index]++;
+                        }else{
+                            names.push(name);
+                            namesLength.push(1);
+                            n++;
+                        }
+                    });
                 }
                 //Califica los elementos dentro de la entidad
                 var elementImportances=0;
+                var elementsInside = 0;
                 solutionEntity.find('.entityElement').each(function(){
-                    var solutionElement=$(this);                    
+                    var solutionElement=$(this);
                     var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
                     var elementQualification=qualifyElements(solutionElement,answerElement);
+                    if(solutionElement.is('input:radio')){
+                        var name = $(this).attr("name");
+                        var index = names.indexOf(name);
+                        if(elementQualification){
+                            namesLength[index] = 0;
+                        }else{
+                            resetInputElement(answerElement);
+                            if(namesLength[index] === 0 || --namesLength[index] > 0){
+                                return;
+                            }
+                        }
+                    }
                     correct=correct&&elementQualification;
                     //Suma la calilficación
                     if(elementQualification){
                         elementImportances+=parseFloat(answerElement.attr("data-element-importance"));
+                    }else{
+                        resetInputElement(answerElement);
                     }
+                    elementsInside++;
                 });
-                totalExercise+=elementImportances*entity.weight;
+                totalExercise+=elementImportances*entity.weight*elementsInside;
                 if(correct){
                     entity.draw("right");
                 }else{
-                    entity.draw("wrong");
+//                    entity.draw("wrong");
                     correctAll=false;
                 }
             }
@@ -774,8 +830,10 @@ var Editor = function(params,callback){
         }
         //Revisa los input:radio
         if(solution.is('input:radio')){
-            if(solution.attr("data-val")===answer.attr("data-val")){
-                correct=true;
+            if(answer.attr("data-val") === "true"){
+                if(solution.attr("data-val")===answer.attr("data-val")){
+                    correct=true;
+                }
             }
         }
         //Revisa los input:checkbox
@@ -784,7 +842,12 @@ var Editor = function(params,callback){
                 correct=true;
             }
         }
-        
+        //Revisa los select
+        if(solution.is('select')){
+            if(solution.attr("data-val")===answer.val()){
+                correct=true;
+            }
+        }
         return correct;
     };
     
@@ -798,6 +861,26 @@ var Editor = function(params,callback){
 //            updateSolvedState($(this));
 //        });
     };
+    
+    /**
+     * Deuelve al estado inicial el elemento de entrada que se le pase
+     * @param {object} bladladladlallakdl
+     */
+    function resetInputElement(elem){
+        if(elem.is('input:text')){
+            elem.val("");
+        }
+        if(elem.is("input:radio")){
+            elem.removeAttr("checked");
+        }
+        if(elem.is("input:checkbox")){
+            elem.removeAttr("checked");
+        }
+        if(elem.is("select")){
+            elem.removeAttr("data-val");
+            elem[0].selectedIndex = 0;
+        }
+    }
     
     /**
      * Actualiza el estado solved con la información del userspace

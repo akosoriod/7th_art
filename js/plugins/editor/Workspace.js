@@ -260,7 +260,7 @@ var Workspace = function(params){
                 entity.draggable({
                     containment: self.container,
                     cursor: "move",
-                    grid: [10,10],
+                    grid: [1,1],
                     opacity: 0.4,
                     scroll: false,
                     zIndex: 10000
