@@ -307,8 +307,9 @@ var Editor = function(params,callback){
                 self.dialogEditEntity.find(".state_container").empty();
             },
             open: function(e,ui){
+                self.dialogEditEntity.find("#select-optional")[0].selectedIndex = self.editingEntity.optional;
                 self.dialogEditEntity.find("#select-optional").change(function(){
-                   self.editingEntity.optional = $(this).val() === "false";
+                   self.editingEntity.optional = $(this).val() === "false"? 1:0;
                 });
                 //Si se edita una entidad de estilo, solo se muestra el estado pasivo
                 if(self.editingEntity.type==="style"||self.editingEntity.type==="audio"||self.editingEntity.type==="script"){
@@ -705,6 +706,7 @@ var Editor = function(params,callback){
                         totalExercise+=entity.weight;
                     }else{
                         correct=false;
+                        entity.draw("wrong");
                     }
                     //Si es una entidad calificable suma n
                     n++;
@@ -721,6 +723,7 @@ var Editor = function(params,callback){
                         orderUser[i]=parseInt(orderUser[i]);
                         if(orderRight[i]!==orderUser[i]){
                             correct=false;
+                            entity.draw("wrong");
                         }
                     }
                     if(correct){
@@ -752,7 +755,6 @@ var Editor = function(params,callback){
                 }
                 //Califica los elementos dentro de la entidad
                 var elementImportances=0;
-                var elementsInside = 0;
                 solutionEntity.find('.entityElement').each(function(){
                     var solutionElement=$(this);
                     var answerElement=userResponse.find('[data-element-id="'+solutionElement.attr('data-element-id')+'"]');
@@ -763,7 +765,7 @@ var Editor = function(params,callback){
                         if(elementQualification){
                             namesLength[index] = 0;
                         }else{
-                            resetInputElement(answerElement);
+                            //resetInputElement(answerElement);
                             if(namesLength[index] === 0 || --namesLength[index] > 0){
                                 return;
                             }
@@ -776,9 +778,8 @@ var Editor = function(params,callback){
                     }else{
                         resetInputElement(answerElement);
                     }
-                    elementsInside++;
                 });
-                totalExercise+=elementImportances*entity.weight*elementsInside;
+                totalExercise+=elementImportances*entity.weight;
                 if(correct){
                     entity.draw("right");
                 }else{
@@ -805,12 +806,18 @@ var Editor = function(params,callback){
             savePoints(self.currentStep,points);
             self.divSolution.find('#totalPoints').text(points);
             solutionDiv.empty();
+            self.divSolution.find('.answers').css("display","block");
         });
+        self.divSolution.find('.answers').css("display","none");
         self.divSolution.find('.answers').click(function(){
             for(var i in self.workspace.entities){
                 var entity=self.workspace.entities[i];
+                if(entity.optional === "1"){
+                     continue;
+                }
                 entity.draw("right");
             }
+            alert("Resuelto con ayuda");
         });
     };
     

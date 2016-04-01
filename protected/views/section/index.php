@@ -63,9 +63,6 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
             <?php
                 foreach ($activitySet->sections as $sectionIter){
                     $class='';
-                    if($sectionIter->sectionType->name == 'acknowledgments'||$sectionIter->sectionType->name == 'credits') {
-                        $class=' black_text ';
-                    }
                     $publishedVersion=$sectionIter->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){
