@@ -831,7 +831,7 @@ var Editor = function(params,callback){
         var correct=false;        
         //Revisa los input:text
         if(solution.is('input:text')){
-            if(solution.attr("data-val")===$.trim(answer.val())){
+            if(solution.attr("data-val").toLowerCase()===$.trim(answer.val().toLowerCase())){
                 correct=true;
             }
         }
