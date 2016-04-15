@@ -267,6 +267,9 @@ var Editor = function(params,callback){
                 self.workspace.logHistory=true;
             }
         });
+//        self.toolbar.find("#button-crosswordmapper").click(function(){
+//            alert("MAP This");
+//        });
         
         stateButtons.click(function(){
             var stateButton=$(this);
@@ -817,7 +820,7 @@ var Editor = function(params,callback){
                 }
                 entity.draw("right");
             }
-            alert("Resuelto con ayuda");
+            alert("Activity solved with help");
         });
     };
     

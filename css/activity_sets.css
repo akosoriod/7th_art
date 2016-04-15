@@ -1,14 +1,18 @@
 #sets .set .poster img{
-    height: 130px;
-    width: 130px;
+    height: 187px;
+    width: 156px;
 }
 
 
 #userpoints{
-    color: #888;
+    color: #fff;
     display: none;
     float: right;
     font-size: 16px;
+    font-weight: bold;
+    padding: 4px;
+    background: rgba(173, 173, 173, 0.47);
+    border-radius: 6px;
 }
 
 .total_percent {

@@ -420,7 +420,8 @@ main.detalle li.jjactive:before {
 }
 #links {
   height: 20px;
-  margin: 70px auto 0;
+  position: relative;
+  margin: 32px auto 38px;
   width: 500px;
 }
 #links .link {
@@ -428,11 +429,18 @@ main.detalle li.jjactive:before {
   margin-left: 5px;
 }
 #links .link img {
-  height: 22px;
-  width: 22px;
+  height: 28px;
+  width: 28px;
 }
 #links .link a {
   font-weight: bold;
+  color: #fff;
+  background: rgba(0,0,0,0.2);
+  padding: 6px;
+  
+}
+#links .link a:hover {
+  color: #fff;
 }
 /* PAGE FRONT, INTRO */
 
@@ -498,8 +506,8 @@ main.detalle li.jjactive:before {
 .page-home #sets .set {
   background: orange;
   float: left;
-  height: 130px;
-  margin: 12px;
+  height: 187px;
+  margin: 12px 54px 35px 12px;
   width: 130px;
 }
 .page-home #sets .set .percent {
@@ -512,12 +520,13 @@ main.detalle li.jjactive:before {
   width: 47px;
 }
 .page-home #sets .set .info {
-  color: white;
-  margin-top: -18px;
+  color: black;
+  margin-top: 4px;
 }
 .page-home #sets .set .info .attribute.title {
   background: transparent;
   text-align: center;
+  text-shadow: none !important;
 }
 .page-home #sets .set .info .hidden {
   display: none;
@@ -534,6 +543,7 @@ main.detalle li.jjactive:before {
 
 #menu-movies {
   height: 20px;
+  left: 13px;
 }
 #menu-movies a.mnu_button {
   background-color: #50992e;
@@ -549,7 +559,7 @@ main.detalle li.jjactive:before {
   margin-left: 2px;
 }
 #controls-movies {
-  height: 17px;
+  height: 0px;
   margin: 10px 0 20px;
 }
 #controls-movies #progress,
