@@ -302,7 +302,7 @@ font-family:"Times New Roman","serif";mso-bidi-font-family:Arial;color:windowtex
 mso-ansi-language:EN-US'><span style='mso-spacerun:yes'> </span>Native and
 non-native recorded audio texts.<o:p></o:p></span></p>
 
-<p class=Normal1CxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
+<!--<p class=Normal1CxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
 5.0pt;margin-left:36.0pt;mso-add-space:auto;text-indent:-17.95pt;mso-pagination:
 none;mso-list:l1 level1 lfo5'><![if !supportLists]><span style='font-size:12.0pt;
 mso-bidi-font-size:10.0pt;line-height:115%;font-family:"Times New Roman","serif";
@@ -314,14 +314,14 @@ mso-bidi-font-family:Arial;color:windowtext;mso-ansi-language:EN-US'><span
 style='mso-spacerun:yes'> </span></span><span style='font-size:12.0pt;
 mso-bidi-font-size:10.0pt;line-height:115%;font-family:"Times New Roman","serif";
 mso-bidi-font-family:Arial;color:windowtext'>A <span class=SpellE>voice</span> <span
-class=SpellE>recording</span> <span class=SpellE>resource</span>.<o:p></o:p></span></p>
+class=SpellE>recording</span> <span class=SpellE>resource</span>.<o:p></o:p></span></p>-->
 
 <p class=Normal1CxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
 5.0pt;margin-left:36.0pt;mso-add-space:auto;text-indent:-17.95pt;mso-pagination:
 none;mso-list:l1 level1 lfo5'><![if !supportLists]><span lang=EN-US
 style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;font-family:
 "Times New Roman","serif";mso-fareast-font-family:"Times New Roman";color:windowtext;
-mso-ansi-language:EN-US'><span style='mso-list:Ignore'>10.<span
+mso-ansi-language:EN-US'><span style='mso-list:Ignore'>9.<span
 style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
 lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;
 font-family:"Times New Roman","serif";mso-bidi-font-family:Arial;color:windowtext;
@@ -333,7 +333,7 @@ users.<o:p></o:p></span></p>
 none;mso-list:l1 level1 lfo5'><![if !supportLists]><span lang=EN-US
 style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;font-family:
 "Times New Roman","serif";mso-fareast-font-family:"Times New Roman";color:windowtext;
-mso-ansi-language:EN-US'><span style='mso-list:Ignore'>11.<span
+mso-ansi-language:EN-US'><span style='mso-list:Ignore'>10.<span
 style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
 lang=EN-US style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;
 font-family:"Times New Roman","serif";mso-bidi-font-family:Arial;color:windowtext;

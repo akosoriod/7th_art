@@ -45,75 +45,69 @@ mso-bidi-font-family:"Times New Roman";mso-bidi-theme-font:minor-bidi;
 mso-ansi-language:ES-CO'><o:p>&nbsp;</o:p></span></p>
 
 
-<table class="credits_table">
-    <tr><td class='title_field'>Rector</td><td class='name_field'>Ignacio Mantilla Prada</td></tr>
-    <tr><td class='title_field'>Vice-Rector </td><td class='name_field'>Diego Hernández Losada</td></tr>
-    <tr><td class='title_field'>Vice-Rector Académico, Sede Bogotá</td><td class='name_field'>Juan Manuel Tejeiro</td></tr>
-    <tr><td class='title_field'>Director Académico, Sede Bogotá</td><td class='name_field'>Gerardo Rodríguez Niño</td></tr>
-    <tr><td class='title_field'>Vice-Rectora de Investigación </td><td class='name_field'>Dolly Montoya Castaño</td></tr>
-    <tr><td class='title_field'>Dirección de Investigación, Sede Bogotá </td><td class='name_field'>Luis Fernando Niño</td></tr>
-    <tr><td class='title_field'>Decano Facultad de Ciencias Humanas </td><td class='name_field'>Ricardo Sánchez Ángel</td></tr>
-    <tr><td class='title_field'>Vicedecana Académica </td><td class='name_field'>Melba Libia Cárdenas</td></tr>
-    <tr><td class='title_field'>Directora Departamento de Lenguas Extranjeras </td><td class='name_field'>Martha Isabel Camargo</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'></td></tr>
-    <tr><td class='title_field'>Producción General </td><td class='name_field'>Dirección Académica, Sede Bogotá</td></tr>
-    <tr><td class='title_field'>Investigación </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Asistentes de investigación </td><td class='name_field'>Zenaida Roa Perilla</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Rafael Vera</td></tr>
-    <tr><td class='title_field'>Asesor Estadístico </td><td class='name_field'>Yesid Cárdenas</td></tr>
-    <tr><td class='title_field'>Creación-Producción </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Auxiliares de producción </td><td class='name_field'>Alejandro Angarita</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Diego Cortés Ruíz</td></tr>
-    <tr><td class='title_field'>Desarrollo de contenido </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Diseño de formato de set de actividades de aprendizaje </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Corrección de estilo pre-virtualización </td><td class='name_field'>Paul Priolet</td></tr>
-    <tr><td class='title_field'>Corrección de estilo pos-virtualización</td><td class='name_field'>Paul Priolet</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Desarrollo plataforma web </td><td class='name_field'>Jean Pierre Charalambos</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Miguel Alejandro Parra</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Óscar Paruma Pabón</td></tr>
-    <tr><td class='title_field'>Auxiliares de desarrollo plataforma web </td><td class='name_field'>Esteban Parra Rodríguez</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Grace Cabana Hernández</td></tr>
-    <tr><td class='title_field'>Diseño de interfaz gráfica </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Dirección-Edición de arte </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Diagramación y maquetación web </td><td class='name_field'>Javier Martínez Correa</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Mónica Contreras</td></tr>
-    <tr><td class='title_field'>Diseño y Diagramación de Contenido </td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'></td></tr>
-    <tr><td class='title_field'>Consultores</td><td class='name_field'>Farley Ortiz Forero, Dirección Nal. Servicios Académicos Virtuales   (Director 2005-2007)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Adrián Comas Mercado, Coordinador Gral. Señal Colombia (2011-2012)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Dirección Nacional de Derechos de Autor</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Javier Martínez Correa, Director Paradigma Web</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Rodolfo Suárez Ortega, Director Dep. Lenguas Extranjeras (2010-2014)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Jorge Arturo Mora Espinosa, Dir. Escuela de Cine y TV. (2004-2006)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Alberto Amaya Calderón, Director Escuela de Cine y TV. (2006-2011)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Gabriel Alba Gutiérrez, Director Escuela de Cine y TV. (2011-2014)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Javier Olarte Triana, Director Escuela de Cine y TV.</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  José Ismael Peña, Decano Dep. Ingeniería Sistemas e Industrial</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Óscar Germán Duarte, Vicedecano Dep. Ingeniería Sistemas e Industrial</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Jaime Mayorga Pinzón, Asesor de Propiedad Intelectual DIEB</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  William Mac McClure II, Director Conservatorio de Música</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Antonio Arnedo González, Director Conservatorio de Música</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Juan De La Rosa, Director Escuela de Diseño Gráfico (2010-2014)</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Paul Priolet, Docente y traductor, Dep. Lenguas Extranjeras</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Hugo Herrera F., Dir. Dep.Ingeniería Sistemas e Industrial</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Henry Umaña Acosta, Director General DNTIC</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Jaime Franky Rodríguez, Director Nacional de Unimedios</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Martha Lucía Chaves, Jefe Oficina Medios Digitales</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>  Sebastián Eslava Garzón, Jefe Oficina de Tecnologías, Sede Bogotá</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'></td></tr>
-    <tr><td class='title_field'>Aplicación pruebas de usabilidad </td><td class='name_field'>Javier Martínez Correa</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'></td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Elizabeth Rodríguez Reyes</td></tr>
-    <tr><td class='title_field'>Dirección-Edición General </td><td class='name_field'></td></tr>
-    <tr><td class='title_field'>Auxiliares de Dirección-Edición </td><td class='name_field'>Diego Cortés Ruíz</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Jhon Herrera Abril</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Giovanna Rodríguez Ortega</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Brayan Sáenz Beltrán</td></tr>
-    <tr><td class='title_field'></td><td class='name_field'>Giovanny Vélez Beltrán</td></tr>
-</table>
+<div class="legal-row"><div class="left">Rector</div><div class="right">Ignacio Mantilla Prada</div></div>
+<div class="legal-row"><div class="left">Vice-Rector</div><div class="right">Diego Hernández Losada</div></div>
+<div class="legal-row"><div class="left">Vice-Rector Académico, Sede Bogotá</div><div class="right">Juan Manuel Tejeiro</div></div>
+<div class="legal-row"><div class="left">Director Académico, Sede Bogotá</div><div class="right">Gerardo Rodríguez Niño</div></div>
+<div class="legal-row"><div class="left">Vice-Rectora de Investigación</div><div class="right">Dolly Montoya Castaño</div></div>
+<div class="legal-row"><div class="left">Dirección de Investigación, Sede Bogotá</div><div class="right">Luis Fernando Niño</div></div>
+<div class="legal-row"><div class="left">Decano Facultad de Ciencias Humanas</div><div class="right">Ricardo Sánchez Ángel</div></div>
+<div class="legal-row"><div class="left">Vicedecana Académica</div><div class="right">Melba Libia Cárdenas</div></div>
+<div class="legal-row"><div class="left">Directora Departamento de Lenguas Extranjeras</div><div class="right">Martha Isabel Camargo</div></div>
+<br>
+<div class="legal-row"><div class="left">Producción General</div><div class="right">Dirección Académica, Sede Bogotá</div></div>
+<div class="legal-row"><div class="left">Investigación</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Asistentes de investigación</div><div class="right">Zenaida Roa Perilla</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Rafael Vera</div></div>
+<div class="legal-row"><div class="left">Asesor Estadístico</div><div class="right">Yesid Cárdenas</div></div>
+<div class="legal-row"><div class="left">Creación-Producción</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Auxiliares de producción</div><div class="right">Alejandro Angarita</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Diego Cortés Ruíz</div></div>
+<div class="legal-row"><div class="left">Desarrollo de contenido</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Diseño de formato de set de actividades de aprendizaje</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Corrección de estilo pre-virtualización</div><div class="right">Paul Priolet</div></div>
+<div class="legal-row"><div class="left">Corrección de estilo pos-virtualización</div><div class="right">Paul Priolet</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Desarrollo plataforma web</div><div class="right">Jean Pierre Charalambos</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Miguel Alejandro Parra</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Óscar Paruma Pabón</div></div>
+<div class="legal-row"><div class="left">Auxiliares de desarrollo plataforma web</div><div class="right">Esteban Parra Rodríguez</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Grace Cabana Hernández</div></div>
+<div class="legal-row"><div class="left">Diseño de interfaz gráfica</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Dirección-Edición de arte</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Diagramación y maquetación web</div><div class="right">Javier Martínez Correa</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Mónica Contreras</div></div>
+<div class="legal-row"><div class="left">Diseño y Diagramación de Contenido</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Consultores</div><div class="right">Farley Ortiz Forero, Dirección Nal. Servicios Académicos Virtuales (Director 2005-2007)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Adrián Comas Mercado, Coordinador Gral. Señal Colombia (2011-2012)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Dirección Nacional de Derechos de Autor</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Javier Martínez Correa, Director Paradigma Web</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Rodolfo Suárez Ortega, Director Dep. Lenguas Extranjeras (2010-2014)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Jorge Arturo Mora Espinosa, Dir. Escuela de Cine y TV. (2004-2006)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Alberto Amaya Calderón, Director Escuela de Cine y TV. (2006-2011)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Gabriel Alba Gutiérrez, Director Escuela de Cine y TV. (2011-2014)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Javier Olarte Triana, Director Escuela de Cine y TV.</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">José Ismael Peña, Decano Dep. Ingeniería Sistemas e Industrial</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Óscar Germán Duarte, Vicedecano Dep. Ingeniería Sistemas e Industrial</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Jaime Mayorga Pinzón, Asesor de Propiedad Intelectual DIEB</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">William Mac McClure II, Director Conservatorio de Música</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Antonio Arnedo González, Director Conservatorio de Música</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Juan De La Rosa, Director Escuela de Diseño Gráfico (2010-2014)</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Paul Priolet, Docente y traductor, Dep. Lenguas Extranjeras</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Henry Umaña Acosta, Director General DNTIC</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Jaime Franky Rodríguez, Director Nacional de Unimedios</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Martha Lucía Chaves, Jefe Oficina Medios Digitales</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Sebastián Eslava Garzón, Jefe Oficina de Tecnologías, Sede Bogotá</div></div>
+<br>
+<div class="legal-row"><div class="left">Aplicación pruebas de usabilidad</div><div class="right">Javier Martínez Correa</div></div>
+<div class="legal-row"><div class="left">Dirección-Edición General</div><div class="right">Elizabeth Rodríguez Reyes</div></div>
+<div class="legal-row"><div class="left">Auxiliares de Dirección-Edición</div><div class="right">Diego Cortés Ruíz</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Jhon Herrera Abril</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Giovanna Rodríguez Ortega</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Brayan Sáenz Beltrán</div></div>
+<div class="legal-row"><div class="left">&nbsp;</div><div class="right">Giovanny Vélez Beltrán</div></div>
 
-
+<br>
 <p class=MsoNormal align=center style='text-align:center;line-height:120%;
 tab-stops:right 248.1pt left 269.35pt'><b style='mso-bidi-font-weight:normal'><span
 style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:120%;font-family:
@@ -254,7 +248,7 @@ DwAAAAAAAAAAAAAAAAAMBQAAZHJzL2Rvd25yZXYueG1sUEsFBgAAAAAEAAQA8wAAABUGAAAAAA==
   <![endif]></v:textbox>
  <w:wrap type="square"/>
 </v:shape><![endif]--><![if !vml]><img class="escudo_creditos" width=322 height=115
-src="/7th_art/images/escudo.png" align=left hspace=12
+src="/7th_art/images/escudo.png" hspace=12
 alt="VICERRECTORÍA DE SEDE&#13;&#10;DIRECCIÓN ACADÉMICA SEDE BOGOTÁ&#13;&#10;&#13;&#10;&#13;&#10;"
 v:shapes="_x0000_s1028"><![endif]><span style='mso-ansi-language:ES-CO;
 mso-fareast-language:ES-CO;mso-no-proof:yes'><!--[if gte vml 1]><v:shape id="Picture_x0020_1"

@@ -442,6 +442,24 @@ main.detalle li.jjactive:before {
 #links .link a:hover {
   color: #fff;
 }
+.legal-row{
+    display: inline-flex;
+    width: 100%;
+    margin-bottom: 7px !important;
+}
+
+.legal-row .left, .legal-row .right{
+    width: 50% !important;
+}
+.legal-row .left {
+    padding-right: 15px !important;
+    text-align: right !important;
+    font-weight: bold !important;
+
+}
+.legal-row .right{
+    text-align: left !important;
+}
 /* PAGE FRONT, INTRO */
 
 .front #welcome {
@@ -504,11 +522,11 @@ main.detalle li.jjactive:before {
   float: left;
 }
 .page-home #sets .set {
-  background: orange;
+  background: transparent;
   float: left;
   height: 187px;
-  margin: 12px 54px 35px 12px;
-  width: 130px;
+  margin: 12px 25px 36px 12px;
+  width: 156px;
 }
 .page-home #sets .set .percent {
   background: url(../images/percentage.png) no-repeat left top transparent;
@@ -527,6 +545,8 @@ main.detalle li.jjactive:before {
   background: transparent;
   text-align: center;
   text-shadow: none !important;
+  font-size: 12pt;
+  font-weight: bold;
 }
 .page-home #sets .set .info .hidden {
   display: none;

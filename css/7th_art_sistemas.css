@@ -185,5 +185,6 @@ main.detalle table tr td {
     text-indent: 5px;
 }
 .escudo_creditos{
-    margin-left: 113px;
+    position: relative;
+    margin: auto !important;
 }

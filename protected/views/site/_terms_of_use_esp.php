@@ -276,22 +276,22 @@ style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp
 10.0pt;line-height:115%;font-family:"Times New Roman","serif";mso-bidi-font-family:
 Arial;color:windowtext'>Audio textos de nativos y estudiantes no nativos.<o:p></o:p></span></p>
 
-<p class=Normal1CxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
+<!--<p class=Normal1CxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
 5.0pt;margin-left:36.0pt;mso-add-space:auto;text-indent:-17.95pt;mso-pagination:
 none;mso-list:l1 level1 lfo2'><![if !supportLists]><span style='font-size:12.0pt;
 mso-bidi-font-size:10.0pt;line-height:115%;font-family:"Times New Roman","serif";
 mso-fareast-font-family:"Times New Roman";color:windowtext'><span
-style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span style='font-size:12.0pt;mso-bidi-font-size:
 10.0pt;line-height:115%;font-family:"Times New Roman","serif";mso-bidi-font-family:
-Arial;color:windowtext'>Recurso para grabación de voz.<o:p></o:p></span></p>
+Arial;color:windowtext'>Recurso para grabación de voz.<o:p></o:p></span></p>-->
 
 <p class=Normal1CxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
 5.0pt;margin-left:36.0pt;mso-add-space:auto;text-indent:-17.95pt;mso-pagination:
 none;mso-list:l1 level1 lfo2'><![if !supportLists]><span style='font-size:12.0pt;
 mso-bidi-font-size:10.0pt;line-height:115%;font-family:"Times New Roman","serif";
 mso-fareast-font-family:"Times New Roman";color:windowtext'><span
-style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
 style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;font-family:
 "Times New Roman","serif";mso-bidi-font-family:Arial;color:windowtext'>Muro
 para la interacción entre y con los usuarios.<o:p></o:p></span></p>
@@ -301,7 +301,7 @@ para la interacción entre y con los usuarios.<o:p></o:p></span></p>
 none;mso-list:l1 level1 lfo2'><![if !supportLists]><span style='font-size:12.0pt;
 mso-bidi-font-size:10.0pt;line-height:115%;font-family:"Times New Roman","serif";
 mso-fareast-font-family:"Times New Roman";color:windowtext'><span
-style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
 style='font-size:12.0pt;mso-bidi-font-size:10.0pt;line-height:115%;font-family:
 "Times New Roman","serif";mso-bidi-font-family:Arial;color:windowtext'>Prototipo
 de la herramienta, versión producto de investigación.<o:p></o:p></span></p>

@@ -784,7 +784,7 @@ var Editor = function(params,callback){
                 });
                 totalExercise+=elementImportances*entity.weight;
                 if(correct){
-                    entity.draw("right");
+//                    entity.draw("right");
                 }else{
 //                    entity.draw("wrong");
                     correctAll=false;
@@ -831,34 +831,36 @@ var Editor = function(params,callback){
      * @returns {bool} Verdadero si la respuesta es correcta
      */
     function qualifyElements(solution,answer){
-        var correct=false;        
-        //Revisa los input:text
-        if(solution.is('input:text')){
-            if(solution.attr("data-val").toLowerCase()===$.trim(answer.val().toLowerCase())){
-                correct=true;
-            }
-        }
-        //Revisa los input:radio
-        if(solution.is('input:radio')){
-            if(answer.attr("data-val") === "true"){
-                if(solution.attr("data-val")===answer.attr("data-val")){
-                    correct=true;
+        try{   
+            //Revisa los input:text
+            if(solution.is('input:text')){
+                if(solution.attr("data-val").toLowerCase()===$.trim(answer.val().toLowerCase())){
+                    return true;
                 }
             }
-        }
-        //Revisa los input:checkbox
-        if(solution.is('input:checkbox')){
-            if(solution.attr("data-val")===answer.attr("data-val")){
-                correct=true;
+            //Revisa los input:radio
+            if(solution.is('input:radio')){
+                if(answer.attr("data-val") === "true"){
+                    if(solution.attr("data-val")===answer.attr("data-val")){
+                        return true;
+                    }
+                }
             }
-        }
-        //Revisa los select
-        if(solution.is('select')){
-            if(solution.attr("data-val")===answer.val()){
-                correct=true;
+            //Revisa los input:checkbox
+            if(solution.is('input:checkbox')){
+                if(solution.attr("data-val")===answer.attr("data-val")){
+                    return true;
+                }
             }
+            //Revisa los select
+            if(solution.is('select')){
+                if(solution.attr("data-val")===answer.val()){
+                    return true;
+                }
+            }
+        }catch(e){
+            return false;
         }
-        return correct;
     };
     
     /**
