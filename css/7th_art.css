@@ -426,18 +426,20 @@ main.detalle li.jjactive:before {
 }
 #links .link {
   float: left;
-  margin-left: 5px;
+  margin-left: 0px;
 }
 #links .link img {
-  height: 28px;
+  height: 29px;
   width: 28px;
+  background: #333;
 }
 #links .link a {
   font-weight: bold;
   color: #fff;
-  background: rgba(0,0,0,0.2);
-  padding: 6px;
-  
+  background: #333;
+  padding: 7px;
+  position: relative;
+  left: -3px;
 }
 #links .link a:hover {
   color: #fff;
@@ -459,6 +461,40 @@ main.detalle li.jjactive:before {
 }
 .legal-row .right{
     text-align: left !important;
+}
+.legal-p, .legal-p li{
+    color:#000;
+    font-size:12pt;
+    text-align: justify;
+    line-height: 17px;
+    font-family:'Times New Roman','serif' !important;
+}
+
+.legal-p li{
+    line-height: 13px !important;
+    padding-top: 0px !important;
+}
+.about-us-ol li {
+    line-height: 16px !important;
+    padding: 3px !important;
+    text-align: justify !important;
+}
+
+.legal p ol li{
+    text-align: justify !important;
+}
+#language-selector {
+    padding: 6px;
+}
+#language-selector div {
+    border: 1px solid #333;
+    margin-right: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.slanguage{
+    background: #aaa;
 }
 /* PAGE FRONT, INTRO */
 

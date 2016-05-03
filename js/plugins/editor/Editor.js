@@ -767,6 +767,8 @@ var Editor = function(params,callback){
                         var index = names.indexOf(name);
                         if(elementQualification){
                             namesLength[index] = 0;
+                            answerElement.removeAttr("checked");
+                            answerElement.attr("checked", "checked");
                         }else{
                             //resetInputElement(answerElement);
                             if(namesLength[index] === 0 || --namesLength[index] > 0){
@@ -810,6 +812,8 @@ var Editor = function(params,callback){
             self.divSolution.find('#totalPoints').text(points);
             solutionDiv.empty();
             self.divSolution.find('.answers').css("display","block");
+            var str_points = points===1?" point":" points";
+            self.message("You scored " + points + str_points);
         });
         self.divSolution.find('.answers').css("display","none");
         self.divSolution.find('.answers').click(function(){
@@ -820,7 +824,7 @@ var Editor = function(params,callback){
                 }
                 entity.draw("right");
             }
-            alert("Activity solved with help");
+            self.message("Activity solved with help");
         });
     };
     
@@ -859,8 +863,8 @@ var Editor = function(params,callback){
                 }
             }
         }catch(e){
-            return false;
         }
+            return false;
     };
     
     /**
@@ -884,9 +888,11 @@ var Editor = function(params,callback){
         }
         if(elem.is("input:radio")){
             elem.removeAttr("checked");
+            elem.attr("data-val","false");
         }
         if(elem.is("input:checkbox")){
             elem.removeAttr("checked");
+            elem.attr("data-val","false");
         }
         if(elem.is("select")){
             elem.removeAttr("data-val");

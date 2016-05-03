@@ -118,7 +118,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 require_once(Yii::app()->basePath . '/views/site/terms_of_use_tabs.php');
                 $this->endWidget('zii.widgets.jui.CJuiDialog');
                 ?>
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c2.png" height="22" width="22" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c2.png" alt="" />
                 <?php
                 print CHtml::link('About Us',
                     array('controller/action','param1'=>'value1'),
@@ -141,7 +141,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 require_once(Yii::app()->basePath . '/views/site/copyright_tabs.php');
                 $this->endWidget('zii.widgets.jui.CJuiDialog');
                 ?>
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c4.png" height="22" width="22" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c4.png" alt="" />
                 <?php
                 print CHtml::link('Copyright page',
                     array('controller/action','param1'=>'value1'),
@@ -164,7 +164,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 require_once(Yii::app()->basePath . '/views/site/about_us_tabs.php');
                 $this->endWidget('zii.widgets.jui.CJuiDialog');
                 ?>
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c8.png" height="22" width="22" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c8.png" alt="" />
                 <?php
                 print CHtml::link('Terms of Use',
                     array('controller/action','param1'=>'value1'),
@@ -173,7 +173,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
                 ?>
             </div>
             <div class="link">
-                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c10.png" height="22" width="22" alt="" />
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c10.png" alt="" />
                 <?php
                 print CHtml::link('FAQ',
                     array('controller/action','param1'=>'value1'),
