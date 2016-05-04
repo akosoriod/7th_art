@@ -177,8 +177,6 @@ class SiteController extends Controller {
             $user->entries++;
             $user->update();
             $this->redirect(array('site/index'));
-        } elseif (isset($_POST['DECLINE'])) {
-            $this->redirect(array('site/logout'));
         } else {
            $this->render('about_us');
         }

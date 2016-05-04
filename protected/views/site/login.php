@@ -43,6 +43,29 @@
                     <?php echo $form->passwordField($model, 'password'); ?>
                     <?php echo $form->error($model, 'password'); ?>
                 </div>
+                <div class="row" style="margin: 2px 0px 2px 0px; color: #000">
+                    Al ingresar, usted acepta nuestros 
+                    <?php
+                $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+                    'id'=>'terms_of_use',
+                    'options'=>array(
+                        'title'=>'T&eacute;rminos de Uso',
+                        'width'=>960,
+                        'height'=>580,
+                        'autoOpen'=>false,
+                        'resizable' => false,
+                    ),
+                ));
+                require_once(Yii::app()->basePath . '/views/site/about_us_tabs.php');
+                $this->endWidget('zii.widgets.jui.CJuiDialog');
+                ?>
+                <?php
+                print CHtml::link('Términos de uso',
+                    array('controller/action','param1'=>'value1'),
+                    array('onclick'=>'$("#terms_of_use").dialog("open"); return false;')
+                );
+                ?>
+                </div>
                 <div class="row buttons">
                 <?php echo CHtml::submitButton('LOGIN'); ?>
                 </div>

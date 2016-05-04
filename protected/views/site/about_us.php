@@ -143,23 +143,19 @@ EOD;
     <div id="buttons" class="col-xs-12 col-sm-12 col-md-12" style="display:inline-flex;">
         <div id="btn_agree" class="button">
             <?php
-            print CHtml::submitButton('I READ IT AND I AGREE', array('name' => 'AGREE'));
+            print CHtml::submitButton('Continue', array('name' => 'AGREE'));
             ?>
         </div>
-        <div id="btn_decline" class="button">
-            <?php
-            print CHtml::submitButton('I DECLINE', array('name' => 'DECLINE'));
-            ?>
-        </div>
+        
     </div>
     <?php $this->endWidget(); ?>
 
-    <div id="steps" class="col-xs-12 col-sm-12 col-md-12" style="display: none;">
+<!--    <div id="steps" class="col-xs-12 col-sm-12 col-md-12" style="display: none;">
         <div id="btn_step_1" class="step step_active">1</div>
         <div id="btn_step_2" class="step step_active">2</div>
         <div id="btn_step_3" class="step">3</div>
         <div id="btn_step_4" class="step">4</div>
-    </div>
+    </div>-->
 
 </div>
 

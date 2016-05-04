@@ -185,6 +185,10 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
                 );
                 ?>
             </div>
+            <div class="link">
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c10.png" alt="" />
+                <a href="#">Research version</a>
+            </div>
         </div>
     </div>
 </main>

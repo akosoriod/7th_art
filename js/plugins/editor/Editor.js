@@ -720,20 +720,32 @@ var Editor = function(params,callback){
                     var listElement=userResponse.find("#entity"+entity.id);
                     var orderRight=listElement.attr('data-order_right').split(',');
                     var orderUser=listElement.attr('data-order_passive').split(',');
+                    var wrongAns = [];
+                    var rigthAns = [];
                     correct=true;
-                    for(var i in orderRight){
+                    n+=orderUser.length; 
+                   for(var i in orderRight){
                         orderRight[i]=parseInt(orderRight[i]);
                         orderUser[i]=parseInt(orderUser[i]);
                         if(orderRight[i]!==orderUser[i]){
-                            correct=false;
-                            entity.draw("wrong");
+                          wrongAns.push(i);  
+//                            correct=false;
+////                            entity.draw("wrong");
+                        }else{
+                            rigthAns.push(i);
                         }
                     }
-                    if(correct){
-                        totalExercise+=entity.weight;
-                    }
-                    //Si es una entidad calificable suma n
-                    n++;
+                    var ii = 0;
+                    listElement.find(".listElement").each(function(){
+                        var aaaa = 0;
+                        if(wrongAns.indexOf(ii++ +"") !== -1){
+                            $(this).find(".content").addClass("wrongListElement"); 
+                        }else{
+                            $(this).find(".content").removeClass("wrongListElement"); 
+                        }
+                    });
+                    
+                    totalExercise+=entity.weight*rigthAns.length;
                 }
                 
                 //Verifica el # de elementos calificables
@@ -817,6 +829,7 @@ var Editor = function(params,callback){
         });
         self.divSolution.find('.answers').css("display","none");
         self.divSolution.find('.answers').click(function(){
+            self.divSolution.find('.check').remove();
             for(var i in self.workspace.entities){
                 var entity=self.workspace.entities[i];
                 if(entity.optional === "1"){

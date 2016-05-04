@@ -499,7 +499,9 @@ table.controller .label{
 .listElement .entity{
     position: relative;
 }
-
+.wrongListElement{
+    border-right: 2px solid red !important;
+}
 .entity .box .content ul{
     line-height: initial !important;
     margin-bottom: 0;

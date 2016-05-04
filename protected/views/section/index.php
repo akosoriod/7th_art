@@ -196,6 +196,10 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
                 );
                 ?>
             </div>
+            <div class="link">
+                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/test/ico_r2_c10.png" alt="" />
+                <a href="#">Research version</a>
+            </div>
         </div>
     </div>
 </main>
