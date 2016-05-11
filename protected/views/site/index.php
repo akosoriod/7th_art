@@ -95,9 +95,18 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/ci
     <div class="row row2">
         <div id="sets" class="col-xs-12 col-sm-12 col-md-12">
             <?php
+            $user=User::getCurrentUser();
+             if ($user->email == "demo7thart_bog@unal.edu.co") {
+                 foreach ($activitySets as $activitySet) {
+                     if ($activitySet->id == 12){
+                         $this->renderPartial('/activitySet/_user_view',array('data'=>$activitySet));
+                     }
+                }
+             }else{
                 foreach ($activitySets as $activitySet) {
                     $this->renderPartial('/activitySet/_user_view',array('data'=>$activitySet));
                 }
+              }
             ?>
         </div>
     </div>

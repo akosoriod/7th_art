@@ -512,3 +512,7 @@ table.controller .label{
 .error_list{
     box-shadow: 2px 2px 5px #ff6666;
 }
+
+.ui-draggable {
+    cursor: move;
+}
