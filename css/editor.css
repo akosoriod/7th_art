@@ -513,6 +513,12 @@ table.controller .label{
     box-shadow: 2px 2px 5px #ff6666;
 }
 
-.ui-draggable {
-    cursor: move;
+.ui-draggable{
+cursor:-webkit-grab; 
+cursor: -moz-grab;
+}
+
+.ui-draggable:active{
+cursor: -webkit-grabbing;
+cursor: -moz-grabbing;
 }

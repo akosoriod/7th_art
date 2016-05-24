@@ -259,7 +259,6 @@ var Workspace = function(params){
             if(entity.hasClass("dragdrop")){
                 entity.draggable({
                     containment: self.container,
-                    cursor: "move",
                     grid: [1,1],
                     opacity: 0.4,
                     scroll: false,
