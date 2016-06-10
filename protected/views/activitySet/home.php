@@ -33,10 +33,12 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
             xorigin: 'center'
         });
         $('body').css({
-            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") center no-repeat transparent',
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") no-repeat center center fixed',
+            '-weblit-background-size': 'cover',
+            '-moz-background-size': 'cover',
+            '-o-background-size': 'cover',
             'background-size': 'cover',
-            'background-repeat': 'no-repeat',
-            'background-position': '50% 50%'
+            'background-repeat': 'no-repeat'
         });
         $('body').addClass('not-front page-set fullpage row-offcanvas row-offcanvas-right');
         

@@ -11,7 +11,8 @@
     </div>
     <a href="<?php echo Yii::app()->request->baseUrl.'/index.php/activitySet/home/movie/'.$data->name; ?>">
         <div class="poster">
-            <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$data->poster,$data->title); ?>
+            <?php echo CHtml::image(Yii::app()->baseUrl.'/'.$data->poster,$data->title,
+                            array('class'=>'img-thumbnail')); ?>
         </div>
         <div class="info">
             <div class="attribute title"><?php echo $data->title; ?></div>
