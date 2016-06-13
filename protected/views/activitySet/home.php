@@ -62,19 +62,22 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
         <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">
         </div>
     </div>
-    <div class="row row2">
+    <div class="row row2" style="margin-left: -35px;">
         <!-- Sections -->
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
             <?php
                 foreach ($model->sections as $section){
                     $class='';
-//                    if($section->sectionType->name == 'acknowledgments'||$section->sectionType->name == 'credits') {
-//                        $class=' black_text ';
-//                    }
+                    $style ='';
+                    if($section->sectionType->name == 'credits') {
+                        $section->sectionType->label = $section->sectionType->label 
+                                . ' <span style="font-size: 26px"> &copy; </span> ';
+                        $style= 'style="padding: 9px 5px 8px;"';
+                    }
                     $publishedVersion=$section->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){
-                            echo '<a id="mnu_'.$section->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
+                            echo '<a ' .$style . ' id="mnu_'.$section->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$model->name.'/section/'.$section->sectionType->name.'">'.$section->sectionType->label.'</a>';
                         }elseif(count($publishedVersion->activities)>1){
                             echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title"><a href="#">'.$section->sectionType->label.'<span class="caret"></span></a><ul>';
                                 foreach ($publishedVersion->activities as $activity) {

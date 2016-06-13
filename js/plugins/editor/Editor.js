@@ -282,31 +282,9 @@ var Editor = function(params,callback){
         self.toolbar.find("#save").click(function(){
             self.save();
         });
-        self.toolbar.find("#load-answers").click(function(){
-            if(self.currentState == "right"){
-                saveCurrentAnswers();
-            }else{
-                alert("Debe estar en \"Modo respuestas\" para cargar las respuestas");
-            }
-        });
     };
     
-    function saveCurrentAnswers(){
-        var a = 1;
-        var currentEnities =self.workspace.div;
-        for(var i in self.workspace.entities){
-            var entity1 =self.workspace.entities[i];
-            var current = self.workspace.div.find("#entity"+entity1.id);
-//            var n = 0;
-            current.find(":text").each(function(){
-                $(this).attr("data-val",$(this).val());
-                $(this).attr("value",$(this).val());
-            });
-//            n += current.find(":checkbox").length;
-//            n += current.find("select").length;
-            
-        }
-    }
+    
     /**
      * Eventos del cuadro de diálogo de edición de entidades
      */
@@ -603,6 +581,10 @@ var Editor = function(params,callback){
         container.find('input:checkbox').change(function(){
             $(this).attr("data-val",true);
             $(this).attr("checked","checked");
+        });
+        
+        container.find('select').change(function(){
+            $(this).attr("data-val",$(this).val());
         });
 
     };
