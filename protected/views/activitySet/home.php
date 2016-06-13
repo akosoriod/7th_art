@@ -72,7 +72,7 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
                     if($section->sectionType->name == 'credits') {
                         $section->sectionType->label = $section->sectionType->label 
                                 . ' <span style="font-size: 26px"> &copy; </span> ';
-                        $style= 'style="padding: 9px 5px 8px;"';
+                        $style= 'style="padding: 9px 5px 8px;;"';
                     }
                     $publishedVersion=$section->publishedVersion();
                     if($publishedVersion){
