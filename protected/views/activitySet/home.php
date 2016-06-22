@@ -34,7 +34,7 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
         });
         $('body').css({
             'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$model->background.'?'.rand(1,1000000); ?>") no-repeat center center fixed',
-            '-weblit-background-size': 'cover',
+            '-webkit-background-size': 'cover',
             '-moz-background-size': 'cover',
             '-o-background-size': 'cover',
             'background-size': 'cover',
@@ -62,7 +62,7 @@ if ($handle = opendir('protected/data/sets/'.$model->name.'/css/')) {
         <div id="menu-movies-acknowledgments" class="col-xs-12 col-sm-12 col-md-4">
         </div>
     </div>
-    <div class="row row2" style="margin-left: -35px;">
+    <div class="row row2" style="margin-left: -44px;width: 1075px;">
         <!-- Sections -->
         <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
             <?php

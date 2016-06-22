@@ -26,10 +26,12 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
         //Instrucción de la plantilla de la UNAL
         $('select', 'form').selectpicker();
         $('body').css({
-            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$section->activitySet->background.'?'.rand(1,1000000); ?>") center no-repeat transparent',
+            'background': 'url("<?php echo Yii::app()->request->baseUrl.'/'.$section->activitySet->background.'?'.rand(1,1000000); ?>") no-repeat center center fixed',
+            '-webkit-background-size': 'cover',
+            '-moz-background-size': 'cover',
+            '-o-background-size': 'cover',
             'background-size': 'cover',
-            'background-repeat': 'no-repeat',
-            'background-position': '50% 50%'
+            'background-repeat': 'no-repeat'
         });
         $('body').addClass('not-front page-set not-logged fullpage row-offcanvas row-offcanvas-right');
         
@@ -57,16 +59,21 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
             <h2 id="ql_activity_set_title"><?php echo $section->activitySet->title; ?></h2>
         </div>
     </div>
-    <div class="row row2">
+    <div class="" style="margin-left: -44px;width: 1075px;">
         <!-- Sections -->
-        <div id="menu-movies" class="col-xs-12 col-sm-12 col-md-12">
+        <div id="menu-movies" class="col-xs-12">
             <?php
                 foreach ($activitySet->sections as $sectionIter){
                     $class='';
+                    $style='';
+                    if($sectionIter->sectionType->name == 'credits') {
+                        $sectionIter->sectionType->label = $sectionIter->sectionType->label. ' <span style="font-size: 26px"> &copy; </span> ';
+                        $style= 'style="padding: 9px 5px 8px;;"';
+                    }
                     $publishedVersion=$sectionIter->publishedVersion();
                     if($publishedVersion){
                         if(count($publishedVersion->activities)===1){
-                            echo '<a id="mnu_'.$sectionIter->sectionType->name.'" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'">'.$sectionIter->sectionType->label.'</a>';
+                            echo '<a ' . $style . ' id="mnu_'.$sectionIter->sectionType->name. '" class="mnu_button '.$class.'" href="'.Yii::app()->request->baseUrl.'/index.php/section/index/movie/'.$activitySet->name.'/section/'.$sectionIter->sectionType->name.'">'.$sectionIter->sectionType->label.'</a>';
                         }elseif(count($publishedVersion->activities)>1){
                             echo '<ul class="mnu_button activity_set_menu unstyled"><li class="title  '.$class.'"><a href="#">'.$sectionIter->sectionType->label.'<span class="caret"></span></a><ul>';
                                 foreach ($publishedVersion->activities as $activityMenu) {
