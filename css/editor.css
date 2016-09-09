@@ -260,6 +260,9 @@ table.controller .label{
 #container #area #editor .button-script{
     background-image: url('../images/editor/script.png');
 }
+#container #area #editor .button-wall{
+    background-image: url('../images/editor/wall.png');
+}
 .entity-true-false-helper{
     background-image: url('../images/editor/button1.png');
     height: 48px;
@@ -318,6 +321,15 @@ table.controller .label{
     }
     .answers .content:hover{
         background-image: url('../images/editor/answers-img-hover.png');
+        background-repeat: no-repeat;
+    }
+    .wall .content{
+        background-image: url('../images/editor/wall-img.png');
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+    .wall .content:hover{
+        background-image: url('../images/editor/wall-img-hover.png');
         background-repeat: no-repeat;
     }
 .entity_editing{
