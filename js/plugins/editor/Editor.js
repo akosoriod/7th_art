@@ -192,44 +192,6 @@ var Editor = function(params,callback){
             lastStep.click();
         }
         
-        //Configurar el set de actividades
-        //Pendiente, por ahora se sube con una entidad de estilos interna
-//        self.div.find('.button-config').click(function(){
-//            $(htmlConfigActivitySet()).dialog({
-//                height:270,
-//                modal:true,
-//                width:420,
-//                open:function(){
-//                    
-//                    $(this).find(".upload_set_css").css({
-//                        height:150,
-//                        width: 200
-//                    });
-//                    $(this).find(".upload_set_css").uploadFile({
-//                        url:self.appUrl+"protected/views/designer/upload.php",
-//                        fileName:"file",
-//                        showStatusAfterSuccess:false,
-//                        dragdropWidth:350,
-//                        dynamicFormData: function() {
-//                            var data ={
-//                                activitySetName:self.activitySet.name,
-//                                type: "style_set",
-//                                extension:"css"
-//                            };
-//                            return data;
-//                        },
-//                        onSuccess:function(files,data,xhr){
-//                            var response=JSON.parse(data);
-//                            self.editingEntity.states['passive'].content='<p class="style_entity" data-file="'+response.file+'">Archivo cargado correctamente</p>';
-//                            self.editingEntity.div.attr('data-file',response.file);
-//                            if(previous){
-//                                $('#'+previous.replace(".","_")).remove();
-//                            }
-//                        }
-//                    });
-//                }
-//            });
-//	});
     };
     
     /**

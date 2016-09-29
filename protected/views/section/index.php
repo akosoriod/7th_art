@@ -100,7 +100,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/re
         </div>
     </div>
     <div id="ql_step_header" class="section_nav row row4">
-        <h3 id="ql_section_name" class="section_nav_name"><?php echo $section->sectionType->label; ?> <div id="userpoints">Points: <span id="totalPoints"><?php echo $step->getPoints($user); ?></span></div></h3>
+        <h3 id="ql_section_name" class="section_nav_name"><?php echo $section->sectionType->label; ?> <div id="userpoints">Points: <span id="totalPoints"><?php echo $step->getPoints($user); ?></span> / 100</div></h3>
         <div class="section_nav_steps">
             <?php
                 if(count($activity->steps)>1){

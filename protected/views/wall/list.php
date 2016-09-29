@@ -6,6 +6,7 @@ $model = new Comment;
 
 // Ref: http://www.tomdeater.com/jquery/character_counter/
 Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.charcounter.js');
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl . '/js/walltest.js');
 ?>
 
 <div class="errorMessage" id="formResult" name="formResult"></div>
@@ -54,14 +55,14 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
 		<?php echo $form->errorSummary($model); ?>
 
 		<div class="field">
-			<?php echo $form->labelEx($model,'comment'); ?>
+			<?php echo $form->labelEx($model,'Type a comment...'); ?>
 			<?php echo $form->textArea($model,'comment',array('rows'=>2, 'cols'=>55, 'style' => 'resize:none; word-wrap:break-word;', 'id'=>'taComment')); ?>
-			<?php echo $form->error($model,'comment'); ?>
+			<?php echo $form->error($model,'error'); ?>
 		</div>
 
 		<div class="buttons">
 			<?php //Ref: http://stackoverflow.com/questions/6348581/yii-ajaxsubmitbutton-with-fields-validation ?>
-			<?php echo CHtml::ajaxSubmitButton('Crear Comentario',
+                            <?php echo CHtml::ajaxSubmitButton('Crear Comentario',
 									CHtml::normalizeUrl(array('comment/create')),
 									array('type'=>'POST',
 											'dataType'=>'json',
@@ -86,7 +87,7 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
 											}",
 											'error' => "function(data) {
 												// handle return data
-												alert('error: '+data);
+												errorCommentario(data);
 											}",
 											'update' => '#formResult'
 									),
