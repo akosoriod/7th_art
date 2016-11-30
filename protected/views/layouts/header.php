@@ -40,7 +40,7 @@
             <!--7<sup>th</sup> @rt : The Power & Magic of Films to Learn English-->
             unal.edu.co
         </div>
-        <div class="navbar-">
+        <div id="main-navbar" class="navbar-" style="display: none">
             <div class="btn-group">
                 <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>">Home</a>
@@ -58,12 +58,12 @@
                 </ul>
             </div>-->
             <?php if(Yii::app()->user->checkAccess('application')){ ?>
-                <div class="btn-group">
+                <div class="btn-group wall-access-btn" style="display: none">
                     <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                         <?php
                         print CHtml::link('Wall',
                             '#',
-                            array('onclick'=>'$("#wall").dialog("open"); return false;')
+                            array('onclick'=>'abrirPanelComentarios(); return false;')
                         );
                         ?>
                     </div>

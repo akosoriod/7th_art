@@ -810,6 +810,9 @@ var Editor = function(params,callback){
             }
             self.message("Activity solved with help");
         });
+        self.divSolution.find('.wall').click(function(){
+            $("#wall").dialog("open");
+        });
     };
     
     /**

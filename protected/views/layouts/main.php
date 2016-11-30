@@ -26,6 +26,8 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap-select.min.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tinyscrollbar/tinyscrollbar.css','all');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/underscore-min.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/timeago.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/7th_art.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/Util.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinyscrollbar/jquery.tinyscrollbar.min.js');
@@ -33,7 +35,12 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art_sistemas.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/reset-context-min.css','all');
+            Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/comment.css','all');
         ?>
+    
+            <script>
+                appUrl="<?php echo Yii::app()->baseUrl."/"; ?>";
+            </script>        
     </head>
     <body>
         <?php require_once(Yii::app()->basePath . '/views/layouts/header.php'); ?>

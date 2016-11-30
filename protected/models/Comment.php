@@ -27,7 +27,7 @@ class Comment extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'comment';
+        return 'user_comment';
     }
 
     /**

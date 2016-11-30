@@ -1,16 +1,16 @@
-<div class="view wall">
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('comment')); ?>:</b>
-	<?php echo CHtml::encode($data->comment); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('user_id')); ?>:</b>
-	<?php echo CHtml::encode($data->user->name).' '.CHtml::encode($data->user->lastname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('date')); ?>:</b>
-	<?php echo CHtml::encode($data->date); ?>
-	<br />
-
+<div id="comment-<%=id%>" class="comment">
+    <% if(own){ %>
+        <a href="#" class="close" 
+           style="display: none"
+           data-dismiss="alert" aria-label="close" 
+           title="Delete comment"
+           onclick="borrarComentario(<%=id%>)">&times;</a>
+    <% } %>
+    <div class="comment-body <%= own? 'own':'' %>">
+        <div class="comment-heading">
+            <h4 class="user"><%= user %></h4>
+            <h5 class="time"><%= jQuery.timeago(date) %></h5>
+        </div>
+        <p><%= comment %></p>
+    </div>
 </div>
-<br />

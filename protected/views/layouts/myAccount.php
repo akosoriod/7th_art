@@ -38,10 +38,11 @@
                 'id'=>'wall',
                 'options'=>array(
                     'title'=>'Wall',
-                    'width'=>580,
-                    'height'=>450,
+                    'width'=>'40%',
+                    'height'=>'auto',
                     'autoOpen'=>false,
                     'resizable' => false,
+                    'close' => 'js:function(){}',
                 ),
             ));
             $this->renderPartial('/wall/list');
