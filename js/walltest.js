@@ -81,7 +81,8 @@ function guardarComentario(url) {
         type: "POST",
         data: {
             comentario: comment,
-            stepid: stepId
+            stepid: stepId, 
+            tabid: commentIndex
         }}).done(function (data) {
         if (data) {
             data = JSON.parse(data);

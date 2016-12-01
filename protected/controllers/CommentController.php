@@ -1,20 +1,20 @@
 <?php
 
 class CommentController extends Controller {
-//    public function accessRules() {
-//        return array(
-//            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-//                'actions' => array(
-//                    'index',
-//                    'createCommentByAjax', "Juanca"
-//                ),
-//                'users' => array('@'),
-//            ),
-//            array('deny', // deny all users
-//                'users' => array('*'),
-//            ),
-//        );
-//    }
+    public function accessRules() {
+        return array(
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array(
+                    'index',
+                    'createCommentByAjax', "Juanca"
+                ),
+                'users' => array('@'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -65,7 +65,7 @@ class CommentController extends Controller {
             $c = $_POST['comentario'];
             $model = new Comment;
 
-            $model->category_id = Yii::app()->session['tabid'];
+            $model->category_id = $_POST['tabid'] + 1 ;
             $model->step_id = $_POST['stepid'];
             $model->parent_id = null;
             $model->date = new CDbExpression('NOW()');
