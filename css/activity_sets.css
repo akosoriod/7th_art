@@ -76,3 +76,9 @@
 .audio_entity{
     width: 200px;
 }
+
+.ui-state-disabled {
+    opacity: 1 !important;
+    background-image: inherit;
+    cursor: inherit;
+}
