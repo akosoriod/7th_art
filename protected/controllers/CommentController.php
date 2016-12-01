@@ -67,7 +67,7 @@ class CommentController extends Controller {
 
             $model->category_id = Yii::app()->session['tabid'];
             $model->step_id = $_POST['stepid'];
-            $model->parent_id = 1;
+            $model->parent_id = null;
             $model->date = new CDbExpression('NOW()');
             $currentUser = User::getCurrentUser();
             $model->user_id = $currentUser->id;
