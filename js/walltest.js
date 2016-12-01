@@ -6,6 +6,7 @@ var commentIndex = null;
 var walls = ["tabForum", "tabCAS"];
 $(function () {
     resetPages();
+    commentIndex = 0;
     CommmentURL = window.appUrl + "index.php/comment/";
     $.ajax({
         url: CommmentURL + "loadTemplate",
@@ -154,6 +155,7 @@ function errorCommentario(data) {
 
 function selectTab(event, ui) {
     var index = ui.index;
+    resetPages();
     $.ajax({
         url: CommmentURL + "tabidsession",
         type: "GET",
@@ -202,9 +204,11 @@ function showComments(index, page) {
             }
         }
         try {
-            var commentLimit = $("#comment-limit");
-            commentLimit.remove();
-            if (!data.limit) {
+            $("#" + walls[commentIndex] +" .comment-limit").each(function(){
+                $(this).remove();
+            });
+
+        if (!data.limit) {
                 panel.append("<span class='comment-limit' id='commment-limit'" + index +" onclick='showComments(" + index + ", " + ++pages[commentIndex] + ")'>See more... </span>");
             }
 
@@ -215,7 +219,6 @@ function showComments(index, page) {
 }
 function resetPages() {
     pages = [0, 0];
-    commentIndex = 0;
 }
 
 function preSetPanelContent(panel, hasComments){
