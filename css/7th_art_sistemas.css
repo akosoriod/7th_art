@@ -57,17 +57,19 @@ Universidad Nacional de Colombia
 }
 
 
+
 /** Estilos para el men� My Account */
-#myAccount{background:repeat-y #333 url(../images/myAccountBck.png);position:fixed;right:-800px;top:150px;transition:all .25s ease-out;z-index:20000}
+#myAccount{background:repeat-y #333 url(../protected/views/layouts/unal/images/servicesBck.png);position:fixed;right:-260px ;top:-2px;transition:all .25s ease-out;padding-top:30px;z-index:20000}
 #myAccount.active{right:0}
 #myAccount ul{margin:0;overflow-x:hidden;padding:0 10px;}
 #myAccount ul li{border-bottom:1px solid #222;border-top:1px solid #444;height:52px;padding:10px 0;width:240px}
 #myAccount ul li:hover{background:#444}
 #myAccount ul li:first-child{border-top:none}
 #myAccount ul li:last-child{border-bottom:none}
+#myAccount ul li p {color: #fff !important; height: 20px;padding-top: 7px;}
 #myAccount ul li a{color:#fff;font-size:.9em;line-height:33px;white-space:nowrap}
 #myAccount ul li img{display:block;float:left;height:32px;margin:0 5px;width:32px}
-#myAccount .tabMyAccount{background-color:#50992E;background-image:url(../images/myAccount.png);background-position:0 0;cursor:pointer;height:126px;left:-34px;position:absolute;top:185px;width:34px}
+#myAccount .tabMyAccount{background-color:#50992E;background-image:url(../protected/views/layouts/unal/images/backServices.png);background-position:0 0;cursor:pointer;height:126px;left: -34px;;position:absolute;top:185px;width:34px}
 #myAccount .tabMyAccount:hover{background-position:0 -127px}
 #myAccount .tabMyAccount.active{background-position:-34px 0}
 #myAccount .tabMyAccount.active:hover{background-position:-34px -127px}

@@ -44,17 +44,17 @@
     </head>
     <body>
         <?php require_once(Yii::app()->basePath . '/views/layouts/header.php'); ?>
-        <?php require_once(Yii::app()->basePath . '/views/layouts/services.php'); ?>
         <!-- Menú My Account -->
         <?php
         // Verifica si el usuario tiene roles asociados (administrator, operator) o si es usuario final (estudiante, profesor).
         $arrayAuthRoleItems = Yii::app()->authManager->getAuthItems(2, Yii::app()->user->getId());
         $arrayKeys = array_keys($arrayAuthRoleItems);
-        // Si es usuario final se autentica contra el directorio LDAP y tiene el rol "user".
+ // Si es usuario final se autentica contra el directorio LDAP y tiene el rol "user".
         if (count($arrayKeys)>0&&$arrayKeys[0]=='user') {
             (!Yii::app()->user->isGuest) ? require_once(Yii::app()->basePath . '/views/layouts/myAccount.php') : '';
         }else{
         ?>
+            <?php require_once(Yii::app()->basePath . '/views/layouts/services.php'); ?>
             <div>&nbsp;</div>
             <div>&nbsp;</div>
             <div id="mainmenu">
