@@ -77,16 +77,18 @@
             <a href="#">Preferences</a>
             <?php require_once(Yii::app()->basePath . '/views/layouts/preferences.php'); ?>
         </li>
+        <div class="btn-group wall-access-btn" style="display: none">
         <li>
             <?php
             $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
                 'id'=>'wall',
                 'options'=>array(
                     'title'=>'Wall',
-                    'width'=>580,
-                    'height'=>450,
+                    'width'=>'40%',
+                    'height'=>'auto',
                     'autoOpen'=>false,
                     'resizable' => false,
+                    'close' => 'js:function(){}',
                 ),
             ));
             $this->renderPartial('/wall/list');
@@ -105,6 +107,7 @@
                 );
             ?>
         </li>
+        </div>
         <li>
             <?php
             $this->beginWidget('zii.widgets.jui.CJuiDialog', array(

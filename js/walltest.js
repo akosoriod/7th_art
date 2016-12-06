@@ -25,17 +25,6 @@ $(function () {
     });
 });
 
-$(function () {
-
-    var navBar = $("#main-navbar");
-    var location = window.location.href;
-    var contains = location.indexOf("section/index/movie");
-    var btns = $(".wall-access-btn");
-    if (contains >= 0) {
-        btns.show();
-    }
-    navBar.fadeIn(2000);
-});
 
 $(function () {
     var url = appUrl + "index.php/comment/createCommentByAjax";

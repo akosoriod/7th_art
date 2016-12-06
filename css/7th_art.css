@@ -802,3 +802,10 @@ body.page-terms .WordSection1 {
 #steps .step_active {
     background: orange;
 }
+.operadores a{
+    color: #50992e !important;
+}
+
+.operadores a:hover{
+    text-decoration: underline;
+}

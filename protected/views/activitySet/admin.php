@@ -8,20 +8,19 @@ $this->breadcrumbs=array(
 );
 
 Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrator.css');
+Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl . '/js/admin/admin.js');
 ?>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
     $( document ).ready(function(){
 //        $(".site-url").empty().append('<div class="icon"> </div> 7 <sup>th</sup> @rt Administator');
         var appUrl="<?php // echo Yii::app()->baseUrl."/"; ?>";
-//        var editor=new Editor({
-//            appUrl:appUrl
-//        });
-//        editor.init();
-//
-//        var sections=$("#navigation").children("ul");
-//        sections.click(function(){
-//            alert("only a prototype");
-//        });
+        $( function() {
+            $( "#container" ).tabs();
+        } );
     });
 </script>
 <main id="admin_page" class="admin_page">
@@ -31,6 +30,12 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
     );
     ?>
     <div id="container">
+        <ul>
+            <li><a href="#activitySets">Sets de actividades</a></li>
+            <li><a href="#users">Administradores y Operadores</a></li>
+            <li><a href="#settings">Ajustes Generales</a></li>
+            <li><a href="#faq">Preguntas Frecuentes</a></li>
+        </ul> 
         <div id="activitySets" class="section">
             <h3 class="section_title">Sets de actividades</h3>
             <div class="buttons">
@@ -59,6 +64,19 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
                     }
                 ?>
             </div>
+        </div>
+        <!-- Preguntas Frecuentes -->
+        <div id="settings" class="section">
+            <div class="panel panel-default">
+                <div class="panel-heading">Opciones del Wall</div>
+                <div class="panel-body">
+                    <h4>Última fecha de restauración: <span id="clear-wall-date">13 Nov 2016</span></h4> 
+                    <div class="text-right">
+                        <button id="clear-wall" type="button" class="btn btn-default">Limpiar Comentarios del Wall</button>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <!-- Preguntas Frecuentes -->
         <div id="faq" class="section">

@@ -2,42 +2,25 @@
 /* @var $this UserController */
 /* @var $data User */
 ?>
+<div class="list-group-item operadores">
 
-<div class="view user">
+    <a href="<?php echo Yii::app()->request->baseUrl . '/index.php/user/view/' . $data->id; ?>">
+        <h3>
+            <?php echo $data->username ?>&nbsp;&nbsp;
+        </h3>
+    </a>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('/user/view', 'id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-	<?php echo CHtml::encode($data->name); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname')); ?>:</b>
-	<?php echo CHtml::encode($data->lastname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
-	<?php echo CHtml::encode($data->username); ?>
-	<br />
-
-	<!--<b><?php // echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>-->
-	<?php // echo CHtml::encode($data->password); ?>
-	<!--<br />-->
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('active')); ?>:</b>
-	<?php echo CHtml::encode($data->active); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('auth_type')); ?>:</b>
-	<?php echo CHtml::encode($data->auth_type); ?>
-	<br />
-
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
-	<?php echo CHtml::encode($data->email); ?>
-	<br />
-
-	*/ ?>
+    <b>Nombre: </b> 
+    <?php echo $data->name . " " . $data->lastname ?>
+    <br>
+    <b>Estado: </b>
+    <?php
+    if ($data->active) {
+        echo '<span class="label label-success">Activo</span>';
+    } else {
+        echo '<span class="label label-danger">Inactivo</span>';
+    }
+    ?>
+    <br />
 
 </div>

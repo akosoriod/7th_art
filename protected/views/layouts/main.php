@@ -40,6 +40,16 @@
     
             <script>
                 appUrl="<?php echo Yii::app()->baseUrl."/"; ?>";
+                $(function () {
+                    var navBar = $("#main-navbar");
+                    var location = window.location.href;
+                    var contains = location.indexOf("section/index/movie");
+                    var btns = $(".wall-access-btn");
+                    if (contains >= 0) {
+                        btns.show();
+                    }
+                    navBar.fadeIn(2000);
+                });
             </script>        
     </head>
     <body>
