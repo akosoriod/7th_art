@@ -11,7 +11,6 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/administrato
 Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl . '/js/admin/admin.js');
 ?>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
@@ -70,9 +69,9 @@ Yii::app()->getClientScript()->registerScriptFile(Yii::app()->baseUrl . '/js/adm
             <div class="panel panel-default">
                 <div class="panel-heading">Opciones del Wall</div>
                 <div class="panel-body">
-                    <h4>Última fecha de restauración: <span id="clear-wall-date">13 Nov 2016</span></h4> 
+                    <h4>Última fecha de limpieza: <span id="clear-wall-date">Nunca se ha efectuado la limpieza</span></h4> 
                     <div class="text-right">
-                        <button id="clear-wall" type="button" class="btn btn-default">Limpiar Comentarios del Wall</button>
+                        <button id="clear-wall" type="button" class="btn btn-danger">Limpiar Comentarios del Wall</button>
                     </div>
                 </div>
             </div>

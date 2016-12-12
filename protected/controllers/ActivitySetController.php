@@ -349,7 +349,7 @@ class ActivitySetController extends Controller
         public function actionClearWallByAjax(){
             try {
                 Yii::app()->db->createCommand('truncate table user_comment')->query();
-                Yii::app()->db->createCommand('insert into app_event (event,date) values(1, NOW())')->query();
+                Yii::app()->db->createCommand('insert into reg_events (event,mdate) values(1, NOW())')->query();
                 print CJSON::encode(array('status' => "success"));
             } catch (Exception $ex) {
                 print CJSON::encode(array('status' => "error", 'error' => $ex));
@@ -358,7 +358,7 @@ class ActivitySetController extends Controller
         
         public function actionLoadWallClearedDateByAjax(){
             try {
-                $res = Yii::app()->db->createCommand('select max(app.date) date, app.event from app_event app where app.event = 1 group by app.event;')->query();
+                $res = Yii::app()->db->createCommand('select max(app.mdate) date, app.event from reg_events app where app.event = 1 group by app.event;')->query();
                 print CJSON::encode(array('status' => "success", 'data'=> $res));
             } catch (Exception $ex) {
                 print CJSON::encode(array('status' => "error", 'error' => $ex));

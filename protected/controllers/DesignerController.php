@@ -273,17 +273,23 @@ class DesignerController extends Controller {
     */
     public function actionSavePointsByAjax(){
         $success=true;
+        $newMax = false;
         //Get the client data
         $stepId=intval($_POST['stepId']);
         $points=intval($_POST['points']);
         $step=Step::model()->findByPk($stepId);
         if($step){
-            $step->setPoints(User::getCurrentUser(),$points);
+            $user = User::getCurrentUser();
+            $max = $step->getPoints($user);
+            if ($points > $max){
+                $step->setPoints(User::getCurrentUser(),$points);
+                $newMax = true;
+            }
         }else{
             $success=false;
         }
         //Return the result of save schedule
-        echo json_encode(array("success"=>$success));
+        echo json_encode(array("success"=>$success, "max"=>$newMax));
     }
     
     /**

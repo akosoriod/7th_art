@@ -13,6 +13,8 @@
         <meta name="revisit-after" content="1 hour">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=2.5, user-scalable=yes">
         <base href="">
+            <!--<script src="https://code.jquery.com/jquery-1.12.4.js" ></script>-->
+            <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
         <?php
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap.min.css');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/reset.css');
@@ -22,15 +24,22 @@
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/phone.css','only screen and (min-width: 768px) and (max-width: 991px)');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/small.css','only screen and (max-width: 767px)');
             Yii::app()->clientScript->registerCoreScript('jquery');
+             
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/form.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/css/bootstrap-select.min.css','all');
+            Yii::app()->clientScript->registerCssFile("https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css",'all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/plugins/tinyscrollbar/tinyscrollbar.css','all');
-            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
+            
+            
+//            Yii::app()->clientScript->registerScriptFile("https://code.jquery.com/jquery-1.12.4.js");
+//            Yii::app()->clientScript->registerScriptFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js");
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/underscore-min.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/timeago.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/7th_art.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/Util.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/plugins/tinyscrollbar/jquery.tinyscrollbar.min.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/bootstrap-select.min.js');
+            Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/alert.js');
             //Estilos de 7th @rt
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art.css','all');
             Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/7th_art_sistemas.css','all');
@@ -96,6 +105,9 @@
         <?php 
             require_once(Yii::app()->basePath . '/views/layouts/footer.php');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/protected/views/layouts/unal/js/unal.js');
+        ?>
+        <?php 
+            require_once(Yii::app()->basePath . '/views/layouts/alert.html');
         ?>
     </body>
 </html>

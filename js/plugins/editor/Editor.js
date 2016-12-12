@@ -791,12 +791,18 @@ var Editor = function(params,callback){
                 console.debug("Gained points: "+points);
             }
             //Almacena el resultado actual
-            savePoints(self.currentStep,points);
-            self.divSolution.find('#totalPoints').text(points);
+            savePoints(self.currentStep, points, function (res) {
+                if (res.max) {
+                    animateScoreBoard();
+                    self.divSolution.find('#totalPoints').text(points);
+                    m_alert_info("Congratulations",
+                            "You scored <strong>" + points + " out of 100</strong>. " +
+                            "<br>Your best so far in this step!", null);
+                }
+            });
             solutionDiv.empty();
             self.divSolution.find('.answers').css("display","block");
             var str_points = points===1?" point":" points";
-            self.message("You scored " + points + str_points);
         });
         self.divSolution.find('.answers').css("display","none");
         self.divSolution.find('.answers').click(function(){
@@ -814,6 +820,13 @@ var Editor = function(params,callback){
             $("#wall").dialog("open");
         });
     };
+    
+    function animateScoreBoard() {
+        $("#userpoints").css("width", "0%");
+        $("#userpoints")
+                .animate({width: "6%"}, 1000)
+                .animate({borderLeftWidth: "15px"}, 1000);
+    }
     
     /**
      * Califica si la respuesta dada a un elemento es correcta
@@ -855,17 +868,6 @@ var Editor = function(params,callback){
     };
     
     /**
-     * Agrega los eventos a las entidades en solution mode
-     */
-    function attachEventsSolutionModeEntities(){
-//        self.workspace.div.find('.entity').keyup(function() {
-//            updateSolvedState($(this));
-//        }).click(function(){
-//            updateSolvedState($(this));
-//        });
-    };
-    
-    /**
      * Deuelve al estado inicial el elemento de entrada que se le pase
      * @param {object} bladladladlallakdl
      */
@@ -887,31 +889,6 @@ var Editor = function(params,callback){
         }
     }
     
-    /**
-     * Actualiza el estado solved con la información del userspace
-     * @param {element} entityElement Elemento del DOM de la entidad
-     */
-//    function updateSolvedState(entityElement){
-//        var entity=self.workspace.getEntity(parseInt(entityElement.attr('data-id')));
-//        
-////        console.warn("Activo de la entidad");
-////        console.debug(escapeHtmlEntities(entity.states.active.content));
-//        
-//        var htmlContent=entityElement.find('.content').clone();
-////        console.warn($(entity.states.active.content));
-//        
-//        $(entity.states.active.content).find('*').each(function(){
-//            var entitySubelement=$(this);
-////            console.warn(entitySubelement);
-////            htmlContent.find("*").each(function(){
-////                console.debug($(this));
-////            });
-//            
-//        });
-//        
-//        console.warn("Contenido del html");
-//        console.debug(escapeHtmlEntities(entityElement.find('.content').html()));
-//    };
 
     /**
      * Guarda el puntaje del usuario para el paso
@@ -932,7 +909,7 @@ var Editor = function(params,callback){
                 }
             }).done(function(response) {
                 var data = JSON.parse(response);
-                if(callback){callback(false,data);}
+                if(callback){callback(data);}
             }).fail(function(error) {
                 if(error.status===403){
                     alert("Su sesión ha terminado, por favor ingrese de nuevo.");
@@ -1013,7 +990,7 @@ var Editor = function(params,callback){
                     //Carga los eventos generales
                     attachEventsSolutionMode();
                     //Se crean los eventos adicionales para las entidades
-                    attachEventsSolutionModeEntities();
+//                    attachEventsSolutionModeEntities();
                 }
             }
         });

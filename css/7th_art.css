@@ -1,4 +1,4 @@
-@import url("http://paradigmaweb.com/7th_art-master/css/peliculas.css");
+/*@import url("http://paradigmaweb.com/7th_art-master/css/peliculas.css");*/
 /*
 Universidad Nacional de Colombia
 7th @rt The Power of Films to Learn English
@@ -808,4 +808,14 @@ body.page-terms .WordSection1 {
 
 .operadores a:hover{
     text-decoration: underline;
+}
+
+
+.modal-7th .modal-header{
+    background: rgb(8, 27, 0);
+    color: #fff;
+}
+
+.modal-7th .modal-body{
+    font-size: 16px;
 }

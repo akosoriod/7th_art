@@ -5,9 +5,6 @@
         <link rel="stylesheet" type="text/css" href="editor.css">
         
         
-        <link rel="stylesheet" type="text/css" href="../jquery/jquery-ui.min.css">
-        <script src="../jquery/jquery-2.1.0.min.js"></script>
-        <script src="../jquery/jquery-ui.min.js"></script>
         <script type="text/javascript">
             $( document ).ready(function(){
                 var countObjects=0;
